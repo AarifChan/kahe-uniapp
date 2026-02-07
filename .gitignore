@@ -1,0 +1,153 @@
+# ============================================================
+# 卡核潮玩 - 主工程 .gitignore
+# 包含 iOS / Android / UniApp / H5 全部子项目
+# ============================================================
+
+# ======================== 通用 ========================
+
+## macOS 系统文件
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+## 编辑器 / IDE 通用
+*.swp
+*.swo
+*~
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+## 日志
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ======================== iOS ========================
+
+## Xcode 构建产物
+build/
+DerivedData/
+*.xcarchive
+
+## Xcode 用户配置
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+
+## 编译产物
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+*.o
+*.d
+*.dia
+
+## Swift Package Manager
+.build/
+.swiftpm/
+
+## CocoaPods (按需取消注释)
+# Pods/
+
+## Carthage
+Carthage/Build/
+
+## fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+## 代码注入
+iOSInjectionProject/
+
+# ======================== Android ========================
+
+## Gradle
+.gradle/
+android/build/
+android/app/build/
+
+## Android Studio / IntelliJ IDEA
+android/.idea/
+*.iml
+*.iws
+*.ipr
+
+## 本地配置（包含机器相关 SDK 路径）
+android/local.properties
+
+## 编译产物
+*.apk
+*.ap_
+*.aab
+
+## NDK
+*.so
+!android/app/libs/**/*.so
+obj/
+
+## 测试
+.externalNativeBuild/
+.cxx/
+captures/
+
+# ======================== UniApp (uni-kahe) ========================
+
+## 依赖
+node_modules/
+
+## 构建产物
+unpackage/
+dist/
+
+## HBuilderX
+.hbuilderx/
+
+## 自动生成（由 uni-app 框架生成）
+uni-kahe/src/types/
+!uni-kahe/src/types/auto-import.d.ts
+uni-kahe/src/manifest.json
+uni-kahe/src/pages.json
+
+## 缓存
+.stylelintcache
+.eslintcache
+*.local
+
+# ======================== H5 ========================
+
+## 构建产物
+h5/dist/
+h5/docs/.vitepress/dist
+h5/docs/.vitepress/cache
+
+# ======================== 构建产物 (根目录) ========================
+
+## iOS 归档
+build/
+
+## 临时文件
+*.tar.gz
+output.json

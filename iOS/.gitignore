@@ -1,0 +1,88 @@
+# ============================
+# iOS 项目 .gitignore
+# ============================
+
+# ---------- Xcode ----------
+
+## Build 产物
+build/
+DerivedData/
+
+## 用户级工程配置（每个开发者不同，不应入库）
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad
+
+## Xcode Workspace 用户数据
+*.xcworkspace/xcuserdata/
+*.xcworkspace/xcshareddata/swiftpm/
+
+## Xcode 自动生成（旧版兼容）
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+
+# ---------- 编译产物 ----------
+
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+*.o
+*.d
+*.dia
+
+# ---------- CocoaPods ----------
+
+# 如果使用 CocoaPods，取消下面的注释
+# Pods/
+# Podfile.lock
+
+# ---------- Swift Package Manager ----------
+
+.build/
+.swiftpm/
+Package.resolved
+
+# ---------- Carthage ----------
+
+Carthage/Build/
+Carthage/Checkouts/
+
+# ---------- fastlane ----------
+
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# ---------- macOS 系统文件 ----------
+
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ---------- 代码注入工具 ----------
+
+iOSInjectionProject/
+
+# ---------- 杂项 ----------
+
+## 临时文件
+*.swp
+*.swo
+*~
+
+## Archives（Xcode 归档产物很大，按需保留）
+*.xcarchive

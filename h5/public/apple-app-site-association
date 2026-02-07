@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "com.jmcw.kahe",
+        "paths": ["/app/*"]
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+# tkinter 是 Python 标准库，通常不需要额外安装
+# 如果需要更好的 GUI 体验，可以考虑使用其他库，但目前使用标准库即可
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"

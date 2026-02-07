@@ -1,0 +1,23 @@
+{
+    "remote_host": "jmcw",
+    "plats": [
+        {
+            "name": "wx_ma",
+            "label": "wx_ma (默认)",
+            "remote_path": "/home/aarif/jmcw/wx_ma",
+            "is_default": true
+        },
+        {
+            "name": "wx_ma_2",
+            "label": "wx_ma_2",
+            "remote_path": "/home/aarif/jmcw/wx_ma_2",
+            "is_default": false
+        },
+        {
+            "name": "wx_ma_3",
+            "label": "wx_ma_3",
+            "remote_path": "/home/aarif/jmcw/wx_ma_3",
+            "is_default": false
+        }
+    ]
+}

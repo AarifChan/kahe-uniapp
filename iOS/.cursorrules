@@ -1,0 +1,90 @@
+# iOS 项目编码规范（uniapp-kahe）
+
+## 文件命名规则
+
+所有**新建**的自定义 Swift/ObjC 文件必须以 `KH` 前缀开头（KaHe 缩写）。
+
+### 命名格式
+- Swift 文件：`KH<模块><描述>.swift`，例如 `KHDebugView.swift`、`KHNetworkManager.swift`
+- ObjC 头文件：`KH<模块><描述>.h`
+- ObjC 实现：`KH<模块><描述>.m`
+- 类名 / 结构体名：与文件名一致，如 `KHDebugView`、`KHNetworkManager`
+- Protocol：`KH<描述>Protocol` 或 `KH<描述>Delegate`
+
+### 不需要 KH 前缀的文件（DCloud SDK 模板文件）
+以下是 DCloud 离线打包模板自带的文件，保持原名不改：
+- `AppDelegate.h/.m` — 应用生命周期
+- `ViewController.h/.m` — PDRCore 容器
+- `OfflineViewController.h/.m` — 离线页
+- `main.m` — 程序入口
+- `HBuilder-Bridging-Header.h` — Swift-ObjC 桥接头
+- `uniapp-kahe-Info.plist` — 项目配置
+- `uniapp-kahe-Prefix.pch` — 预编译头
+- `control.xml` — Pandora 控制文件
+
+## 模块文件夹结构
+
+所有新建文件必须放入对应的模块文件夹中，不允许散落在根目录。
+文件夹在 Xcode 中使用 **Group**（黄色文件夹）组织。
+
+```
+uniapp-kahe/
+├── AppDelegate.h/m              # DCloud 模板（保持原位）
+├── ViewController.h/m           # DCloud 模板（保持原位）
+├── OfflineViewController.h/m    # DCloud 模板（保持原位）
+├── main.m                       # DCloud 模板（保持原位）
+├── HBuilder-Bridging-Header.h   # Swift-ObjC 桥接
+│
+├── KHDebug/                     # 调试模块
+│   └── KHDebugView.swift        #   SwiftUI 调试面板 + ObjC 工厂类
+│
+├── KHBridge/                    # Native ↔ JS 桥接模块
+│   └── (KHXxxModule.swift)      #   UniApp 原生插件
+│
+├── KHConfig/                    # 配置与常量
+│   └── (KHAppConfig.swift)      #   全局配置、环境变量、Feature Flag
+│
+├── KHNetwork/                   # 网络层
+│   └── (KHNetworkManager.swift) #   网络请求、拦截器
+│
+├── KHExtension/                 # Swift 扩展
+│   └── (KHUIView+Ext.swift)     #   扩展命名：KH<原类型>+Ext.swift
+│
+├── KHUtils/                     # 工具类
+│   └── (KHLogger.swift)         #   日志、加密、格式化等通用工具
+│
+├── KHModel/                     # 数据模型
+│   └── (KHUserModel.swift)      #   Codable 模型定义
+│
+├── KHView/                      # 自定义 SwiftUI 视图组件
+│   └── (KHLoadingView.swift)    #   可复用的 UI 组件
+│
+├── Pandora/                     # UniApp 离线资源（Folder Reference，蓝色文件夹）
+│   └── apps/__UNI__2BE2CDB/www/
+│
+├── icon/                        # App 图标资源
+└── *.lproj/                     # 本地化资源
+```
+
+## 新建文件检查清单
+
+创建新文件时，必须确认以下几点：
+
+1. **前缀**：文件名和主要类型名是否以 `KH` 开头？
+2. **文件夹**：文件是否放在了正确的模块文件夹下？
+3. **桥接头**：如果是 Swift 文件且需要被 ObjC 调用，是否已通过 `@objc` 暴露？
+4. **Info.plist**：如果是 UniApp 原生插件，是否已更新 `dcloud_uniplugins` 配置？
+
+## Swift 编码规范
+
+- 优先使用 Swift，仅在 DCloud SDK 接口需要时使用 ObjC
+- 使用 `guard let` / `if let` 安全解包，禁止 `!` 强制解包
+- UI 操作必须在主线程：`DispatchQueue.main.async { ... }`
+- 注释说明 "Why"，尤其是 Native ↔ JS 桥接层代码
+- 创建 Native 插件时，注释中需包含 JS 端传入的 JSON 结构
+
+## 扩展文件命名
+
+- UIView 扩展 → `KHUIView+Ext.swift`
+- String 扩展 → `KHString+Ext.swift`
+- 格式：`KH<原类型>+<描述>.swift`

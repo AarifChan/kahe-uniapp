@@ -1,0 +1,8 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "eslint.validate": ["javascript", "vue"],
+    "prettier.requireConfig": true,
+    "editor.formatOnSave": true
+}
