@@ -10,7 +10,7 @@
       <view class="modal-edit-content">
         <view class="modal-edit-content-info">
           <form @submit="formSubmit">
-            //#ifdef MP-WEIXIN
+            <!-- #ifdef MP-WEIXIN -->
             <button
               class="modal-edit-content-info-head"
               open-type="chooseAvatar"
@@ -21,15 +21,17 @@
                 :src="avatarUrl"
               ></image>
             </button>
-            // #endif //#ifndef MP-WEIXIN
+            <!-- #endif -->
+            <!-- #ifndef MP-WEIXIN -->
             <button class="modal-edit-content-info-head" @click="chooseImage">
               <image
                 class="modal-edit-content-info-head-img"
                 :src="avatarUrl"
               ></image>
             </button>
-            // #endif
+            <!-- #endif -->
 
+            <!-- #ifdef MP-WEIXIN -->
             <button
               class="modal-edit-content-info-btn theme-font"
               open-type="chooseAvatar"
@@ -37,19 +39,41 @@
             >
               点击上传
             </button>
+            <!-- #endif -->
+            <!-- #ifndef MP-WEIXIN -->
+            <button
+              class="modal-edit-content-info-btn theme-font"
+              @click="chooseImage"
+            >
+              点击上传
+            </button>
+            <!-- #endif -->
             <view class="modal-edit-content-info-name">
               <view class="modal-edit-content-info-name-title theme-font"
                 >用户昵称：</view
               >
+              <!-- #ifdef MP-WEIXIN -->
               <input
                 type="nickname"
                 name="nickname"
-                style="'color: #C6C6C6; font-size: 15px;height:16px;'"
                 class="modal-edit-content-info-name-input theme-font"
                 placeholder="请输入用户昵称"
                 :placeholderStyle="placeholderStyle"
                 :value="nickName"
+                @input="onNicknameInput"
               />
+              <!-- #endif -->
+              <!-- #ifndef MP-WEIXIN -->
+              <input
+                type="text"
+                name="nickname"
+                class="modal-edit-content-info-name-input theme-font"
+                placeholder="请输入用户昵称"
+                :placeholderStyle="placeholderStyle"
+                :value="nickName"
+                @input="onNicknameInput"
+              />
+              <!-- #endif -->
             </view>
             <view class="modal-edit-content-bottom">
               <button formType="submit" class="modal-edit-content-bottom-item">
@@ -145,18 +169,22 @@ const onChooseAvatar = (e: any) => {
     },
   });
 };
-const formSubmit = (e: any) => {
-  const {
-    target: {
-      value: { nickname },
-    },
-  } = e;
-  const { avatarUrl } = dataMap;
-  if (!nickname || nickname === "" || !avatarUrl || avatarUrl === "") {
-    ShowToast("请输入完整用户信息");
+// 实时同步昵称输入，避免依赖 form submit 事件取值
+// Why: APP 环境下 form submit 事件的 e.detail.value 可能为 null，
+//      导致解构报错 "Cannot destructure property 'nickname' from null"
+const onNicknameInput = (e: any) => {
+  dataMap.nickName = e.detail?.value ?? "";
+};
+const formSubmit = () => {
+  const { nickName, avatarUrl } = dataMap;
+  if (!nickName || nickName.trim() === "") {
+    ShowToast("请输入用户昵称");
     return;
   }
-  dataMap.nickName = nickname;
+  if (!avatarUrl || avatarUrl === "") {
+    ShowToast("请上传头像");
+    return;
+  }
   updateInfoAction();
 };
 const updateInfoAction = () => {
@@ -237,7 +265,8 @@ onMounted(() => {
         border: none;
       }
       &-btn {
-        margin-top: 25rpx;
+        margin-top: 20rpx;
+        margin-bottom: 16rpx;
         position: relative;
         color: #000000;
         font-style: normal;
@@ -252,7 +281,7 @@ onMounted(() => {
       }
 
       &-name {
-        margin-top: 40rpx;
+        margin-top: 24rpx;
         position: relative;
         display: flex;
         flex-direction: row;

@@ -5,6 +5,28 @@
 
 set -e  # 遇到错误立即退出
 
+# ==================== Node 版本切换 ====================
+# 通过 nvm 切换到 Node 18，确保 UniApp 编译兼容性
+NODE_VERSION="18"
+
+export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+    # shellcheck disable=SC1091
+    . "$NVM_DIR/nvm.sh"
+    echo "[INFO] 当前 Node 版本: $(node -v)"
+    echo "[INFO] 切换到 Node $NODE_VERSION..."
+    nvm use "$NODE_VERSION"
+    echo "[INFO] 已切换到 Node 版本: $(node -v)"
+else
+    echo "[WARN] 未找到 nvm，将使用当前 Node 版本: $(node -v 2>/dev/null || echo '未安装')"
+fi
+
+# 启用 corepack 以支持 yarn（Node 18+ 内置）
+if command -v corepack &> /dev/null; then
+    corepack enable 2>/dev/null || true
+    echo "[INFO] corepack 已启用，yarn 版本: $(yarn -v 2>/dev/null || echo '未检测到')"
+fi
+
 # ==================== 配置区域 ====================
 # 脚本所在目录
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
