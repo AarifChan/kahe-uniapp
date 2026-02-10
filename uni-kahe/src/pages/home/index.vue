@@ -11,7 +11,10 @@
   >
     <!-- 搜索 -->
     <view class="home-search">
-      <image class="logo" src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/logo.png" />
+      <image
+        class="logo"
+        src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/logo.png"
+      />
       <Search
         @did-tap-search="handleSearch"
         placeholder="请输入你想要搜索的内容"
@@ -120,11 +123,6 @@ onMounted(async () => {
       AppModule.changeProductTabIndex(0);
     }, 500);
   }
-  uni.hideTabBar({
-            animation: false, // 离线打包建议先关闭动画尝试
-            success: () => console.log('隐藏成功'),
-            fail: (err) => console.log('隐藏失败', err)
-  });
 });
 // onShow(() => {
 //     getHomeList()

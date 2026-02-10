@@ -19,6 +19,7 @@
         :scroll-y="true"
         :enable-flex="true"
         scroll-with-animation
+        :style="{ height: `calc(990rpx - 80rpx - ${payTypeHeight}rpx)` }"
       >
         <view class="pay-scroll-info">
           <view class="pay-scroll-info-top">
@@ -157,17 +158,96 @@
         </view>
       </scroll-view>
 
-      <view class="pay-bottom">
+      <!-- 支付方式选择 -->
+      <view class="pay-type" v-if="showPayType">
+        <view class="pay-type-title">选择支付方式</view>
+        <view class="pay-type-list">
+          <!-- 余额支付 -->
+          <view
+            class="pay-type-item"
+
+          >
+            <view class="pay-type-item-left">
+              <view class="pay-type-icon balance-icon">
+                <text class="pay-type-icon-text">余</text>
+              </view>
+              <view class="pay-type-info">
+                <view class="pay-type-name">余额支付</view>
+                <view class="pay-type-desc">可用余额 ¥{{ userInfo.balance || 0 }}</view>
+              </view>
+            </view>
+            <view class="pay-type-check">
+              <view class="pay-type-check-circle" v-if="payType === 'balance'">
+                <view class="pay-type-check-dot"></view>
+              </view>
+              <view class="pay-type-check-empty" v-else></view>
+            </view>
+          </view>
+
+          <!-- #ifdef APP -->
+          <!-- 微信支付 -->
+          <view
+            class="pay-type-item"
+            :class="{ active: payType === 1 }"
+            @tap.stop="selectPayType(1)"
+          >
+            <view class="pay-type-item-left">
+              <view class="pay-type-icon wechat-icon">
+                <image
+                  class="pay-type-icon-img"
+                  src="/static/wechat-pay.svg"
+                  mode="aspectFit"
+                />
+              </view>
+              <view class="pay-type-info">
+                <view class="pay-type-name">微信支付</view>
+                <view class="pay-type-desc">微信APP支付</view>
+              </view>
+            </view>
+            <view class="pay-type-check">
+              <view class="pay-type-check-circle" v-if="payType === 1">
+                <view class="pay-type-check-dot"></view>
+              </view>
+              <view class="pay-type-check-empty" v-else></view>
+            </view>
+          </view>
+
+          <!-- 支付宝支付 -->
+          <view
+            class="pay-type-item"
+            :class="{ active: payType === 0 }"
+            @tap.stop="selectPayType(0)"
+          >
+            <view class="pay-type-item-left">
+              <view class="pay-type-icon alipay-icon">
+                <image
+                  class="pay-type-icon-img"
+                  src="/static/alipay.svg"
+                  mode="aspectFit"
+                />
+              </view>
+              <view class="pay-type-info">
+                <view class="pay-type-name">支付宝支付</view>
+                <view class="pay-type-desc">支付宝APP支付</view>
+              </view>
+            </view>
+            <view class="pay-type-check">
+              <view class="pay-type-check-circle" v-if="payType === 0">
+                <view class="pay-type-check-dot"></view>
+              </view>
+              <view class="pay-type-check-empty" v-else></view>
+            </view>
+          </view>
+          <!-- #endif -->
+        </view>
+      </view>
+
+      <view class="pay-bottom" :style="{ bottom: `${payTypeHeight}rpx` }">
         <view class="pay-bottom-info">
           <view class="pay-bottom-info-price">¥{{ goods.payPrice }}</view>
           <view class="pay-bottom-info-title">订单合计</view>
         </view>
         <view class="pay-bottom-btn" @tap.stop="didTapConfirm">
-          <!--          <image-->
-          <!--            class="pay-bottom-btn-img"-->
-          <!--            src="https://jms.85gui7.com/kahe-202510/ka-he/common/pay-btn.png"-->
-          <!--          />-->
-
           <view class="pay-bottom-btn-title">立即付款</view>
           <view class="pay-bottom-btn-subTitle"
             >已抵扣{{ goods.usedPrice }}</view
@@ -242,11 +322,12 @@ import Agreement from "@/components/agreement/index.vue";
 import PayButton from "./components/button.vue";
 import { UIMerchant, UIProductPayModel } from "@/model";
 import CommonModal from "@/components/modal/index.vue";
-import { type PropType, ref, watch, computed } from "vue";
+import { type PropType, ref, watch, computed, onMounted } from "vue";
 import { useModal } from "@/composables/modal";
 import { useCoupon } from "@/composables/coupon";
 import { UserModule } from "@/store/modules/user";
 import { ShowToast } from "@/utils";
+import { AppModule } from "@/store/modules/app";
 const { modalShow, modalTitle, modalContent, showModalType } = useModal();
 const { getCoupon, hasValidCoupon } = useCoupon();
 const userInfo = computed(() => UserModule.userInfo);
@@ -278,6 +359,24 @@ const props = defineProps({
 });
 
 const agree = ref(false);
+const payType = ref(0); // 默认支付宝
+const showPayType = ref(false); // 是否显示支付方式选择（只在 App 环境显示）
+const payTypeHeight = ref(0); // 支付方式区域高度
+
+// 判断是否为 App 环境
+const isApp = ref(false);
+const checkEnv = () => {
+  // #ifdef APP
+  isApp.value = true;
+  showPayType.value = true;
+  payTypeHeight.value = 340;
+  // #endif
+  // #ifndef APP
+  isApp.value = false;
+  showPayType.value = false;
+  payTypeHeight.value = 0;
+  // #endif
+};
 
 const isSkip = ref(props.skipChecked);
 const vShow = ref(false);
@@ -294,12 +393,22 @@ watch(
   }
 );
 
+const selectPayType = (type: number) => {
+  payType.value = type;
+  AppModule.setPayType(type);
+};
+
 const didTapConfirm = () => {
   if (!agree.value) {
     ShowToast("请阅读并允许协议");
     return;
   }
-  emits("didTapPay", props.goods.id);
+  // 非 App 环境只传商品ID，App 环境额外传支付方式
+  if (isApp.value) {
+    emits("didTapPay", props.goods.id);
+  } else {
+    emits("didTapPay", props.goods.id);
+  }
 };
 
 const didTapClose = () => {
@@ -314,6 +423,7 @@ const emits = defineEmits([
   "didTapCoupon",
   "didTapPay",
   "update:skipChecked",
+  "didTapPayWithType",
 ]);
 watch(
   () => props.show,
@@ -324,6 +434,10 @@ watch(
     }
   }
 );
+
+onMounted(() => {
+  checkEnv();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -568,5 +682,127 @@ watch(
   background: #f6f6f6;
   border-radius: 10rpx;
   margin-bottom: 32rpx;
+}
+
+/* 支付方式选择样式 */
+.pay-type {
+  position: fixed;
+  bottom: 141rpx;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 20rpx 32rpx;
+  box-sizing: border-box;
+  border-top: 1rpx solid #f0f0f0;
+
+  &-title {
+    font-size: 26rpx;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 16rpx;
+  }
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16rpx 0;
+
+    &.active {
+      .pay-type-name {
+        color: #333;
+      }
+    }
+
+    &-left {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  &-icon {
+    width: 56rpx;
+    height: 56rpx;
+    border-radius: 12rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20rpx;
+    overflow: hidden;
+
+    &.balance-icon {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+    }
+
+    &.wechat-icon {
+      background-color: #09bb07;
+    }
+
+    &.alipay-icon {
+      background-color: #1677ff;
+    }
+
+    &-text {
+      font-size: 24rpx;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    &-img {
+      width: 40rpx;
+      height: 40rpx;
+    }
+  }
+
+  &-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-name {
+    font-size: 28rpx;
+    color: #333;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  &-desc {
+    font-size: 22rpx;
+    color: #999;
+    margin-top: 4rpx;
+  }
+
+  &-check {
+    &-circle {
+      width: 36rpx;
+      height: 36rpx;
+      border-radius: 50%;
+      border: 2rpx solid #efd56f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-dot {
+      width: 20rpx;
+      height: 20rpx;
+      border-radius: 50%;
+      background-color: #efd56f;
+    }
+
+    &-empty {
+      width: 36rpx;
+      height: 36rpx;
+      border-radius: 50%;
+      border: 2rpx solid #ddd;
+    }
+  }
 }
 </style>

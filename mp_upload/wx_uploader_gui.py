@@ -120,7 +120,7 @@ def read_env_file(mode: str) -> dict:
     return env_vars
 
 
-def build_mp_weixin(mode: str = "production", branch: str = "") -> bool:
+def build_mp_weixin(mode: str = "production") -> bool:
     """
     编译微信小程序
     mode: "production" 或 "development"
@@ -140,8 +140,6 @@ def build_mp_weixin(mode: str = "production", branch: str = "") -> bool:
     print("-" * 60)
     print(f"编译模式:            {mode_text}")
     print(f"环境文件:            {env_file}")
-    if branch:
-        print(f"Git 分支:           {branch}")
     print(f"VITE_APP_ENV:        {app_env}")
     print(f"VITE_APP_BASEURL:    {base_url}")
     print(f"VITE_APP_CDN_FOLDER: {cdn_folder}")
@@ -154,19 +152,13 @@ def build_mp_weixin(mode: str = "production", branch: str = "") -> bool:
         else:
             build_cmd = "yarn build:mp-weixin"
 
-        # 可选的分支切换及更新
-        git_cmd = ""
-        if branch:
-            # 如果分支不为空，则切换到对应分支并拉取最新代码
-            git_cmd = f"git checkout {branch} && git pull && "
-
-        # 使用 bash 加载 nvm 并切换到 node 18，然后执行 git 和 yarn 编译命令
+        # 使用 bash 加载 nvm 并切换到 node 18，然后执行 yarn 编译命令
         # nvm 是 shell 函数，需要先 source nvm.sh
         shell_cmd = f'''
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
             nvm use 18
-            {git_cmd}{build_cmd}
+            {build_cmd}
         '''
         
         result = subprocess.run(
@@ -490,8 +482,6 @@ class WxUploaderGUI:
         self.plat_var = tk.StringVar()
         # 编译模式
         self.build_mode_var = tk.StringVar(value="production")
-        # Git 分支（可选）
-        self.branch_var = tk.StringVar()
         
         # 设置默认 plat
         self._set_default_plat()
@@ -527,16 +517,8 @@ class WxUploaderGUI:
                        variable=self.build_mode_var).pack(side="left", padx=5)
         tk.Radiobutton(frame_build_mode, text="测试环境", value="development", 
                        variable=self.build_mode_var).pack(side="left", padx=5)
-
-        # ===== 行 4：选择分支（可选） =====
-        frame_branch = tk.Frame(root)
-        frame_branch.pack(fill="x", padx=10, pady=5)
-
-        tk.Label(frame_branch, text="Git 分支（可选）：").pack(side="left")
-        tk.Entry(frame_branch, textvariable=self.branch_var, width=20).pack(side="left", padx=5)
-        tk.Label(frame_branch, text="留空则使用当前分支").pack(side="left", padx=5)
         
-        # ===== 行 5：一键编译发布按钮 =====
+        # ===== 行 4：一键编译发布按钮 =====
         frame_one_click = tk.Frame(root)
         frame_one_click.pack(fill="x", padx=10, pady=15)
         
@@ -628,7 +610,6 @@ class WxUploaderGUI:
         remote_path = self.get_remote_dir(plat_name)
         remote_host = self.config.get("remote_host", "jmcw")
         appid = parse_appid_from_key(key_path)
-        branch = self.branch_var.get().strip()
         
         # 读取环境配置
         env_vars = read_env_file(build_mode)
@@ -639,7 +620,6 @@ class WxUploaderGUI:
             f"即将执行以下操作：\n\n"
             f"1. 编译微信小程序（{mode_text}）\n"
             f"   API地址: {base_url}\n\n"
-            f"   Git 分支: {branch or '当前分支'}\n\n"
             f"2. 上传代码到服务器并执行 run-mp.sh\n"
             f"   主机: {remote_host}\n"
             f"   路径: {remote_path}\n\n"
@@ -654,7 +634,7 @@ class WxUploaderGUI:
             self.root.title("微信小程序上传工具 - 正在编译...")
             self.root.update()
             
-            if not build_mp_weixin(build_mode, branch):
+            if not build_mp_weixin(build_mode):
                 messagebox.showerror("错误", "编译失败，请检查终端输出")
                 self.root.title("微信小程序上传工具")
                 return

@@ -18,6 +18,7 @@
   },
   "permissions": {
     "OAuth": {},
+    "Payment": {},
     "UniNView": {
       "description": "UniNView原生渲染"
     }
@@ -35,6 +36,7 @@
     },
     "popGesture": "close",
     "launchwebview": {
+      "render": "always",
       "id": "1",
       "kernel": "WKWebview"
     },
@@ -42,44 +44,8 @@
     "nvueStyleCompiler": "uni-app",
     "compilerVersion": 3,
     "tabBar": {
-      "position": "bottom",
-      "color": "#999",
-      "selectedColor": "#007aff",
-      "borderStyle": "rgba(0,0,0,0.4)",
-      "blurEffect": "none",
-      "fontSize": "10px",
-      "iconWidth": "24px",
-      "spacing": "3px",
-      "height": "50px",
-      "list": [
-        {
-          "pagePath": "pages/home/index",
-          "text": "首页"
-        },
-        {
-          "pagePath": "pages/merchant/index",
-          "text": "商家"
-        },
-        {
-          "pagePath": "pages/machine/index",
-          "text": "抽卡机"
-        },
-        {
-          "pagePath": "pages/box/index",
-          "text": "盒柜"
-        },
-        {
-          "pagePath": "pages/mine/index",
-          "text": "我的"
-        }
-      ],
       "custom": true,
-      "selectedIndex": 0,
-      "shown": true,
-      "child": [
-        "lauchwebview"
-      ],
-      "selected": 0
+      "height": "0px"
     },
     "safearea": {
       "bottom": {
@@ -112,6 +78,14 @@
           "weixin": {
             "appid": "wx6d682802dea2854f",
             "UniversalLinks": ""
+          }
+        },
+        "payment": {
+          "alipay": {
+            "__platform__": [
+              "ios",
+              "android"
+            ]
           }
         },
         "audio": {
@@ -152,12 +126,6 @@
     },
     "uniStatistics": {
       "enable": false
-    },
-    "safearea": {
-      "background": "#FFFFFF",
-      "bottom": {
-        "offset": "auto"
-      }
     }
   },
   "launch_path": "__uniappview.html"

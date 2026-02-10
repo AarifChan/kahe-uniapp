@@ -220,10 +220,10 @@
         <!-- 微信分享 配置begin -->
         <meta-data
             android:name="WX_SECRET"
-            android:value="1fa8cff41ab1cddc5634901c6ed4f12a" />
+            android:value="微信的secret" />
         <meta-data
             android:name="WX_APPID"
-            android:value="wx6d682802dea2854f" />
+            android:value="微信的appid" />
 
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -235,7 +235,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:scheme="wx6d682802dea2854f" />
+                <data android:scheme="微信的appid" />
             </intent-filter>
         </activity>
         <!-- 微信分享 配置 end -->
@@ -248,7 +248,7 @@
 
         <meta-data
             android:name="WX_APPID"
-            android:value="wx6d682802dea2854f" />
+            android:value="微信的appid" />
 
         <!-- 微信支付配置end -->
         <!-- 小米分享 -->

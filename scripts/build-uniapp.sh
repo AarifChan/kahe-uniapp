@@ -49,7 +49,7 @@ PANDORA_DIR="$IOS_DIR/uniapp-kahe/Pandora/apps/$APP_ID/www"
 
 # Android 工程目录与 UniApp AppID
 ANDROID_DIR="$PROJECT_ROOT/android"
-ANDROID_APP_ID="__UNI__B"  # Android assets 中当前使用的 AppID 目录
+ANDROID_APP_ID="__UNI__2BE2CDB"  # Android assets 中当前使用的 AppID 目录
 ANDROID_WWW_DIR="$ANDROID_DIR/app/src/main/assets/apps/$ANDROID_APP_ID/www"
 
 # 构建配置
@@ -119,7 +119,7 @@ check_environment() {
 
 # ==================== 编译 UniApp ====================
 build_uniapp() {
-    log_info "开始编译 UniApp (app-plus 平台)..."
+    log_info "开始编译 UniApp (app 通用平台)..."
     
     cd "$UNIAPP_DIR"
     
@@ -129,9 +129,10 @@ build_uniapp() {
         yarn install
     fi
     
-    # 编译 app-plus 平台
-    log_info "执行: yarn build:app-ios"
-    yarn build:app-ios
+    # 编译 app 通用平台（同时兼容 iOS 和 Android）
+    # 注意：不要用 build:app-ios 或 build:app-android，否则会排除另一平台的条件编译代码
+    log_info "执行: yarn build:app"
+    yarn build:app
     
     if [ $? -ne 0 ]; then
         log_error "UniApp 编译失败"
@@ -146,7 +147,7 @@ copy_resources() {
     log_info "开始复制 UniApp 资源到 iOS Pandora 与 Android assets..."
     
     # UniApp 编译输出目录
-    # 注意：yarn build:app-ios 输出的目录是 app，不是 app-ios
+    # 注意：yarn build:app 输出到 dist/build/app 目录
     UNIAPP_BUILD_DIR="$UNIAPP_DIR/dist/build/app"
     
     if [ ! -d "$UNIAPP_BUILD_DIR" ]; then
@@ -169,6 +170,40 @@ copy_resources() {
         # 如需完全清空旧资源，可取消下一行注释
         # rm -rf "$ANDROID_WWW_DIR"/*
         cp -R "$UNIAPP_BUILD_DIR"/* "$ANDROID_WWW_DIR/"
+        
+        # ---------- 修复 Android __uniappview.html ----------
+        # Vite CLI 编译产出的 __uniappview.html 使用 uni-app-view.umd.js（Web 运行时），
+        # 但 DCloud Android 原生 SDK 需要加载 view.umd.min.js + app-view.js 才能正常工作。
+        # 这里替换为 SDK 兼容的格式。
+        ANDROID_VIEW_HTML="$ANDROID_WWW_DIR/__uniappview.html"
+        if [ -f "$ANDROID_VIEW_HTML" ]; then
+            log_info "修复 Android __uniappview.html（适配原生 SDK 运行时）..."
+            cat > "$ANDROID_VIEW_HTML" << 'VIEWHTML'
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      var __UniViewStartTime__ = Date.now();
+      var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
+        CSS.supports('top: constant(a)'))
+      document.write(
+        '<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
+        (coverSupport ? ', viewport-fit=cover' : '') + '" />')
+    </script>
+    <title>View</title>
+    <link rel="stylesheet" href="view.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="view.umd.min.js"></script>
+    <script src="app-view.js"></script>
+  </body>
+</html>
+VIEWHTML
+            log_info "Android __uniappview.html 已修复 ✓"
+        fi
+        
         log_info "Android 资源复制完成 ✓"
     else
         log_warn "未检测到 Android 工程目录: $ANDROID_DIR，已跳过 Android 资源复制"

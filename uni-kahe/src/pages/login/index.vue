@@ -303,6 +303,7 @@ const handleSubmit = async () => {
   if (err) {
     ShowToast(err + "");
   } else {
+    // 手机号/密码登录本身就有手机号，直接完成
     eventBus.emit("didLogin", true);
     uni.navigateBack({
       complete() {
@@ -313,6 +314,25 @@ const handleSubmit = async () => {
 };
 
 // #ifdef APP-PLUS
+/** 微信登录成功后检查是否需要绑定手机号 */
+const handleLoginSuccess = () => {
+  const phone = UserModule.userInfo?.phone;
+  if (!phone || phone === "") {
+    // 未绑定手机号，跳转到绑定页面（使用 redirectTo 替换当前登录页）
+    uni.redirectTo({
+      url: "/subPackages/setting/bindPhone/index",
+    });
+  } else {
+    // 已有手机号，正常回到上一页
+    eventBus.emit("didLogin", true);
+    uni.navigateBack({
+      complete() {
+        ShowToast("登陆成功", 2000);
+      },
+    });
+  }
+};
+
 const handleWechatOneClick = async () => {
   if (!validateAgreement()) return;
 
@@ -333,12 +353,7 @@ const handleWechatOneClick = async () => {
                 if (err) {
                   ShowToast(err + "");
                 } else {
-                  eventBus.emit("didLogin", true);
-                  uni.navigateBack({
-                    complete() {
-                      ShowToast("登陆成功", 2000);
-                    },
-                  });
+                  handleLoginSuccess();
                 }
               },
               (error) => {

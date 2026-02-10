@@ -151,7 +151,7 @@ class User extends VuexModule {
         console.log("code:", code);
         const logRes = await loginRequest({
           code: code,
-          plat: "wx_ma_2",
+          plat: "wx_ma",
         });
         if (logRes.code === 200) {
           this.context.commit("UPDATE_TOKEN", logRes.data.token);
@@ -208,7 +208,7 @@ class User extends VuexModule {
       code: this.code,
       phoneIv: params.iv,
       phoneEncryptedData: params.encryptedData,
-      plat: "wx_ma_2",
+      plat: "wx_ma",
     } as LoginRequestParams;
 
     const resp = await loginByWxApp(loginParams);
@@ -279,7 +279,7 @@ class User extends VuexModule {
               code: code,
               iv: res.iv,
               encryptedData: res.encryptedData,
-              plat: "wx_ma_2",
+              plat: "wx_ma",
             });
             if (logRes.code === 200) {
               this.context.commit("UPDATE_TOKEN", logRes.data.token);
@@ -446,7 +446,7 @@ class User extends VuexModule {
     return new Promise(async (resolve, _) => {
       let payType = "";
       // #ifdef MP-WEIXIN
-      payType = "wx_ma_2";
+      payType = "wx_ma";
       // #endif
 
       // #ifdef H5
@@ -456,6 +456,13 @@ class User extends VuexModule {
         resolve("请在别的浏览器尝试");
         return;
       }
+
+      // #endif
+
+      // #ifdef APP
+      console.log("[APP Pay] handleWxPay start, orderId:", orderId, "pid:", pid);
+      console.log("[APP Pay] payType:", payType);
+      payType = AppModule.payType === 1 ? "wx_app" : "ali_app";
 
       // #endif
 
@@ -471,26 +478,42 @@ class User extends VuexModule {
         }
         params.aliReturnUrl = aliReturnUrl + `&orderId=${orderId}`;
       }
+
+      // #ifdef APP
+      console.log("[APP Pay] orderSubmit params:", JSON.stringify(params));
+      // #endif
+
       const orderResp = await orderSubmitRequest(params);
+
+      // #ifdef APP
+      console.log("[APP Pay] orderSubmit response:", JSON.stringify(orderResp));
+      // #endif
+
       if (orderResp.code !== 200) {
         await orderCancelRequest(orderId);
+        console.log("[APP Pay] alipay orderCancelRequest orderString:", orderResp.msg);
         resolve(orderResp.msg + "error~");
         ShowToast(orderResp.msg);
         return;
       }
       if (payType === "ali_app") {
         const orderString = orderResp.data.jsConfig?.orderString ?? "";
+
+        // #ifdef APP
+        console.log("[APP Pay] alipay orderString:", orderString);
+        // #endif
+
         uni.requestPayment({
           provider: "alipay",
           orderInfo: orderString,
           success: async (result) => {
-            console.log("paySuccess:", JSON.stringify(result));
+            console.log("[APP Pay] alipay success:", JSON.stringify(result));
             ShowToast("支付成功");
 
             resolve(null);
           },
           fail: async (err: any) => {
-            console.log("pay->error:", JSON.stringify(err));
+            console.log("[APP Pay] alipay fail:", JSON.stringify(err));
             await orderCancelRequest(orderId);
             resolve("取消支付" + JSON.stringify(err));
           },
@@ -503,8 +526,12 @@ class User extends VuexModule {
           resolve("支付出错，请联系客服");
         }
       } else {
-        console.log("pay->wx_app");
         const payParams = orderResp.data.jsConfig as OrderWechatPayParams;
+
+        // #ifdef APP
+        console.log("[APP Pay] wx payParams:", JSON.stringify(payParams));
+        // #endif
+
         let orderInfo = {};
         if (payType === "wx_app") {
           orderInfo = {
@@ -516,11 +543,16 @@ class User extends VuexModule {
             timestamp: payParams.timestamp, // 时间戳（单位：秒）
             sign: payParams.sign, // 签名，这里用的 MD5 签名
           };
-          // console.log("check:", orderInfo)
+
+          // #ifdef APP
+          console.log("[APP Pay] wx_app orderInfo:", JSON.stringify(orderInfo));
+          // #endif
+
           uni.requestPayment({
             provider: "wxpay",
             orderInfo: JSON.stringify(orderInfo),
             success: async (result) => {
+              console.log("[APP Pay] wxpay success:", JSON.stringify(result));
               ShowToast("支付成功");
               pollPaymentStatus(orderId, 5000, 10)
                 .then((res) => {
@@ -531,13 +563,18 @@ class User extends VuexModule {
                 });
             },
             fail: async (err: any) => {
-              console.log("pay->error:", JSON.stringify(err));
+              console.log("[APP Pay] wxpay fail:", JSON.stringify(err));
               await orderCancelRequest(orderId);
               resolve("取消支付");
             },
           });
         } else {
           const payParams = orderResp.data.jsConfig as OrderWechatMpPayParams;
+
+          // #ifdef APP
+          console.log("[APP Pay] wx_mp payParams:", JSON.stringify(payParams));
+          // #endif
+
           uni.requestPayment({
             provider: "wxpay",
             nonceStr: payParams.nonceStr,
@@ -547,7 +584,7 @@ class User extends VuexModule {
             timeStamp: payParams.timeStamp,
             orderInfo: orderId,
             success: async (result) => {
-              console.log(result);
+              console.log("[APP Pay] wxpay mp success:", JSON.stringify(result));
               pollPaymentStatus(orderId, 5000, 10)
                 .then((res) => {
                   resolve(res === "success" ? null : "订单查询失败");
@@ -557,6 +594,7 @@ class User extends VuexModule {
                 });
             },
             fail: async (_) => {
+              console.log("[APP Pay] wxpay mp fail");
               await orderCancelRequest(orderId);
               resolve("取消支付");
             },

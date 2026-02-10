@@ -89,6 +89,11 @@ class App extends VuexModule {
   }
 
   @Action
+  setPayType(type: number) {
+    this.context.commit("UPDATE_PAY_TYPE", type);
+  }
+
+  @Action
   changeCurrentTabIndex(index: number) {
     this.context.commit("UPDATE_CURRENT_TAB_INDEX", index);
   }

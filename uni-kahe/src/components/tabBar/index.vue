@@ -1,6 +1,9 @@
 <template>
   <view class="tab-bar">
-    <image class="tab-bar-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/tabBar-bg2.png" />
+    <image
+      class="tab-bar-bg"
+      src="https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/tabBar-bg2.png"
+    />
     <view class="tab-bar-content">
       <view
         v-for="(item, index) in tabList"
@@ -55,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { AppModule } from "@/store/modules/app";
 import type { TabBarItem } from "@/model";
 import { getPageOptions } from "@/utils/tools";
@@ -71,9 +74,23 @@ onMounted(() => {
   let index = tabList
     .map((item) => item.selectPath)
     .indexOf(`/${lastPage.route}`);
-  console.log("page:", lastPage.route, index);
-  AppModule.changeCurrentTabIndex(index);
+  // console.log("page:", lastPage.route, index);
+  // AppModule.changeCurrentTabIndex(index);
+
+  uni.setNavigationBarTitle({
+    title: tabList[AppModule.currentTabIndex].title,
+  });
 });
+watch(
+  () => AppModule.currentTabIndex,
+  (oldIndex, newIndex) => {
+    if (newIndex !== oldIndex) {
+      uni.setNavigationBarTitle({
+        title: tabList[newIndex].title,
+      });
+    }
+  }
+);
 
 const tabList: TabBarItem[] = [
   {
@@ -81,45 +98,52 @@ const tabList: TabBarItem[] = [
     title: "首页",
     selectPath: "/pages/home/index",
     iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item1.png",
-    iconSelected: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item1-active.png",
+    iconSelected:
+      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item1-active.png",
   },
   {
     text: "商家",
     title: "商家",
     selectPath: "/pages/merchant/index",
     iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item2.png",
-    iconSelected: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item2-active.png",
+    iconSelected:
+      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item2-active.png",
   },
   {
     text: "抽卡机",
     title: "抽卡机",
     selectPath: "/pages/machine/index",
-    iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item3-active.png",
-    iconSelected: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item3-active.png",
+    iconNormal:
+      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item3-active.png",
+    iconSelected:
+      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item3-active.png",
   },
   {
     text: "盒柜",
     title: "盒柜",
     selectPath: "/pages/box/index",
     iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item4.png",
-    iconSelected: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item4-active.png",
+    iconSelected:
+      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item4-active.png",
   },
   {
     text: "我的",
     title: "我的",
     selectPath: "/pages/mine/index",
     iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item5.png",
-    iconSelected: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item5-active.png",
+    iconSelected:
+      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item5-active.png",
   },
 ];
 
 const switchTab = (path: string, index: number) => {
-  uni.switchTab({
-    url: path,
-    complete(result) {
-      // uni.hideLoading();
-    },
-  });
+  // uni.switchTab({
+  //   url: path,
+  //   complete(result) {
+  //     // uni.hideLoading();
+  //   },
+  // });
+  console.log(path, index);
   AppModule.changeCurrentTabIndex(index);
   // uni.showLoading();
 };
@@ -207,7 +231,7 @@ const switchTab = (path: string, index: number) => {
         }
 
         .margin {
-         transform: translateY(12rpx);
+          transform: translateY(12rpx);
         }
 
         .move_right {

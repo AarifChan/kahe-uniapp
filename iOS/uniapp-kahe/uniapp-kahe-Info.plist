@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
-	<string>卡牌核心</string>
+	<string></string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIcons</key>
@@ -45,11 +45,13 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>alixpay</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>alixpayhbilderhello</string>
+				<string>alix2021006131626300</string>
 			</array>
 		</dict>
 		<dict>
@@ -117,10 +119,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>为了提高你的用户体验，通过蓝牙外设iBeacon推送消息，提升用户体验</string>
 	<key>NSCameraUsageDescription</key>
 	<string>为了提高用户体验，需要使用您照相机的权限，设置个性化的头像</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string></string>
+	<string>为了提高用户体验，需要你的麦克风权限，把您的语音转成文字。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>为了提高用户体验，需要使用您相册的权限，设置个性化的头像</string>
 	<key>NSUserTrackingUsageDescription</key>
