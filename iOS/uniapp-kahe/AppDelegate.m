@@ -14,9 +14,12 @@
 #import "PDRCoreApp.h"
 #import "PDRCoreAppManager.h"
 
-// Swift 自动生成的头文件，用于访问 KHDebugViewFactory（SwiftUI 调试页面工厂）
+// Swift 自动生成的头文件，用于访问 Swift 类
 // 注意：头文件名称 = "$(PRODUCT_MODULE_NAME)-Swift.h"，'-' 会替换为 '_'
 #import "uniapp_kahe-Swift.h"
+
+// Objective-C 原生模块
+#import "KHDeviceHelper.h"
 
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <netinet/in.h>
@@ -40,37 +43,48 @@
 {
     // 0. 注册 UserDefaults 默认值（首次安装时 debug 模式默认开启）
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{
-        @"kahe_launch_debug_mode": @NO
+        @"kahe_launch_debug_mode": @NO,
+        @"KHAppLaunchCount": @0
     }];
+    
+    // 增加启动计数
+    NSInteger launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"KHAppLaunchCount"];
+    [[NSUserDefaults standardUserDefaults] setInteger:launchCount + 1 forKey:@"KHAppLaunchCount"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
-    // 1. 初始化 UniApp 引擎（仅初始化，不绑定视图）
+    // 1. 初始化原生功能模块
+    [self setupNativeFeatures];
+
+    // 2. 初始化 UniApp 引擎（仅初始化，不绑定视图）
     BOOL ret = [PDRCore initEngineWihtOptions:launchOptions
                                   withRunMode:PDRCoreRunModeNormal withDelegate:self];
 
     UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window = window;
 
-    // 2. 读取启动模式开关
-    BOOL debugMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"kahe_launch_debug_mode"];
-
-    if (debugMode) {
-        // ---- 调试模式 ----
-        // 预加载引擎（不绑定视图），然后显示调试面板
-        self.didStartUniApp = YES;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[PDRCore Instance] start];
-            self.isEnginePreloaded = YES;
-            NSLog(@"[DebugPanel] UniApp 引擎预加载完成");
-        });
-        [self showDebugRoot];
+//    // 2. 读取启动模式开关
+//    BOOL debugMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"kahe_launch_debug_mode"];
+//
+//    if (debugMode) {
+//        // ---- 调试模式 ----
+//        // 预加载引擎（不绑定视图），然后显示调试面板
+//        self.didStartUniApp = YES;
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [[PDRCore Instance] start];
+//            self.isEnginePreloaded = YES;
+//            NSLog(@"[DebugPanel] UniApp 引擎预加载完成");
+//        });
+////        [self showDebugRoot];
+//    } else {
+//        // ---- 直接进入 UniApp 模式 ----
+//     
+//    }
+    
+    // 走原始流程：网络检测 → UniApp / 离线页
+    if ([self isNetworkReachable]) {
+        [self showUniAppRoot];
     } else {
-        // ---- 直接进入 UniApp 模式 ----
-        // 走原始流程：网络检测 → UniApp / 离线页
-        if ([self isNetworkReachable]) {
-            [self showUniAppRoot];
-        } else {
-            [self showOfflineRoot];
-        }
+        [self showOfflineRoot];
     }
 
     [self.window makeKeyAndVisible];
@@ -108,6 +122,57 @@
     dispatch_async(dispatch_get_main_queue(), ^(void) {
         [[PDRCore Instance] start];
     });
+}
+
+#pragma mark - Native Features
+
+/// 初始化原生功能模块
+- (void)setupNativeFeatures {
+    // 初始化网络监控
+    [[KHNetworkMonitor shared] startMonitoring];
+    
+    // 初始化数据存储
+    [KHDataStore shared];
+    
+    // 初始化功能管理器
+    [KHFeatureManager shared];
+    
+    // 预加载设备信息
+    NSDictionary *deviceInfo = [[KHFeatureManager shared] getDeviceInfo];
+    NSLog(@"[AppDelegate] 设备信息: %@", deviceInfo);
+    
+    // 使用 Objective-C 设备辅助类获取更详细信息
+    KHDeviceHelper *deviceHelper = [KHDeviceHelper sharedHelper];
+    NSDictionary *detailInfo = [deviceHelper detailedDeviceInfo];
+    NSLog(@"[AppDelegate] 详细设备信息: %@", detailInfo);
+    
+    // 监听网络状态变化通知
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleNetworkStatusChanged:)
+                                                 name:@"KHNetworkStatusChanged"
+                                               object:nil];
+}
+
+/// 处理网络状态变化通知
+- (void)handleNetworkStatusChanged:(NSNotification *)notification {
+    BOOL connected = [notification.userInfo[@"connected"] boolValue];
+    NSInteger typeValue = [notification.userInfo[@"type"] integerValue];
+    
+    NSString *typeString = @"未知";
+    switch (typeValue) {
+        case 1:
+            typeString = @"WiFi";
+            break;
+        case 2:
+            typeString = @"蜂窝网络";
+            break;
+        case 3:
+            typeString = @"以太网";
+            break;
+        default:
+            break;
+    }
+    NSLog(@"[AppDelegate] 网络状态变化: %@, 类型: %@", connected ? @"已连接" : @"已断开", typeString);
 }
 
 #pragma mark - Network Gate
@@ -151,10 +216,10 @@
 #pragma mark - Root ViewController 切换
 
 /// 显示 SwiftUI 调试页面（APP 启动时的默认入口）
-- (void)showDebugRoot {
-    UIViewController *debugVC = [KHDebugViewFactory makeDebugViewController];
-    self.window.rootViewController = debugVC;
-}
+//- (void)showDebugRoot {
+//    UIViewController *debugVC = [KHDebugViewFactory makeDebugViewController];
+//    self.window.rootViewController = debugVC;
+//}
 
 /// 从调试页面切换到 UniApp（供 Swift 调用）
 /// 包含网络检测：有网进入 UniApp，无网显示离线页

@@ -500,9 +500,10 @@ class User extends VuexModule {
         const orderString = orderResp.data.jsConfig?.orderString ?? "";
 
         // #ifdef APP
-        console.log("[APP Pay] alipay orderString:", orderString);
+        console.log(`[APP Pay] alipay orderString:${orderString}`);
         // #endif
 
+        console.log("String Length:", orderString.length);
         uni.requestPayment({
           provider: "alipay",
           orderInfo: orderString,

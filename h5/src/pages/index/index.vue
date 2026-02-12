@@ -40,12 +40,39 @@ const cardGames = [
   },
 ]
 
-// 下载 APP（根据实际下载链接替换）
+// 下载 APP
 function downloadApp() {
-  uni.showToast({
-    title: '请前往应用商店搜索「卡牌核心」',
-    icon: 'none',
-  })
+  const systemInfo = uni.getSystemInfoSync()
+
+  if (systemInfo.platform === 'ios') {
+    // iOS 跳转到 TestFlight
+    // #ifdef APP-PLUS
+    plus.runtime.openURL('https://testflight.apple.com/join/v9AdPbW1')
+    // #endif
+    // #ifdef H5
+    window.open('https://testflight.apple.com/join/v9AdPbW1', '_blank')
+    // #endif
+    // #ifdef MP
+    uni.showToast({
+      title: '请前往 App Store 下载 TestFlight',
+      icon: 'none',
+    })
+    // #endif
+  }
+  else if (systemInfo.platform === 'android') {
+    // 安卓提示敬请期待
+    uni.showToast({
+      title: '安卓版本敬请期待',
+      icon: 'none',
+    })
+  }
+  else {
+    // 其他平台（如 H5、小程序等）
+    uni.showToast({
+      title: '请前往应用商店搜索「卡牌核心」',
+      icon: 'none',
+    })
+  }
 }
 
 // 跳转到用户协议页面

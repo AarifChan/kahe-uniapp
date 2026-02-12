@@ -159,100 +159,83 @@
       </scroll-view>
 
       <!-- 支付方式选择 -->
-      <view class="pay-type" v-if="showPayType">
-        <view class="pay-type-title">选择支付方式</view>
-        <view class="pay-type-list">
-          <!-- 余额支付 -->
-          <view
-            class="pay-type-item"
 
-          >
-            <view class="pay-type-item-left">
-              <view class="pay-type-icon balance-icon">
-                <text class="pay-type-icon-text">余</text>
-              </view>
-              <view class="pay-type-info">
-                <view class="pay-type-name">余额支付</view>
-                <view class="pay-type-desc">可用余额 ¥{{ userInfo.balance || 0 }}</view>
-              </view>
-            </view>
-            <view class="pay-type-check">
-              <view class="pay-type-check-circle" v-if="payType === 'balance'">
-                <view class="pay-type-check-dot"></view>
-              </view>
-              <view class="pay-type-check-empty" v-else></view>
-            </view>
-          </view>
 
-          <!-- #ifdef APP -->
-          <!-- 微信支付 -->
-          <view
-            class="pay-type-item"
-            :class="{ active: payType === 1 }"
-            @tap.stop="selectPayType(1)"
-          >
-            <view class="pay-type-item-left">
-              <view class="pay-type-icon wechat-icon">
-                <image
-                  class="pay-type-icon-img"
-                  src="/static/wechat-pay.svg"
-                  mode="aspectFit"
-                />
-              </view>
-              <view class="pay-type-info">
-                <view class="pay-type-name">微信支付</view>
-                <view class="pay-type-desc">微信APP支付</view>
-              </view>
-            </view>
-            <view class="pay-type-check">
-              <view class="pay-type-check-circle" v-if="payType === 1">
-                <view class="pay-type-check-dot"></view>
-              </view>
-              <view class="pay-type-check-empty" v-else></view>
-            </view>
-          </view>
+      <view class="pay-bottom">
+        <view class="pay-type" v-if="showPayType">
+          <view class="pay-type-title">选择支付方式</view>
+          <view class="pay-type-list">
 
-          <!-- 支付宝支付 -->
-          <view
-            class="pay-type-item"
-            :class="{ active: payType === 0 }"
-            @tap.stop="selectPayType(0)"
-          >
-            <view class="pay-type-item-left">
-              <view class="pay-type-icon alipay-icon">
-                <image
-                  class="pay-type-icon-img"
-                  src="/static/alipay.svg"
-                  mode="aspectFit"
-                />
+            <!-- #ifdef APP -->
+            <!-- 微信支付 -->
+            <view
+              class="pay-type-item"
+              :class="{ active: payType === 1 }"
+              @tap.stop="selectPayType(1)"
+            >
+              <view class="pay-type-item-left">
+                <view class="pay-type-icon wechat-icon">
+                  <image
+                    class="pay-type-icon-img"
+                    src="/static/wechat-pay.svg"
+                    mode="aspectFit"
+                  />
+                </view>
+                <view class="pay-type-info">
+                  <view class="pay-type-name">微信支付</view>
+                  <view class="pay-type-desc">微信APP支付</view>
+                </view>
               </view>
-              <view class="pay-type-info">
-                <view class="pay-type-name">支付宝支付</view>
-                <view class="pay-type-desc">支付宝APP支付</view>
+              <view class="pay-type-check">
+                <view class="pay-type-check-circle" v-if="payType === 1">
+                  <view class="pay-type-check-dot"></view>
+                </view>
+                <view class="pay-type-check-empty" v-else></view>
               </view>
             </view>
-            <view class="pay-type-check">
-              <view class="pay-type-check-circle" v-if="payType === 0">
-                <view class="pay-type-check-dot"></view>
+
+            <!-- 支付宝支付 -->
+            <view
+              class="pay-type-item"
+              :class="{ active: payType === 0 }"
+              @tap.stop="selectPayType(0)"
+            >
+              <view class="pay-type-item-left">
+                <view class="pay-type-icon alipay-icon">
+                  <image
+                    class="pay-type-icon-img"
+                    src="/static/alipay.svg"
+                    mode="aspectFit"
+                  />
+                </view>
+                <view class="pay-type-info">
+                  <view class="pay-type-name">支付宝支付</view>
+                  <view class="pay-type-desc">支付宝APP支付</view>
+                </view>
               </view>
-              <view class="pay-type-check-empty" v-else></view>
+              <view class="pay-type-check">
+                <view class="pay-type-check-circle" v-if="payType === 0">
+                  <view class="pay-type-check-dot"></view>
+                </view>
+                <view class="pay-type-check-empty" v-else></view>
+              </view>
             </view>
+            <!-- #endif -->
           </view>
-          <!-- #endif -->
         </view>
-      </view>
-
-      <view class="pay-bottom" :style="{ bottom: `${payTypeHeight}rpx` }">
-        <view class="pay-bottom-info">
-          <view class="pay-bottom-info-price">¥{{ goods.payPrice }}</view>
-          <view class="pay-bottom-info-title">订单合计</view>
-        </view>
-        <view class="pay-bottom-btn" @tap.stop="didTapConfirm">
-          <view class="pay-bottom-btn-title">立即付款</view>
-          <view class="pay-bottom-btn-subTitle"
+        <div class="pay-bottom-pay">
+          <view class="pay-bottom-info">
+            <view class="pay-bottom-info-price">¥{{ goods.payPrice }}</view>
+            <view class="pay-bottom-info-title">订单合计</view>
+          </view>
+          <view class="pay-bottom-btn" @tap.stop="didTapConfirm">
+            <view class="pay-bottom-btn-title">立即付款</view>
+            <view class="pay-bottom-btn-subTitle"
             >已抵扣{{ goods.usedPrice }}</view
-          >
-        </view>
+            >
+          </view>
+        </div>
+
       </view>
       <!--      <view>-->
       <!--        <view class="pay-top">-->
@@ -369,7 +352,7 @@ const checkEnv = () => {
   // #ifdef APP
   isApp.value = true;
   showPayType.value = true;
-  payTypeHeight.value = 340;
+  payTypeHeight.value = 300;
   // #endif
   // #ifndef APP
   isApp.value = false;
@@ -603,13 +586,20 @@ onMounted(() => {
   left: 0;
   width: 100%;
   background-color: white;
-  height: calc(141rpx);
+  //height: calc(141rpx);
   display: flex;
   padding: 0 32rpx env(safe-area-inset-bottom);
   box-sizing: border-box;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  &-pay{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32rpx;
+    width: 100%;
+    box-sizing: border-box;
+  }
   &-info {
     display: flex;
     flex-direction: column;
@@ -686,9 +676,7 @@ onMounted(() => {
 
 /* 支付方式选择样式 */
 .pay-type {
-  position: fixed;
-  bottom: 141rpx;
-  left: 0;
+
   width: 100%;
   background-color: #fff;
   padding: 20rpx 32rpx;
