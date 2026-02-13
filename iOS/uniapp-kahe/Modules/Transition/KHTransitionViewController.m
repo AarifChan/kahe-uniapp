@@ -13,9 +13,12 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *subtitleLabel;
 @property (nonatomic, strong) UILabel *statusLabel;
-@property (nonatomic, strong) UIProgressView *progressView;
+@property (nonatomic, strong) UIView *progressTrackView;
+@property (nonatomic, strong) UIView *progressFillView;
+@property (nonatomic, strong) NSLayoutConstraint *progressFillWidthConstraint;
 @property (nonatomic, strong) UIView *progressContainer;
 @property (nonatomic, strong) CAGradientLayer *gradientLayer;
+@property (nonatomic, strong) CAGradientLayer *progressGradientLayer;
 @property (nonatomic, strong) UIView *shimmerView;
 
 @end
@@ -54,11 +57,6 @@
     [self.view.layer insertSublayer:self.gradientLayer atIndex:0];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    self.gradientLayer.frame = self.view.bounds;
-}
-
 - (void)setupUI {
     // Logo 图片
     self.logoImageView = [[UIImageView alloc] init];
@@ -84,14 +82,13 @@
     [self.view addSubview:self.titleLabel];
     
     // 副标题
-    UILabel *subtitleLabel = [[UILabel alloc] init];
-    subtitleLabel.text = @"发现潮玩乐趣";
-    subtitleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
-    subtitleLabel.textColor = [UIColor colorWithRed:0.5 green:0.45 blue:0.4 alpha:1.0];
-    subtitleLabel.textAlignment = NSTextAlignmentCenter;
-    subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:subtitleLabel];
-    self.subtitleLabel = subtitleLabel;
+    self.subtitleLabel = [[UILabel alloc] init];
+    self.subtitleLabel.text = @"发现潮玩乐趣";
+    self.subtitleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
+    self.subtitleLabel.textColor = [UIColor colorWithRed:0.5 green:0.45 blue:0.4 alpha:1.0];
+    self.subtitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.subtitleLabel];
     
     // 状态文字
     self.statusLabel = [[UILabel alloc] init];
@@ -102,28 +99,37 @@
     self.statusLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.statusLabel];
     
-    // 进度条容器
+    // 进度条容器（背景轨道）
     self.progressContainer = [[UIView alloc] init];
-    self.progressContainer.backgroundColor = [UIColor colorWithRed:0.9 green:0.87 blue:0.82 alpha:0.5];
-    self.progressContainer.layer.cornerRadius = 3;
+    self.progressContainer.backgroundColor = [UIColor colorWithRed:0.85 green:0.82 blue:0.77 alpha:0.6];
+    self.progressContainer.layer.cornerRadius = 4;
     self.progressContainer.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.progressContainer];
     
-    // 进度条
-    self.progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-    self.progressView.progressTintColor = [UIColor colorWithRed:1.0 green:0.72 blue:0.35 alpha:1.0];
-    self.progressView.trackTintColor = [UIColor clearColor];
-    self.progressView.progress = 0;
-    self.progressView.layer.cornerRadius = 3;
-    self.progressView.clipsToBounds = YES;
-    self.progressView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.progressContainer addSubview:self.progressView];
+    // 进度条填充部分
+    self.progressFillView = [[UIView alloc] init];
+    self.progressFillView.backgroundColor = [UIColor colorWithRed:1.0 green:0.72 blue:0.35 alpha:1.0];
+    self.progressFillView.layer.cornerRadius = 4;
+    self.progressFillView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.progressContainer addSubview:self.progressFillView];
+    
+    // 添加渐变效果到进度条
+    self.progressGradientLayer = [CAGradientLayer layer];
+    self.progressGradientLayer.colors = @[
+        (__bridge id)[UIColor colorWithRed:1.0 green:0.7 blue:0.3 alpha:1.0].CGColor,
+        (__bridge id)[UIColor colorWithRed:1.0 green:0.6 blue:0.2 alpha:1.0].CGColor
+    ];
+    self.progressGradientLayer.startPoint = CGPointMake(0, 0.5);
+    self.progressGradientLayer.endPoint = CGPointMake(1, 0.5);
+    self.progressGradientLayer.cornerRadius = 4;
+    [self.progressFillView.layer insertSublayer:self.progressGradientLayer atIndex:0];
+    self.progressFillView.layer.masksToBounds = YES;
     
     // shimmer 效果层
     self.shimmerView = [[UIView alloc] init];
-    self.shimmerView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.4];
+    self.shimmerView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];
     self.shimmerView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.progressContainer addSubview:self.shimmerView];
+    [self.progressFillView addSubview:self.shimmerView];
     
     // 设置约束
     [NSLayoutConstraint activateConstraints:@[
@@ -139,27 +145,26 @@
         [self.titleLabel.widthAnchor constraintEqualToAnchor:self.view.widthAnchor],
         
         // 副标题
-        [subtitleLabel.topAnchor constraintEqualToAnchor:self.titleLabel.bottomAnchor constant:8],
-        [subtitleLabel.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        [subtitleLabel.widthAnchor constraintEqualToAnchor:self.view.widthAnchor],
+        [self.subtitleLabel.topAnchor constraintEqualToAnchor:self.titleLabel.bottomAnchor constant:8],
+        [self.subtitleLabel.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.subtitleLabel.widthAnchor constraintEqualToAnchor:self.view.widthAnchor],
         
         // 进度条容器
         [self.progressContainer.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-120],
         [self.progressContainer.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        [self.progressContainer.widthAnchor constraintEqualToConstant:220],
-        [self.progressContainer.heightAnchor constraintEqualToConstant:6],
+        [self.progressContainer.widthAnchor constraintEqualToConstant:240],
+        [self.progressContainer.heightAnchor constraintEqualToConstant:8],
         
-        // 进度条
-        [self.progressView.leadingAnchor constraintEqualToAnchor:self.progressContainer.leadingAnchor],
-        [self.progressView.trailingAnchor constraintEqualToAnchor:self.progressContainer.trailingAnchor],
-        [self.progressView.centerYAnchor constraintEqualToAnchor:self.progressContainer.centerYAnchor],
-        [self.progressView.heightAnchor constraintEqualToConstant:6],
+        // 进度条填充（初始宽度为0）
+        [self.progressFillView.leadingAnchor constraintEqualToAnchor:self.progressContainer.leadingAnchor],
+        [self.progressFillView.topAnchor constraintEqualToAnchor:self.progressContainer.topAnchor],
+        [self.progressFillView.bottomAnchor constraintEqualToAnchor:self.progressContainer.bottomAnchor],
         
         // shimmer
-        [self.shimmerView.leadingAnchor constraintEqualToAnchor:self.progressContainer.leadingAnchor],
-        [self.shimmerView.topAnchor constraintEqualToAnchor:self.progressContainer.topAnchor],
-        [self.shimmerView.bottomAnchor constraintEqualToAnchor:self.progressContainer.bottomAnchor],
-        [self.shimmerView.widthAnchor constraintEqualToConstant:40],
+        [self.shimmerView.leadingAnchor constraintEqualToAnchor:self.progressFillView.trailingAnchor constant:-60],
+        [self.shimmerView.topAnchor constraintEqualToAnchor:self.progressFillView.topAnchor],
+        [self.shimmerView.bottomAnchor constraintEqualToAnchor:self.progressFillView.bottomAnchor],
+        [self.shimmerView.widthAnchor constraintEqualToConstant:30],
         
         // 状态文字
         [self.statusLabel.bottomAnchor constraintEqualToAnchor:self.progressContainer.topAnchor constant:-16],
@@ -167,15 +172,25 @@
         [self.statusLabel.widthAnchor constraintEqualToAnchor:self.view.widthAnchor]
     ]];
     
+    // 保存进度条宽度约束（用于更新进度）
+    self.progressFillWidthConstraint = [self.progressFillView.widthAnchor constraintEqualToConstant:0];
+    self.progressFillWidthConstraint.active = YES;
+    
     // 初始状态
     self.logoImageView.alpha = 0;
     self.logoImageView.transform = CGAffineTransformMakeScale(0.6, 0.6);
     self.titleLabel.alpha = 0;
     self.titleLabel.transform = CGAffineTransformMakeTranslation(0, 20);
-    subtitleLabel.alpha = 0;
+    self.subtitleLabel.alpha = 0;
     self.statusLabel.alpha = 0;
     self.progressContainer.alpha = 0;
     self.progressContainer.transform = CGAffineTransformMakeTranslation(0, 10);
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    // 更新进度条渐变层frame
+    self.progressGradientLayer.frame = self.progressFillView.bounds;
 }
 
 #pragma mark - Animation
@@ -227,9 +242,9 @@
 - (void)startShimmerAnimation {
     // 创建 shimmer 滑动效果
     CABasicAnimation *shimmer = [CABasicAnimation animationWithKeyPath:@"position.x"];
-    shimmer.fromValue = @(-40);
-    shimmer.toValue = @(260);
-    shimmer.duration = 1.5;
+    shimmer.fromValue = @(-30);
+    shimmer.toValue = @(300);
+    shimmer.duration = 1.2;
     shimmer.repeatCount = HUGE_VALF;
     shimmer.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     [self.shimmerView.layer addAnimation:shimmer forKey:@"shimmer"];
@@ -239,7 +254,18 @@
 
 - (void)updateProgress:(CGFloat)progress {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.progressView setProgress:progress animated:YES];
+        CGFloat clampedProgress = MAX(0, MIN(1, progress));
+        CGFloat maxWidth = 240; // 进度条容器宽度
+        CGFloat newWidth = maxWidth * clampedProgress;
+        
+        self.progressFillWidthConstraint.constant = newWidth;
+        
+        [UIView animateWithDuration:0.3
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+            [self.progressContainer layoutIfNeeded];
+        } completion:nil];
     });
 }
 
@@ -261,7 +287,7 @@
 - (void)transitionToUniAppWithCompletion:(void (^)(void))completion {
     dispatch_async(dispatch_get_main_queue(), ^{
         // 完成进度
-        [self.progressView setProgress:1.0 animated:YES];
+        [self updateProgress:1.0];
         self.statusLabel.text = @"准备就绪";
         
         // 停止 shimmer

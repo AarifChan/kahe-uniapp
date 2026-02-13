@@ -2,60 +2,56 @@
   <view class="bind-phone">
     <image
       class="bind-phone-bg"
-      src="https://jms.85gui7.com/kahe-202510/images/mine-bg.png"
+      src="https://jms.85gui7.com/kahe-202510/new-login/bg.png"
     />
     <view class="bind-phone-content">
-      <view class="bind-phone-content-header">
-        <text class="bind-phone-content-header-title">绑定手机号</text>
-        <text class="bind-phone-content-header-desc"
-          >为保障账号安全，请绑定您的手机号</text
-        >
+      <view class="bind-phone-content-top">
+        <text class="bind-phone-content-top-title theme-font">绑定手机号</text>
+        <image
+          class="bind-phone-content-top-subTitle"
+          src="https://jms.85gui7.com/kahe-202510/new-login/item.png"
+        />
       </view>
 
       <view class="bind-phone-content-form">
-        <TnForm ref="formRef" :model="formData" :rules="formRules">
-          <TnFormItem label="" prop="phone">
-            <view class="bind-phone-content-form-item">
-              <TnInput
-                v-model="formData.phone"
-                type="number"
-                :maxlength="11"
-                placeholder="请输入手机号"
-                :border="false"
-                height="80"
-              />
-            </view>
-          </TnFormItem>
-          <TnFormItem label="" prop="code">
-            <view class="bind-phone-content-form-item">
-              <TnInput
-                v-model="formData.code"
-                type="text"
-                clearable
-                :maxlength="6"
-                placeholder="请输入验证码"
-                :border="false"
-                height="80"
-              >
-                <template #suffix>
-                  <view
-                    v-if="maxTime === 0"
-                    class="bind-phone-content-form-item-btn"
-                    @tap.stop="getSmsCodeAction"
-                    >获取验证码</view
-                  >
-                  <TnCountDown
-                    v-else
-                    :time="120"
-                    separator-mode="cn"
-                    text-color="#B6B6B6"
-                    :show-hour="false"
-                  />
-                </template>
-              </TnInput>
-            </view>
-          </TnFormItem>
-        </TnForm>
+        <!-- 手机号输入 -->
+        <view class="bind-phone-content-form-field">
+          <input
+            v-model="formData.phone"
+            class="bind-phone-content-form-input"
+            type="number"
+            maxlength="11"
+            placeholder="请输入手机号"
+          />
+        </view>
+
+        <!-- 验证码输入 -->
+        <view class="bind-phone-content-form-field sms">
+          <input
+            v-model="formData.code"
+            class="bind-phone-content-form-input"
+            type="number"
+            maxlength="6"
+            placeholder="请输入验证码"
+          />
+          <view
+            class="bind-phone-content-form-smsBtn"
+            :class="{ disabled: maxTime > 0 }"
+            @tap.stop="getSmsCodeAction"
+          >
+            <TnCountDown
+              v-if="maxTime > 0"
+              :time="maxTime"
+              separator-mode="cn"
+              text-color="#1a5fb6"
+              :show-hour="false"
+              :show-minute="false"
+              :show-second="true"
+              @end="maxTime = 0"
+            />
+            <text v-else>获取验证码</text>
+          </view>
+        </view>
       </view>
 
       <!-- 绑定按钮 -->
@@ -76,31 +72,12 @@
 </template>
 
 <script setup lang="ts">
-import TnFormItem from "@tuniao/tnui-vue3-uniapp/components/form/src/form-item.vue";
-import TnInput from "@tuniao/tnui-vue3-uniapp/components/input/src/input.vue";
-import TnForm from "@tuniao/tnui-vue3-uniapp/components/form/src/form.vue";
 import TnCountDown from "@tuniao/tnui-vue3-uniapp/components/count-down/src/count-down.vue";
-import { computed, ref } from "vue";
-import type { FormRules, TnFormInstance } from "@tuniao/tnui-vue3-uniapp";
+import { ref } from "vue";
 import { getSmsCodeRequest, bindMobile } from "@/api";
 import { ShowToast } from "@/utils";
 import { UserModule } from "@/store/modules/user";
 import { eventBus } from "@/utils/event";
-
-const formRef = ref<TnFormInstance>();
-
-const formRules = computed(() => {
-  return {
-    phone: [
-      { required: true, message: "请输入手机号", trigger: "blur" },
-      { min: 11, max: 11, message: "请输入正确的手机号", trigger: "blur" },
-    ],
-    code: [
-      { required: true, message: "请输入验证码", trigger: "blur" },
-      { min: 4, max: 6, message: "请输入正确的验证码", trigger: "blur" },
-    ],
-  } as FormRules;
-});
 
 const formData = ref({
   phone: "",
@@ -111,15 +88,19 @@ const maxTime = ref(0);
 
 /** 发送验证码 */
 const getSmsCodeAction = async () => {
+  if (maxTime.value > 0) return;
+
   const phone = formData.value.phone;
   if (!phone || phone.length !== 11) {
     ShowToast("请输入正确的手机号");
     return;
   }
+
   const resp = await getSmsCodeRequest({
     phone,
-    type: "bindMobile",
+    type: "bind",
   });
+
   if (resp.code === 200) {
     ShowToast("验证码已发送");
     maxTime.value = 120;
@@ -132,25 +113,35 @@ const getSmsCodeAction = async () => {
 };
 
 /** 绑定手机号 */
-const handleBind = () => {
-  formRef.value?.validate(async (valid) => {
-    if (valid) {
-      const params = {
-        phone: formData.value.phone,
-        captcha: formData.value.code,
-      };
-      const resp = await bindMobile(params);
-      if (resp.code === 200) {
-        await ShowToast("绑定成功");
-        // 刷新用户信息，确保 phone 字段已更新
-        await UserModule.getUserInfo();
-        eventBus.emit("didLogin", true);
-        navigateAfterBind();
-      } else {
-        ShowToast(resp.msg ?? "绑定失败");
-      }
-    }
-  });
+const handleBind = async () => {
+  const phone = formData.value.phone.trim();
+  const code = formData.value.code.trim();
+
+  if (!phone || phone.length !== 11) {
+    ShowToast("请输入正确的手机号");
+    return;
+  }
+
+  if (!code) {
+    ShowToast("请输入验证码");
+    return;
+  }
+
+  const params = {
+    phone: phone,
+    captcha: code,
+  };
+
+  const resp = await bindMobile(params);
+  if (resp.code === 200) {
+    await ShowToast("绑定成功");
+    // 刷新用户信息，确保 phone 字段已更新
+    await UserModule.getUserInfo();
+    eventBus.emit("didLogin", true);
+    navigateAfterBind();
+  } else {
+    ShowToast(resp.msg ?? "绑定失败");
+  }
 };
 
 /** 跳过绑定 */
@@ -172,10 +163,13 @@ const navigateAfterBind = () => {
 .bind-phone {
   position: relative;
   width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 
   &-bg {
     width: 100%;
-    height: 100vh;
+    height: 100%;
   }
 
   &-content {
@@ -186,52 +180,88 @@ const navigateAfterBind = () => {
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 
-    &-header {
-      margin-top: 120rpx;
-      margin-bottom: 40rpx;
+    &-top {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
+      justify-content: center;
+      width: 100vw;
+      margin-bottom: 80rpx;
 
       &-title {
-        font-size: 48rpx;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 16rpx;
+        text-align: center;
+        color: #83e3ff;
+        font-weight: 400;
+        font-size: 72rpx;
+        @include text-stroke-color(#2b2b2b);
       }
 
-      &-desc {
-        font-size: 26rpx;
-        color: #999;
+      &-subTitle {
+        width: 97rpx;
+        height: 66rpx;
+        margin-bottom: 60rpx;
       }
     }
 
     &-form {
-      width: 100%;
-      padding: 30px;
+      width: 560rpx;
+      margin-bottom: 10rpx;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-      &-item {
+      &-field {
         width: 100%;
-        background: #e7e7e7;
-        border-radius: 4rpx;
+        height: 78rpx;
+        padding: 0 22rpx;
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 16rpx;
+        display: flex;
+        align-items: center;
+        margin-bottom: 18rpx;
+      }
 
-        &-btn {
-          text-align: right;
-          width: 80px;
-          font-size: 13px;
-          font-weight: 400;
-          color: #3a3939;
-        }
+      &-field.sms {
+        justify-content: space-between;
+      }
+
+      &-input {
+        flex: 1;
+        height: 78rpx;
+        line-height: 78rpx;
+        font-size: 28rpx;
+        color: #000;
+      }
+
+      &-smsBtn {
+        margin-left: 16rpx;
+        padding: 10rpx 16rpx;
+        font-size: 24rpx;
+        color: #1a5fb6;
+        border: 1rpx solid #1a5fb6;
+        border-radius: 12rpx;
+        background: rgba(255, 255, 255, 0.9);
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 140rpx;
+      }
+
+      &-smsBtn.disabled {
+        opacity: 0.6;
       }
     }
 
     &-login {
-      margin-top: 9rpx;
+      margin-top: 40rpx;
       position: relative;
-      width: 634rpx;
-      height: 70rpx;
+      width: 494rpx;
+      height: 67rpx;
 
       &-img {
         width: 100%;
@@ -239,18 +269,14 @@ const navigateAfterBind = () => {
       }
 
       &-text {
+        position: absolute;
         left: 0;
         top: 0;
         width: 100%;
-        height: 100%;
-        position: absolute;
-        line-height: 70rpx;
+        line-height: 67rpx;
         text-align: center;
-        font-weight: 400;
-        font-size: 40rpx;
+        font-size: 27rpx;
         color: #ffffff;
-        text-shadow: -1px -1px 0 #2356a9, 1px -1px 0 #2356a9, -1px 1px 0 #2356a9,
-          1px 1px 0 #2356a9;
       }
     }
 
@@ -260,7 +286,7 @@ const navigateAfterBind = () => {
 
       &-text {
         font-size: 28rpx;
-        color: #999;
+        color: #1a5fb6;
         text-decoration: underline;
       }
     }
