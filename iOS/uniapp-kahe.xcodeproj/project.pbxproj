@@ -79,6 +79,9 @@
 		58C0B0E52F3E2E650012A37B /* KHDeviceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 58C0B0DE2F3E2E650012A37B /* KHDeviceHelper.m */; };
 		58C0B0E62F3E2E650012A37B /* KHDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0B0DC2F3E2E650012A37B /* KHDataStore.swift */; };
 		58C0B0E72F3E2E650012A37B /* KHNetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0B0E02F3E2E650012A37B /* KHNetworkMonitor.swift */; };
+		58C0B0F22F3EB34C0012A37B /* KHLogPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 58C0B0EF2F3EB34C0012A37B /* KHLogPlugin.m */; };
+		58C0B0F32F3EB34C0012A37B /* KHLogPluginBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 58C0B0F12F3EB34C0012A37B /* KHLogPluginBridge.m */; };
+		58C0B0F72F3EC5E80012A37B /* KHTransitionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58C0B0F52F3EC5E80012A37B /* KHTransitionViewController.m */; };
 		58DDF3C52F1F41D00011AC49 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EED641D198A265F000A4449 /* CoreTelephony.framework */; };
 		58DDF3C62F1F41D70011AC49 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EED641B198A2654000A4449 /* SystemConfiguration.framework */; };
 		58DDF3C72F1F41E00011AC49 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 24BD5AEF1C99494A00B05AA2 /* libz.tbd */; };
@@ -410,6 +413,12 @@
 		58C0B0DF2F3E2E650012A37B /* KHFeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KHFeatureManager.swift; sourceTree = "<group>"; };
 		58C0B0E02F3E2E650012A37B /* KHNetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KHNetworkMonitor.swift; sourceTree = "<group>"; };
 		58C0B0E12F3E2E650012A37B /* KHUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KHUtilities.swift; sourceTree = "<group>"; };
+		58C0B0EE2F3EB34C0012A37B /* KHLogPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHLogPlugin.h; sourceTree = "<group>"; };
+		58C0B0EF2F3EB34C0012A37B /* KHLogPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHLogPlugin.m; sourceTree = "<group>"; };
+		58C0B0F02F3EB34C0012A37B /* KHLogPluginBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHLogPluginBridge.h; sourceTree = "<group>"; };
+		58C0B0F12F3EB34C0012A37B /* KHLogPluginBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHLogPluginBridge.m; sourceTree = "<group>"; };
+		58C0B0F42F3EC5E80012A37B /* KHTransitionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHTransitionViewController.h; sourceTree = "<group>"; };
+		58C0B0F52F3EC5E80012A37B /* KHTransitionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHTransitionViewController.m; sourceTree = "<group>"; };
 		58DDF3C22F1F416A0011AC49 /* liblibOauth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibOauth.a; path = ../../4.87/SDK/SDK/Libs/liblibOauth.a; sourceTree = "<group>"; };
 		58DDF3C32F1F41750011AC49 /* libWXOauth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWXOauth.a; path = ../../4.87/SDK/SDK/Libs/libWXOauth.a; sourceTree = "<group>"; };
 		58DDF3C42F1F41930011AC49 /* libWeChatSDK_pay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWeChatSDK_pay.a; path = ../../4.87/SDK/SDK/Libs/libWeChatSDK_pay.a; sourceTree = "<group>"; };
@@ -1495,6 +1504,10 @@
 			isa = PBXGroup;
 			children = (
 				58C0B0DC2F3E2E650012A37B /* KHDataStore.swift */,
+				58C0B0EE2F3EB34C0012A37B /* KHLogPlugin.h */,
+				58C0B0EF2F3EB34C0012A37B /* KHLogPlugin.m */,
+				58C0B0F02F3EB34C0012A37B /* KHLogPluginBridge.h */,
+				58C0B0F12F3EB34C0012A37B /* KHLogPluginBridge.m */,
 				58C0B0DD2F3E2E650012A37B /* KHDeviceHelper.h */,
 				58C0B0DE2F3E2E650012A37B /* KHDeviceHelper.m */,
 				58C0B0DF2F3E2E650012A37B /* KHFeatureManager.swift */,
@@ -1504,11 +1517,21 @@
 			path = NativeFeatures;
 			sourceTree = "<group>";
 		};
+		58C0B0F62F3EC5E80012A37B /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				58C0B0F42F3EC5E80012A37B /* KHTransitionViewController.h */,
+				58C0B0F52F3EC5E80012A37B /* KHTransitionViewController.m */,
+			);
+			path = Transition;
+			sourceTree = "<group>";
+		};
 		58DE4AF52F373FD20021AFCA /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				58DE4AF62F373FDB0021AFCA /* Debug */,
 				58C0B0E22F3E2E650012A37B /* NativeFeatures */,
+				58C0B0F62F3EC5E80012A37B /* Transition */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -4129,6 +4152,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58C0B0F72F3EC5E80012A37B /* KHTransitionViewController.m in Sources */,
 				8EED62B5198A1D14000A4449 /* ViewController.m in Sources */,
 				58DE4AF42F373DE60021AFCA /* KHDebugView.swift in Sources */,
 				8EED62AC198A1D13000A4449 /* AppDelegate.m in Sources */,
@@ -4140,6 +4164,8 @@
 				58C0B0E72F3E2E650012A37B /* KHNetworkMonitor.swift in Sources */,
 				2FDE6A3F296D7568004C7701 /* DCloud.swift in Sources */,
 				8EED62A8198A1D13000A4449 /* main.m in Sources */,
+				58C0B0F22F3EB34C0012A37B /* KHLogPlugin.m in Sources */,
+				58C0B0F32F3EB34C0012A37B /* KHLogPluginBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

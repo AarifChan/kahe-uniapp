@@ -39,15 +39,12 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    // 安全兜底：如果 splash screen 在页面出现后仍未关闭，则强制关闭
-    // Why: 预加载模式下 autoclose 时序可能错乱，此处延迟 2 秒做最终保障
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        PDRCore *engine = [PDRCore Instance];
-        if (engine && ![engine isSplashPageClosed]) {
-            [engine closeLoadingPage];
-            NSLog(@"[DebugPanel] 强制关闭 splash screen（安全兜底）");
-        }
-    });
+    // 如果是预加载模式，立即关闭 loading page（不需要显示默认 splash）
+    PDRCore *engine = [PDRCore Instance];
+    if (engine && ![engine isSplashPageClosed]) {
+        [engine closeLoadingPage];
+        NSLog(@"[ViewController] 关闭 loading page（预加载模式）");
+    }
 }
 
 - (UIRectEdge)preferredScreenEdgesDeferringSystemGestures {

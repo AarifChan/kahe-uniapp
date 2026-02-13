@@ -14,6 +14,7 @@
       <image
         class="logo"
         src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/logo.png"
+        @longpress="handleLogoLongPress"
       />
       <Search
         @did-tap-search="handleSearch"
@@ -78,7 +79,11 @@ import { AppModule } from "@/store/modules/app";
 import { useGroupBuy } from "@/composables/groupBuy";
 import { onShareAppMessage, onShareTimeline } from "@dcloudio/uni-app";
 import { UserModule } from "@/store/modules/user";
+import { useLog } from "@/composables/useLog";
 const { groupBuyList, getGroupBuyListByHot } = useGroupBuy();
+
+// 使用日志插件
+const { logger, getStats } = useLog({ tag: 'HomePage' });
 
 const scrollThreshold = computed(() => {
   return AppModule.statusBarHeight + AppModule.navBarHeight;
@@ -113,10 +118,17 @@ const {
 } = useGoods();
 const currentVew = ref("");
 onMounted(async () => {
+  logger.info('首页加载开始');
+  const startTime = Date.now();
+  
   current.value = AppModule.productTabIndex;
   getGroupBuyListByHot();
   await getGoodsList(goodsTabList.value[current.value].value);
   await getHomeList();
+  
+  const loadTime = Date.now() - startTime;
+  logger.info(`首页加载完成，耗时: ${loadTime}ms`);
+  
   if (AppModule.productTabIndex !== 0) {
     setTimeout(() => {
       currentVew.value = "currentTab";
@@ -129,6 +141,7 @@ onMounted(async () => {
 // })
 
 const handleSearch = (content: string) => {
+  logger.info(`搜索关键词: ${content}`);
   goodsParams.value.key = content;
   goodsParams.value.page = 1;
 
@@ -138,6 +151,29 @@ const navOpacity = ref(0);
 const handleScroll = (e: any) => {
   const scrollTop = e.detail.scrollTop;
   navOpacity.value = Math.min(scrollTop / scrollThreshold.value, 1);
+};
+
+// 长按 Logo 导出日志（调试用）
+const handleLogoLongPress = async () => {
+  try {
+    const stats = await getStats();
+    if (stats) {
+      uni.showModal({
+        title: '日志信息',
+        content: `文件数: ${stats.totalFiles}\n总大小: ${stats.totalSizeReadable}`,
+        confirmText: '导出',
+        success: async (res) => {
+          if (res.confirm) {
+            const { exportLogs } = useLog();
+            const path = await exportLogs();
+            uni.showToast({ title: '导出成功', icon: 'success' });
+          }
+        }
+      });
+    }
+  } catch (error) {
+    logger.error('获取日志统计失败', error);
+  }
 };
 onShareAppMessage(() => {
   return {

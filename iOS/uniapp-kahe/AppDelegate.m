@@ -14,34 +14,39 @@
 #import "PDRCoreApp.h"
 #import "PDRCoreAppManager.h"
 
-// Swift 自动生成的头文件，用于访问 Swift 类
-// 注意：头文件名称 = "$(PRODUCT_MODULE_NAME)-Swift.h"，'-' 会替换为 '_'
+// Swift 自动生成的头文件
 #import "uniapp_kahe-Swift.h"
 
 // Objective-C 原生模块
 #import "KHDeviceHelper.h"
+#import "KHLogPlugin.h"
+
+// 过渡页面
+#import "KHTransitionViewController.h"
 
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <netinet/in.h>
 
+#import "KHLogPlugin.h"
+#import "KHLogPluginBridge.h"
 
 @interface AppDelegate()<PDRCoreDelegate>
 @property (strong, nonatomic) ViewController *h5ViewContoller;
+@property (strong, nonatomic) KHTransitionViewController *transitionVC;
 @property (assign, nonatomic) BOOL didStartUniApp;
+@property (assign, nonatomic) BOOL isUniAppReady;
 @end
 
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize rootViewController;
-#pragma mark -
-#pragma mark app lifecycle
-/*
- * @Summary:程序启动时收到push消息
- */
+
+#pragma mark - App Lifecycle
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // 0. 注册 UserDefaults 默认值（首次安装时 debug 模式默认开启）
+    // 0. 注册 UserDefaults 默认值
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{
         @"kahe_launch_debug_mode": @NO,
         @"KHAppLaunchCount": @0
@@ -62,30 +67,8 @@
     UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window = window;
 
-//    // 2. 读取启动模式开关
-//    BOOL debugMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"kahe_launch_debug_mode"];
-//
-//    if (debugMode) {
-//        // ---- 调试模式 ----
-//        // 预加载引擎（不绑定视图），然后显示调试面板
-//        self.didStartUniApp = YES;
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [[PDRCore Instance] start];
-//            self.isEnginePreloaded = YES;
-//            NSLog(@"[DebugPanel] UniApp 引擎预加载完成");
-//        });
-////        [self showDebugRoot];
-//    } else {
-//        // ---- 直接进入 UniApp 模式 ----
-//     
-//    }
-    
-    // 走原始流程：网络检测 → UniApp / 离线页
-    if ([self isNetworkReachable]) {
-        [self showUniAppRoot];
-    } else {
-        [self showOfflineRoot];
-    }
+    // 3. 显示原生过渡页面，同时后台预加载 UniApp
+    [self showTransitionRoot];
 
     [self.window makeKeyAndVisible];
     return ret;
@@ -104,6 +87,7 @@
     }
     return UIStatusBarStyleDefault;
 }
+
 -(void)setStatusBarStyle:(UIStatusBarStyle)statusBarStyle {
     if (self.h5ViewContoller) {
         [self.h5ViewContoller setStatusBarStyle:statusBarStyle];
@@ -117,16 +101,8 @@
     }
 }
 
-#pragma mark -
-- (void)startMainApp {
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-        [[PDRCore Instance] start];
-    });
-}
-
 #pragma mark - Native Features
 
-/// 初始化原生功能模块
 - (void)setupNativeFeatures {
     // 初始化网络监控
     [[KHNetworkMonitor shared] startMonitoring];
@@ -146,6 +122,10 @@
     NSDictionary *detailInfo = [deviceHelper detailedDeviceInfo];
     NSLog(@"[AppDelegate] 详细设备信息: %@", detailInfo);
     
+    // 初始化日志插件
+    [KHLogPlugin sharedPlugin];
+    NSLog(@"[AppDelegate] 日志插件已初始化");
+    
     // 监听网络状态变化通知
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleNetworkStatusChanged:)
@@ -153,7 +133,6 @@
                                                object:nil];
 }
 
-/// 处理网络状态变化通知
 - (void)handleNetworkStatusChanged:(NSNotification *)notification {
     BOOL connected = [notification.userInfo[@"connected"] boolValue];
     NSInteger typeValue = [notification.userInfo[@"type"] integerValue];
@@ -175,9 +154,8 @@
     NSLog(@"[AppDelegate] 网络状态变化: %@, 类型: %@", connected ? @"已连接" : @"已断开", typeString);
 }
 
-#pragma mark - Network Gate
+#pragma mark - Network Check
 
-/// 轻量网络可用性判断（依赖 SystemConfiguration.framework）
 - (BOOL)isNetworkReachable {
     struct sockaddr_in zeroAddress;
     bzero(&zeroAddress, sizeof(zeroAddress));
@@ -213,46 +191,192 @@
     return reachable && !connectionRequired;
 }
 
-#pragma mark - Root ViewController 切换
+#pragma mark - Transition Flow
 
-/// 显示 SwiftUI 调试页面（APP 启动时的默认入口）
-//- (void)showDebugRoot {
-//    UIViewController *debugVC = [KHDebugViewFactory makeDebugViewController];
-//    self.window.rootViewController = debugVC;
-//}
-
-/// 从调试页面切换到 UniApp（供 Swift 调用）
-/// 包含网络检测：有网进入 UniApp，无网显示离线页
-- (void)switchToUniApp {
-    if ([self isNetworkReachable]) {
-        [self showUniAppRoot];
-    } else {
-        [self showOfflineRoot];
-    }
-
-    // 页面切换过渡动画
-    CATransition *transition = [CATransition animation];
-    transition.type = kCATransitionFade;
-    transition.duration = 0.3;
-    [self.window.layer addAnimation:transition forKey:kCATransition];
+/// 显示原生过渡页面并开始预加载
+- (void)showTransitionRoot {
+    self.transitionVC = [[KHTransitionViewController alloc] init];
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:self.transitionVC];
+    nav.navigationBarHidden = YES;
+    self.rootViewController = nav;
+    self.window.rootViewController = nav;
+    
+    // 开始预加载 UniApp
+    [self preloadUniApp];
 }
 
-- (void)showOfflineRoot {
-    __weak typeof(self) weakSelf = self;
+/// 后台预加载 UniApp
+- (void)preloadUniApp {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        // 模拟加载阶段
+        [self simulateLoadingStages];
+        
+        // 实际启动 UniApp 引擎（在后台进行）
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[PDRCore Instance] start];
+            self.isEnginePreloaded = YES;
+            NSLog(@"[Transition] UniApp 引擎预加载完成");
+        });
+        
+        // 等待引擎初始化完成
+        [self waitForUniAppReady];
+    });
+}
 
+/// 模拟加载阶段（用于展示进度）
+- (void)simulateLoadingStages {
+    NSArray *stages = @[
+        @{ @"progress": @0.1, @"text": @"正在初始化...", @"delay": @0.3 },
+        @{ @"progress": @0.25, @"text": @"加载资源...", @"delay": @0.5 },
+        @{ @"progress": @0.45, @"text": @"启动引擎...", @"delay": @0.6 },
+        @{ @"progress": @0.65, @"text": @"加载页面...", @"delay": @0.8 },
+        @{ @"progress": @0.85, @"text": @"准备就绪...", @"delay": @0.4 }
+    ];
+    
+    for (NSDictionary *stage in stages) {
+        CGFloat progress = [stage[@"progress"] floatValue];
+        NSString *text = stage[@"text"];
+        NSTimeInterval delay = [stage[@"delay"] doubleValue];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.transitionVC updateProgress:progress];
+            [self.transitionVC updateStatusText:text];
+        });
+        
+        [NSThread sleepForTimeInterval:delay];
+    }
+}
+
+/// 等待 UniApp 准备就绪
+- (void)waitForUniAppReady {
+    // 检查网络状态
+    if (![self isNetworkReachable]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.transitionVC updateStatusText:@"网络连接失败"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self showOfflineFromTransition];
+            });
+        });
+        return;
+    }
+    
+    // 等待引擎初始化（轮询检查）
+    NSInteger maxWaitCount = 50; // 最多等待 5 秒
+    NSInteger waitCount = 0;
+    
+    while (!self.isUniAppReady && waitCount < maxWaitCount) {
+        [NSThread sleepForTimeInterval:0.1];
+        waitCount++;
+        
+        // 检查 PDRCore 是否已准备好
+        PDRCore *core = [PDRCore Instance];
+        if (core && core.appManager && core.appManager.activeApp) {
+            self.isUniAppReady = YES;
+            break;
+        }
+    }
+    
+    // 确保至少显示 2 秒的过渡页面（避免闪屏）
+    [NSThread sleepForTimeInterval:0.5];
+    
+    // 过渡到 UniApp
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self transitionToUniApp];
+    });
+}
+
+/// 执行过渡到 UniApp
+- (void)transitionToUniApp {
+    // 创建 UniApp 视图控制器
+    ViewController *viewController = [[ViewController alloc] init];
+    self.h5ViewContoller = viewController;
+    
+    // 设置不显示默认 loading（因为我们已经用原生页面替代了）
+    viewController.showLoadingView = NO;
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    navigationController.navigationBarHidden = YES;
+    
+    // 执行过渡动画
+    [self.transitionVC transitionToUniAppWithCompletion:^{
+        // 动画完成后切换 rootViewController
+        self.rootViewController = navigationController;
+        
+        // 使用更平滑的过渡动画
+        [UIView transitionWithView:self.window
+                          duration:0.4
+                           options:UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionCurveEaseInOut
+                        animations:^{
+            self.window.rootViewController = navigationController;
+        } completion:^(BOOL finished) {
+            self.didStartUniApp = YES;
+            NSLog(@"[Transition] 已切换到 UniApp");
+        }];
+    }];
+}
+
+/// 从过渡页面显示离线页面
+- (void)showOfflineFromTransition {
+    __weak typeof(self) weakSelf = self;
+    
     OfflineViewController *vc = [[OfflineViewController alloc] init];
     vc.onRetry = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!strongSelf) { return; }
-
-        // 重新检测网络
+        
         if ([strongSelf isNetworkReachable]) {
-            [strongSelf showUniAppRoot];
+            [strongSelf showTransitionRoot];
         } else {
             [vc updateStatusText:@"当前网络仍不可用，请检查后重试"];
         }
     };
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    nav.navigationBarHidden = YES;
+    
+    [UIView transitionWithView:self.window
+                      duration:0.3
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+        self.window.rootViewController = nav;
+    } completion:nil];
+    
+    self.rootViewController = nav;
+}
 
+#pragma mark - Original Methods (Kept for compatibility)
+
+- (void)startMainApp {
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        [[PDRCore Instance] start];
+    });
+}
+
+/// 从调试页面切换到 UniApp
+- (void)switchToUniApp {
+    if ([self isNetworkReachable]) {
+        [self showTransitionRoot];
+    } else {
+        [self showOfflineRoot];
+    }
+}
+
+- (void)showOfflineRoot {
+    __weak typeof(self) weakSelf = self;
+    
+    OfflineViewController *vc = [[OfflineViewController alloc] init];
+    vc.onRetry = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) { return; }
+        
+        if ([strongSelf isNetworkReachable]) {
+            [strongSelf showTransitionRoot];
+        } else {
+            [vc updateStatusText:@"当前网络仍不可用，请检查后重试"];
+        }
+    };
+    
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBarHidden = YES;
     self.rootViewController = nav;
@@ -261,8 +385,7 @@
 
 - (void)showUniAppRoot {
     if (self.didStartUniApp) {
-        // 已启动过（比如从无网页切过来），仅切换 root
-        // 这里仍然重新创建 ViewController，避免状态不一致
+        // 已启动过，直接切换
     }
 
     ViewController *viewController = [[ViewController alloc] init];
@@ -273,17 +396,15 @@
     self.rootViewController = navigationController;
     self.window.rootViewController = navigationController;
 
-    // 启动 UniApp 引擎（只启动一次）
     if (!self.didStartUniApp) {
         self.didStartUniApp = YES;
         [self startMainApp];
     }
 
-    // 引擎已预加载时跳过 splash screen：
-    // Why: 预加载阶段 start 后，JS autoclose 的触发时机已过，
-    //       再 showLoadingPage 会导致 splash 永远无法自动关闭
     self.h5ViewContoller.showLoadingView = !self.isEnginePreloaded;
 }
+
+#pragma mark - App Events
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
   completionHandler:(void(^)(BOOL succeeded))completionHandler{
@@ -296,8 +417,6 @@
     if (self.didStartUniApp) {
         [PDRCore handleSysEvent:PDRCoreSysEventBecomeActive withObject:nil];
     }
-
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -305,9 +424,6 @@
     if (self.didStartUniApp) {
         [PDRCore handleSysEvent:PDRCoreSysEventResignActive withObject:nil];
     }
-
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -315,8 +431,6 @@
     if (self.didStartUniApp) {
         [PDRCore handleSysEvent:PDRCoreSysEventEnterBackground withObject:nil];
     }
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -324,18 +438,14 @@
     if (self.didStartUniApp) {
         [PDRCore handleSysEvent:PDRCoreSysEventEnterForeGround withObject:nil];
     }
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
-
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [PDRCore destoryEngine];
 }
 
-#pragma mark -
-#pragma mark URL
+#pragma mark - URL Handling
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
@@ -345,28 +455,23 @@
     return YES;
 }
 
-/*
- * @Summary:程序被第三方调用，传入参数启动
- *
- */
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
     [PDRCore handleSysEvent:PDRCoreSysEventOpenURL withObject:url];
     return YES;
 }
+
 - (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     [PDRCore handleSysEvent:PDRCoreSysEventOpenURLWithOptions withObject:@[url,options]];
     return YES;
 }
 
-/*
- * @Summary:通用链接
- */
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler {
     [PDRCore handleSysEvent:PDRCoreSysEventContinueUserActivity withObject:userActivity];
     restorationHandler(nil);
     return YES;
 }
+
 @end
 
 @implementation UINavigationController(Orient)
