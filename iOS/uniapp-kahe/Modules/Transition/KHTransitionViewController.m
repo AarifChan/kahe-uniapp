@@ -74,7 +74,7 @@
     
     // 标题
     self.titleLabel = [[UILabel alloc] init];
-    self.titleLabel.text = @"卡核潮玩";
+    self.titleLabel.text = @"卡牌核心";
     self.titleLabel.font = [UIFont systemFontOfSize:32 weight:UIFontWeightSemibold];
     self.titleLabel.textColor = [UIColor colorWithRed:0.25 green:0.2 blue:0.15 alpha:1.0];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -83,7 +83,7 @@
     
     // 副标题
     self.subtitleLabel = [[UILabel alloc] init];
-    self.subtitleLabel.text = @"发现潮玩乐趣";
+    self.subtitleLabel.text = @"共创卡牌的核心社区";
     self.subtitleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
     self.subtitleLabel.textColor = [UIColor colorWithRed:0.5 green:0.45 blue:0.4 alpha:1.0];
     self.subtitleLabel.textAlignment = NSTextAlignmentCenter;

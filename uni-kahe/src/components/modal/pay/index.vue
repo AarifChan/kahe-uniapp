@@ -125,10 +125,7 @@
         <view class="pay-scroll-save">
           <view class="pay-scroll-save-title">购买需知</view>
           <view class="pay-scroll-save-right">
-            <agreement
-              v-model:checked="agree"
-              @did-tap-protocol="didTapProtocol"
-            />
+
             <view class="gray-text">我已知悉未成年人禁止购买 </view>
             <view class="gray-text group-text"
               >严禁未满8周岁未成年人购买，8周岁及以上未成年人的一
@@ -162,6 +159,13 @@
 
 
       <view class="pay-bottom">
+        <view class="pay-bottom-check">
+          <agreement
+            v-model:checked="agree"
+            @did-tap-protocol="didTapProtocol"
+          />
+        </view>
+
         <view class="pay-type" v-if="showPayType">
           <view class="pay-type-title">选择支付方式</view>
           <view class="pay-type-list">
@@ -352,7 +356,7 @@ const checkEnv = () => {
   // #ifdef APP
   isApp.value = true;
   showPayType.value = true;
-  payTypeHeight.value = 300;
+  payTypeHeight.value = 324;
   // #endif
   // #ifndef APP
   isApp.value = false;
@@ -591,6 +595,9 @@ onMounted(() => {
   padding: 0 32rpx env(safe-area-inset-bottom);
   box-sizing: border-box;
   flex-direction: column;
+  &-check{
+    padding: 16rpx 0;
+  }
   &-pay{
     display: flex;
     flex-direction: row;

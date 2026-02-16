@@ -1,0 +1,95 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Build and upload to TestFlight"
+  lane :beta do
+    # 获取当前版本号
+    version = get_version_number(
+      xcodeproj: "uniapp-kahe.xcodeproj",
+      target: "uniapp-kahe"
+    )
+    
+    # 获取最新的 build 号并 +1
+    build_number = app_store_build_number(
+      app_identifier: "com.jmcw.kahe",
+      live: false,
+      username: ENV["APPLE_ID"]
+    ) + 1
+    
+    increment_build_number(
+      xcodeproj: "uniapp-kahe.xcodeproj",
+      build_number: build_number
+    )
+    
+    # 构建 Archive
+    gym(
+      scheme: "uniapp-kahe",
+      configuration: "Release",
+      export_method: "app-store",
+      output_directory: "build",
+      output_name: "KaheUniApp.ipa",
+      include_bitcode: false,
+      include_symbols: true,
+      xcargs: "-allowProvisioningUpdates"
+    )
+    
+    # 上传到 TestFlight
+    upload_to_testflight(
+      app_identifier: "com.jmcw.kahe",
+      skip_submission: true,      # 跳过审核提交，只上传构建
+      skip_waiting_for_build_processing: true,  # 不等待处理完成
+      notify_external_testers: false,
+      username: ENV["APPLE_ID"]
+    )
+    
+    # 清理 build 号（可选）
+    # reset_build_number
+    
+    UI.success("✅ Successfully uploaded build #{build_number} to TestFlight!")
+  end
+  
+  desc "Build without uploading"
+  lane :build do
+    gym(
+      scheme: "uniapp-kahe",
+      configuration: "Release",
+      export_method: "app-store",
+      output_directory: "build",
+      output_name: "KaheUniApp.ipa",
+      include_bitcode: false,
+      include_symbols: true,
+      xcargs: "-allowProvisioningUpdates"
+    )
+    
+    UI.success("✅ Build completed: build/KaheUniApp.ipa")
+  end
+  
+  desc "Upload existing IPA to TestFlight"
+  lane :upload do
+    upload_to_testflight(
+      app_identifier: "com.jmcw.kahe",
+      ipa: "build/KaheUniApp.ipa",
+      skip_submission: true,
+      skip_waiting_for_build_processing: true,
+      notify_external_testers: false,
+      username: ENV["APPLE_ID"]
+    )
+    
+    UI.success("✅ Successfully uploaded to TestFlight!")
+  end
+end

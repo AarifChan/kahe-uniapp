@@ -1,0 +1,7 @@
+app_identifier("com.jmcw.kahe")
+apple_id(ENV["APPLE_ID"])
+
+# 团队 ID（如果有多个团队，取消注释并填写）
+# team_id(ENV["APPLE_TEAM_ID"])
+
+# itc_team_id("YOUR_ITC_TEAM_ID")

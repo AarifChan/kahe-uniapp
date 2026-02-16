@@ -123,6 +123,7 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:largeHeap="true"
+        tools:replace="android:name"
         android:debuggable="true"
         >
 
@@ -262,7 +263,7 @@
             android:name="MIUI_REDIRECT_URI"
             android:value="%小米分享的回调地址%" />
 
-<!--        <activity android:name="com.xiaomi.account.openauth.AuthorizeActivity" />-->
+        <activity android:name="com.xiaomi.account.openauth.AuthorizeActivity" />
         <!-- 小米分享 end -->
         <!-- Dcloud 开屏广告配置>
         <meta-data android:name="DCLOUD_STREAMAPP_CHANNEL" android:value="io.dcloud.H57BCF8D2|H57BCF8D2|12331280401"></meta-data>

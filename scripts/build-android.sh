@@ -128,7 +128,7 @@ build_uniapp() {
 copy_resources() {
     log_info "开始复制 UniApp 资源到 Android assets..."
     
-    # UniApp 编译输出目录
+    # UniApp 编译输出目录（app-android 平台输出到 dist/build/app）
     UNIAPP_BUILD_DIR="$UNIAPP_DIR/dist/build/app"
     
     if [ ! -d "$UNIAPP_BUILD_DIR" ]; then
@@ -147,9 +147,8 @@ copy_resources() {
     cp -R "$UNIAPP_BUILD_DIR"/* "$ANDROID_WWW_DIR/"
     
     # ---------- 修复 Android __uniappview.html ----------
-    # Vite CLI 编译产出的 __uniappview.html 使用 uni-app-view.umd.js（Web 运行时），
-    # 但 DCloud Android 原生 SDK 需要加载 view.umd.min.js + app-view.js 才能正常工作。
-    # 这里替换为 SDK 兼容的格式。
+    # Vite CLI 编译产出的 __uniappview.html 需要适配 Android 原生 SDK
+    # 使用 uni-app-view.umd.js (Vite 构建的 View 层运行时)
     ANDROID_VIEW_HTML="$ANDROID_WWW_DIR/__uniappview.html"
     if [ -f "$ANDROID_VIEW_HTML" ]; then
         log_info "修复 Android __uniappview.html（适配原生 SDK 运行时）..."
@@ -160,6 +159,9 @@ copy_resources() {
     <meta charset="UTF-8" />
     <script>
       var __UniViewStartTime__ = Date.now();
+      document.addEventListener('DOMContentLoaded', function() {
+          document.documentElement.style.fontSize = document.documentElement.clientWidth / 20 + 'px'
+      })
       var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
         CSS.supports('top: constant(a)'))
       document.write(
@@ -177,6 +179,125 @@ copy_resources() {
 </html>
 VIEWHTML
         log_info "Android __uniappview.html 已修复 ✓"
+    fi
+    
+    # 创建 view.css（如果不存在）
+    if [ -f "$ANDROID_WWW_DIR/app.css" ] && [ ! -f "$ANDROID_WWW_DIR/view.css" ]; then
+        log_info "创建 view.css（从 app.css 复制）..."
+        cp "$ANDROID_WWW_DIR/app.css" "$ANDROID_WWW_DIR/view.css"
+        log_info "view.css 已创建 ✓"
+    fi
+    
+    # ---------- 创建 control.xml（如果不存在）----------
+    # DCloud 离线打包必需的控制文件
+    ANDROID_APP_DIR="$ANDROID_DIR/app/src/main/assets/apps/$ANDROID_APP_ID"
+    CONTROL_XML="$ANDROID_APP_DIR/control.xml"
+    if [ ! -f "$CONTROL_XML" ]; then
+        log_warn "control.xml 不存在，正在创建..."
+        mkdir -p "$ANDROID_APP_DIR"
+        cat > "$CONTROL_XML" << 'CONTROLXML'
+<?xml version="1.0" encoding="utf-8"?>
+<hbuilder version="1.9.9.65453">
+<apps>
+    <app appid="__UNI__2BE2CDB" appver="1.0.0"/>
+</apps>
+</hbuilder>
+CONTROLXML
+        log_info "control.xml 已创建 ✓"
+    else
+        log_info "control.xml 已存在"
+    fi
+    
+    # 创建 view.umd.min.js 软链接（如果不存在）
+    if [ -f "$ANDROID_WWW_DIR/uni-app-view.umd.js" ] && [ ! -f "$ANDROID_WWW_DIR/view.umd.min.js" ]; then
+        log_info "创建 view.umd.min.js（软链接到 uni-app-view.umd.js）..."
+        ln -sf uni-app-view.umd.js "$ANDROID_WWW_DIR/view.umd.min.js" 2>/dev/null || \
+            cp "$ANDROID_WWW_DIR/uni-app-view.umd.js" "$ANDROID_WWW_DIR/view.umd.min.js"
+        log_info "view.umd.min.js 已创建 ✓"
+    fi
+    
+    # ---------- 修复 app-config.js ----------
+    # 如果 app-config.js 是空的，需要创建基本配置
+    APP_CONFIG_JS="$ANDROID_WWW_DIR/app-config.js"
+    if [ -f "$APP_CONFIG_JS" ]; then
+        # 检查文件大小，如果小于 50 字节视为空
+        file_size=$(stat -f%z "$APP_CONFIG_JS" 2>/dev/null || stat -c%s "$APP_CONFIG_JS" 2>/dev/null || echo 0)
+        if [ "$file_size" -lt 50 ]; then
+            log_warn "app-config.js 几乎为空 ($file_size bytes)，正在修复..."
+            cat > "$APP_CONFIG_JS" << 'CONFIGJS'
+(function(){
+  var config = {
+    "pages": [
+      "pages/index/index",
+      "pages/home/index",
+      "pages/mine/index",
+      "pages/box/index",
+      "pages/machine/index",
+      "pages/merchant/index",
+      "pages/login/index"
+    ],
+    "subPackages": [],
+    "globalStyle": {
+      "navigationBarTextStyle": "black",
+      "navigationBarTitleText": "",
+      "navigationBarBackgroundColor": "#FDEFCC",
+      "backgroundColor": "#FDEFCC"
+    },
+    "tabBar": {
+      "custom": true,
+      "list": [
+        {"pagePath": "pages/home/index", "text": "首页"},
+        {"pagePath": "pages/merchant/index", "text": "商家"},
+        {"pagePath": "pages/machine/index", "text": "抽卡机"},
+        {"pagePath": "pages/box/index", "text": "盒柜"},
+        {"pagePath": "pages/mine/index", "text": "我的"}
+      ]
+    }
+  };
+  if (typeof exports !== 'undefined') {
+    exports.config = config;
+  }
+  if (typeof window !== 'undefined') {
+    window.__uniConfig = config;
+  }
+})();
+CONFIGJS
+            log_info "app-config.js 已修复 ✓"
+        else
+            log_info "app-config.js 正常 ($file_size bytes)"
+        fi
+    else
+        log_warn "app-config.js 不存在"
+    fi
+    
+    # ---------- 创建 app-view.js ----------
+    # 如果 app-view.js 不存在，需要创建
+    APP_VIEW_JS="$ANDROID_WWW_DIR/app-view.js"
+    if [ ! -f "$APP_VIEW_JS" ]; then
+        log_warn "app-view.js 不存在，正在创建..."
+        cat > "$APP_VIEW_JS" << 'VIEWJS'
+(function() {
+  'use strict';
+  if (typeof uni === 'undefined') {
+    console.error('uni is not defined');
+    return;
+  }
+  if (typeof Vue !== 'undefined') {
+    var app = Vue.createApp({});
+    if (window.__uniConfig) {
+      app.config.globalProperties.$config = window.__uniConfig;
+    }
+  }
+  if (typeof plus !== 'undefined' && plus.webview) {
+    var currentWebview = plus.webview.currentWebview();
+    if (currentWebview) {
+      currentWebview.evalJS('typeof __uniapp__ready !== "undefined" && __uniapp__ready()');
+    }
+  }
+  document.dispatchEvent(new Event('uni-app-ready'));
+})();
+VIEWJS
+        log_info "app-view.js 已创建 ✓"
     fi
     
     log_info "Android 资源复制完成 ✓"

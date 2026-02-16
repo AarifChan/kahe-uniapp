@@ -16,19 +16,18 @@ android {
         }
         manifestPlaceholders = [
                 "apk.applicationId"     : "com.jmcw.kahe",
-                "GETUI_APPID"           : "unipush的appid",
-                "plus.unipush.appid"    : "unipush的appid",
-                "plus.unipush.appkey"   : "unipuish的appkey",
-                "plus.unipush.appsecret": "unipush的secrety"
+                "GETUI_APPID"           : "",
+                "plus.unipush.appid"    : "",
+                "plus.unipush.appkey"   : "",
+                "plus.unipush.appsecret": ""
         ]
+    }
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
         }
-    }
     signingConfigs {
         config {
-            // Android 签名已切换为工程根目录下的 jmcw.keystore
             keyAlias 'jmcw'
             keyPassword 'jmcw2026'
             storeFile file('../../jmcw.keystore')

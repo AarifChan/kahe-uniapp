@@ -1,6 +1,6 @@
 <template>
     <view class="homeGoods">
-        <image class="homeGoods-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/home/item-bg.png" />
+        <image class="homeGoods-bg" mode="widthFix" src="https://jms.85gui7.com/kahe-202510/ka-he/home/item-bg.png" />
         <!--        <view class="homeGoods-empty" v-if="item.isSellout">-->
         <!--            <image-->
         <!--                style="width:137rpx;height: 63rpx"-->
