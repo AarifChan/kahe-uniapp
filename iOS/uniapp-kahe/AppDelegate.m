@@ -184,9 +184,6 @@
     if (canConnectAutomatically && interventionNotRequired) {
         connectionRequired = NO;
     }
-    if (@available(iOS 11.0, *)) {
-        [UIApplication sharedApplication].keyWindow.rootViewController.view.insetsLayoutMarginsFromSafeArea = NO;
-    }
 
     return reachable && !connectionRequired;
 }
@@ -212,12 +209,19 @@
         // 模拟加载阶段
         [self simulateLoadingStages];
         
-        // 实际启动 UniApp 引擎（在后台进行）
+        // 使用信号量等待主线程完成引擎启动
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        
+        // 实际启动 UniApp 引擎（在主线程执行）
         dispatch_async(dispatch_get_main_queue(), ^{
             [[PDRCore Instance] start];
             self.isEnginePreloaded = YES;
             NSLog(@"[Transition] UniApp 引擎预加载完成");
+            dispatch_semaphore_signal(semaphore);
         });
+        
+        // 等待引擎启动完成（最多等待3秒）
+        dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)));
         
         // 等待引擎初始化完成
         [self waitForUniAppReady];

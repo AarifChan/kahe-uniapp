@@ -465,7 +465,7 @@ onMounted(() => {
     width: 100%;
     height: calc(990rpx - 80rpx);
     box-sizing: border-box;
-    padding: 32rpx;
+    padding: 16rpx;
     display: flex;
     flex-direction: column;
     &-info {
@@ -596,7 +596,9 @@ onMounted(() => {
   box-sizing: border-box;
   flex-direction: column;
   &-check{
-    padding: 16rpx 0;
+    padding: 16rpx 32rpx;
+    width: 100%;
+    box-sizing: border-box;
   }
   &-pay{
     display: flex;
