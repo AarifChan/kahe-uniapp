@@ -112,6 +112,7 @@
 
           <!-- #ifdef APP-PLUS -->
           <button
+            v-if="isWechatInstalled"
             class="pageLogin-content-actions-btn wx"
             @tap.stop="handleWechatOneClick"
           >
@@ -185,11 +186,19 @@ import { getSmsCodeRequest } from "@/api";
 
 const { modalShow, modalTitle, modalContent, showModalType } = useModal();
 const checked = ref(false);
+const isWechatInstalled = ref(false);
 
 onShow(() => {
   // #ifdef MP-WEIXIN
-
   UserModule.getCode();
+  // #endif
+
+  // #ifdef APP-PLUS
+  // 检测微信是否安装
+  isWechatInstalled.value = plus.runtime.isApplicationExist({
+    pname: 'com.tencent.mm',
+    action: 'weixin://'
+  });
   // #endif
 });
 
