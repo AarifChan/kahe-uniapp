@@ -26,6 +26,7 @@
 
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <netinet/in.h>
+#import <WebKit/WebKit.h>
 
 #import "KHLogPlugin.h"
 #import "KHLogPluginBridge.h"
@@ -152,6 +153,25 @@
             break;
     }
     NSLog(@"[AppDelegate] 网络状态变化: %@, 类型: %@", connected ? @"已连接" : @"已断开", typeString);
+    
+    // 如果网络已连接，且当前在离线页面，自动重试加载
+    if (connected && [self isCurrentlyOffline]) {
+        NSLog(@"[AppDelegate] 网络已恢复，自动重试加载");
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self showTransitionRoot];
+        });
+    }
+}
+
+/// 检查当前是否处于离线页面
+- (BOOL)isCurrentlyOffline {
+    UIViewController *rootVC = self.window.rootViewController;
+    if ([rootVC isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nav = (UINavigationController *)rootVC;
+        UIViewController *topVC = nav.topViewController;
+        return [topVC isKindOfClass:[OfflineViewController class]];
+    }
+    return NO;
 }
 
 #pragma mark - Network Check
@@ -192,6 +212,9 @@
 
 /// 显示原生过渡页面并开始预加载
 - (void)showTransitionRoot {
+    // 每次显示过渡页面时，先彻底重置状态（支持重新加载）
+    [self resetUniAppState];
+    
     self.transitionVC = [[KHTransitionViewController alloc] init];
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:self.transitionVC];
@@ -199,8 +222,10 @@
     self.rootViewController = nav;
     self.window.rootViewController = nav;
     
-    // 开始预加载 UniApp
-    [self preloadUniApp];
+    // 延迟 0.3 秒后开始预加载，确保缓存清理完成
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self preloadUniApp];
+    });
 }
 
 /// 后台预加载 UniApp
@@ -214,6 +239,8 @@
         
         // 实际启动 UniApp 引擎（在主线程执行）
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"[Transition] 启动 UniApp 引擎...");
+            
             [[PDRCore Instance] start];
             self.isEnginePreloaded = YES;
             NSLog(@"[Transition] UniApp 引擎预加载完成");
@@ -226,6 +253,66 @@
         // 等待引擎初始化完成
         [self waitForUniAppReady];
     });
+}
+
+/// 重置 UniApp 状态以支持重新加载
+- (void)resetUniAppState {
+    self.didStartUniApp = NO;
+    self.isUniAppReady = NO;
+    self.isEnginePreloaded = NO;
+    
+    // 清理旧的 ViewController（关键：这会清理关联的 WebView）
+    if (self.h5ViewContoller) {
+        // 找到并清理 WebView
+        [self findAndCleanupWebViewInView:self.h5ViewContoller.view];
+        [self.h5ViewContoller.view removeFromSuperview];
+        self.h5ViewContoller = nil;
+    }
+    
+    // 清理 PDRCore 相关设置
+    PDRCore *core = [PDRCore Instance];
+    if (core) {
+        // 重置 presentViewController
+        core.persentViewController = nil;
+        
+        // 清除 NSURLCache
+        [[NSURLCache sharedURLCache] removeAllCachedResponses];
+        
+        // 清理 WKWebView 缓存（同步方式，iOS 9+）
+        if (@available(iOS 9.0, *)) {
+            NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+            NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
+            [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes
+                                                       modifiedSince:dateFrom
+                                                   completionHandler:^{
+                NSLog(@"[Transition] WKWebView 缓存已清理");
+            }];
+        }
+        
+        // 清理本地存储和 Cookie
+        NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        for (NSHTTPCookie *cookie in cookieStorage.cookies) {
+            [cookieStorage deleteCookie:cookie];
+        }
+    }
+    
+    NSLog(@"[Transition] 已重置 UniApp 状态和 WebView 缓存");
+}
+
+/// 在视图中查找并清理 WebView
+- (void)findAndCleanupWebViewInView:(UIView *)view {
+    for (UIView *subview in view.subviews) {
+        // 如果是 WKWebView，先停止加载并清理
+        if ([subview isKindOfClass:[WKWebView class]]) {
+            WKWebView *webView = (WKWebView *)subview;
+            [webView stopLoading];
+            webView.navigationDelegate = nil;
+            webView.UIDelegate = nil;
+            NSLog(@"[Transition] 清理 WKWebView");
+        }
+        // 递归查找
+        [self findAndCleanupWebViewInView:subview];
+    }
 }
 
 /// 模拟加载阶段（用于展示进度）
@@ -265,29 +352,45 @@
         return;
     }
     
-    // 等待引擎初始化（轮询检查）
-    NSInteger maxWaitCount = 50; // 最多等待 5 秒
-    NSInteger waitCount = 0;
+    // 使用定时器在主线程轮询检查引擎状态（避免后台线程访问 PDRCore）
+    __block NSInteger waitCount = 0;
+    const NSInteger maxWaitCount = 50; // 最多等待 5 秒
     
-    while (!self.isUniAppReady && waitCount < maxWaitCount) {
-        [NSThread sleepForTimeInterval:0.1];
-        waitCount++;
-        
-        // 检查 PDRCore 是否已准备好
-        PDRCore *core = [PDRCore Instance];
-        if (core && core.appManager && core.appManager.activeApp) {
-            self.isUniAppReady = YES;
-            break;
-        }
+    // 先等待至少 1.5 秒，让引擎有足够时间初始化
+    [NSThread sleepForTimeInterval:1.5];
+    
+    // 切换到主线程检查状态
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self checkUniAppReadyWithCount:waitCount maxCount:maxWaitCount];
+    });
+}
+
+/// 在主线程检查 UniApp 是否就绪（递归检查）
+- (void)checkUniAppReadyWithCount:(NSInteger)count maxCount:(NSInteger)maxCount {
+    if (count >= maxCount) {
+        // 超时，直接过渡到 UniApp
+        NSLog(@"[Transition] 等待引擎超时，强制过渡");
+        [self transitionToUniApp];
+        return;
     }
     
-    // 确保至少显示 2 秒的过渡页面（避免闪屏）
-    [NSThread sleepForTimeInterval:0.5];
+    // 在主线程检查 PDRCore 状态（线程安全）
+    PDRCore *core = [PDRCore Instance];
+    BOOL isReady = (core && core.appManager && core.appManager.activeApp);
     
-    // 过渡到 UniApp
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self transitionToUniApp];
-    });
+    if (isReady) {
+        self.isUniAppReady = YES;
+        NSLog(@"[Transition] 引擎已就绪，准备过渡");
+        // 再等待 0.5 秒确保 UI 渲染完成
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self transitionToUniApp];
+        });
+    } else {
+        // 0.1 秒后再次检查
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self checkUniAppReadyWithCount:count + 1 maxCount:maxCount];
+        });
+    }
 }
 
 /// 执行过渡到 UniApp
@@ -329,11 +432,14 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!strongSelf) { return; }
         
-        if ([strongSelf isNetworkReachable]) {
-            [strongSelf showTransitionRoot];
-        } else {
-            [vc updateStatusText:@"当前网络仍不可用，请检查后重试"];
-        }
+        // 延迟重试，给用户时间去允许网络权限
+        [vc updateStatusText:@"正在检查网络..."];
+        [vc setRetryEnabled:NO];
+        
+        // 延迟 0.5 秒后重试，因为用户可能在权限弹窗中刚刚点击"允许"
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [strongSelf attemptReloadWithRetryCount:3 fromViewController:vc];
+        });
     };
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
@@ -347,6 +453,28 @@
     } completion:nil];
     
     self.rootViewController = nav;
+}
+
+/// 尝试重新加载，带重试机制
+- (void)attemptReloadWithRetryCount:(NSInteger)retryCount fromViewController:(OfflineViewController *)vc {
+    if ([self isNetworkReachable]) {
+        // 网络可用，重新加载 UniApp
+        NSLog(@"[Reload] 网络已恢复，重新加载 UniApp");
+        [self showTransitionRoot];
+    } else if (retryCount > 0) {
+        // 网络仍不可用，延迟后重试
+        NSLog(@"[Reload] 网络不可用，%ld 秒后重试 (剩余 %ld 次)", (long)1, (long)retryCount);
+        [vc updateStatusText:[NSString stringWithFormat:@"网络连接中... (%ld)", (long)retryCount]];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self attemptReloadWithRetryCount:retryCount - 1 fromViewController:vc];
+        });
+    } else {
+        // 重试次数用完，提示用户
+        NSLog(@"[Reload] 网络检查失败，提示用户");
+        [vc updateStatusText:@"当前网络仍不可用，请检查网络设置后重试"];
+        [vc setRetryEnabled:YES];
+    }
 }
 
 #pragma mark - Original Methods (Kept for compatibility)
@@ -374,11 +502,14 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!strongSelf) { return; }
         
-        if ([strongSelf isNetworkReachable]) {
-            [strongSelf showTransitionRoot];
-        } else {
-            [vc updateStatusText:@"当前网络仍不可用，请检查后重试"];
-        }
+        // 延迟重试，给用户时间去允许网络权限
+        [vc updateStatusText:@"正在检查网络..."];
+        [vc setRetryEnabled:NO];
+        
+        // 延迟 0.5 秒后重试
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [strongSelf attemptReloadWithRetryCount:3 fromViewController:vc];
+        });
     };
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];

@@ -129,6 +129,8 @@
 	<string>为了提高用户体验，需要你的麦克风权限，把您的语音转成文字。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>为了提高用户体验，需要使用您相册的权限，设置个性化的头像</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>为了提供更精准的内容推荐和广告服务，我们需要获取您的设备标识符</string>
 	<key>StatusBarBackground</key>
 	<string>#FFFFFF</string>
 	<key>UIApplicationShortcutItems</key>
