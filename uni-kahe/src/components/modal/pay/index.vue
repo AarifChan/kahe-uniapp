@@ -181,7 +181,7 @@
                 <view class="pay-type-icon wechat-icon">
                   <image
                     class="pay-type-icon-img"
-                    src="/static/wechat-pay.svg"
+                    src="https://jms.85gui7.com/kahe-202510/wechat-pay.svg"
                     mode="aspectFit"
                   />
                 </view>
@@ -208,7 +208,7 @@
                 <view class="pay-type-icon alipay-icon">
                   <image
                     class="pay-type-icon-img"
-                    src="/static/alipay.svg"
+                    src="https://jms.85gui7.com/kahe-202510/alipay.svg"
                     mode="aspectFit"
                   />
                 </view>
