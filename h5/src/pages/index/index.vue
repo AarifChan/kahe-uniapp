@@ -47,10 +47,10 @@ function downloadApp() {
   if (systemInfo.platform === 'ios') {
     // iOS 跳转到 TestFlight
     // #ifdef APP-PLUS
-    plus.runtime.openURL('https://testflight.apple.com/join/v9AdPbW1')
+    plus.runtime.openURL('https://apps.apple.com/app/卡牌核心/id6758882691')
     // #endif
     // #ifdef H5
-    window.open('https://testflight.apple.com/join/v9AdPbW1', '_blank')
+    window.open('https://apps.apple.com/app/卡牌核心/id6758882691', '_blank')
     // #endif
     // #ifdef MP
     uni.showToast({
