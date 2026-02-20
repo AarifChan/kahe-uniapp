@@ -151,7 +151,7 @@ class User extends VuexModule {
         console.log("code:", code);
         const logRes = await loginRequest({
           code: code,
-          plat: "wx_ma_3",
+          plat: import.meta.env.VITE_APP_PLATFORM || "wx_ma_3",
         });
         if (logRes.code === 200) {
           this.context.commit("UPDATE_TOKEN", logRes.data.token);
@@ -208,7 +208,7 @@ class User extends VuexModule {
       code: this.code,
       phoneIv: params.iv,
       phoneEncryptedData: params.encryptedData,
-      plat: "wx_ma_3",
+      plat: import.meta.env.VITE_APP_PLATFORM || "wx_ma_3",
     } as LoginRequestParams;
 
     const resp = await loginByWxApp(loginParams);
@@ -279,7 +279,7 @@ class User extends VuexModule {
               code: code,
               iv: res.iv,
               encryptedData: res.encryptedData,
-              plat: "wx_ma_3",
+              plat: import.meta.env.VITE_APP_PLATFORM || "wx_ma_3",
             });
             if (logRes.code === 200) {
               this.context.commit("UPDATE_TOKEN", logRes.data.token);
@@ -446,7 +446,7 @@ class User extends VuexModule {
     return new Promise(async (resolve, _) => {
       let payType = "";
       // #ifdef MP-WEIXIN
-      payType = "wx_ma_3";
+      payType = import.meta.env.VITE_APP_PLATFORM || "wx_ma_3";
       // #endif
 
       // #ifdef H5
