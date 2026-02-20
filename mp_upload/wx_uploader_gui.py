@@ -482,6 +482,8 @@ class WxUploaderGUI:
         self.plat_var = tk.StringVar()
         # 编译模式
         self.build_mode_var = tk.StringVar(value="production")
+        # 是否使用环境变量中的 plat
+        self.use_env_plat_var = tk.BooleanVar(value=True)
         
         # 设置默认 plat
         self._set_default_plat()
@@ -528,6 +530,15 @@ class WxUploaderGUI:
     
     def _set_default_plat(self):
         """设置默认选中的 plat"""
+        # 默认使用环境变量
+        self.plat_var.set("__env__")
+        
+        # 检查环境变量是否有效
+        plat_from_env = self.get_plat_from_env(self.build_mode_var.get())
+        if plat_from_env:
+            return
+        
+        # 如果环境变量无效，使用配置中的默认
         for plat in self.config.get("plats", []):
             if plat.get("is_default", False):
                 self.plat_var.set(plat["name"])
@@ -544,6 +555,14 @@ class WxUploaderGUI:
             widget.destroy()
         
         tk.Label(self.frame_plat, text="上传目标：").pack(side="left")
+        
+        # 添加使用环境变量的选项
+        tk.Radiobutton(
+            self.frame_plat,
+            text="使用环境变量 (VITE_APP_PLATFORM)",
+            value="__env__",
+            variable=self.plat_var
+        ).pack(side="left", padx=5)
         
         for plat in self.config.get("plats", []):
             tk.Radiobutton(
@@ -583,46 +602,86 @@ class WxUploaderGUI:
             return plats[0]["remote_path"]
         return "/home/aarif/jmcw/wx_ma"
     
+    def get_plat_from_env(self, build_mode: str = "production") -> dict:
+        """
+        从环境变量 VITE_APP_PLATFORM 获取 plat 配置
+        返回匹配的 plat 配置，如果没有匹配则返回 None
+        """
+        env_vars = read_env_file(build_mode)
+        platform = env_vars.get('VITE_APP_PLATFORM', '').strip()
+        
+        if not platform:
+            return None
+        
+        # 在配置中查找匹配的 plat
+        for plat in self.config.get("plats", []):
+            if plat["name"] == platform:
+                return plat
+        
+        return None
+    
     def ensure_key_and_plat(self):
         key_path = self.key_path_var.get().strip()
         if not key_path:
             messagebox.showerror("错误", "请先选择 private.wx*.key 文件")
-            return None, None
+            return None, None, None
         if not os.path.isfile(key_path):
             messagebox.showerror("错误", f"key 文件不存在：\n{key_path}")
-            return None, None
+            return None, None, None
         
         plat_name = self.plat_var.get()
         if not plat_name:
             messagebox.showerror("错误", "请选择上传目标 plat")
-            return None, None
+            return None, None, None
         
-        return key_path, plat_name
+        # 处理使用环境变量的情况
+        actual_plat_name = plat_name
+        plat_from_env = None
+        if plat_name == "__env__":
+            build_mode = self.build_mode_var.get()
+            plat_from_env = self.get_plat_from_env(build_mode)
+            if plat_from_env:
+                actual_plat_name = plat_from_env["name"]
+            else:
+                env_vars = read_env_file(build_mode)
+                platform = env_vars.get('VITE_APP_PLATFORM', '未设置')
+                messagebox.showerror("错误", 
+                    f"环境变量 VITE_APP_PLATFORM='{platform}' 没有匹配的配置\n"
+                    f"请在 plat_config.json 中添加对应配置，或手动选择目标平台")
+                return None, None, None
+        
+        return key_path, plat_name, actual_plat_name
     
     def build_and_publish(self):
         """一键编译并发布：编译代码 -> 上传代码到服务器 -> 上传key并发布到微信"""
-        key_path, plat_name = self.ensure_key_and_plat()
+        key_path, plat_selection, actual_plat_name = self.ensure_key_and_plat()
         if not key_path:
             return
         
         build_mode = self.build_mode_var.get()
         mode_text = "生产环境" if build_mode == "production" else "测试环境"
-        remote_path = self.get_remote_dir(plat_name)
+        remote_path = self.get_remote_dir(actual_plat_name)
         remote_host = self.config.get("remote_host", "jmcw")
         appid = parse_appid_from_key(key_path)
         
         # 读取环境配置
         env_vars = read_env_file(build_mode)
         base_url = env_vars.get('VITE_APP_BASEURL', '未配置')
+        platform_env = env_vars.get('VITE_APP_PLATFORM', '未配置')
+        
+        # 构建平台信息
+        plat_info = f"使用环境变量: VITE_APP_PLATFORM={platform_env}" if plat_selection == "__env__" else f"手动选择: {actual_plat_name}"
         
         # 确认操作
         if not messagebox.askyesno("确认", 
             f"即将执行以下操作：\n\n"
             f"1. 编译微信小程序（{mode_text}）\n"
-            f"   API地址: {base_url}\n\n"
+            f"   API地址: {base_url}\n"
+            f"   平台标识: {platform_env}\n\n"
             f"2. 上传代码到服务器并执行 run-mp.sh\n"
             f"   主机: {remote_host}\n"
-            f"   路径: {remote_path}\n\n"
+            f"   路径: {remote_path}\n"
+            f"   ({plat_info})\n\n"
             f"3. 上传 key 文件并发布到微信\n"
             f"   AppID: {appid}\n"
             f"   路径: {remote_path}/{appid}\n\n"
@@ -661,11 +720,13 @@ class WxUploaderGUI:
             clean_wx_upload_dir()
             
             self.root.title("微信小程序上传工具")
-            messagebox.showinfo("完成", 
+            plat_display = f"{actual_plat_name} (来自环境变量)" if plat_selection == "__env__" else actual_plat_name
+            messagebox.showinfo("完成",
                 f"一键发布完成！\n\n"
                 f"编译模式: {mode_text}\n"
                 f"API地址:  {base_url}\n"
-                f"目标平台: {plat_name}\n"
+                f"平台标识: {platform_env}\n"
+                f"目标平台: {plat_display}\n"
                 f"远程路径: {remote_path}\n"
                 f"AppID:    {appid}")
             
