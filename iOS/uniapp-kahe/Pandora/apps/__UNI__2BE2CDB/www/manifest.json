@@ -44,8 +44,40 @@
     "nvueStyleCompiler": "uni-app",
     "compilerVersion": 3,
     "tabBar": {
+      "position": "bottom",
+      "color": "#999",
+      "selectedColor": "#007aff",
+      "borderStyle": "rgba(0,0,0,0.4)",
+      "blurEffect": "none",
+      "fontSize": "10px",
+      "iconWidth": "24px",
+      "spacing": "3px",
+      "height": "50px",
+      "list": [
+        {
+          "pagePath": "pages/home/index",
+          "text": "首页"
+        },
+        {
+          "pagePath": "pages/merchant/index",
+          "text": "商家"
+        },
+        {
+          "pagePath": "pages/machine/index",
+          "text": "抽卡机"
+        },
+        {
+          "pagePath": "pages/box/index",
+          "text": "盒柜"
+        },
+        {
+          "pagePath": "pages/mine/index",
+          "text": "我的"
+        }
+      ],
       "custom": true,
-      "height": "0px"
+      "selectedIndex": 0,
+      "shown": true
     },
     "safearea": {
       "bottom": {
@@ -152,7 +184,7 @@
       "nvue": {
         "flex-direction": "column"
       },
-      "nvueLaunchMode": "normal",
+      "nvueLaunchMode": "fast",
       "webView": {
         "minUserAgentVersion": "49.0"
       }
@@ -165,6 +197,12 @@
     },
     "uniStatistics": {
       "enable": false
+    },
+    "safearea": {
+      "background": "#FFFFFF",
+      "bottom": {
+        "offset": "auto"
+      }
     }
   },
   "launch_path": "__uniappview.html"

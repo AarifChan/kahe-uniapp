@@ -345,58 +345,59 @@ const handleLoginSuccess = () => {
 const handleWechatOneClick = async () => {
   if (!validateAgreement()) return;
 
+  const handleCodeLogin = async (code?: string) => {
+    if (!code) {
+      ShowToast("未获取到微信授权码");
+      return;
+    }
+    const err = await UserModule.handleAppWechatLogin({ code });
+    if (err) {
+      ShowToast(err + "");
+    } else {
+      handleLoginSuccess();
+    }
+  };
+
+  const fallbackByUniLogin = () => {
+    uni.login({
+      provider: "weixin",
+      success: async (result) => {
+        const res = result as any;
+        const code = res?.authResult?.code || res?.code;
+        await handleCodeLogin(code);
+      },
+      fail: (err) => {
+        console.error("uni.login weixin fail:", err);
+        ShowToast("无法拉起微信，请检查微信安装/签名配置");
+      },
+    });
+  };
+
   plus.oauth.getServices(
     (services) => {
       const weixinService = services.find((s) => s.id === "weixin");
-      if (weixinService) {
-        // 1. 必须先清除之前的授权缓存，强制触发微信拉起
-        weixinService.logout(
-          async () => {
-            // 2. 调用 authorize 接口专门请求 code
-            weixinService.authorize(
-              async (event) => {
-                // 这里的 event.code 就是你需要的授权 code
-                const code = event.code;
-                console.log("获取到的微信 code:", code);
-                const err = await UserModule.handleAppWechatLogin({ code });
-                if (err) {
-                  ShowToast(err + "");
-                } else {
-                  handleLoginSuccess();
-                }
-              },
-              (error) => {
-                console.error("授权失败:", error);
-              }
-            );
-          },
-          (error) => {
-            console.error("清除缓存失败:", error);
-          }
-        );
+      if (!weixinService) {
+        // OAuth 服务未注册时，回退到 uni.login，避免“点击无反应”
+        fallbackByUniLogin();
+        return;
       }
+      weixinService.authorize(
+        async (event: any) => {
+          const code = event?.code;
+          console.log("获取到的微信 code:", code);
+          await handleCodeLogin(code);
+        },
+        (error) => {
+          console.error("plus.oauth authorize fail:", error);
+          fallbackByUniLogin();
+        }
+      );
     },
     (error) => {
-      console.error("获取服务列表失败:", error);
+      console.error("plus.oauth.getServices fail:", error);
+      fallbackByUniLogin();
     }
   );
-
-  // uni.login({
-  //   provider: "weixin",
-  //   success: async (result) => {
-  //     const res = result as any;
-  //     const code = res.authResult.code;
-  //
-  //     if (!code) {
-  //       ShowToast(`微信登录失败:${JSON.stringify(res)}`);
-  //       return;
-  //     }
-  //
-  //   },
-  //   fail: () => {
-  //     ShowToast("微信登录失败");
-  //   },
-  // });
 };
 // #endif
 
