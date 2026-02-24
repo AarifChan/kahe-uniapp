@@ -1,5 +1,7 @@
 const fs = require("fs");
+const fsp = require("fs/promises");
 const path = require("path");
+const { spawn } = require("child_process");
 const qiniu = require("qiniu");
 
 // 七牛云配置
@@ -14,9 +16,31 @@ const formUploader = new qiniu.form_up.FormUploader(config);
 const putExtra = new qiniu.form_up.PutExtra();
 const folderName = "kahe-202510";
 
-// 刷新 CDN 缓存
+const PROJECT_ROOT = path.resolve(__dirname, "../..");
+const ANDROID_DIR = path.join(PROJECT_ROOT, "android");
+const H5_INDEX_FILE = path.join(PROJECT_ROOT, "h5/src/pages/index/index.vue");
 
-// 上传文件到七牛云
+const options = { scope: bucket };
+const putPolicy = new qiniu.rs.PutPolicy(options);
+const uploadToken = putPolicy.uploadToken(mac);
+
+function runCommand(command, args, cwd) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, args, {
+      cwd,
+      stdio: "inherit",
+    });
+    child.on("close", (code) => {
+      if (code === 0) {
+        resolve();
+        return;
+      }
+      reject(new Error(`${command} ${args.join(" ")} failed: ${code}`));
+    });
+    child.on("error", reject);
+  });
+}
+
 function uploadFile(localFile, key) {
   return new Promise((resolve, reject) => {
     formUploader.putFile(
@@ -24,53 +48,92 @@ function uploadFile(localFile, key) {
       key,
       localFile,
       putExtra,
-      function (respErr, respBody, respInfo) {
+      (respErr, respBody, respInfo) => {
         if (respErr) {
           reject(respErr);
+          return;
         }
         if (respInfo.statusCode === 200) {
           resolve(respBody);
-        } else {
-          reject(respBody);
+          return;
         }
+        reject(respBody);
       }
     );
   });
 }
 
-// 获取七牛云上传凭证
-const options = {
-  scope: bucket,
-};
-const putPolicy = new qiniu.rs.PutPolicy(options);
-const uploadToken = putPolicy.uploadToken(mac);
+function nowTag() {
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+}
 
-// 遍历 static 文件夹下的所有图片文件
+async function getLatestReleaseApk() {
+  const releaseDir = path.join(ANDROID_DIR, "app/build/outputs/apk/release");
+  const files = await fsp.readdir(releaseDir);
+  const apkFiles = files.filter((name) => name.endsWith(".apk"));
+  if (apkFiles.length === 0) {
+    throw new Error(`未找到 APK 文件: ${releaseDir}`);
+  }
+  const withStat = await Promise.all(
+    apkFiles.map(async (name) => {
+      const abs = path.join(releaseDir, name);
+      const stat = await fsp.stat(abs);
+      return { abs, mtimeMs: stat.mtimeMs };
+    })
+  );
+  withStat.sort((a, b) => b.mtimeMs - a.mtimeMs);
+  return withStat[0].abs;
+}
+
+async function updateAndroidDownloadUrlInH5(url) {
+  const original = await fsp.readFile(H5_INDEX_FILE, "utf8");
+  const pattern = /const ANDROID_APK_URL = ['"][^'"]*['"]/;
+  if (!pattern.test(original)) {
+    throw new Error(`未在 ${H5_INDEX_FILE} 找到 ANDROID_APK_URL 常量，请先接入页面常量`);
+  }
+  const updated = original.replace(pattern, `const ANDROID_APK_URL = '${url}'`);
+  await fsp.writeFile(H5_INDEX_FILE, updated, "utf8");
+}
+
+async function buildAndPublishAndroidApk() {
+  console.log("\n[1/4] 编译 UniApp 离线资源...");
+  await runCommand("bash", ["./scripts/build-android.sh"], PROJECT_ROOT);
+
+  console.log("\n[2/4] 组装 Android Release APK...");
+  const gradlew = process.platform === "win32" ? "gradlew.bat" : "./gradlew";
+  await runCommand(gradlew, [":app:assembleRelease"], ANDROID_DIR);
+
+  console.log("\n[3/4] 上传 APK 到七牛...");
+  const apkPath = await getLatestReleaseApk();
+  const apkKey = `apk/kahe-android-${nowTag()}.apk`;
+  await uploadFile(apkPath, apkKey);
+  const apkUrl = `${cdnDomain}/${apkKey}`;
+  console.log(`[OK] APK 上传成功: ${apkUrl}`);
+
+  console.log("\n[4/4] 回填 H5 安卓下载地址...");
+  await updateAndroidDownloadUrlInH5(apkUrl);
+  console.log(`[OK] 已更新: ${H5_INDEX_FILE}`);
+  console.log(`\n发布完成，安卓下载地址: ${apkUrl}\n`);
+}
+
 function traverseDirectory(dir, prefix = "") {
-  fs.readdir(dir, function (err, files) {
+  fs.readdir(dir, (err, files) => {
     if (err) {
       console.error("Error reading directory:", err);
       return;
     }
-
-    files.forEach(function (file) {
+    files.forEach((file) => {
       const filePath = path.join(dir, file);
-      fs.stat(filePath, function (err, stats) {
-        if (err) {
-          console.error("Error stating file:", err);
+      fs.stat(filePath, (statErr, stats) => {
+        if (statErr) {
+          console.error("Error stating file:", statErr);
           return;
         }
-
         if (stats.isFile()) {
-          // 如果是文件，则上传到七牛云指定目录
           const extname = path.extname(file).toLowerCase();
-
-          if (
-            extname === ".png" ||
-            extname === ".jpg" ||
-            extname === ".jpeg" ||
-            extname === ".gif"
-          ) {
+          if ([".png", ".jpg", ".jpeg", ".gif"].includes(extname)) {
             const key = prefix ? `${prefix}/${file}` : file;
             uploadFile(filePath, key)
               .then((respBody) => {
@@ -81,7 +144,6 @@ function traverseDirectory(dir, prefix = "") {
               });
           }
         } else if (stats.isDirectory()) {
-          // 如果是目录，则递归遍历
           const subPrefix = prefix ? `${prefix}/${file}` : file;
           traverseDirectory(filePath, subPrefix);
         }
@@ -90,5 +152,23 @@ function traverseDirectory(dir, prefix = "") {
   });
 }
 
-// 开始遍历 static 文件夹下的所有图片文件
-traverseDirectory("./src/static", folderName);
+async function main() {
+  const mode = (process.argv[2] || "apk").toLowerCase();
+  if (mode === "apk") {
+    await buildAndPublishAndroidApk();
+    return;
+  }
+  if (mode === "images") {
+    console.log("开始上传 static 图片到七牛...");
+    traverseDirectory(path.resolve(__dirname, "../src/static"), folderName);
+    return;
+  }
+  console.log("用法:");
+  console.log("  node ./scripts/upload_to_qiniu.js apk     # 一键打包 Android 离线 UniApp + 上传 APK + 回填 H5 下载地址");
+  console.log("  node ./scripts/upload_to_qiniu.js images  # 上传 static 图片到七牛");
+}
+
+main().catch((err) => {
+  console.error("[ERROR]", err.message || err);
+  process.exit(1);
+});

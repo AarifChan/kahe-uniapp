@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { ref } from 'vue'
+import Guide from '@/components/guide/index.vue'
+
 defineOptions({
   name: 'Home',
 })
@@ -11,6 +14,33 @@ definePage({
     navigationBarTitleText: '卡牌核心',
   },
 })
+
+// 安卓 APK 下载地址（由 uni-kahe/scripts/upload_to_qiniu.js 自动更新）
+const ANDROID_APK_URL = 'https://jms.85gui7.com/apk/kahe-android-20260224-165741.apk'
+const APP_STORE_URL = 'https://apps.apple.com/cn/app/%E5%8D%A1%E7%89%8C%E6%A0%B8%E5%BF%83/id6758882691'
+
+const showGuide = ref(false)
+
+function isWechatBrowser() {
+  // #ifdef H5
+  const ua = window.navigator.userAgent.toLowerCase()
+  return ua.includes('micromessenger')
+  // #endif
+  return false
+}
+
+function showWechatOpenBrowserGuide() {
+  showGuide.value = true
+}
+
+function triggerAndroidApkDownload() {
+  // #ifdef H5
+  window.location.href = ANDROID_APK_URL
+  // #endif
+  // #ifdef APP-PLUS
+  plus.runtime.openURL(ANDROID_APK_URL)
+  // #endif
+}
 
 // 支持的卡牌游戏列表（产品展示）
 const cardGames = [
@@ -39,32 +69,27 @@ const cardGames = [
     color: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
   },
 ]
-
+const systemInfo = uni.getSystemInfoSync()
+const platform = systemInfo.platform
 // 下载 APP
 function downloadApp() {
-  const systemInfo = uni.getSystemInfoSync()
-
-  if (systemInfo.platform === 'ios') {
-    // iOS 跳转到 TestFlight
-    // #ifdef APP-PLUS
-    plus.runtime.openURL('https://testflight.apple.com/join/v9AdPbW1')
-    // #endif
-    // #ifdef H5
-    window.open('https://testflight.apple.com/join/v9AdPbW1', '_blank')
-    // #endif
-    // #ifdef MP
-    uni.showToast({
-      title: '请前往 App Store 下载 TestFlight',
-      icon: 'none',
-    })
-    // #endif
+  if (platform === 'ios') {
+    // iOS 微信内置浏览器同样可能拦截 App Store 跳转，统一弹引导
+    if (isWechatBrowser()) {
+      showWechatOpenBrowserGuide()
+      return
+    }
+    else {
+      window.location.href = APP_STORE_URL
+    }
   }
-  else if (systemInfo.platform === 'android') {
-    // 安卓提示敬请期待
-    uni.showToast({
-      title: '安卓版本敬请期待',
-      icon: 'none',
-    })
+  else if (platform === 'android') {
+    // 安卓微信内置浏览器无法直接下载 APK，先提示引导
+    if (isWechatBrowser()) {
+      showWechatOpenBrowserGuide()
+      return
+    }
+    triggerAndroidApkDownload()
   }
   else {
     // 其他平台（如 H5、小程序等）
@@ -85,6 +110,7 @@ function goUserAgreement() {
 
 <template>
   <view class="min-h-screen from-blue-50 to-purple-50 bg-gradient-to-b">
+    <Guide v-model:show="showGuide" />
     <!-- 顶部站点导航 -->
     <view class="sticky top-0 z-20 flex items-center justify-between bg-white/90 px-4 py-3 text-xs text-gray-700 shadow-md">
       <view class="font-bold">
@@ -126,6 +152,17 @@ function goUserAgreement() {
         <view class="mx-auto max-w-2xl text-lg text-gray-600 leading-relaxed">
           「卡牌核心」是一款面向卡牌爱好者的集换式卡牌交易平台，涵盖游戏王(OCG、TCG)、宝可梦(PTCG)、数码宝贝(DTCG)、航海王(OPCG)
           等热门卡牌游戏及周边产品，提供安全、便捷的线上交易与交流体验。
+        </view>
+        <view
+          class="h-16 flex items-center justify-center rounded-2xl from-blue-500 to-purple-600 bg-gradient-to-r shadow-lg"
+          @tap.stop="downloadApp"
+        >
+          <text class="text-xl text-white font-bold">
+            立即下载「卡牌核心」APP
+          </text>
+        </view>
+        <view class="mt-4 text-center text-sm text-gray-500">
+          支持 iOS 和 Android 平台
         </view>
       </view>
     </view>
@@ -283,18 +320,6 @@ function goUserAgreement() {
 
     <!-- 下载按钮区域 & 联系方式 & 备案信息 -->
     <view class="px-6 pb-12 pb-safe">
-      <view
-        class="h-16 flex items-center justify-center rounded-2xl from-blue-500 to-purple-600 bg-gradient-to-r shadow-lg active:scale-95"
-        @tap="downloadApp"
-      >
-        <text class="text-xl text-white font-bold">
-          立即下载「卡牌核心」APP
-        </text>
-      </view>
-      <view class="mt-4 text-center text-sm text-gray-500">
-        支持 iOS 和 Android 平台
-      </view>
-
       <!-- 联系方式 -->
       <view class="mt-6 rounded-2xl bg-white/80 p-4 text-xs text-gray-600 leading-relaxed shadow-md">
         <view class="mb-2 text-gray-800 font-semibold">
