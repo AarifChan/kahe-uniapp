@@ -159,51 +159,18 @@ copy_resources() {
     # ---------- iOS Pandora ----------
     mkdir -p "$PANDORA_DIR"
     log_info "复制到 iOS Pandora 目录: $PANDORA_DIR"
-    # 如需完全清空旧资源，可取消下一行注释
-    # rm -rf "$PANDORA_DIR"/*
+    # 每次同步前清空旧资源，避免保留过期文件
+    rm -rf "$PANDORA_DIR"/*
     cp -R "$UNIAPP_BUILD_DIR"/* "$PANDORA_DIR/"
     
     # ---------- Android assets ----------
     if [ -d "$ANDROID_DIR" ]; then
         mkdir -p "$ANDROID_WWW_DIR"
         log_info "复制到 Android 资源目录: $ANDROID_WWW_DIR"
-        # 如需完全清空旧资源，可取消下一行注释
-        # rm -rf "$ANDROID_WWW_DIR"/*
+        # 每次同步前清空旧资源，避免保留过期文件
+        rm -rf "$ANDROID_WWW_DIR"/*
         cp -R "$UNIAPP_BUILD_DIR"/* "$ANDROID_WWW_DIR/"
-        
-        # ---------- 修复 Android __uniappview.html ----------
-        # Vite CLI 编译产出的 __uniappview.html 使用 uni-app-view.umd.js（Web 运行时），
-        # 但 DCloud Android 原生 SDK 需要加载 view.umd.min.js + app-view.js 才能正常工作。
-        # 这里替换为 SDK 兼容的格式。
-        ANDROID_VIEW_HTML="$ANDROID_WWW_DIR/__uniappview.html"
-        if [ -f "$ANDROID_VIEW_HTML" ]; then
-            log_info "修复 Android __uniappview.html（适配原生 SDK 运行时）..."
-            cat > "$ANDROID_VIEW_HTML" << 'VIEWHTML'
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <script>
-      var __UniViewStartTime__ = Date.now();
-      var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
-        CSS.supports('top: constant(a)'))
-      document.write(
-        '<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
-        (coverSupport ? ', viewport-fit=cover' : '') + '" />')
-    </script>
-    <title>View</title>
-    <link rel="stylesheet" href="view.css" />
-  </head>
-  <body>
-    <div id="app"></div>
-    <script src="view.umd.min.js"></script>
-    <script src="app-view.js"></script>
-  </body>
-</html>
-VIEWHTML
-            log_info "Android __uniappview.html 已修复 ✓"
-        fi
-        
+
         log_info "Android 资源复制完成 ✓"
     else
         log_warn "未检测到 Android 工程目录: $ANDROID_DIR，已跳过 Android 资源复制"

@@ -41,6 +41,8 @@ UNIAPP_DIR="$PROJECT_ROOT/uni-kahe"
 ANDROID_DIR="$PROJECT_ROOT/android"
 ANDROID_APP_ID="__UNI__2BE2CDB"
 ANDROID_WWW_DIR="$ANDROID_DIR/app/src/main/assets/apps/$ANDROID_APP_ID/www"
+DEMO_WWW_DIR="/Users/fuqiang/Downloads/最新版/4.87/Android-SDK@4.87.82540_20251128/HBuilder-HelloUniApp/app/src/main/assets/apps/__UNI__B/www"
+EXPECTED_UNI_COMPILER_VERSION="4.87"
 
 # 构建模式：production 或 development
 BUILD_MODE="production"
@@ -96,7 +98,7 @@ check_environment() {
 
 # ==================== 编译 UniApp ====================
 build_uniapp() {
-    log_info "开始编译 UniApp (app-plus 平台, Android)..."
+    log_info "开始编译 UniApp (app 通用平台)..."
     log_info "构建模式: $BUILD_MODE"
     
     cd "$UNIAPP_DIR"
@@ -108,12 +110,14 @@ build_uniapp() {
     fi
     
     # 根据模式选择编译命令
+    # 注意：为兼容当前 Android 离线 SDK，统一使用 app 通用平台产物（dist/build/app）
+    # 避免 app-android 专用产物与壳侧运行时格式不一致（如 uni-app-view.umd.js / app-view.js 差异）
     if [ "$BUILD_MODE" = "development" ]; then
-        log_info "执行: yarn build:app-android --mode development"
-        yarn build:app-android --mode development
+        log_info "执行: yarn build:app --mode development"
+        yarn build:app --mode development
     else
-        log_info "执行: yarn build:app-android"
-        yarn build:app-android
+        log_info "执行: yarn build:app"
+        yarn build:app
     fi
     
     if [ $? -ne 0 ]; then
@@ -127,177 +131,96 @@ build_uniapp() {
 # ==================== 复制资源到 Android assets ====================
 copy_resources() {
     log_info "开始复制 UniApp 资源到 Android assets..."
-    
+    local source_www_dir=""
+    local app_control_xml="$ANDROID_DIR/app/src/main/assets/apps/$ANDROID_APP_ID/control.xml"
+
     # UniApp 编译输出目录（app-android 平台输出到 dist/build/app）
     UNIAPP_BUILD_DIR="$UNIAPP_DIR/dist/build/app"
-    
-    if [ ! -d "$UNIAPP_BUILD_DIR" ]; then
-        log_error "UniApp 编译输出目录不存在: $UNIAPP_BUILD_DIR"
-        log_error "请先执行编译步骤"
-        exit 1
+
+    if [ "$USE_DEMO_WWW" = true ]; then
+        source_www_dir="$DEMO_WWW_DIR"
+        log_warn "A/B 测试模式：使用 demo 的 www 资源"
+        if [ ! -d "$source_www_dir" ]; then
+            log_error "Demo www 目录不存在: $source_www_dir"
+            exit 1
+        fi
+    else
+        source_www_dir="$UNIAPP_BUILD_DIR"
+        if [ ! -d "$source_www_dir" ]; then
+            log_error "UniApp 编译输出目录不存在: $source_www_dir"
+            log_error "请先执行编译步骤"
+            exit 1
+        fi
     fi
     
     # 创建 Android assets 目录并复制资源
     mkdir -p "$ANDROID_WWW_DIR"
     log_info "复制到 Android 资源目录: $ANDROID_WWW_DIR"
-    
-    # 如需完全清空旧资源，可取消下一行注释
-    # rm -rf "$ANDROID_WWW_DIR"/*
-    
-    cp -R "$UNIAPP_BUILD_DIR"/* "$ANDROID_WWW_DIR/"
-    
-    # ---------- 修复 Android __uniappview.html ----------
-    # Vite CLI 编译产出的 __uniappview.html 需要适配 Android 原生 SDK
-    # 使用 uni-app-view.umd.js (Vite 构建的 View 层运行时)
-    ANDROID_VIEW_HTML="$ANDROID_WWW_DIR/__uniappview.html"
-    if [ -f "$ANDROID_VIEW_HTML" ]; then
-        log_info "修复 Android __uniappview.html（适配原生 SDK 运行时）..."
-        cat > "$ANDROID_VIEW_HTML" << 'VIEWHTML'
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <script>
-      var __UniViewStartTime__ = Date.now();
-      document.addEventListener('DOMContentLoaded', function() {
-          document.documentElement.style.fontSize = document.documentElement.clientWidth / 20 + 'px'
-      })
-      var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
-        CSS.supports('top: constant(a)'))
-      document.write(
-        '<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
-        (coverSupport ? ', viewport-fit=cover' : '') + '" />')
-    </script>
-    <title>View</title>
-    <link rel="stylesheet" href="view.css" />
-  </head>
-  <body>
-    <div id="app"></div>
-    <script src="view.umd.min.js"></script>
-    <script src="app-view.js"></script>
-  </body>
-</html>
-VIEWHTML
-        log_info "Android __uniappview.html 已修复 ✓"
+
+    # 每次同步前清空旧资源，避免残留旧版运行时文件导致卡闪屏
+    rm -rf "$ANDROID_WWW_DIR"/*
+    cp -R "$source_www_dir"/* "$ANDROID_WWW_DIR/"
+
+    # demo www 的 manifest id 是 __UNI__B，需要改写为当前壳工程 AppID 才能正确启动
+    if [ "$USE_DEMO_WWW" = true ] && [ -f "$ANDROID_WWW_DIR/manifest.json" ]; then
+        sed -i '' "s/\"id\":\"__UNI__B\"/\"id\":\"$ANDROID_APP_ID\"/g" "$ANDROID_WWW_DIR/manifest.json"
+        log_info "已重写 demo manifest appid 为: $ANDROID_APP_ID"
     fi
-    
-    # 创建 view.css（如果不存在）
-    if [ -f "$ANDROID_WWW_DIR/app.css" ] && [ ! -f "$ANDROID_WWW_DIR/view.css" ]; then
-        log_info "创建 view.css（从 app.css 复制）..."
-        cp "$ANDROID_WWW_DIR/app.css" "$ANDROID_WWW_DIR/view.css"
-        log_info "view.css 已创建 ✓"
-    fi
-    
-    # ---------- 创建 control.xml（如果不存在）----------
-    # DCloud 离线打包必需的控制文件
-    ANDROID_APP_DIR="$ANDROID_DIR/app/src/main/assets/apps/$ANDROID_APP_ID"
-    CONTROL_XML="$ANDROID_APP_DIR/control.xml"
-    if [ ! -f "$CONTROL_XML" ]; then
-        log_warn "control.xml 不存在，正在创建..."
-        mkdir -p "$ANDROID_APP_DIR"
-        cat > "$CONTROL_XML" << 'CONTROLXML'
+
+    if [ -f "$ANDROID_WWW_DIR/manifest.json" ]; then
+        local manifest_id
+        local manifest_compiler_version
+        local manifest_nvue_launch_mode
+        local manifest_version_name
+        node -e "const fs=require('fs');const p=process.argv[1];const m=JSON.parse(fs.readFileSync(p,'utf8'));m.plus=m.plus||{};m.plus['uni-app']=m.plus['uni-app']||{};m.plus['uni-app'].nvueLaunchMode='fast';fs.writeFileSync(p,JSON.stringify(m,null,2));" "$ANDROID_WWW_DIR/manifest.json"
+        manifest_id=$(node -e "const fs=require('fs');const m=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));console.log(m.id||'');" "$ANDROID_WWW_DIR/manifest.json")
+        manifest_compiler_version=$(node -e "const fs=require('fs');const m=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));console.log(((m.plus||{})['uni-app']||{}).compilerVersion||'');" "$ANDROID_WWW_DIR/manifest.json")
+        manifest_nvue_launch_mode=$(node -e "const fs=require('fs');const m=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));console.log((((m.plus||{})['uni-app']||{}).nvueLaunchMode||''));" "$ANDROID_WWW_DIR/manifest.json")
+        manifest_version_name=$(node -e "const fs=require('fs');const m=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));console.log((((m.version||{}).name)||'1.0.0'));" "$ANDROID_WWW_DIR/manifest.json")
+
+        log_info "manifest appid: $manifest_id"
+        log_info "manifest compilerVersion: $manifest_compiler_version"
+        log_info "manifest nvueLaunchMode: $manifest_nvue_launch_mode"
+
+        if [ "$manifest_id" != "$ANDROID_APP_ID" ]; then
+            log_error "manifest appid 不匹配，期望: $ANDROID_APP_ID，实际: $manifest_id"
+            exit 1
+        fi
+
+        if [ "$USE_DEMO_WWW" = false ] && [ "$manifest_compiler_version" != "$EXPECTED_UNI_COMPILER_VERSION" ]; then
+            log_error "compilerVersion 不匹配，期望: $EXPECTED_UNI_COMPILER_VERSION，实际: $manifest_compiler_version"
+            log_error "请先升级/对齐 UniApp CLI 版本，避免出现“3.1.22 与 4.87 不匹配”弹窗"
+            exit 1
+        fi
+
+        # 生成离线包 control.xml（壳读取主应用入口所需）
+        # 说明：dcloud_control.xml 位于 assets/data，用于应用列表；
+        # control.xml 位于 assets/apps/<appid>/，用于该 app 离线包控制信息。
+        cat > "$app_control_xml" <<EOF
 <?xml version="1.0" encoding="utf-8"?>
-<hbuilder version="1.9.9.65453">
+<hbuilder version="1.9.9.82540">
 <apps>
-    <app appid="__UNI__2BE2CDB" appver="1.0.0"/>
+    <app appid="$manifest_id" appver="$manifest_version_name"/>
 </apps>
 </hbuilder>
-CONTROLXML
-        log_info "control.xml 已创建 ✓"
-    else
-        log_info "control.xml 已存在"
+EOF
+        log_info "已生成 control.xml: $app_control_xml (appver=$manifest_version_name)"
     fi
-    
-    # 创建 view.umd.min.js 软链接（如果不存在）
-    if [ -f "$ANDROID_WWW_DIR/uni-app-view.umd.js" ] && [ ! -f "$ANDROID_WWW_DIR/view.umd.min.js" ]; then
-        log_info "创建 view.umd.min.js（软链接到 uni-app-view.umd.js）..."
-        ln -sf uni-app-view.umd.js "$ANDROID_WWW_DIR/view.umd.min.js" 2>/dev/null || \
-            cp "$ANDROID_WWW_DIR/uni-app-view.umd.js" "$ANDROID_WWW_DIR/view.umd.min.js"
-        log_info "view.umd.min.js 已创建 ✓"
-    fi
-    
-    # ---------- 修复 app-config.js ----------
-    # 如果 app-config.js 是空的，需要创建基本配置
-    APP_CONFIG_JS="$ANDROID_WWW_DIR/app-config.js"
-    if [ -f "$APP_CONFIG_JS" ]; then
-        # 检查文件大小，如果小于 50 字节视为空
-        file_size=$(stat -f%z "$APP_CONFIG_JS" 2>/dev/null || stat -c%s "$APP_CONFIG_JS" 2>/dev/null || echo 0)
-        if [ "$file_size" -lt 50 ]; then
-            log_warn "app-config.js 几乎为空 ($file_size bytes)，正在修复..."
-            cat > "$APP_CONFIG_JS" << 'CONFIGJS'
-(function(){
-  var config = {
-    "pages": [
-      "pages/index/index",
-      "pages/home/index",
-      "pages/mine/index",
-      "pages/box/index",
-      "pages/machine/index",
-      "pages/merchant/index",
-      "pages/login/index"
-    ],
-    "subPackages": [],
-    "globalStyle": {
-      "navigationBarTextStyle": "black",
-      "navigationBarTitleText": "",
-      "navigationBarBackgroundColor": "#FDEFCC",
-      "backgroundColor": "#FDEFCC"
-    },
-    "tabBar": {
-      "custom": true,
-      "list": [
-        {"pagePath": "pages/home/index", "text": "首页"},
-        {"pagePath": "pages/merchant/index", "text": "商家"},
-        {"pagePath": "pages/machine/index", "text": "抽卡机"},
-        {"pagePath": "pages/box/index", "text": "盒柜"},
-        {"pagePath": "pages/mine/index", "text": "我的"}
-      ]
-    }
-  };
-  if (typeof exports !== 'undefined') {
-    exports.config = config;
-  }
-  if (typeof window !== 'undefined') {
-    window.__uniConfig = config;
-  }
-})();
-CONFIGJS
-            log_info "app-config.js 已修复 ✓"
-        else
-            log_info "app-config.js 正常 ($file_size bytes)"
-        fi
-    else
-        log_warn "app-config.js 不存在"
-    fi
-    
-    # ---------- 创建 app-view.js ----------
-    # 如果 app-view.js 不存在，需要创建
-    APP_VIEW_JS="$ANDROID_WWW_DIR/app-view.js"
-    if [ ! -f "$APP_VIEW_JS" ]; then
-        log_warn "app-view.js 不存在，正在创建..."
-        cat > "$APP_VIEW_JS" << 'VIEWJS'
-(function() {
-  'use strict';
-  if (typeof uni === 'undefined') {
-    console.error('uni is not defined');
-    return;
-  }
-  if (typeof Vue !== 'undefined') {
-    var app = Vue.createApp({});
-    if (window.__uniConfig) {
-      app.config.globalProperties.$config = window.__uniConfig;
-    }
-  }
-  if (typeof plus !== 'undefined' && plus.webview) {
-    var currentWebview = plus.webview.currentWebview();
-    if (currentWebview) {
-      currentWebview.evalJS('typeof __uniapp__ready !== "undefined" && __uniapp__ready()');
-    }
-  }
-  document.dispatchEvent(new Event('uni-app-ready'));
-})();
-VIEWJS
-        log_info "app-view.js 已创建 ✓"
+
+    # 可选：仅在显式开启时注入旧壳视图运行时文件
+    # 默认关闭，避免“新壳产物 + 旧壳入口”混用导致启动链路异常
+    if [ "$USE_LEGACY_VIEW_RUNTIME" = true ] && [ "$USE_DEMO_WWW" = false ] && [ -f "$ANDROID_WWW_DIR/uni-app-view.umd.js" ] && [ ! -f "$ANDROID_WWW_DIR/app-view.js" ]; then
+        log_warn "已开启 legacy 视图运行时注入：开始覆盖旧壳文件"
+        local runtime_files=( "__uniappview.html" "__uniappes6.js" "view.umd.min.js" "app-view.js" "view.css" )
+        local f=""
+        for f in "${runtime_files[@]}"; do
+            if [ -f "$DEMO_WWW_DIR/$f" ]; then
+                cp "$DEMO_WWW_DIR/$f" "$ANDROID_WWW_DIR/$f"
+            else
+                log_warn "demo 运行时文件缺失，跳过: $f"
+            fi
+        done
+        log_info "legacy 视图运行时文件注入完成"
     fi
     
     log_info "Android 资源复制完成 ✓"
@@ -312,6 +235,8 @@ main() {
     # 解析命令行参数
     SKIP_UNIAPP_BUILD=false
     SKIP_COPY=false
+    USE_DEMO_WWW=false
+    USE_LEGACY_VIEW_RUNTIME=false
     
     while [[ $# -gt 0 ]]; do
         case $1 in
@@ -323,9 +248,20 @@ main() {
                 SKIP_COPY=true
                 shift
                 ;;
+            --use-demo-www)
+                USE_DEMO_WWW=true
+                SKIP_UNIAPP_BUILD=true
+                log_warn "已启用 demo www 测试模式，将跳过 UniApp 编译"
+                shift
+                ;;
             --test)
                 BUILD_MODE="development"
                 log_info "已切换到测试环境模式"
+                shift
+                ;;
+            --legacy-view-runtime)
+                USE_LEGACY_VIEW_RUNTIME=true
+                log_warn "已启用 legacy 视图运行时注入（仅用于兼容性排查）"
                 shift
                 ;;
             --mode)
@@ -347,6 +283,8 @@ main() {
                 echo "选项:"
                 echo "  --skip-uniapp      跳过 UniApp 编译，仅同步已有编译结果"
                 echo "  --skip-copy        跳过资源复制"
+                echo "  --use-demo-www     使用 SDK demo 的 www 资源做 A/B 测试（自动跳过 UniApp 编译）"
+                echo "  --legacy-view-runtime  强制注入 demo 旧壳视图运行时（仅用于兼容性排查）"
                 echo "  --test             使用测试环境配置打包（等价于 --mode development）"
                 echo "  --mode <mode>      指定构建模式: dev/development/test 或 prod/production（默认: production）"
                 echo "  --help             显示帮助信息"
@@ -355,6 +293,7 @@ main() {
                 echo "  $0                 # 生产环境打包并同步到 Android"
                 echo "  $0 --test          # 测试环境打包并同步到 Android"
                 echo "  $0 --mode dev      # 测试环境打包并同步到 Android"
+                echo "  $0 --use-demo-www  # 用 demo 的 www 覆盖 Android 资源做 A/B 测试"
                 exit 0
                 ;;
             *)

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      强制覆盖 SDK 侧同名主题，确保 WebAppActivity 始终使用 AppCompat 后代主题。
+      避免启动/重建 Activity 时触发 "You need to use a Theme.AppCompat theme" 崩溃。
+    -->
+    <style name="DCloudTheme" parent="Theme.AppCompat.DayNight.NoActionBar" />
+    <style name="DCloudTheme.Light" parent="Theme.AppCompat.Light.NoActionBar" />
+    <style name="AppCompat.ThemeNoTitleBar" parent="Theme.AppCompat.Light.NoActionBar" />
+    <style name="ThemeNoTitleBar" parent="Theme.AppCompat.Light.NoActionBar" />
+</resources>
