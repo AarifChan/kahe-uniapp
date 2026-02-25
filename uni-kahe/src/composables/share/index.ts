@@ -1,3 +1,4 @@
+/* global plus, uni, console */
 import { ShowToast } from "@/utils";
 
 export interface WeixinMiniProgramShareOptions {
@@ -8,7 +9,9 @@ export interface WeixinMiniProgramShareOptions {
 
 const DEFAULT_MINI_PROGRAM_ID = "gh_4a7522ad6b7a";
 const DEFAULT_WEB_URL = "https://app.91tcg.com";
-const DEFAULT_SCENE: "WXSceneSession" | "WXSenceTimeline" = "WXSceneSession";
+// Use a tiny fixed image as emergency thumbnail fallback for WeChat.
+const DEFAULT_FALLBACK_IMAGE = "https://jms.85gui7.com/share.png";
+const DEFAULT_SCENE: "WXSceneSession" | "WXSceneTimeline" = "WXSceneSession";
 const DEFAULT_MINI_PROGRAM_TYPE: 0 | 1 | 2 = 0;
 
 export function shareWeixinMiniProgramCard(options: WeixinMiniProgramShareOptions) {
@@ -20,6 +23,7 @@ export function shareWeixinMiniProgramCard(options: WeixinMiniProgramShareOption
   }
 
   // #ifdef APP-PLUS
+  let wxInstalled = false;
   try {
     const wxByAction = plus.runtime.isApplicationExist({
       pname: "com.tencent.mm",
@@ -28,6 +32,7 @@ export function shareWeixinMiniProgramCard(options: WeixinMiniProgramShareOption
     const wxByPkg = plus.runtime.isApplicationExist({
       pname: "com.tencent.mm",
     });
+    wxInstalled = !!(wxByAction || wxByPkg);
     console.log("[Share][Weixin] install check:", {
       wxByAction,
       wxByPkg,
@@ -38,29 +43,57 @@ export function shareWeixinMiniProgramCard(options: WeixinMiniProgramShareOption
     console.log("[Share][Weixin] install check error:", e);
   }
 
-  uni.share({
-    provider: "weixin",
-    type: 5,
-    scene: DEFAULT_SCENE,
-    title,
-    imageUrl,
-    miniProgram: {
-      id: DEFAULT_MINI_PROGRAM_ID,
-      path,
-      type: DEFAULT_MINI_PROGRAM_TYPE,
-      webUrl: DEFAULT_WEB_URL,
-    },
-    success: (ret) => {
-      ShowToast("分享成功");
-      console.log(JSON.stringify(ret));
-    },
-    fail: (err: any) => {
-      console.error("分享失败:", err);
-      const message = err?.message || err?.msg || "unknown";
-      const code = err?.code ?? "";
-      ShowToast(`分享失败(${code}): ${message}`);
-    },
-  });
+  if (!wxInstalled) {
+    ShowToast("请先安装微信");
+    return;
+  }
+
+  const doShare = (thumb: string, isRetry: boolean) => {
+    uni.share({
+      provider: "weixin",
+      type: 5,
+      scene: DEFAULT_SCENE,
+      title,
+      imageUrl: thumb,
+      miniProgram: {
+        id: DEFAULT_MINI_PROGRAM_ID,
+        path,
+        type: DEFAULT_MINI_PROGRAM_TYPE,
+        webUrl: DEFAULT_WEB_URL,
+      },
+      success: (ret) => {
+        ShowToast("分享成功");
+        console.log(JSON.stringify(ret));
+      },
+      fail: (err: any) => {
+        const code = err?.code ?? "";
+        const message = err?.message || err?.msg || err?.errMsg || "unknown";
+        const raw = (() => {
+          try {
+            return JSON.stringify(err);
+          } catch {
+            return String(err);
+          }
+        })();
+        console.error("[Share][Weixin] 分享失败:", { code, message, raw, thumb, isRetry });
+
+        const thumbInvalid =
+          String(code) === "-100" ||
+          /thumbData|checkArgs|not be null|128kb/i.test(String(message)) ||
+          /thumbData|checkArgs|not be null|128kb/i.test(String(raw));
+
+        if (!isRetry && thumbInvalid && thumb !== DEFAULT_FALLBACK_IMAGE) {
+          console.warn("[Share][Weixin] 缩略图疑似不合规，使用 fallback 缩略图重试");
+          doShare(DEFAULT_FALLBACK_IMAGE, true);
+          return;
+        }
+
+        ShowToast(`分享失败(${code}): ${message}`);
+      },
+    });
+  };
+
+  doShare(imageUrl || DEFAULT_FALLBACK_IMAGE, false);
   // #endif
 
   // #ifndef APP-PLUS
