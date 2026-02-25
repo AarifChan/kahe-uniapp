@@ -94,26 +94,50 @@
               <view class="detail-bottom-left-box-text"> 抽奖码 </view>
             </view>
           </view>
-          <button
-            v-if="userDetail.status === 1"
-            open-type="share"
-            class="detail-bottom-right"
-          >
-            <image
-              class="detail-bottom-right-img"
-              src="https://jms.85gui7.com/kahe-202510/ka-he/common/btn-big-bg.png"
-            />
-            <view class="detail-bottom-right-title theme-font text-stroke-main">
-              更多抽奖码
+          <view class="detail-bottom-actions">
+            <!-- #ifdef MP-WEIXIN -->
+            <button class="detail-bottom-share" open-type="share">
+              <image
+                class="detail-bottom-share-img"
+                src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
+              />
+              <view class="detail-bottom-share-title theme-font text-stroke-main">
+                分享
+              </view>
+            </button>
+            <!-- #endif -->
+            <!-- #ifndef MP-WEIXIN -->
+            <view class="detail-bottom-share" @tap.stop="handleClickShare">
+              <image
+                class="detail-bottom-share-img"
+                src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
+              />
+              <view class="detail-bottom-share-title theme-font text-stroke-main">
+                分享
+              </view>
             </view>
-          </button>
-          <view v-else class="detail-bottom-right" @tap.stop="tapPrizeAction">
-            <image
-              class="detail-bottom-right-img"
-              src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
-            />
-            <view class="detail-bottom-right-title theme-font text-stroke-main">
-              参与抽奖
+            <!-- #endif -->
+            <button
+              v-if="userDetail.status === 1"
+              open-type="share"
+              class="detail-bottom-right"
+            >
+              <image
+                class="detail-bottom-right-img"
+                src="https://jms.85gui7.com/kahe-202510/ka-he/common/btn-big-bg.png"
+              />
+              <view class="detail-bottom-right-title theme-font text-stroke-main">
+                更多抽奖码
+              </view>
+            </button>
+            <view v-else class="detail-bottom-right" @tap.stop="tapPrizeAction">
+              <image
+                class="detail-bottom-right-img"
+                src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
+              />
+              <view class="detail-bottom-right-title theme-font text-stroke-main">
+                参与抽奖
+              </view>
             </view>
           </view>
         </view>
@@ -144,6 +168,8 @@ import { onShareAppMessage, onShareTimeline, onShow } from "@dcloudio/uni-app";
 import { UserModule } from "@/store/modules/user";
 import type { UserGoodsModel } from "@/model";
 import type { WareDetailGoods } from "@/model/welfare";
+import { shareWeixinMiniProgramCard } from "@/composables/share";
+import { ShowToast } from "@/utils";
 
 import Merchant from "./components/merchant.vue";
 
@@ -221,6 +247,17 @@ const clickActivity = () => {
 const clickRewardCode = () => {
   uni.navigateTo({
     url: `/subPackages/product/reward-code/index?aid=${aid.value}`,
+  });
+};
+const handleClickShare = () => {
+  if (!aid.value) {
+    ShowToast("活动信息异常，暂无法分享");
+    return;
+  }
+  shareWeixinMiniProgramCard({
+    title: `${UserModule.userInfo.nickname}邀请您来助力免费得奖品！`,
+    imageUrl: welfareDetails.value.logo || "https://jms.85gui7.com/kahe-202510/common/share.jpg",
+    path: `/subPackages/product/welfare-detail/index?aid=${aid.value}&obj=${UserModule.userInfo.uid}`,
   });
 };
 onShareAppMessage(() => {
@@ -416,6 +453,11 @@ onShareTimeline(() => {
         }
       }
     }
+    &-actions {
+      display: flex;
+      align-items: center;
+      gap: 12rpx;
+    }
 
     &-right {
       position: relative;
@@ -439,6 +481,38 @@ onShareTimeline(() => {
         text-align: center;
         width: 100%;
       }
+    }
+    &-share {
+      position: relative;
+      width: 160rpx;
+      height: 76rpx;
+      display: flex;
+      margin: 0;
+      align-items: center;
+      justify-content: center;
+      background-color: transparent;
+      border: 0;
+      padding: 0;
+      line-height: normal;
+      &-img {
+        width: 100%;
+        height: 100%;
+      }
+      &-title {
+        position: absolute;
+        left: 0;
+        top: 8rpx;
+        font-size: 24rpx;
+        color: #ffffff;
+        text-align: center;
+        width: 100%;
+      }
+    }
+    &-share::after {
+      margin: 0;
+      padding: 0;
+      background-color: transparent;
+      border: 0;
     }
     &-right::after {
       margin: 0;

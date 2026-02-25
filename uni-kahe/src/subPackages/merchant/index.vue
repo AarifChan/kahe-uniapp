@@ -7,6 +7,16 @@
         <!--                src="https://jms.85gui7.com/kahe-202510/merchant/contact.png"-->
         <!--            />联系商家</view-->
         <!--        >-->
+        <!-- #ifdef MP-WEIXIN -->
+        <button class="merchantInfo-share merchantInfo-share-btn" open-type="share">
+            <image class="merchantInfo-contact-img" src="https://jms.85gui7.com/share.png" />分享商家
+        </button>
+        <!-- #endif -->
+        <!-- #ifndef MP-WEIXIN -->
+        <view class="merchantInfo-share" @tap.stop="handleClickShare">
+            <image class="merchantInfo-contact-img" src="https://jms.85gui7.com/share.png" />分享商家
+        </view>
+        <!-- #endif -->
         <view class="merchantInfo-complain" @tap.stop="handleClickComplain">
             <image class="merchantInfo-contact-img" src="https://jms.85gui7.com/kahe-202510/merchant/complaint.png" />投诉商家
         </view>
@@ -80,6 +90,8 @@ import { UserModule } from "@/store/modules/user";
 import { useLogin } from "@/composables/login";
 import { AppModule } from "@/store/modules/app";
 import { eventBus } from "@/utils/event";
+import { shareWeixinMiniProgramCard } from "@/composables/share";
+import { ShowToast } from "@/utils";
 const { loginShow, handleLogin } = useLogin();
 const { getMerchantDetail, detail, handleClickItem } = useMerchantDetail();
 const {
@@ -129,6 +141,19 @@ const handleClickComplain = () => {
     uni.previewImage({
         current: image,
         urls: [image],
+    });
+};
+
+const handleClickShare = () => {
+    const id = detail.value?.id;
+    if (!id) {
+        ShowToast("商家信息异常，暂无法分享");
+        return;
+    }
+    shareWeixinMiniProgramCard({
+        title: `${UserModule.userInfo?.nickname ?? ""}邀请你来卡核抽取各种稀有卡牌！`,
+        imageUrl: detail.value.icon || detail.value.logo || "https://jms.85gui7.com/kahe-202510/common/share.jpg",
+        path: `/subPackages/merchant/index?merchantId=${id}`,
     });
 };
 
@@ -241,6 +266,39 @@ const merchantTabList = [
             width: 24rpx;
             height: 24rpx;
         }
+    }
+
+    &-share,
+    &-share:after,
+    &-share:before {
+        position: absolute;
+        right: -4rpx;
+        top: 156rpx;
+
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 22rpx 0 0 22rpx;
+        border: 2px solid #ffffff;
+        font-weight: normal;
+        font-size: 24rpx;
+        color: #ffffff;
+        text-align: center;
+        line-height: 40rpx;
+        padding: 2rpx 8rpx;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    &-share-btn {
+        padding: 2rpx 8rpx;
+        border: 0;
+        background: rgba(0, 0, 0, 0.5);
+        line-height: 40rpx;
+    }
+
+    &-share-btn::after {
+        border: 0;
     }
 
     &-content {
@@ -389,8 +447,6 @@ const merchantTabList = [
             grid-template-columns: repeat(auto-fill,
                     minmax(calc((100% - 10px) / 2), 1fr)); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
             grid-gap: 10px; // 这是网格间的间隙，根据需要调整
-
-            &-item {}
         }
     }
 }

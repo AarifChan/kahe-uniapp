@@ -62,6 +62,7 @@ import { PropType, ref, watch } from "vue";
 import { UserModule } from "@/store/modules/user";
 import { ShowToast } from "@/utils";
 import { showInGroupImage } from "@/utils/tools";
+import { shareWeixinMiniProgramCard } from "@/composables/share";
 const { checkIsFavorite, handleFavoriteAction } = useFavorite();
 const actionList = ref([
   {
@@ -151,34 +152,11 @@ const handleShare = () => {
     return;
   }
   const sharePath = `/subPackages/product/detail/index?pid=${pid}`;
-
-  // #ifdef APP-PLUS
-  uni.share({
-    provider: "weixin",
-    type: 5,
-    scene: "WXSceneSession",
+  shareWeixinMiniProgramCard({
     title: "这个箱子快出货了，速来！",
     imageUrl: props.product?.image || "https://jms.85gui7.com/kahe-202510/common/share.jpg",
-    miniProgram: {
-      id: "gh_4a7522ad6b7a",
-      path: sharePath,
-      type: 0,
-      webUrl: "https://app.91tcg.com",
-    },
-    success: (ret) => {
-      ShowToast("分享成功");
-      console.log(JSON.stringify(ret));
-    },
-    fail: (err) => {
-      console.error("分享失败:", err);
-      ShowToast("分享失败，请检查是否已安装微信");
-    },
+    path: sharePath,
   });
-  // #endif
-
-  // #ifndef APP-PLUS
-  ShowToast("请在APP内使用微信分享");
-  // #endif
 }
 const emits = defineEmits(["didTapReload"]);
 watch(
