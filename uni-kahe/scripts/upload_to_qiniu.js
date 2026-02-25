@@ -14,11 +14,13 @@ const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 const config = new qiniu.conf.Config();
 const formUploader = new qiniu.form_up.FormUploader(config);
 const putExtra = new qiniu.form_up.PutExtra();
+const cdnManager = new qiniu.cdn.CdnManager(mac);
 const folderName = "kahe-202510";
 
 const PROJECT_ROOT = path.resolve(__dirname, "../..");
 const ANDROID_DIR = path.join(PROJECT_ROOT, "android");
 const H5_INDEX_FILE = path.join(PROJECT_ROOT, "h5/src/pages/index/index.vue");
+const H5_DIR = path.join(PROJECT_ROOT, "h5");
 
 const options = { scope: bucket };
 const putPolicy = new qiniu.rs.PutPolicy(options);
@@ -63,6 +65,26 @@ function uploadFile(localFile, key) {
   });
 }
 
+function refreshCdnUrls(urls) {
+  return new Promise((resolve, reject) => {
+    if (!Array.isArray(urls) || urls.length === 0) {
+      resolve();
+      return;
+    }
+    cdnManager.refreshUrls(urls, (respErr, respBody, respInfo) => {
+      if (respErr) {
+        reject(respErr);
+        return;
+      }
+      if (respInfo && respInfo.statusCode >= 200 && respInfo.statusCode < 300) {
+        resolve(respBody);
+        return;
+      }
+      reject(new Error(`刷新 CDN 失败: ${JSON.stringify(respBody)}`));
+    });
+  });
+}
+
 function nowTag() {
   const d = new Date();
   const pad = (n) => String(n).padStart(2, "0");
@@ -97,6 +119,14 @@ async function updateAndroidDownloadUrlInH5(url) {
   await fsp.writeFile(H5_INDEX_FILE, updated, "utf8");
 }
 
+async function deployH5ToBothSites() {
+  const deployScript = "./scripts/deploy-h5.sh";
+  console.log(">>> 发布 H5 到 m.85gui7.com");
+  await runCommand("bash", [deployScript, "m"], H5_DIR);
+  console.log(">>> 发布 H5 到 app.91tcg.com");
+  await runCommand("bash", [deployScript, "app"], H5_DIR);
+}
+
 async function buildAndPublishAndroidApk() {
   console.log("\n[1/4] 编译 UniApp 离线资源...");
   await runCommand("bash", ["./scripts/build-android.sh"], PROJECT_ROOT);
@@ -105,16 +135,25 @@ async function buildAndPublishAndroidApk() {
   const gradlew = process.platform === "win32" ? "gradlew.bat" : "./gradlew";
   await runCommand(gradlew, [":app:assembleRelease"], ANDROID_DIR);
 
-  console.log("\n[3/4] 上传 APK 到七牛...");
+  console.log("\n[3/5] 上传 APK 到七牛...");
   const apkPath = await getLatestReleaseApk();
   const apkKey = `apk/kahe-android-${nowTag()}.apk`;
   await uploadFile(apkPath, apkKey);
   const apkUrl = `${cdnDomain}/${apkKey}`;
   console.log(`[OK] APK 上传成功: ${apkUrl}`);
 
-  console.log("\n[4/4] 回填 H5 安卓下载地址...");
+  console.log("\n[4/5] 强制刷新七牛 CDN 缓存...");
+  await refreshCdnUrls([apkUrl]);
+  console.log("[OK] CDN 缓存刷新成功");
+
+  console.log("\n[5/6] 回填 H5 安卓下载地址...");
   await updateAndroidDownloadUrlInH5(apkUrl);
   console.log(`[OK] 已更新: ${H5_INDEX_FILE}`);
+
+  console.log("\n[6/6] 发布 H5 到 m.85gui7.com 和 app.91tcg.com...");
+  await deployH5ToBothSites();
+  console.log("[OK] H5 双站点发布完成");
+
   console.log(`\n发布完成，安卓下载地址: ${apkUrl}\n`);
 }
 

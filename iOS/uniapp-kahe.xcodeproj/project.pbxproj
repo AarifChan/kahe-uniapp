@@ -63,6 +63,8 @@
 		4F8546B12518D8BF00858D80 /* storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A1967C42125371000B330A9 /* storage.framework */; };
 		4FA53F7726E5D01300BAD6A0 /* uni-jsframework-vue3.js in Resources */ = {isa = PBXBuildFile; fileRef = 4FA53F7626E5D01300BAD6A0 /* uni-jsframework-vue3.js */; };
 		4FE36666254FE3D100DCD173 /* libuchardet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE36665254FE3D100DCD173 /* libuchardet.a */; };
+		5889C2682F4E98A3004C27A4 /* liblibShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5889C2672F4E9891004C27A4 /* liblibShare.a */; };
+		5889C26A2F4E98C5004C27A4 /* libweixinShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5889C2692F4E98B7004C27A4 /* libweixinShare.a */; };
 		58A369202F3B937C00DFF640 /* libalixpayment.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AFD8031CB50C3F00C0F062 /* libalixpayment.a */; };
 		58A369222F3B93A100DFF640 /* liblibPayment.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58A369212F3B939100DFF640 /* liblibPayment.a */; };
 		58A369272F3B93D700DFF640 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ACF69AA19FF899A007C64F1 /* CFNetwork.framework */; };
@@ -404,6 +406,8 @@
 		4F6ABFDD2451A1DC00C40B5A /* dclogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dclogo@2x.png"; sourceTree = "<group>"; };
 		4FA53F7626E5D01300BAD6A0 /* uni-jsframework-vue3.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "uni-jsframework-vue3.js"; sourceTree = "<group>"; };
 		4FE36665254FE3D100DCD173 /* libuchardet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuchardet.a; path = ../../SDK/Libs/libuchardet.a; sourceTree = "<group>"; };
+		5889C2672F4E9891004C27A4 /* liblibShare.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibShare.a; path = ../../SDK/Libs/liblibShare.a; sourceTree = "<group>"; };
+		5889C2692F4E98B7004C27A4 /* libweixinShare.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libweixinShare.a; path = ../../SDK/Libs/libweixinShare.a; sourceTree = "<group>"; };
 		58A369212F3B939100DFF640 /* liblibPayment.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibPayment.a; path = ../../SDK/Libs/liblibPayment.a; sourceTree = "<group>"; };
 		58A369312F3B964200DFF640 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		58C0B0C22F3E29950012A37B /* AlipaySDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = AlipaySDK.xcframework; sourceTree = "<group>"; };
@@ -1142,6 +1146,8 @@
 				58DDF3C92F1F41F70011AC49 /* libWXOauth.a in Frameworks */,
 				58A369202F3B937C00DFF640 /* libalixpayment.a in Frameworks */,
 				58DE4E4F2F3742020021AFCA /* liblibCamera.a in Frameworks */,
+				5889C2682F4E98A3004C27A4 /* liblibShare.a in Frameworks */,
+				5889C26A2F4E98C5004C27A4 /* libweixinShare.a in Frameworks */,
 				58DDF3CA2F1F42000011AC49 /* libWeChatSDK_pay.a in Frameworks */,
 				24AFD85B1CB50C4000C0F062 /* liblibOrientation.a in Frameworks */,
 				24AFD85E1CB50C4000C0F062 /* liblibPGInvocation.a in Frameworks */,
@@ -3915,6 +3921,8 @@
 		8EED629A198A1D13000A4449 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5889C2692F4E98B7004C27A4 /* libweixinShare.a */,
+				5889C2672F4E9891004C27A4 /* liblibShare.a */,
 				58C0B0C22F3E29950012A37B /* AlipaySDK.xcframework */,
 				58A369312F3B964200DFF640 /* QuartzCore.framework */,
 				58A369212F3B939100DFF640 /* liblibPayment.a */,
@@ -4345,7 +4353,7 @@
 					"$(SRCROOT)/../../SDK/Libs/**",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jmcw.kahe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4414,7 +4422,7 @@
 					"$(SRCROOT)/../../SDK/Libs/**",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jmcw.kahe;
 				PRODUCT_NAME = "$(TARGET_NAME)";

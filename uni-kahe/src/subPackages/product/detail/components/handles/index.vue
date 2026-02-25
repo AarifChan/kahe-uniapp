@@ -1,24 +1,57 @@
 <template>
   <view class="actions">
-    <view
-      class="actions-item"
-      v-for="(item, index) in actionList"
-      :key="index + 'itemId'"
-      :id="index + 'itemId'"
-      @tap.stop="handleAction(item)"
-    >
-      <image
-        class="actions-item-bg"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/product/item-bg.png"
-      />
-      <image class="actions-item-icon" :src="item.icon" />
-      <text class="actions-item-title theme-font">{{ item.title }}</text>
-      <view
-        v-if="item.action === 4 && unReadCount > 0"
-        class="actions-item-num"
-        >{{ unReadCount }}</view
+    <template v-for="(item, index) in actionList" :key="index + 'itemId'">
+      <!-- #ifdef MP-WEIXIN -->
+      <button
+        v-if="item.action === 5"
+        class="actions-item actions-item-btn"
+        :id="index + 'itemId'"
+        open-type="share"
       >
-    </view>
+        <image
+          class="actions-item-bg"
+          src="https://jms.85gui7.com/kahe-202510/ka-he/product/item-bg.png"
+        />
+        <image class="actions-item-icon" :src="item.icon" />
+        <text class="actions-item-title theme-font">{{ item.title }}</text>
+      </button>
+      <!-- #endif -->
+
+      <view
+        v-if="item.action !== 5"
+        class="actions-item"
+        :id="index + 'itemId'"
+        @tap.stop="handleAction(item)"
+      >
+        <image
+          class="actions-item-bg"
+          src="https://jms.85gui7.com/kahe-202510/ka-he/product/item-bg.png"
+        />
+        <image class="actions-item-icon" :src="item.icon" />
+        <text class="actions-item-title theme-font">{{ item.title }}</text>
+        <view
+          v-if="item.action === 4 && unReadCount > 0"
+          class="actions-item-num"
+          >{{ unReadCount }}</view
+        >
+      </view>
+
+      <!-- #ifndef MP-WEIXIN -->
+      <view
+        v-if="item.action === 5"
+        class="actions-item"
+        :id="index + 'itemId'"
+        @tap.stop="handleAction(item)"
+      >
+        <image
+          class="actions-item-bg"
+          src="https://jms.85gui7.com/kahe-202510/ka-he/product/item-bg.png"
+        />
+        <image class="actions-item-icon" :src="item.icon" />
+        <text class="actions-item-title theme-font">{{ item.title }}</text>
+      </view>
+      <!-- #endif -->
+    </template>
   </view>
 </template>
 
@@ -51,6 +84,11 @@ const actionList = ref([
     title: "刷新",
     action: 3,
   },
+  {
+    icon:'https://jms.85gui7.com/share.png',
+    title: "分享",
+    action: 5,
+  }
 ]);
 export interface ActionItem {
   icon: string;
@@ -88,6 +126,10 @@ const handleAction = async (item: ActionItem) => {
     console.log("点击客服");
     showInGroupImage();
   }
+  if (item.action === 5) {
+    console.log("点击分享");
+    handleShare();
+  }
 };
 
 const handleClickContact = () => {
@@ -102,7 +144,42 @@ const handleClickContact = () => {
     url: `/subPackages/webview/index?url=${encodeURIComponent(url)}`,
   });
 };
+const handleShare = () => {
+  const pid = props.product?.pid;
+  if (!pid) {
+    ShowToast("商品信息异常，暂无法分享");
+    return;
+  }
+  const sharePath = `/subPackages/product/detail/index?pid=${pid}`;
 
+  // #ifdef APP-PLUS
+  uni.share({
+    provider: "weixin",
+    type: 5,
+    scene: "WXSceneSession",
+    title: "这个箱子快出货了，速来！",
+    imageUrl: props.product?.image || "https://jms.85gui7.com/kahe-202510/common/share.jpg",
+    miniProgram: {
+      id: "gh_4a7522ad6b7a",
+      path: sharePath,
+      type: 0,
+      webUrl: "https://app.91tcg.com",
+    },
+    success: (ret) => {
+      ShowToast("分享成功");
+      console.log(JSON.stringify(ret));
+    },
+    fail: (err) => {
+      console.error("分享失败:", err);
+      ShowToast("分享失败，请检查是否已安装微信");
+    },
+  });
+  // #endif
+
+  // #ifndef APP-PLUS
+  ShowToast("请在APP内使用微信分享");
+  // #endif
+}
 const emits = defineEmits(["didTapReload"]);
 watch(
   () => props.product,
@@ -166,6 +243,17 @@ watch(
       background-color: red;
       color: #fff;
       border-radius: 16rpx;
+    }
+
+    &-btn {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      line-height: normal;
+    }
+
+    &-btn::after {
+      border: 0;
     }
   }
 }
