@@ -151,3 +151,13 @@ build/
 ## 临时文件
 *.tar.gz
 output.json
+
+# ======================== 离线包/编译同步产物（不跟踪） ========================
+
+## UniApp 同步到 Android assets 的离线编译结果
+android/app/src/main/assets/apps/**/www/
+android/app/src/main/assets/apps/**/www/**
+
+## iOS Pandora 离线编译结果（若存在）
+iOS/Pandora/apps/**/www/
+iOS/Pandora/apps/**/www/**
