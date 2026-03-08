@@ -240,11 +240,11 @@ export function useBox() {
           selected: false,
         });
       }
-      // boxList.value = tmp
       total.value = res.data.totalElements;
+        // 注意：这里是商户展开后的箱子列表，不应覆盖页面主列表的 total，
+      // 否则会导致 handleScrollToLower 的分页判断失效。
       return tmp;
     } else {
-      total.value = 0;
       return [];
     }
   };
@@ -267,6 +267,7 @@ export function useBox() {
       mineMerchantList.value =
         params.page === 1 ? list : [...mineMerchantList.value, ...list];
       merchantTotal.value = resp.data.totalElements;
+
       console.log("loadMerchantList", mineMerchantList.value);
     }
   };
@@ -277,6 +278,7 @@ export function useBox() {
       return;
     }
     disSelectAll();
+    params.value.page = 1;
     currentExpand.value = index;
     const merchant = mineMerchantList.value[index];
     mineMerchantList.value[index].box = await loadMerchantBoxList(merchant.id);
@@ -470,10 +472,33 @@ export function useBox() {
   const currentIndex = ref(AppModule.boxTabIndex);
   const handleScrollToLower = async () => {
     if (currentIndex.value === 0) {
-      if (total.value > params.value.page * params.value.limit) {
-        params.value.page++;
-        await loadData(0);
+      console.log(
+        "handleScrollToLower",
+        total.value,
+        params.value.page,
+        params.value.limit,
+        currentExpand.value
+      );
+      const hasNextPage = total.value > params.value.page * params.value.limit;
+      if (!hasNextPage) {
+        return;
       }
+
+      params.value.page++;
+
+      if (currentExpand.value === -1) {
+        await loadData(0);
+        return;
+      }
+
+      const currentMerchant = mineMerchantList.value[currentExpand.value];
+      if (!currentMerchant) {
+        return;
+      }
+
+      const currentBoxList = currentMerchant.box ?? [];
+      const nextBoxList = await loadMerchantBoxList(currentMerchant.id);
+      currentMerchant.box = [...currentBoxList, ...nextBoxList];
     } else if (currentIndex.value === 1) {
       if (total.value > params.value.page * params.value.limit) {
         params.value.page++;

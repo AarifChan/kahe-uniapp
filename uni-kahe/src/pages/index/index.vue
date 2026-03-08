@@ -27,6 +27,7 @@ import { AppModule } from "@/store/modules/app";
 import Info from "@/components/modal/info/index.vue";
 import Vip from "@/components/modal/vip/index.vue";
 import { UserModule } from "@/store/modules/user";
+import { onShareAppMessage, onShareTimeline } from "@dcloudio/uni-app";
 const current = ref(AppModule.currentTabIndex);
 watch(
   () => AppModule.currentTabIndex,
@@ -41,6 +42,24 @@ const userInfo = computed(() => {
 });
 onLoad(() => {
   console.log("currentTabIndex:", AppModule.currentTabIndex);
+});
+onShareAppMessage(() => {
+  return {
+    title: `${
+      UserModule.userInfo?.nickname ?? ""
+    }邀请你来卡核抽取各种稀有卡牌！`,
+    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
+    path: "/pages/welcome/index",
+  };
+});
+onShareTimeline(() => {
+  return {
+    title: `${
+      UserModule.userInfo?.nickname ?? ""
+    }邀请你来卡核抽取各种稀有卡牌！`,
+    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
+    path: "/pages/welcome/index",
+  };
 });
 </script>
 

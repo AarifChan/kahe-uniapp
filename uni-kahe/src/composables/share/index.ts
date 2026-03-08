@@ -10,11 +10,14 @@ export interface WeixinMiniProgramShareOptions {
 const DEFAULT_MINI_PROGRAM_ID = "gh_4a7522ad6b7a";
 const DEFAULT_WEB_URL = "https://app.91tcg.com";
 // Use a tiny fixed image as emergency thumbnail fallback for WeChat.
-const DEFAULT_FALLBACK_IMAGE = "https://jms.85gui7.com/share.png";
+const DEFAULT_FALLBACK_IMAGE =
+  "https://jms.85gui7.com/kahe-202510/common/share.jpg";
 const DEFAULT_SCENE: "WXSceneSession" | "WXSceneTimeline" = "WXSceneSession";
 const DEFAULT_MINI_PROGRAM_TYPE: 0 | 1 | 2 = 0;
 
-export function shareWeixinMiniProgramCard(options: WeixinMiniProgramShareOptions) {
+export function shareWeixinMiniProgramCard(
+  options: WeixinMiniProgramShareOptions
+) {
   const { title, imageUrl, path } = options;
 
   if (!path) {
@@ -75,15 +78,18 @@ export function shareWeixinMiniProgramCard(options: WeixinMiniProgramShareOption
             return String(err);
           }
         })();
-        console.error("[Share][Weixin] 分享失败:", { code, message, raw, thumb, isRetry });
+        console.error("[Share][Weixin] 分享失败:", {
+          code,
+          message,
+          raw,
+          thumb,
+          isRetry,
+        });
 
-        const thumbInvalid =
-          String(code) === "-100" ||
-          /thumbData|checkArgs|not be null|128kb/i.test(String(message)) ||
-          /thumbData|checkArgs|not be null|128kb/i.test(String(raw));
-
-        if (!isRetry && thumbInvalid && thumb !== DEFAULT_FALLBACK_IMAGE) {
-          console.warn("[Share][Weixin] 缩略图疑似不合规，使用 fallback 缩略图重试");
+        if (!isRetry && thumb !== DEFAULT_FALLBACK_IMAGE) {
+          console.warn(
+            "[Share][Weixin] 首次分享失败，使用 fallback 缩略图重试"
+          );
           doShare(DEFAULT_FALLBACK_IMAGE, true);
           return;
         }
