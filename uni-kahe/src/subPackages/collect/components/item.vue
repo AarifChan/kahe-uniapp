@@ -1,5 +1,5 @@
 <template>
-  <view class="collect">
+  <view class="collect-item-root">
     <image class="collect-bg" src="https://jms.85gui7.com/kahe-202510/collect/item-bg.png" />
     <view class="collect-item">
       <view class="collect-item-top">
@@ -109,17 +109,17 @@ const emits = defineEmits(["didClickItem", "didExchangeItem"]);
 </script>
 
 <style lang="scss" scoped>
-.collect {
+.collect-item-root {
   position: relative;
   width: 100%;
   box-sizing: border-box;
   height: 236rpx;
   border-radius: 10rpx;
-  &-bg {
+  .collect-bg {
     width: 100%;
     height: 100%;
   }
-  &-item {
+  .collect-item {
     position: absolute;
     left: 0;
     top: 0;

@@ -1,3 +1,4 @@
+/* global uni */
 import {
   CollectListObject,
   CollectParams,

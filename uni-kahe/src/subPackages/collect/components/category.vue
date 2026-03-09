@@ -76,7 +76,7 @@ const emits = defineEmits(["didChange"]);
     //flex-direction: row;
     white-space: nowrap;
     position: relative;
-    height: 100%;
+    height: 140rpx;
     &-item {
       position: relative;
       display: flex;

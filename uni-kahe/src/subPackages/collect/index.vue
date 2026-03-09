@@ -49,7 +49,7 @@
             @did-exchange-item="handleClickItem"
           />
         </view>
-        <empty v-show="collectionList.length === 0" />
+        <empty :show="collectionList.length === 0" />
       </scroll-view>
     </view>
     <Exchange
@@ -97,10 +97,12 @@ const handleCollectionExchange = async (id: number) => {
   }
 };
 
-// onMounted(() => {
-//
-// });
+onMounted(() => {
+  collectionParams.value.page = 1;
+  getCollectionList();
+});
 onShow(() => {
+  collectionParams.value.page = 1;
   getCollectionList();
 });
 const clickRule = () => {
@@ -132,8 +134,9 @@ const navToHome = () => {
   background-size: 100% 100%;
   background-repeat: no-repeat;
   &-content {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
     display: flex;
     flex-direction: column;
     &-top {
@@ -185,8 +188,8 @@ const navToHome = () => {
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      align-items: center;
       &-item {
+        width: 100%;
         margin-bottom: 22rpx;
       }
       &-item:last-child {

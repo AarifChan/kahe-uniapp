@@ -170,7 +170,7 @@
           <view class="pay-type-title">选择支付方式</view>
           <view class="pay-type-list">
 
-            <!-- #ifdef APP -->
+            <!-- #ifdef APP-PLUS || H5 -->
             <!-- 微信支付 -->
             <view
               class="pay-type-item"
@@ -187,7 +187,9 @@
                 </view>
                 <view class="pay-type-info">
                   <view class="pay-type-name">微信支付</view>
-                  <view class="pay-type-desc">微信APP支付</view>
+                  <view class="pay-type-desc">{{
+                    isApp ? "微信APP支付" : "微信H5支付"
+                  }}</view>
                 </view>
               </view>
               <view class="pay-type-check">
@@ -214,7 +216,9 @@
                 </view>
                 <view class="pay-type-info">
                   <view class="pay-type-name">支付宝支付</view>
-                  <view class="pay-type-desc">支付宝APP支付</view>
+                  <view class="pay-type-desc">{{
+                    isApp ? "支付宝APP支付" : "支付宝H5支付"
+                  }}</view>
                 </view>
               </view>
               <view class="pay-type-check">
@@ -347,18 +351,23 @@ const props = defineProps({
 
 const agree = ref(false);
 const payType = ref(0); // 默认支付宝
-const showPayType = ref(false); // 是否显示支付方式选择（只在 App 环境显示）
+const showPayType = ref(false); // 是否显示支付方式选择（App/H5 显示）
 const payTypeHeight = ref(0); // 支付方式区域高度
 
-// 判断是否为 App 环境
+// 判断当前运行环境
 const isApp = ref(false);
 const checkEnv = () => {
-  // #ifdef APP
+  // #ifdef APP-PLUS
   isApp.value = true;
   showPayType.value = true;
   payTypeHeight.value = 324;
   // #endif
-  // #ifndef APP
+  // #ifdef H5
+  isApp.value = false;
+  showPayType.value = true;
+  payTypeHeight.value = 324;
+  // #endif
+  // #ifndef APP-PLUS || H5
   isApp.value = false;
   showPayType.value = false;
   payTypeHeight.value = 0;
