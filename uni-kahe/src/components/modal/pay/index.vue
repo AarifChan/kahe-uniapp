@@ -28,8 +28,13 @@
               <text class="pay-scroll-info-top-right-title">{{
                 goods.title
               }}</text>
-              <text class="pay-scroll-info-top-right-price theme-font"
+              <text
+                class="pay-scroll-info-top-right-price theme-font"
+                v-if="!goods.isIntegral"
                 >¥{{ goods.totalPrice }}</text
+              >
+              <text class="pay-scroll-info-top-right-price theme-font" v-else
+                >{{ goods.totalPrice }}积分</text
               >
             </view>
           </view>
@@ -91,15 +96,24 @@
             <view class="row" style="margin-top: 16rpx">
               <view class="row" style="margin-right: 8rpx">
                 <view class="black-text">极速发货 </view>
-                <image class="ok-icon" src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png" />
+                <image
+                  class="ok-icon"
+                  src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png"
+                />
               </view>
               <view class="row" style="margin-right: 8rpx">
                 <view class="black-text">品质保证 </view>
-                <image class="ok-icon" src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png" />
+                <image
+                  class="ok-icon"
+                  src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png"
+                />
               </view>
               <view class="row">
                 <view class="black-text">售后无忧 </view>
-                <image class="ok-icon" src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png" />
+                <image
+                  class="ok-icon"
+                  src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png"
+                />
               </view>
             </view>
           </view>
@@ -125,7 +139,6 @@
         <view class="pay-scroll-save">
           <view class="pay-scroll-save-title">购买需知</view>
           <view class="pay-scroll-save-right">
-
             <view class="gray-text">我已知悉未成年人禁止购买 </view>
             <view class="gray-text group-text"
               >严禁未满8周岁未成年人购买，8周岁及以上未成年人的一
@@ -157,7 +170,6 @@
 
       <!-- 支付方式选择 -->
 
-
       <view class="pay-bottom">
         <view class="pay-bottom-check">
           <agreement
@@ -169,7 +181,6 @@
         <view class="pay-type" v-if="showPayType">
           <view class="pay-type-title">选择支付方式</view>
           <view class="pay-type-list">
-
             <!-- #ifdef APP-PLUS || H5 -->
             <!-- 微信支付 -->
             <view
@@ -239,11 +250,10 @@
           <view class="pay-bottom-btn" @tap.stop="didTapConfirm">
             <view class="pay-bottom-btn-title">立即付款</view>
             <view class="pay-bottom-btn-subTitle"
-            >已抵扣{{ goods.usedPrice }}</view
+              >已抵扣{{ goods.usedPrice }}</view
             >
           </view>
         </div>
-
       </view>
       <!--      <view>-->
       <!--        <view class="pay-top">-->
@@ -604,12 +614,12 @@ onMounted(() => {
   padding: 0 32rpx env(safe-area-inset-bottom);
   box-sizing: border-box;
   flex-direction: column;
-  &-check{
+  &-check {
     padding: 16rpx 32rpx;
     width: 100%;
     box-sizing: border-box;
   }
-  &-pay{
+  &-pay {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -694,7 +704,6 @@ onMounted(() => {
 
 /* 支付方式选择样式 */
 .pay-type {
-
   width: 100%;
   background-color: #fff;
   padding: 20rpx 32rpx;

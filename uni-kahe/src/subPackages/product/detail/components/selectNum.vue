@@ -22,7 +22,7 @@
           v-for="(item, index) in goodsList"
           :key="index"
           :item="item"
-          :goods-price="product.price"
+          :goods-price="product.payType === 8 ? item.price : product.price"
           @tap.stop="clickItem(item)"
         />
       </view>

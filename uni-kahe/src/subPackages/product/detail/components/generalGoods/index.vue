@@ -105,6 +105,10 @@ defineProps({
     default: false,
     type: Boolean,
   },
+  quality: {
+    default: 0,
+    type: Number,
+  },
 });
 </script>
 

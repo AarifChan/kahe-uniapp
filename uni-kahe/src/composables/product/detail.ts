@@ -299,6 +299,7 @@ export function useProductDetail() {
             image: val.image,
             name: val.title,
             prob: val.prob,
+            quality: val.quality,
             levelName: limitLevelName(val.level),
             level: val.level,
             price: val.price,
@@ -335,6 +336,7 @@ export function useProductDetail() {
         title: productDetail.value.title,
         totalPrice: data.totalPrice,
         payPrice: data.payPrice,
+        isIntegral: productDetail.value.payType === 8,
         price: formatPrice(productDetail.value.price),
         usedPrice:
           Number(data.usedMoney) +
@@ -533,7 +535,7 @@ export function useProductDetail() {
           levelImage: getLevelImage(item.goodsDto.level),
           image: item.goodsDto.image,
           last: item.num ?? item.weight,
-          quality: item.goodsDto.quality,
+          quality: item.goodsDto?.quality,
           total: item.total ?? item.weight,
           isSpec: false,
           isSellOut: item.num === 0,
@@ -542,6 +544,7 @@ export function useProductDetail() {
           isDemon: demonGid.filter((n) => n === item.goodsDto.id).length > 0,
         });
       }
+
       for (const item of data.product.specGoods ?? []) {
         const prob = item.prob ? item.prob * 100 : 0;
 
@@ -553,7 +556,7 @@ export function useProductDetail() {
           level: item.goodsDto.level,
           levelImage: getLevelImage(item.goodsDto.level),
           image: item.goodsDto.image,
-          quality: item.goodsDto.quality,
+          quality: item.goodsDto?.quality,
           last: item.num ?? 0,
           total: item.total ?? 0,
           isSpec: true,
@@ -572,7 +575,7 @@ export function useProductDetail() {
           level: item.goodsDto.level,
           levelImage: getLevelImage(item.goodsDto.level),
           image: item.goodsDto.image,
-          quality: item.goodsDto.quality,
+          quality: item.goodsDto?.quality,
           last: item.weight ?? 0,
           total: item.weight ?? 0,
           isSpec: false,
@@ -654,6 +657,7 @@ export function useProductDetail() {
       levelList.value = levelArray;
       boxList = useSortFun(boxList);
       goodsList.value = [...attachList, ...boxList];
+      console.log("goodList:", goodsList.value);
       // 魔王物品:
       // const coinType = data.product.payType === 8 ? '积分' : '水晶'
       const coinType = "积分";
@@ -689,6 +693,7 @@ export function useProductDetail() {
             levelImage: getLevelImage(item.goodsDto.level),
             image: item.goodsDto.image,
             last: item.num ?? 0,
+            quality: item.goodsDto.quality,
             total: item.total ?? 0,
             isSpec: true,
             isSellOut: item.num === 0,
@@ -709,6 +714,8 @@ export function useProductDetail() {
         settleStatus: data.product.settleStatus,
         settleTime: data.product.settleTime,
         merchant: data.box.merchant,
+        payType: data.product.payType,
+        isIntegral: data.box.subTag === 5,
         attachList: attachGoodsList,
         luckyList: luckyList,
         levelList: levelArray,
@@ -717,6 +724,7 @@ export function useProductDetail() {
         num: data.product.num,
         type: data.product.type,
         price: data.box.price,
+        salePrice: data.product.price,
         total: data.product.total,
         bagBoxTime: data.product.bagBoxTime,
         queueLockTime: data.product.queueLockTime,

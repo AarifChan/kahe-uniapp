@@ -251,14 +251,14 @@ const handleDidClickButton = (bType: ProductDetailButtonType) => {
 
 onShareAppMessage(() => {
   return {
-    title: "这个箱子快出货了，速来！",
+    title: productDetail.value.title + "这个箱子快出货了，速来！",
     imageUrl: productDetail.value.image,
     path: `/subPackages/product/detail/index?pid=${productDetail.value.id}`,
   };
 });
 onShareTimeline(() => {
   return {
-    title: "这个箱子快出货了，速来！",
+    title: productDetail.value.title + "这个箱子快出货了，速来！",
     imageUrl: productDetail.value.image,
     path: `/subPackages/product/detail/index?pid=${productDetail.value.id}`,
   };

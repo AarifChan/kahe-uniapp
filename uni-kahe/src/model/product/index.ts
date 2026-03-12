@@ -19,6 +19,7 @@ export interface ProductGoodsDTOModel {
   level: number;
   name: string;
   price: number;
+  quality: number;
   salePrice: number; // 出售价格
   saleTime: string;
   updateTime: string;

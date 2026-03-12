@@ -94,6 +94,7 @@ export interface UIProductDetailLevelGroupItem {
   levelName: string;
   price: string;
   isDemon?: boolean;
+  quantity: number;
 }
 
 export interface UIProductDetailLevelGroup {
@@ -232,6 +233,7 @@ export interface UIProductPayModel {
   num: number;
   id: string | number;
   coupon?: UICouponModel;
+  isIntegral?: boolean;
 }
 
 export interface UITabItemType {
@@ -440,6 +442,7 @@ export interface UIProductDetailModel {
   boxId: number;
   title: string;
   num: number;
+  payType: number;
   total: number;
   image: string;
   pid: number;
@@ -449,6 +452,7 @@ export interface UIProductDetailModel {
   preId: number;
   nextId: number;
   price: number;
+  salePrice: number;
   isFavorite: boolean;
   merchant?: UIMerchant;
   bagBoxTime: number;
@@ -471,6 +475,7 @@ export interface UIProductDetailModel {
   winNum: number[];
   settleStatus: number;
   settleTime: string;
+  isIntegral: boolean;
 }
 export interface UIProductSwapItemModel {
   id: number;
