@@ -48,8 +48,10 @@ export function useShinging() {
           params.value.page === 1
             ? res.data.content
             : [...historyList.value, ...res.data.content];
+        total.value = res.data.totalElements;
       } else {
         historyList.value = [];
+        total.value = 0;
       }
     });
   };
@@ -93,6 +95,12 @@ export function useShinging() {
   };
 
   const handleScrollToLower = async () => {
+    console.log(
+      "scrollToLower:",
+      total.value,
+      params.value.page,
+      params.value.limit
+    );
     if (total.value > params.value.page * params.value.limit) {
       params.value.page++;
       queryHistory();
