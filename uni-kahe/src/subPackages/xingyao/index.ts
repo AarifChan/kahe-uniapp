@@ -103,7 +103,11 @@ export function useShinging() {
     );
     if (total.value > params.value.page * params.value.limit) {
       params.value.page++;
-      queryHistory();
+      if (logType.value === 2) {
+        queryLogList();
+      } else {
+        queryHistory();
+      }
     }
   };
 

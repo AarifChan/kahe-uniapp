@@ -16,7 +16,12 @@
       <CustomSubmit @tap-submit="tapSubmit" :info="pageInfo" />
       <CustomBottom @tap-award="tapAward" :info="pageInfo" />
     </view>
-    <WinningPop v-model="showWinningPop" :list="logList" :type="logType" />
+    <WinningPop
+      v-model="showWinningPop"
+      :list="logList"
+      :type="logType"
+      @scrolltolower="handleScrollToLower"
+    />
     <HistoryPop
       v-model="showHistoryPop"
       :list="historyList"

@@ -86,10 +86,10 @@ const actionList = ref([
     action: 3,
   },
   {
-    icon:'https://jms.85gui7.com/share.png',
+    icon: "https://jms.85gui7.com/share.png",
     title: "分享",
     action: 5,
-  }
+  },
 ]);
 export interface ActionItem {
   icon: string;
@@ -153,11 +153,13 @@ const handleShare = () => {
   }
   const sharePath = `/subPackages/product/detail/index?pid=${pid}`;
   shareWeixinMiniProgramCard({
-    title: "这个箱子快出货了，速来！",
-    imageUrl: props.product?.image || "https://jms.85gui7.com/kahe-202510/common/share.jpg",
+    title: `【${props.product?.title}】这个箱子快出货了，速来！`,
+    imageUrl:
+      props.product?.image ||
+      "https://jms.85gui7.com/kahe-202510/common/share.jpg",
     path: sharePath,
   });
-}
+};
 const emits = defineEmits(["didTapReload"]);
 watch(
   () => props.product,
@@ -174,7 +176,7 @@ watch(
 .actions {
   position: fixed;
   right: 8rpx;
-  bottom: calc(160rpx + env(safe-area-inset-bottom));
+  bottom: calc(200rpx + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   align-items: center;
