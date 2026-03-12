@@ -540,7 +540,10 @@ export function useProductDetail() {
           isSpec: false,
           isSellOut: item.num === 0,
           goodDesc: item.goodsDto?.goodDesc,
-          salePrice: data.product.price,
+          salePrice:
+            data.product.payType === 8
+              ? item.goodsDto.price
+              : data.product.price,
           isDemon: demonGid.filter((n) => n === item.goodsDto.id).length > 0,
         });
       }
@@ -562,7 +565,10 @@ export function useProductDetail() {
           isSpec: true,
           isSellOut: item.num === 0,
           goodDesc: item.goodsDto?.goodDesc,
-          salePrice: data.product.price,
+          salePrice:
+            data.product.payType === 8
+              ? item.goodsDto.price
+              : data.product.price,
           isDemon: demonGid.filter((n) => n === item.goodsDto.id).length > 0,
         });
       }
@@ -585,7 +591,10 @@ export function useProductDetail() {
           isSky: true,
           isSellOut: item.num === 0,
           goodDesc: item.goodsDto?.goodDesc,
-          salePrice: data.product.price,
+          salePrice:
+            data.product.payType === 8
+              ? item.goodsDto.price
+              : data.product.price,
           isDemon: demonGid.filter((n) => n === item.goodsDto.id).length > 0,
         });
       }
@@ -606,7 +615,10 @@ export function useProductDetail() {
           isStrand: true,
           isSellOut: false,
           goodDesc: item.goodsDto?.goodDesc,
-          salePrice: data.product.price,
+          salePrice:
+            data.product.payType === 8
+              ? item.goodsDto.salePrice
+              : data.product.price,
           isDemon: demonGid.filter((n) => n === item.goodsDto.id).length > 0,
         });
       }
