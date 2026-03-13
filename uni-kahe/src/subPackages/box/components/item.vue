@@ -8,7 +8,7 @@
         @tap.passive="emits('didTapDetail', item)"
       />
       <view class="boxItem-top-quality">{{
-        getTitleByQuality(item.quality)
+        getTitleByQuality(item.goods.quality)
       }}</view>
 
       <!--            <view class="boxItem-top-levelBg">-->
