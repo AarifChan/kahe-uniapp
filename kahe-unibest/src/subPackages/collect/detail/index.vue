@@ -12,9 +12,9 @@
             class="collectDetail-content-top-item-icon"
             src="https://jms.85gui7.com/kahe-202510/collect/item1.png"
           />
-          <view class="collectDetail-content-top-item-title text-stroke-main"
-            >首页</view
-          >
+          <view class="collectDetail-content-top-item-title text-stroke-main">
+            首页
+          </view>
         </view>
         <view class="collectDetail-content-top-info">
           <image
@@ -22,15 +22,17 @@
             mode="heightFix"
             :src="collectDetail?.product.logo"
           />
-          <view class="collectDetail-content-top-info-title">{{
-            collectDetail?.product.name
-          }}</view>
-          <view class="collectDetail-content-top-info-subTitle"
-            >{{ collectDetail?.product.sales }}人集成，余{{
-              collectDetail?.product.total ??
-              0 - (collectDetail?.product.sales ?? 0)
-            }}件｜参考价：{{ collectDetail?.product.price }}</view
-          >
+          <view class="collectDetail-content-top-info-title">
+            {{
+              collectDetail?.product.name
+            }}
+          </view>
+          <view class="collectDetail-content-top-info-subTitle">
+            {{ collectDetail?.product.sales }}人集成，余{{
+              collectDetail?.product.total
+                ?? 0 - (collectDetail?.product.sales ?? 0)
+            }}件｜参考价：{{ collectDetail?.product.price }}
+          </view>
           <view class="collectDetail-content-top-info-progress">
             <image
               class="collectDetail-content-top-info-progress-title"
@@ -42,9 +44,11 @@
                 :style="progressStyle"
               />
             </view>
-            <view class="collectDetail-content-top-info-progress-subTitle">{{
-              progress
-            }}</view>
+            <view class="collectDetail-content-top-info-progress-subTitle">
+              {{
+                progress
+              }}
+            </view>
           </view>
         </view>
       </view>
@@ -63,19 +67,21 @@
               class="collectDetail-content-bottom-top-info-avatar text-flow-ellipsis-single"
               :src="collectDetail?.user.avatar"
             />
-            <view class="collectDetail-content-bottom-top-info-name">{{
-              collectDetail?.user.nickname
-            }}</view>
+            <view class="collectDetail-content-bottom-top-info-name">
+              {{
+                collectDetail?.user.nickname
+              }}
+            </view>
           </view>
         </view>
-        <view class="collectDetail-content-bottom-tips"
-          >一次性达100%进度才能完成集赏</view
-        >
+        <view class="collectDetail-content-bottom-tips">
+          一次性达100%进度才能完成集赏
+        </view>
         <tab @did-change="handleTabChange" />
         <view class="collectDetail-content-bottom-list">
           <goods
             v-for="(item, index) in goodsList"
-            :key="'goodsList' + index"
+            :key="`goodsList${index}`"
             :item="item"
             @did-select="goodsList[index].selected = !item.selected"
           />
@@ -96,7 +102,7 @@
         />
       </button>
     </view>
-    <!--        <login v-model:show="loginShow" @did-tap-login="handleLogin" />-->
+    <!--        <login v-model:show="loginShow" @did-tap-login="handleLogin" /> -->
     <alert v-model:show="alertShow" @confirm="handlePayCollect" />
     <select-modal
       v-model:show="showSelectNum"
@@ -108,20 +114,22 @@
 </template>
 
 <script lang="ts" setup>
+import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
+import { computed, onMounted } from 'vue'
+import { useLogin } from '@/composables/login'
+
 import { useUserStore } from '@/store/user'
-import Tab from "../components/tab.vue";
-import Goods from "../components/collectGoods.vue";
-
-import { getPageOptions } from "@/utils/tools";
-import { useCollectDetail } from "./index";
-import { computed, onMounted } from "vue";
-import { onShareAppMessage, onShareTimeline } from "@dcloudio/uni-app";
-
+import { eventBus } from '@/utils/event'
+import { getPageOptions } from '@/utils/tools'
 // import Login from '@/components/login/index.vue'
-import Alert from "../components/alert/index.vue";
-import SelectModal from "../components/select/index.vue";
-import { useLogin } from "@/composables/login";
-import { eventBus } from "@/utils/event";
+import Alert from '../components/alert/index.vue'
+
+import Goods from '../components/collectGoods.vue'
+import SelectModal from '../components/select/index.vue'
+import Tab from '../components/tab.vue'
+import { useCollectDetail } from './index'
+
+const userStore = useUserStore()
 const {
   didTapConfirm,
   showSelectNum,
@@ -137,71 +145,72 @@ const {
   handleScrollToLower,
   handleCollect,
   handlePayCollect,
-} = useCollectDetail();
-const { loginShow, handleLogin } = useLogin();
+} = useCollectDetail()
+const { loginShow, handleLogin } = useLogin()
 
-eventBus.on("didLogin", (_) => {
-  loadData();
-});
+eventBus.on('didLogin', (_) => {
+  loadData()
+})
 onMounted(() => {
-  loadData();
-});
+  loadData()
+})
 
-const loadData = () => {
-  loadDetail();
-  getGoodsList();
-};
+function loadData() {
+  loadDetail()
+  getGoodsList()
+}
 
-const navToHome = () => {
-  console.log("navToHome");
+function navToHome() {
+  console.log('navToHome')
   uni.redirectTo({
-    url: "/subPackages/collect/index",
-  });
-};
+    url: '/subPackages/collect/index',
+  })
+}
 
-const handleTabChange = (item: { title: string; value: number }) => {
-  goodsParams.value.level = item.value;
-  goodsParams.value.page = 1;
-  getGoodsList();
-};
+function handleTabChange(item: { title: string, value: number }) {
+  goodsParams.value.level = item.value
+  goodsParams.value.page = 1
+  getGoodsList()
+}
 
-const loadDetail = async () => {
-  const pid = getPageOptions().id;
-  const uid = getPageOptions().uid;
-  await userStore.getUserInfo();
+async function loadDetail() {
+  const pid = getPageOptions().id
+  const uid = getPageOptions().uid
+  await userStore.getUserInfo()
   if (Number(uid) !== Number(userStore.userInfo.uid)) {
-    getCollectDetail(pid, uid);
-  } else {
-    getCollectDetail(pid);
+    getCollectDetail(pid, uid)
   }
-};
+  else {
+    getCollectDetail(pid)
+  }
+}
 
 const progress = computed(() => {
-  return `${(collectProgress.value * 100).toFixed(2)}%`;
-});
+  return `${(collectProgress.value * 100).toFixed(2)}%`
+})
 
 const progressStyle = computed(() => {
   return {
     width: `${collectProgress.value * 100}%`,
-  };
-});
+  }
+})
 
 onShareAppMessage(() => {
-  const userId = userStore.userInfo.uid;
+  const userId = userStore.userInfo.uid
   return {
-    title: "朋友！助我一臂之力！",
+    title: '朋友！助我一臂之力！',
     imageUrl: collectDetail.value?.product.logo,
     path: `/subPackages/collect/detail/index?id=${collectDetail.value?.product.id}&uid=${userId}`,
-  };
-});
+  }
+})
 onShareTimeline(() => {
-  const userId = userStore.userInfo.uid;
+  const userId = userStore.userInfo.uid
   return {
-    title: "朋友！助我一臂之力！",
+    title: '朋友！助我一臂之力！',
     imageUrl: collectDetail.value?.product.logo,
     path: `/subPackages/collect/detail/index?id=${collectDetail.value?.product.id}&uid=${userId}`,
-  };
-});
+  }
+})
 </script>
 
 <style lang="scss" scoped>

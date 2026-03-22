@@ -11,10 +11,10 @@
         mode="scaleToFill"
         class="title"
       />
-      <CustomNav @tap-nav="tapNav" :info="pageInfo" />
+      <CustomNav :info="pageInfo" @tap-nav="tapNav" />
       <CustomItem :info="pageInfo" />
-      <CustomSubmit @tap-submit="tapSubmit" :info="pageInfo" />
-      <CustomBottom @tap-award="tapAward" :info="pageInfo" />
+      <CustomSubmit :info="pageInfo" @tap-submit="tapSubmit" />
+      <CustomBottom :info="pageInfo" @tap-award="tapAward" />
     </view>
     <WinningPop
       v-model="showWinningPop"
@@ -42,26 +42,27 @@
 </template>
 
 <script setup lang="ts">
-import CustomNav from "./components/CustomNav/index.vue";
-import CustomItem from "./components/CustomItem/index.vue";
-import CustomSubmit from "./components/CustomSubmit/index.vue";
-import CustomBottom from "./components/CustomBottom/index.vue";
-import WinningPop from "./components/WinningPop/index.vue";
-import HistoryPop from "./components/HistoryPop/index.vue";
-import CongratulPop from "./components/CongratulPop/index.vue";
+import type { AddressModel } from '@/model'
+import { onMounted, provide, ref } from 'vue'
+import CommonModal from '@/components/modal/index.vue'
+import { useModal } from '@/composables/modal'
+import { ShowToast } from '@/utils'
+import CongratulPop from './components/CongratulPop/index.vue'
+import CustomBottom from './components/CustomBottom/index.vue'
 
-import { onMounted, provide, ref } from "vue";
-const showWinningPop = ref(false);
-const showHistoryPop = ref(false);
-const showCongratulPop = ref(false);
-const awardType = ref("record");
-import { useShinging } from "./index";
-import CommonModal from "@/components/modal/index.vue";
-import { useModal } from "@/composables/modal";
-import { ShowToast } from "@/utils";
-import { AddressModel } from "@/model";
+import CustomItem from './components/CustomItem/index.vue'
+import CustomNav from './components/CustomNav/index.vue'
+import CustomSubmit from './components/CustomSubmit/index.vue'
+import HistoryPop from './components/HistoryPop/index.vue'
+import WinningPop from './components/WinningPop/index.vue'
+import { useShinging } from './index'
 
-const { modalShow, modalTitle, modalContent, showModalType } = useModal();
+const showWinningPop = ref(false)
+const showHistoryPop = ref(false)
+const showCongratulPop = ref(false)
+const awardType = ref('record')
+
+const { modalShow, modalTitle, modalContent, showModalType } = useModal()
 const {
   getData,
   pageInfo,
@@ -73,62 +74,65 @@ const {
   logType,
   handleScrollToLower,
   logList,
-} = useShinging();
+} = useShinging()
 
 onMounted(() => {
-  getData();
-});
+  getData()
+})
 
-provide("awardType", awardType);
+provide('awardType', awardType)
 // 点击领取&&本期记录
-const tapAward = (item: string) => {
-  if (item === "award") {
-    showCongratulPop.value = true;
-  } else {
-    awardType.value = "record";
-    logType.value = 2;
-    queryLogList();
-    showWinningPop.value = true;
+function tapAward(item: string) {
+  if (item === 'award') {
+    showCongratulPop.value = true
   }
-};
-const onReceive = (address: AddressModel) => {
+  else {
+    awardType.value = 'record'
+    logType.value = 2
+    queryLogList()
+    showWinningPop.value = true
+  }
+}
+function onReceive(address: AddressModel) {
   handleReceive(address).then((res) => {
     if (res.code === 200) {
-      showCongratulPop.value = false;
-      ShowToast("实体参与券将3个工作日内寄出");
-    } else {
-      ShowToast(res.msg);
+      showCongratulPop.value = false
+      ShowToast('实体参与券将3个工作日内寄出')
     }
-  });
-};
-const tapSubmit = (value: string) => {
+    else {
+      ShowToast(res.msg)
+    }
+  })
+}
+function tapSubmit(value: string) {
   if (value.length === 0) {
-    ShowToast("请输入券码");
-    return;
+    ShowToast('请输入券码')
+    return
   }
   handleSignIn(value)
     .then((res) => {
       if (res.code === 200) {
-        ShowToast("参与成功");
-        getData();
-      } else {
-        ShowToast(res.msg);
+        ShowToast('参与成功')
+        getData()
+      }
+      else {
+        ShowToast(res.msg)
       }
     })
     .catch((err) => {
-      console.log("handleSignIn error", err);
-    });
-};
-const tapNav = (value: any) => {
+      console.log('handleSignIn error', err)
+    })
+}
+function tapNav(value: any) {
   if (value.key === 1) {
-    showModalType(10);
+    showModalType(10)
   }
   if (value.key === 2) {
-    logType.value = 3;
-    queryHistory();
-    showHistoryPop.value = true;
+    logType.value = 3
+    queryHistory()
+    showHistoryPop.value = true
   }
-};
+}
 </script>
 
 <style lang="scss">

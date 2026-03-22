@@ -23,8 +23,8 @@
         <view class="activity-content-list-grid">
           <item
             v-for="(item, index) in dataList"
-            :key="'key' + index"
-            :id="'id' + index"
+            :id="`id${index}`"
+            :key="`key${index}`"
             :item="item"
             @did-click-item="tapWelfareAction"
           />
@@ -35,11 +35,11 @@
 </template>
 
 <script lang="ts" setup>
-import Tab from "./components/tab/index.vue";
-import Item from "./components/item/index.vue";
-import { useWelfare } from "@/composables/welfare";
-import { onMounted } from "vue";
-import { getPageOptions } from "@/utils/tools";
+import { onMounted } from 'vue'
+import { useWelfare } from '@/composables/welfare'
+import { getPageOptions } from '@/utils/tools'
+import Item from './components/item/index.vue'
+import Tab from './components/tab/index.vue'
 
 const {
   current,
@@ -50,20 +50,20 @@ const {
   handleScrollToLower,
   getWelfareList,
   merchantId,
-} = useWelfare();
+} = useWelfare()
 
 onMounted(() => {
-  const ops = getPageOptions();
-  merchantId.value = ops.merchantId;
+  const ops = getPageOptions()
+  merchantId.value = ops.merchantId
   if (!merchantId.value) {
-    tabList.value = tabList.value.filter((n) => n.value !== 1);
+    tabList.value = tabList.value.filter(n => n.value !== 1)
   }
-  console.log("isMerchant:", merchantId.value);
-  getWelfareList();
-});
-const handleClick = (index: number) => {
-  reloadData(index);
-};
+  console.log('isMerchant:', merchantId.value)
+  getWelfareList()
+})
+function handleClick(index: number) {
+  reloadData(index)
+}
 </script>
 
 <style lang="scss" scoped>

@@ -6,9 +6,9 @@
     <view class="pageControl-center">
       <text class="pageControl-center-title">第</text>
       <text class="pageControl-center-value">{{ product.current }}</text>
-      <text class="pageControl-center-title"
-        >/{{ product.lastSeq }}箱 商品剩余</text
-      >
+      <text class="pageControl-center-title">
+        /{{ product.lastSeq }}箱 商品剩余
+      </text>
       <text class="pageControl-center-value">{{ product.num }}</text>
       <text class="pageControl-center-title">/{{ product.total }}</text>
     </view>
@@ -25,8 +25,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { UIProductDetailModel } from "@/model";
-import type { PropType } from "vue";
+import type { PropType } from 'vue'
+import type { UIProductDetailModel } from '@/model'
 
 defineProps({
   product: {
@@ -49,9 +49,9 @@ defineProps({
     default: 80,
     type: Number,
   },
-});
+})
 
-const emits = defineEmits(["didClickChangeBox"]);
+const emits = defineEmits(['didClickChangeBox'])
 </script>
 
 <style lang="scss" scoped>

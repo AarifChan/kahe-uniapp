@@ -12,8 +12,9 @@
           <view
             class="collectRecord-content-tab-item-title theme-font"
             :style="{ color: current === 0 ? '#693301' : '#60B1EC' }"
-            >我参与的</view
           >
+            我参与的
+          </view>
         </view>
         <view class="collectRecord-content-tab-item" @tap.stop="didClickTab(1)">
           <image
@@ -24,8 +25,9 @@
           <view
             class="collectRecord-content-tab-item-title theme-font"
             :style="{ color: current === 1 ? '#693301' : '#60B1EC' }"
-            >好友帮我</view
           >
+            好友帮我
+          </view>
         </view>
       </view>
       <scroll-view
@@ -35,7 +37,7 @@
       >
         <view
           v-for="(item, index) in dataList"
-          :key="'collectRecord' + index"
+          :key="`collectRecord${index}`"
           class="collectRecord-content-list-item"
         >
           <image
@@ -54,23 +56,27 @@
                 >
                   <view
                     class="collectRecord-content-list-item-content-top-left-info-title"
-                    >{{
+                  >
+                    {{
                       current === 0
                         ? item.user?.nickname
                         : item.helper?.nickname
-                    }}</view
-                  >
+                    }}
+                  </view>
                   <view
                     class="collectRecord-content-list-item-content-top-left-info-title"
-                    >ID:{{
-                      current === 0 ? item.user?.uid : item.helper?.uid
-                    }}</view
                   >
+                    ID:{{
+                      current === 0 ? item.user?.uid : item.helper?.uid
+                    }}
+                  </view>
                 </view>
               </view>
-              <view class="collectRecord-content-list-item-content-top-right">{{
-                item.createTime
-              }}</view>
+              <view class="collectRecord-content-list-item-content-top-right">
+                {{
+                  item.createTime
+                }}
+              </view>
             </view>
             <view class="collectRecord-content-list-item-content-line" />
             <view class="collectRecord-content-list-item-content-bottom">
@@ -82,8 +88,9 @@
                 />
                 <view
                   class="collectRecord-content-list-item-content-bottom-left-title text-flow-ellipsis-single"
-                  >{{ item.name }}</view
                 >
+                  {{ item.name }}
+                </view>
               </view>
               <view
                 style="
@@ -95,11 +102,12 @@
               >
                 <view
                   class="collectRecord-content-list-item-content-bottom-right"
-                  >+{{ item.amount }}助力值</view
                 >
+                  +{{ item.amount }}助力值
+                </view>
                 <view
-                  class="collectRecord-content-list-item-content-bottom-thank"
                   v-if="current === 1"
+                  class="collectRecord-content-list-item-content-bottom-thank"
                   @tap.stop="handleThank(item)"
                 >
                   <image
@@ -112,8 +120,9 @@
                   />
                   <view
                     class="collectRecord-content-list-item-content-bottom-thank-title theme-font"
-                    >感谢</view
                   >
+                    感谢
+                  </view>
                 </view>
               </view>
             </view>
@@ -133,64 +142,67 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
-import {
+import type {
   CollectOrderItem,
+} from '@/api/collect'
+import { onMounted, ref } from 'vue'
+import {
   getCollectOrderRequest,
   handleCollectThankRequest,
-} from "@/api/collect";
-import { ShowToast } from "@/utils";
+} from '@/api/collect'
+import { ShowToast } from '@/utils'
 
 const params = ref({
   page: 1,
   limit: 10,
   type: 0,
-});
-const current = ref(0);
+})
+const current = ref(0)
 
-const total = ref(0);
-const dataList = ref<CollectOrderItem[]>([]);
-const didClickTab = (index: number) => {
-  current.value = index;
-  params.value.page = 1;
-  dataList.value = [];
-  params.value.type = index;
-  getCollectOrderList();
-};
+const total = ref(0)
+const dataList = ref<CollectOrderItem[]>([])
+function didClickTab(index: number) {
+  current.value = index
+  params.value.page = 1
+  dataList.value = []
+  params.value.type = index
+  getCollectOrderList()
+}
 
 onMounted(() => {
-  getCollectOrderList();
-});
+  getCollectOrderList()
+})
 
-const handleThank = async (item: CollectOrderItem) => {
+async function handleThank(item: CollectOrderItem) {
   if (item.isThanked) {
-    return;
+    return
   }
-  const resp = await handleCollectThankRequest(item.id);
+  const resp = await handleCollectThankRequest(item.id)
   if (resp.code === 200) {
-    item.isThanked = true;
+    item.isThanked = true
   }
-};
-const getCollectOrderList = async () => {
-  const resp = await getCollectOrderRequest(params.value);
+}
+async function getCollectOrderList() {
+  const resp = await getCollectOrderRequest(params.value)
   if (resp.code === 200) {
-    const list =
-      params.value.page === 1 ? new Array<CollectOrderItem>() : dataList.value;
+    const list
+      = params.value.page === 1 ? new Array<CollectOrderItem>() : dataList.value
     resp.data.content.forEach((item) => {
-      list.push(item);
-    });
-    dataList.value = list;
-    total.value = resp.data.totalElements;
-  } else {
-    ShowToast(resp.msg);
+      list.push(item)
+    })
+    dataList.value = list
+    total.value = resp.data.totalElements
   }
-};
-const handleScrollToLower = () => {
+  else {
+    ShowToast(resp.msg)
+  }
+}
+function handleScrollToLower() {
   if (total.value > params.value.page * params.value.limit) {
-    params.value.page++;
-    getCollectOrderList();
+    params.value.page++
+    getCollectOrderList()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

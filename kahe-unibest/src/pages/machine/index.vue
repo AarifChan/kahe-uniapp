@@ -14,24 +14,25 @@
         :search="true"
         @did-click="didClickMachineTab"
       />
-      <goods @tapCardListItem="tapCardListItem" :list="machineList" />
+      <goods :list="machineList" @tap-card-list-item="tapCardListItem" />
       <empty :show="machineList.length === 0" />
     </view>
   </scroll-view>
   <TabBar />
 </template>
+
 <script setup lang="ts">
+import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
+import { onMounted } from 'vue'
+import Empty from '@/components/empty/index.vue'
+import TabBar from '@/components/tabBar/index.vue'
+import { useGoods } from '@/composables/goods'
 import { useUserStore } from '@/store/user'
+import Top from '../infinite/components/top.vue'
+import Goods from './components/goods.vue'
+import Tab from './components/tab.vue'
+
 const userStore = useUserStore()
-import Top from "../infinite/components/top.vue";
-import Goods from "./components/goods.vue";
-import Empty from "@/components/empty/index.vue";
-import NavBar from "@/components/navBar/index.vue";
-import Tab from "./components/tab.vue";
-import { useGoods } from "@/composables/goods";
-import TabBar from "@/components/tabBar/index.vue";
-import { onMounted } from "vue";
-import { onShareAppMessage, onShareTimeline } from "@dcloudio/uni-app";
 
 const {
   machineScroll,
@@ -43,31 +44,32 @@ const {
   current,
   machineTabList,
   didClickMachineTab,
-} = useGoods();
+} = useGoods()
 
 onMounted(() => {
-  getBarrageList();
-  getMachineList();
-});
+  getBarrageList()
+  getMachineList()
+})
 onShareAppMessage(() => {
   return {
     title: `${
-      userStore.userInfo?.nickname ?? ""
+      userStore.userInfo?.nickname ?? ''
     }邀请你来卡核抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
-    path: "/pages/welcome/index",
-  };
-});
+    imageUrl: 'https://jms.85gui7.com/kahe-202510/common/share.jpg',
+    path: '/pages/welcome/index',
+  }
+})
 onShareTimeline(() => {
   return {
     title: `${
-      userStore.userInfo?.nickname ?? ""
+      userStore.userInfo?.nickname ?? ''
     }邀请你来卡核抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
-    path: "/pages/welcome/index",
-  };
-});
+    imageUrl: 'https://jms.85gui7.com/kahe-202510/common/share.jpg',
+    path: '/pages/welcome/index',
+  }
+})
 </script>
+
 <style lang="scss" scoped>
 .machine {
   position: relative;

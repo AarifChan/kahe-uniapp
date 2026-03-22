@@ -8,39 +8,39 @@
         :trim="true"
         :clearable="true"
         :placeholderStyle="placeholderStyle"
-      />
+      >
       <image
         v-if="black"
-        @tap.stop="emits('didTapSearch', search)"
         class="search-content-iconNew"
         src="https://jms.85gui7.com/kahe-202510/ka-he/home/search-new.png"
+        @tap.stop="emits('didTapSearch', search)"
       />
       <image
         v-else
-        @tap.stop="emits('didTapSearch', search)"
         class="search-content-icon"
         src="https://jms.85gui7.com/kahe-202510/ka-he/common/search.png"
+        @tap.stop="emits('didTapSearch', search)"
       />
     </view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref } from 'vue'
 
 defineProps({
   placeholder: {
-    default: "输入关键字",
+    default: '输入关键字',
     type: String,
   },
   black: {
     default: false,
     type: Boolean,
   },
-});
-const search = ref("");
-const placeholderStyle = "color: #A7A7A7; font-size: 14px;height:16px;";
-const emits = defineEmits(["didTapSearch"]);
+})
+const emits = defineEmits(['didTapSearch'])
+const search = ref('')
+const placeholderStyle = 'color: #A7A7A7; font-size: 14px;height:16px;'
 </script>
 
 <style lang="scss" scoped>

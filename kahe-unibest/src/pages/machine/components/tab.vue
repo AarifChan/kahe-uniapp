@@ -2,27 +2,29 @@
   <view class="machineTab">
     <view class="machineTab-list">
       <view
-        class="machineTab-list-item"
         v-for="(item, index) in list"
         :key="index"
+        class="machineTab-list-item"
         @tap.stop="clickItem(index)"
       >
         <image class="machineTab-list-item-img" :src="item.icon" />
-        <view class="machineTab-list-item-title text-flow-ellipsis-single">{{
-          item.title
-        }}</view>
+        <view class="machineTab-list-item-title text-flow-ellipsis-single">
+          {{
+            item.title
+          }}
+        </view>
       </view>
     </view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import type { PropType } from "vue";
+import type { PropType } from 'vue'
 
 interface ItemType {
-  title: string;
-  value: number;
-  icon: string;
+  title: string
+  value: number
+  icon: string
 }
 
 defineProps({
@@ -38,13 +40,13 @@ defineProps({
     default: false,
     type: Boolean,
   },
-});
-const emits = defineEmits(["update:current", "didClick"]);
+})
+const emits = defineEmits(['update:current', 'didClick'])
 
-const clickItem = (index: number) => {
-  emits("update:current", index);
-  emits("didClick", index);
-};
+function clickItem(index: number) {
+  emits('update:current', index)
+  emits('didClick', index)
+}
 </script>
 
 <style lang="scss" scoped>

@@ -11,8 +11,10 @@
       />
       <view class="common-content">
         <view class="common-content-top">
-          <view class="common-content-top-title theme-font text-stroke-main">{{
-            title}}</view>
+          <view class="common-content-top-title theme-font text-stroke-main">
+            {{
+              title }}
+          </view>
         </view>
         <scroll-view
           class="common-content-text"
@@ -20,7 +22,7 @@
           :enable-flex="true"
           scroll-with-animation
         >
-          <rich-text :nodes="content"></rich-text>
+          <rich-text :nodes="content" />
         </scroll-view>
         <view
           class="common-content-bottom"
@@ -34,8 +36,8 @@
 </template>
 
 <script lang="ts" setup>
-import CustomButton from "@/components/custom/button/index.vue";
-import { ref, watch } from "vue";
+import { ref, watch } from 'vue'
+import CustomButton from '@/components/custom/button/index.vue'
 
 const props = defineProps({
   show: {
@@ -43,25 +45,25 @@ const props = defineProps({
     type: Boolean,
   },
   title: {
-    default: "",
+    default: '',
     type: String,
   },
   content: {
-    default: "",
+    default: '',
     type: String,
   },
-});
+})
 
-const vShow = ref(props.show);
+const emits = defineEmits(['update:show'])
+
+const vShow = ref(props.show)
 
 watch(
   () => props.show,
   (value) => {
-    vShow.value = value;
-  }
-);
-
-const emits = defineEmits(["update:show"]);
+    vShow.value = value
+  },
+)
 </script>
 
 <style lang="scss" scoped>

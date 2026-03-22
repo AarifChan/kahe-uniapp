@@ -1,8 +1,8 @@
 <template>
   <view
-    class="goods"
     v-for="(item, index) in list"
     :key="index"
+    class="goods"
     @tap.stop="emits('tapCardListItem', item)"
   >
     <image class="goods-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/machine/item-bg.png" />
@@ -10,13 +10,16 @@
       <image class="goods-left-img" :src="item.logo" mode="widthFix" />
     </view>
     <view class="goods-right">
-      <view class="goods-right-title theme-font">{{ item.title }}</view>
+      <view class="goods-right-title theme-font">
+        {{ item.title }}
+      </view>
       <view style="display: flex; align-items: center">
-        <view class="goods-right-price price-font">￥{{ item.price }}</view>
-        <view class="goods-right-num"
-          >含<text>{{ item.goods?.length ?? 0 }}</text
-          >种卡牌</view
-        >
+        <view class="goods-right-price price-font">
+          ￥{{ item.price }}
+        </view>
+        <view class="goods-right-num">
+          含<text>{{ item.goods?.length ?? 0 }}</text>种卡牌
+        </view>
       </view>
       <view class="goods-right-bottom">
         <scroll-view
@@ -26,9 +29,9 @@
           class="goods-right-bottom-scroll"
         >
           <view
-            class="goods-right-bottom-scroll-item"
             v-for="(goods, index) in item.goods"
             :key="index"
+            class="goods-right-bottom-scroll-item"
           >
             <image
               class="goods-right-bottom-scroll-item-img"
@@ -40,16 +43,19 @@
     </view>
   </view>
 </template>
+
 <script setup lang="ts">
-import { type ProductBoxModel } from "@/model";
+import type { ProductBoxModel } from '@/model'
+
 defineProps({
   list: {
     type: Array as () => ProductBoxModel[],
     default: () => [],
   },
-});
-const emits = defineEmits(["tapCardListItem"]);
+})
+const emits = defineEmits(['tapCardListItem'])
 </script>
+
 <style lang="scss" scoped>
 .goods {
   position: relative;

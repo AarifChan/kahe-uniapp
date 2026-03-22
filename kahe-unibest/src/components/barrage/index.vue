@@ -1,34 +1,40 @@
 <template>
   <view class="barrageIndex">
     <view
-      class="barrage anmt"
       v-for="(item, index) in list"
       :key="index"
+      class="barrage anmt"
       @tap.stop="emits('tapLampAction', item)"
     >
       <view class="right">
-        <img class="avatar" :src="item.avatar" alt="" />
+        <img class="avatar" :src="item.avatar" alt="">
         <view
           v-if="item.userName.length > 0"
           class="userName text-flow-ellipsis-single"
-          >{{ item.userName }}</view
         >
-        <view class="info text-flow-ellipsis-single">{{ item.content }}</view>
+          {{ item.userName }}
+        </view>
+        <view class="info text-flow-ellipsis-single">
+          {{ item.content }}
+        </view>
       </view>
     </view>
   </view>
 </template>
+
 <script setup lang="ts">
-import type { UIBarrageModel } from "@/model";
-import type { PropType } from "vue";
-const emits = defineEmits(["tapLampAction"]);
+import type { PropType } from 'vue'
+import type { UIBarrageModel } from '@/model'
+
 defineProps({
   list: {
     type: Array as PropType<UIBarrageModel[]>,
     default: () => [],
   },
-});
+})
+const emits = defineEmits(['tapLampAction'])
 </script>
+
 <style lang="scss" scoped>
 .barrageIndex {
   position: absolute;

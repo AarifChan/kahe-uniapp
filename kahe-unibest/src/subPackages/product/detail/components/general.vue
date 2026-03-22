@@ -2,32 +2,32 @@
   <view class="general">
     <top
       :product="product"
-      @tap-show-model="tapShowModel"
       :choose="isSelectNum"
+      @tap-show-model="tapShowModel"
       @did-tap-change="
         emits('didClickButton', ProductDetailButtonType.ChangeBox)
       "
       @did-tap-reload="emits('didClickButton', ProductDetailButtonType.Reload)"
     />
-    <InGroup @tap.stop="emits('didClickRemark')" :content="product.remark" />
+    <InGroup :content="product.remark" @tap.stop="emits('didClickRemark')" />
     <page-control
       :product="product"
       @did-click-change-box="didClickChangeBox"
     />
     <CommonTab
       v-model:current-index="currentIndex"
+      :product="product"
+      class="general-common"
       @tab-did-change="tabDidChange"
       @scroll-to-lower="scrollToLower"
-      :product="product"
       @did-click-button="handleClickAction"
-      class="general-common"
     >
       <template #goods>
         <view class="general-content-list">
           <goods-item
-            class="general-content-list-item"
             v-for="(item, index) in goodsList"
             :key="index"
+            class="general-content-list-item"
             :item="item"
             :goods-price="product.payType === 8 ? item.price : product.price"
             @tap.stop="clickItem(item)"
@@ -58,27 +58,28 @@
     />
   </view>
 </template>
+
 <script setup lang="ts">
-import { ref } from "vue";
-import type { PropType } from "vue";
-import PageControl from "./pageControl/index.vue";
-import Top from "./generalTop/index.vue";
-import Record from "@/subPackages/product/card/components/record.vue";
-import CommonTab from "./CommonTab/index.vue";
-
-import InGroup from "./InGroup/index.vue";
-import Cards from "./bottomCards/index.vue";
-import AllTab from "./all/index.vue";
-import GoodsItem from "./generalGoods/index.vue";
-import { useMerchant } from "@/pages/merchant/index";
-
+import type { PropType } from 'vue'
 import type {
   UIProductBoxModel,
   UIProductDetailModel,
   UIProductPriceCard,
   UIProductRecordModel,
-} from "@/model";
-import { ProductDetailButtonType } from "@/model";
+} from '@/model'
+import { ref } from 'vue'
+import { ProductDetailButtonType } from '@/model'
+import Record from '@/subPackages/product/card/components/record.vue'
+
+import AllTab from './all/index.vue'
+import Cards from './bottomCards/index.vue'
+import CommonTab from './CommonTab/index.vue'
+import GoodsItem from './generalGoods/index.vue'
+import Top from './generalTop/index.vue'
+
+import InGroup from './InGroup/index.vue'
+import PageControl from './pageControl/index.vue'
+
 defineProps({
   goodsList: {
     default: () => [],
@@ -104,64 +105,65 @@ defineProps({
     default: () => [],
     type: Array,
   },
-});
-const tapShowModel = (value: number) => {
-  emits("tapShowModel", value);
-};
-const currentIndex = ref(0);
+})
+const emits = defineEmits([
+  'tabDidChange',
+  'didClickChangeBox',
+  'didClickPurchase',
+  'didClickButton',
+  'scrollToLower',
+  'sortTabAction',
+  'clickItem',
+  'tapShowModel',
+  'didClickRemark',
+])
+function tapShowModel(value: number) {
+  emits('tapShowModel', value)
+}
+const currentIndex = ref(0)
 
-const handleClickAction = (action: number) => {
+function handleClickAction(action: number) {
   switch (action) {
     case 0:
-      emits("didClickButton", ProductDetailButtonType.Save);
-      break;
+      emits('didClickButton', ProductDetailButtonType.Save)
+      break
     case 1:
-      emits("didClickButton", ProductDetailButtonType.Favorite);
-      break;
+      emits('didClickButton', ProductDetailButtonType.Favorite)
+      break
     case 2:
-      emits("didClickButton", ProductDetailButtonType.Reload);
-      break;
+      emits('didClickButton', ProductDetailButtonType.Reload)
+      break
   }
-};
+}
 
-const scrollToLower = () => {
+function scrollToLower() {
   if (currentIndex.value === 0) {
-    return;
+    return
   }
-  emits("scrollToLower");
-};
-const emits = defineEmits([
-  "tabDidChange",
-  "didClickChangeBox",
-  "didClickPurchase",
-  "didClickButton",
-  "scrollToLower",
-  "sortTabAction",
-  "clickItem",
-  "tapShowModel",
-  "didClickRemark",
-]);
-const clickItem = (item: any) => {
-  emits("clickItem", item);
-};
-const sortTabAction = (i: any) => {
-  emits("sortTabAction", i);
-};
-const tabDidChange = (index: number) => {
+  emits('scrollToLower')
+}
+function clickItem(item: any) {
+  emits('clickItem', item)
+}
+function sortTabAction(i: any) {
+  emits('sortTabAction', i)
+}
+function tabDidChange(index: number) {
   // currentIndex.value = index;
-  emits("tabDidChange", index);
-};
+  emits('tabDidChange', index)
+}
 
-const didClickChangeBox = (isLeft: boolean) => {
-  emits("didClickChangeBox", isLeft);
-};
+function didClickChangeBox(isLeft: boolean) {
+  emits('didClickChangeBox', isLeft)
+}
 
-const didClickPurchase = (num: number) => {
-  emits("didClickPurchase", {
+function didClickPurchase(num: number) {
+  emits('didClickPurchase', {
     num,
-  });
-};
+  })
+}
 </script>
+
 <style lang="scss" scoped>
 .general {
   width: 100%;

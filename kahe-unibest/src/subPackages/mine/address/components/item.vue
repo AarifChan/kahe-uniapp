@@ -18,9 +18,9 @@
       />
       <view v-else-if="type === 'switch'" class="addressInput-item-switch">
         <TnSwitch
+          v-model="inputValue"
           active-color="#95C3F7"
           inactive-color="#C0C0C0"
-          v-model="inputValue"
         />
       </view>
 
@@ -30,51 +30,52 @@
 </template>
 
 <script lang="ts" setup>
-import TnInput from "@tuniao/tnui-vue3-uniapp/components/input/src/input.vue";
-import TnSwitch from "@tuniao/tnui-vue3-uniapp/components/switch/src/switch.vue";
+import TnFormItem from '@tuniao/tnui-vue3-uniapp/components/form/src/form-item.vue'
+import TnInput from '@tuniao/tnui-vue3-uniapp/components/input/src/input.vue'
 
-import TnFormItem from "@tuniao/tnui-vue3-uniapp/components/form/src/form-item.vue";
-import { ref, watch } from "vue";
+import TnSwitch from '@tuniao/tnui-vue3-uniapp/components/switch/src/switch.vue'
+import { ref, watch } from 'vue'
+
 const props = defineProps({
   title: {
-    default: "",
+    default: '',
     type: String,
   },
   value: {
-    default: "",
+    default: '',
     type: [String, Number],
   },
   placeholder: {
-    default: "",
+    default: '',
     type: String,
   },
   type: {
-    default: "input",
+    default: 'input',
     type: String,
   },
-});
+})
 
-const inputValue = ref(props.value);
+const emits = defineEmits(['update:value', 'didClickSelect', 'fetchWxAddress'])
 
-const emits = defineEmits(["update:value", "didClickSelect", "fetchWxAddress"]);
+const inputValue = ref(props.value)
 
 watch(
   () => inputValue.value,
   (value) => {
-    emits("update:value", value);
-  }
-);
+    emits('update:value', value)
+  },
+)
 
 watch(
   () => props.value,
   (value) => {
-    inputValue.value = value;
-  }
-);
+    inputValue.value = value
+  },
+)
 
-const onChange = (e: { detail: boolean | string }) => {
-  emits("update:value", e.detail);
-};
+function onChange(e: { detail: boolean | string }) {
+  emits('update:value', e.detail)
+}
 </script>
 
 <style lang="scss" scoped>

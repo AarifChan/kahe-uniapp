@@ -5,12 +5,13 @@
       <view class="box-item-left-info">
         <text
           class="box-item-left-info-title text-flow-ellipsis-multiple theme-font"
-          >{{ item.title }}</text
         >
+          {{ item.title }}
+        </text>
         <view class="box-item-left-info-other">
-          <text class="box-item-left-info-other-title"
-            >当前有{{ item.num }}件商品待处理</text
-          >
+          <text class="box-item-left-info-other-title">
+            当前有{{ item.num }}件商品待处理
+          </text>
         </view>
       </view>
     </view>
@@ -25,17 +26,17 @@
 </template>
 
 <script lang="ts" setup>
-import type { UIMineBoxModel } from "@/model";
-import SelectItem from "../select/index.vue";
-import { type PropType } from "vue";
+import type { PropType } from 'vue'
+import type { UIMineBoxModel } from '@/model'
+import SelectItem from '../select/index.vue'
 
 defineProps({
   item: {
     default: {} as UIMineBoxModel,
     type: Object as PropType<UIMineBoxModel>,
   },
-});
-const emits = defineEmits(["didTapDetail", "didTapSelect"]);
+})
+const emits = defineEmits(['didTapDetail', 'didTapSelect'])
 </script>
 
 <style lang="scss" scoped>

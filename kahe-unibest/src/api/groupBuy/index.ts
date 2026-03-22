@@ -1,99 +1,95 @@
-import { get, post } from "@/utils/request";
-import {
-  ListObject,
-  GroupBuyParams,
-  GroupBuyItem,
-  GroupBuyDetail,
-  GroupBuyRecordParams,
-  GroupBuyCardParams,
+import type {
   GroupBuyCard,
-  GroupBuyMineCardParams,
+  GroupBuyCardParams,
+  GroupBuyDetail,
+  GroupBuyItem,
   GroupBuyLog,
-  GroupBuySubmitRes,
-  GroupBuyRecord,
+  GroupBuyMineCardParams,
+  GroupBuyParams,
   GroupBuyPurchaseModel,
-} from "@/model";
+  GroupBuyRecord,
+  GroupBuyRecordParams,
+  GroupBuySubmitRes,
+  ListObject,
+} from '@/model'
+import { get, post } from '@/utils/request'
 
 /**
  * 获取拼团列表
  * @param params
  */
-export const getGroupBuyListRequest = (params: GroupBuyParams) => {
+export function getGroupBuyListRequest(params: GroupBuyParams) {
   return get<ListObject<GroupBuyItem>>(
-    "secret/list",
+    'secret/list',
     {
       merchant: 1,
       ...params,
     },
     {
       urlAppend: true,
-    }
-  );
-};
+    },
+  )
+}
 
 /**
  * 获取卡密列表
  * @param params
  */
-export const getGroupBuyCardListRequest = (params: GroupBuyCardParams) => {
-  return get<ListObject<GroupBuyCard>>("secret/card/list", params);
-};
+export function getGroupBuyCardListRequest(params: GroupBuyCardParams) {
+  return get<ListObject<GroupBuyCard>>('secret/card/list', params)
+}
 
 /**
  * 获取卡密记录
  * @param params
  */
-export const getMineGroupBuyCardListRequest = (
-  params: GroupBuyMineCardParams
-) => {
-  return get<ListObject<GroupBuyLog>>("secret/log", params);
-};
+export function getMineGroupBuyCardListRequest(params: GroupBuyMineCardParams) {
+  return get<ListObject<GroupBuyLog>>('secret/log', params)
+}
 
 /**
  * 获取拼团详情
  * @param id
  */
-export const getGroupBuyDetailRequest = (id: number) => {
+export function getGroupBuyDetailRequest(id: number) {
   return get<GroupBuyDetail>(
-    "secret/detail",
+    'secret/detail',
     {
       id,
     },
     {
       urlAppend: true,
-    }
-  );
-};
+    },
+  )
+}
 
 /**
  * 获取拼团详情的购买记录
  * @param params
  */
-export const getGroupBuyDetailRecordRequest = (
-  params: GroupBuyRecordParams
-) => {
-  return get<ListObject<GroupBuyRecord>>("secret/order", params);
-};
+export function getGroupBuyDetailRecordRequest(params: GroupBuyRecordParams) {
+  return get<ListObject<GroupBuyRecord>>('secret/order', params)
+}
 
 /**
  * 确认购买
  * @orderId 订单ID
  */
-export const purchaseGroupBuyRequest = (orderId: string) => {
-  return post<GroupBuyPurchaseModel>("secret/purchase", {
+export function purchaseGroupBuyRequest(orderId: string) {
+  return post<GroupBuyPurchaseModel>('secret/purchase', {
     orderId,
-  });
-};
+  })
+}
 
-export const submitGroupBuyRequest = (params: { id: number; num: number }) => {
-  return post<GroupBuySubmitRes>("secret/submit", params);
-};
+export function submitGroupBuyRequest(params: { id: number, num: number }) {
+  return post<GroupBuySubmitRes>('secret/submit', params)
+}
 
 /**
  * 拼团发货
  */
-export const deliverGroupBuyDetailRecord = (orderId: string) => {
-  return post<GroupBuyPurchaseModel>("secret/deliver", {
+export function deliverGroupBuyDetailRecord(orderId: string) {
+  return post<GroupBuyPurchaseModel>('secret/deliver', {
     orderId,
-  });
-};
+  })
+}

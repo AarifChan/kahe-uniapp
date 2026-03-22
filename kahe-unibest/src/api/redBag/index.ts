@@ -1,26 +1,26 @@
-import { get, post } from "@/utils/request";
-import type { ListObject, PageParams } from "@/model";
 import type {
-  RedBagListItem,
   RedBagDetailModel,
-} from "@/composables/redBag/model";
+  RedBagListItem,
+} from '@/composables/redBag/model'
+import type { ListObject, PageParams } from '@/model'
+import { get, post } from '@/utils/request'
 
-export const getMineRedBagRequest = async (params: PageParams) => {
-  return await get<ListObject<RedBagListItem>>("activity/redbag/list", params);
-};
+export async function getMineRedBagRequest(params: PageParams) {
+  return await get<ListObject<RedBagListItem>>('activity/redbag/list', params)
+}
 
-export const getRedBagDetailRequest = async (id: number) => {
-  return await get<RedBagDetailModel>("activity/redbag/detail", {
+export async function getRedBagDetailRequest(id: number) {
+  return await get<RedBagDetailModel>('activity/redbag/detail', {
     id,
-  });
-};
+  })
+}
 
-export const receiveRedBagRequest = async (params: any) => {
-  return await post("activity/redbag/receive", params);
-};
+export async function receiveRedBagRequest(params: any) {
+  return await post('activity/redbag/receive', params)
+}
 
-export const shareRedBagRequest = async (id: number) => {
-  return await post("activity/redbag/share", {
+export async function shareRedBagRequest(id: number) {
+  return await post('activity/redbag/share', {
     id,
-  });
-};
+  })
+}

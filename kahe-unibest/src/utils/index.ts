@@ -167,14 +167,18 @@ export function currentEnv(): string {
   const isWeChat = ua.includes('micromessenger')
   const isMiniProgram = ua.includes('miniprogram')
   const isAlipay = ua.includes('alipay')
-  if (isWeChat && isMiniProgram) return 'mp-weixin'
-  if (isWeChat) return 'h5-weixin'
-  if (isAlipay && isMiniProgram) return 'mp-alipay'
-  if (isAlipay) return 'h5-alipay'
+  if (isWeChat && isMiniProgram)
+return 'mp-weixin'
+  if (isWeChat)
+return 'h5-weixin'
+  if (isAlipay && isMiniProgram)
+return 'mp-alipay'
+  if (isAlipay)
+return 'h5-alipay'
   return 'pc'
 }
 
-export const getTitleByQuality = (val: number) => {
+export function getTitleByQuality(val: number) {
   switch (val) {
     case 1: return '损伤品相'
     case 2: return '瑕疵品相'
@@ -189,3 +193,7 @@ export const getTitleByQuality = (val: number) => {
  * 通常为 /pages/index/index
  */
 export const HOME_PAGE = `/${(pages as PageMetaDatum[]).find(page => page.type === 'home')?.path || (pages as PageMetaDatum[])[0].path}`
+
+export * from './pay'
+export * from './storage'
+export * from './Toast'

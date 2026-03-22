@@ -1,8 +1,8 @@
 <template>
   <view class="lotteryCard" :class="[isAnimating ? 'turnCard' : '']">
-    <!--    <view class="lotteryCard-card" v-if="!isOpen">-->
-    <!--      <image class="lotteryCard-card-bg" :src="cardCoverImage"></image>-->
-    <!--    </view>-->
+    <!--    <view class="lotteryCard-card" v-if="!isOpen"> -->
+    <!--      <image class="lotteryCard-card-bg" :src="cardCoverImage"></image> -->
+    <!--    </view> -->
     <view
       class="lotteryCard-card"
       :style="{ backgroundImage: `url(${bgImage})` }"
@@ -27,28 +27,31 @@
       <view v-if="isOpen" class="lotteryCard-card-info">
         <text
           class="lotteryCard-card-info-title theme-font text-flow-ellipsis-multiple"
-          >{{ item.title }}</text
         >
+          {{ item.title }}
+        </text>
       </view>
     </view>
   </view>
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
+
+import type { LotteryModel } from '@/components/lottery/index.vue'
 import {
   computed,
   defineComponent,
-  type PropType,
+
   reactive,
   toRefs,
-} from "vue";
+} from 'vue'
+import { useEnum } from '@/composables/enum'
+import { getLevelName, getLevelNum } from '@/utils/tools/image'
 
-import type { LotteryModel } from "@/components/lottery/index.vue";
-import { getLevelName, getLevelNum } from "@/utils/tools/image";
-import { useEnum } from "@/composables/enum";
-const { getLevelImageByLevel } = useEnum();
+const { getLevelImageByLevel } = useEnum()
 export default defineComponent({
-  name: "LotteryCard",
+  name: 'LotteryCard',
   props: {
     level: {
       default: 1,
@@ -69,35 +72,35 @@ export default defineComponent({
     const dataMap = reactive({
       bgImage: computed(() => {
         return props.item
-          ? "https://jms.85gui7.com/cyd/lottery/card-lottery" +
-              getLevelNum(props.item?.level) +
-              ".png"
-          : "";
+          ? `https://jms.85gui7.com/cyd/lottery/card-lottery${
+            getLevelNum(props.item?.level)
+          }.png`
+          : ''
       }),
-      cardInfoImage: "https://jms.85gui7.com/cyd/lottery/card-bg.png",
-      cardCoverImage: "https://jms.85gui7.com/kahe-202510/lottery/card-cover.png",
+      cardInfoImage: 'https://jms.85gui7.com/cyd/lottery/card-bg.png',
+      cardCoverImage: 'https://jms.85gui7.com/kahe-202510/lottery/card-cover.png',
       levelBgImage: computed(() => {
         return props.item
-          ? "https://jms.85gui7.com/yqoh/lottery/level-bg-" +
-              getLevelNum(props.item?.level) +
-              ".png"
-          : "";
+          ? `https://jms.85gui7.com/yqoh/lottery/level-bg-${
+            getLevelNum(props.item?.level)
+          }.png`
+          : ''
       }),
       levelImage: computed(() => {
         return props.item
-          ? "https://jms.85gui7.com/yqoh/level/" +
-              getLevelName(props.item?.level) +
-              ".png"
-          : "";
+          ? `https://jms.85gui7.com/yqoh/level/${
+            getLevelName(props.item?.level)
+          }.png`
+          : ''
       }),
-    });
+    })
 
     return {
       ...toRefs(dataMap),
       getLevelImageByLevel,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

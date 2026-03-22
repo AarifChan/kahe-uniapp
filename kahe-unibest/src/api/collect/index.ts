@@ -1,118 +1,118 @@
-import { get, post } from "@/utils/request";
-import type { ListObject, PageParams } from "@/model";
+import type { ListObject, PageParams } from '@/model'
+import { get, post } from '@/utils/request'
 
 export interface CollectParams extends PageParams {
-  cate: number | null;
+  cate: number | null
 }
 
 export interface CollectDetailParams {
-  obj: number | null;
-  pid: number;
+  obj: number | null
+  pid: number
 }
 
 export interface CollectOrderParams extends PageParams {
-  type: number;
+  type: number
 }
 
 export interface CollectPurchaseParams {
-  obj?: number | null;
-  pid: number;
-  num: number;
-  cate: number;
-  goods?: { boxId: number; gid: number; id: number; num: number }[] | null;
+  obj?: number | null
+  pid: number
+  num: number
+  cate: number
+  goods?: { boxId: number, gid: number, id: number, num: number }[] | null
 }
 
 export interface UserModel {
-  avatar: string;
-  nickname: string;
-  phone: string;
-  uid: number;
-  username: string;
-  vip: number;
+  avatar: string
+  nickname: string
+  phone: string
+  uid: number
+  username: string
+  vip: number
 }
 
 export interface CollectListObject {
-  cate: number;
+  cate: number
 
-  createTime: string;
+  createTime: string
 
-  expireTime: string;
+  expireTime: string
 
-  id: number;
+  id: number
 
-  logo: string;
+  logo: string
 
-  name: string;
+  name: string
 
-  price: number;
+  price: number
 
-  sales: number;
+  sales: number
 
-  sort: number;
+  sort: number
 
-  status: number;
+  status: number
 
-  total: number;
+  total: number
 
-  isThanked: boolean;
+  isThanked: boolean
 
-  updateTime: string;
+  updateTime: string
 }
 
 export interface CollectOrderItem {
-  amount: number;
-  createTime: string;
-  helper: UserModel;
-  id: number;
-  logo: string;
-  name: string;
-  orderId: string;
-  pid: number;
-  isThanked: boolean;
-  user: UserModel;
+  amount: number
+  createTime: string
+  helper: UserModel
+  id: number
+  logo: string
+  name: string
+  orderId: string
+  pid: number
+  isThanked: boolean
+  user: UserModel
 }
 
 export interface CollectDetailObject {
-  product: CollectListObject;
-  user: UserModel;
+  product: CollectListObject
+  user: UserModel
 }
 
 export interface CollectPurchaseRes {
-  amount: number;
-  createTime: string;
-  goods: string;
-  id: number;
-  logo: string;
-  name: string;
-  obj: number;
-  orderId: string;
-  pid: number;
-  uid: number;
-  updateTime: string;
+  amount: number
+  createTime: string
+  goods: string
+  id: number
+  logo: string
+  name: string
+  obj: number
+  orderId: string
+  pid: number
+  uid: number
+  updateTime: string
 }
 
-export const getCollectListRequest = (params: CollectParams) => {
-  return get<ListObject<CollectListObject>>("collection/product", params, {
+export function getCollectListRequest(params: CollectParams) {
+  return get<ListObject<CollectListObject>>('collection/product', params, {
     urlAppend: true,
-  });
-};
+  })
+}
 
-export const getCollectDetailRequest = (params: CollectDetailParams) => {
-  return get<CollectDetailObject>("collection/product/detail", params, {
+export function getCollectDetailRequest(params: CollectDetailParams) {
+  return get<CollectDetailObject>('collection/product/detail', params, {
     urlAppend: true,
-  });
-};
+  })
+}
 
-export const purchaseCollectProduct = (params: CollectPurchaseParams) => {
-  return post<CollectPurchaseRes>("collection/product/purchase", params, {
+export function purchaseCollectProduct(params: CollectPurchaseParams) {
+  return post<CollectPurchaseRes>('collection/product/purchase', params, {
     urlAppend: false,
-  });
-};
+  })
+}
 
-export const getCollectOrderRequest = (params: CollectOrderParams) => {
-  return get<ListObject<CollectOrderItem>>("collection/order", params);
-};
+export function getCollectOrderRequest(params: CollectOrderParams) {
+  return get<ListObject<CollectOrderItem>>('collection/order', params)
+}
 
-export const handleCollectThankRequest = (id: number) => {
-  return post<boolean>("collection/order/thank", { id });
-};
+export function handleCollectThankRequest(id: number) {
+  return post<boolean>('collection/order/thank', { id })
+}

@@ -7,9 +7,9 @@
       </view>
       <view class="discountCard-top-btn" @tap.stop="emits('didClickItem')">
         <image class="discountCard-top-btn-bg" src="https://jms.85gui7.com/kahe-202510/merchant/btn.png" />
-        <text class="discountCard-top-btn-text text-stroke theme-font"
-          >领 取</text
-        >
+        <text class="discountCard-top-btn-text theme-font text-stroke">
+          领 取
+        </text>
       </view>
     </view>
     <view class="discountCard-bottom">
@@ -19,8 +19,12 @@
           src="https://jms.85gui7.com/kahe-202510/discount/item1.png"
         />
         <view class="discountCard-bottom-item-info">
-          <view class="discountCard-bottom-item-info-title">购买必得</view>
-          <view class="discountCard-bottom-item-info-subTitle">1288XX点券</view>
+          <view class="discountCard-bottom-item-info-title">
+            购买必得
+          </view>
+          <view class="discountCard-bottom-item-info-subTitle">
+            1288XX点券
+          </view>
         </view>
       </view>
       <view class="discountCard-bottom-item">
@@ -29,8 +33,12 @@
           src="https://jms.85gui7.com/kahe-202510/discount/item2.png"
         />
         <view class="discountCard-bottom-item-info">
-          <view class="discountCard-bottom-item-info-title">购买必得</view>
-          <view class="discountCard-bottom-item-info-subTitle">1288XX点券</view>
+          <view class="discountCard-bottom-item-info-title">
+            购买必得
+          </view>
+          <view class="discountCard-bottom-item-info-subTitle">
+            1288XX点券
+          </view>
         </view>
       </view>
     </view>
@@ -38,7 +46,7 @@
 </template>
 
 <script lang="ts" setup>
-const emits = defineEmits(["didClickItem"]);
+const emits = defineEmits(['didClickItem'])
 </script>
 
 <style lang="scss" scoped>

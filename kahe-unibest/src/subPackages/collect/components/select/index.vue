@@ -9,9 +9,9 @@
       <image class="boxSelect-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/common/select-bg.png" />
       <view class="boxSelect-wrapper">
         <view class="boxSelect-wrapper-content">
-          <view class="boxSelect-wrapper-content-title other-font"
-            >输入数量</view
-          >
+          <view class="boxSelect-wrapper-content-title other-font">
+            输入数量
+          </view>
           <view class="boxSelect-wrapper-content-center">
             <view class="boxSelect-wrapper-content-center-input">
               <tn-input
@@ -19,15 +19,15 @@
                 type="digit"
                 clearable
                 :maxlength="11"
-                :placeholder="'最大' + max"
+                :placeholder="`最大${max}`"
                 :border="false"
                 height="80"
                 label-class="boxSelect-wrapper-content-center-input"
               />
             </view>
-            <text class="boxSelect-wrapper-content-center-title other-font"
-              >个</text
-            >
+            <text class="boxSelect-wrapper-content-center-title other-font">
+              个
+            </text>
           </view>
           <view class="boxSelect-wrapper-content-bottom">
             <view
@@ -47,11 +47,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { UserGoodsModel } from "@/model";
-import type { PropType } from "vue";
-import { ref, watch } from "vue";
-import { ShowToast } from "@/utils";
-import TnInput from "@tuniao/tnui-vue3-uniapp/components/input/src/input.vue";
+import TnInput from '@tuniao/tnui-vue3-uniapp/components/input/src/input.vue'
+import { ref, watch } from 'vue'
+import { ShowToast } from '@/utils'
 
 const props = defineProps({
   show: {
@@ -66,39 +64,39 @@ const props = defineProps({
     default: 1,
     type: Number,
   },
-});
+})
 
-const vShow = ref(false);
+const emits = defineEmits(['update:show', 'update:num', 'didTapConfirm'])
+
+const vShow = ref(false)
 
 watch(
   () => props.show,
   (value) => {
-    vShow.value = value;
-  }
-);
+    vShow.value = value
+  },
+)
 
-const input = ref(0);
+const input = ref(0)
 
-const emits = defineEmits(["update:show", "update:num", "didTapConfirm"]);
-
-const didTapConfirm = () => {
-  const num = Number(input.value) ?? 0;
+function didTapConfirm() {
+  const num = Number(input.value) ?? 0
   if (num > props.num) {
-    ShowToast("数量输入有误");
-    return;
+    ShowToast('数量输入有误')
+    return
   }
-  emits("update:num", num);
+  emits('update:num', num)
 
-  emits("update:show", false);
-  emits("didTapConfirm", num);
-};
+  emits('update:show', false)
+  emits('didTapConfirm', num)
+}
 
 watch(
   () => props.show,
   (val) => {
-    input.value = props.num;
-  }
-);
+    input.value = props.num
+  },
+)
 </script>
 
 <style lang="scss" scoped>

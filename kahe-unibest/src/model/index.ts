@@ -1,20 +1,20 @@
-export * from "./base";
-export * from "./user";
-export * from "./product";
-export * from "./order";
-export * from "./uiModel";
-export * from "./address";
-export * from "./agent";
-export * from "./pet";
-export * from "./mall";
-export * from "./box";
-export * from "./merchant";
-export * from "./groupBuy";
+export * from './address'
+export * from './agent'
+export * from './base'
+export * from './box'
+export * from './groupBuy'
+export * from './mall'
+export * from './merchant'
+export * from './order'
+export * from './pet'
+export * from './product'
+export * from './uiModel'
+export * from './user'
 
 export interface TabBarItem {
-  text: string;
-  title: string;
-  selectPath: string;
-  iconNormal: string;
-  iconSelected: string;
+  text: string
+  title: string
+  selectPath: string
+  iconNormal: string
+  iconSelected: string
 }

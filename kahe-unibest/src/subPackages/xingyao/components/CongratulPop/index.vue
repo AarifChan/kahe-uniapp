@@ -1,75 +1,77 @@
 <script setup lang="ts">
-import TnPopup from "@tuniao/tnui-vue3-uniapp/components/popup/src/popup.vue";
-import TnForm from "@tuniao/tnui-vue3-uniapp/components/form/src/form.vue";
-import TnFormItem from "@tuniao/tnui-vue3-uniapp/components/form/src/form-item.vue";
-import TnInput from "@tuniao/tnui-vue3-uniapp/components/input/src/input.vue";
-import type { TnFormInstance } from "@tuniao/tnui-vue3-uniapp";
-import { onMounted, onUnmounted, PropType, reactive, ref } from "vue";
-import { ShingingInfo } from "@/subPackages/xingyao/api";
-import { eventBus } from "@/utils/event";
-import { AddressModel } from "@/model";
-import { ShowToast } from "@/utils";
-const modelValue = defineModel<boolean>();
-const choose = ref(false);
-const tapChoose = () => {
-  choose.value = !choose.value;
-};
+import type { TnFormInstance } from '@tuniao/tnui-vue3-uniapp'
+import type { PropType } from 'vue'
+import type { AddressModel } from '@/model'
+import type { ShingingInfo } from '@/subPackages/xingyao/api'
+import TnFormItem from '@tuniao/tnui-vue3-uniapp/components/form/src/form-item.vue'
+import TnForm from '@tuniao/tnui-vue3-uniapp/components/form/src/form.vue'
+import TnInput from '@tuniao/tnui-vue3-uniapp/components/input/src/input.vue'
+import TnPopup from '@tuniao/tnui-vue3-uniapp/components/popup/src/popup.vue'
+import { onMounted, onUnmounted, reactive, ref } from 'vue'
+import { ShowToast } from '@/utils'
+import { eventBus } from '@/utils/event'
+
 defineProps({
   info: {
     default: {},
     type: Object as PropType<ShingingInfo>,
   },
-});
+})
+const emits = defineEmits(['protocol', 'confirm'])
+const modelValue = defineModel<boolean>()
+const choose = ref(false)
+function tapChoose() {
+  choose.value = !choose.value
+}
 const selectAddress = ref<AddressModel>({
-  phone: "",
-  address: "",
-  name: "",
-});
+  phone: '',
+  address: '',
+  name: '',
+})
 
-const formRef = ref<TnFormInstance>();
+const formRef = ref<TnFormInstance>()
 
-const navToSelectAddress = () => {
+function navToSelectAddress() {
   uni.navigateTo({
     url: `/subPackages/mine/address/index?needSelect=${true}`,
-  });
-};
-const emits = defineEmits(["protocol", "confirm"]);
+  })
+}
 onMounted(() => {
-  eventBus.on("didSelectAddress", (addressItem: AddressModel) => {
-    console.log("didSelectAddress:", addressItem);
-    selectAddress.value = addressItem;
-    selectAddress.value.name = addressItem.realName;
-    selectAddress.value.address =
-      addressItem.province +
-      addressItem.city +
-      addressItem.district +
-      addressItem.detail;
-  });
-});
-const handleRecieve = () => {
+  eventBus.on('didSelectAddress', (addressItem: AddressModel) => {
+    console.log('didSelectAddress:', addressItem)
+    selectAddress.value = addressItem
+    selectAddress.value.name = addressItem.realName
+    selectAddress.value.address
+      = addressItem.province
+        + addressItem.city
+        + addressItem.district
+        + addressItem.detail
+  })
+})
+function handleRecieve() {
   if (!choose.value) {
-    ShowToast("阅读并同意《用户使用协议》");
-    return;
+    ShowToast('阅读并同意《用户使用协议》')
+    return
   }
   if (
-    selectAddress.value.name?.length === 0 ||
-    selectAddress.value.phone.length === 0 ||
-    selectAddress.value.address?.length === 0
+    selectAddress.value.name?.length === 0
+    || selectAddress.value.phone.length === 0
+    || selectAddress.value.address?.length === 0
   ) {
-    ShowToast("请填写完整的收货地址");
-    return;
+    ShowToast('请填写完整的收货地址')
+    return
   }
-  emits("confirm", selectAddress.value);
-};
+  emits('confirm', selectAddress.value)
+}
 onUnmounted(() => {
-  eventBus.off("didSelectAddress");
-});
+  eventBus.off('didSelectAddress')
+})
 // 表单数据
 const formData = reactive({
-  recipient: "",
-  contact: "",
-  address: "",
-});
+  recipient: '',
+  contact: '',
+  address: '',
+})
 </script>
 
 <template>
@@ -93,9 +95,9 @@ const formData = reactive({
           mode="scaleToFill"
           class="pop-bg"
         />
-        <view class="pop-title"
-          >今日消费满{{ info?.minScore }}元，即可领取参与码!</view
-        >
+        <view class="pop-title">
+          今日消费满{{ info?.minScore }}元，即可领取参与码!
+        </view>
         <view class="pop-content">
           <view class="top">
             <text>选择收货信息</text>
@@ -117,10 +119,14 @@ const formData = reactive({
               <TnInput v-model="selectAddress.address" textarea />
             </TnFormItem>
           </TnForm>
-          <view class="card">参与码为实体卡片，需填写收货信息。</view>
+          <view class="card">
+            参与码为实体卡片，需填写收货信息。
+          </view>
         </view>
         <view class="pop-button" @click="handleRecieve">
-          <view class="btn"> 确定领取 </view>
+          <view class="btn">
+            确定领取
+          </view>
         </view>
         <view class="pop-bottom">
           <view class="rectangle" @tap.stop="tapChoose">
@@ -130,10 +136,10 @@ const formData = reactive({
               class="select-icon"
             />
             <image
+              v-if="choose"
               src="https://jms.85gui7.com/kahe-202510/shine/selected.png"
               mode="scaleToFill"
               class="icon"
-              v-if="choose"
             />
           </view>
           <text @click="emits('protocol')">已阅读并同意《用户使用协议》</text>
@@ -142,6 +148,7 @@ const formData = reactive({
     </view>
   </TnPopup>
 </template>
+
 <style lang="scss" scoped>
 .content {
   padding: 64rpx 0;
@@ -246,7 +253,7 @@ const formData = reactive({
       justify-content: center;
       width: 187rpx;
       height: 63rpx;
-      background-image: url("https://jms.85gui7.com/kahe-202510/shine/yellow.png");
+      background-image: url('https://jms.85gui7.com/kahe-202510/shine/yellow.png');
       background-size: 100% 100%;
       background-repeat: no-repeat;
     }

@@ -11,8 +11,9 @@
           <view class="merchant-card-content-top-info-title">
             <text
               class="merchant-card-content-top-info-title-name theme-font"
-              >{{ item.name }}</text
             >
+              {{ item.name }}
+            </text>
             <view
               class="merchant-card-content-top-info-title-bar"
               :style="{ backgroundColor: getTagBgColor(item.tag) }"
@@ -21,9 +22,11 @@
                 class="merchant-card-content-top-info-title-bar-tag"
                 :src="getTagIcon(item.tag)"
               />
-              <text class="merchant-card-content-top-info-title-bar-title">{{
-                getLevelName(item.tag)
-              }}</text>
+              <text class="merchant-card-content-top-info-title-bar-title">
+                {{
+                  getLevelName(item.tag)
+                }}
+              </text>
             </view>
           </view>
         </view>
@@ -31,10 +34,10 @@
           class="merchant-card-content-top-btn"
           @tap.stop="emits('didClickInfo', item)"
         >
-          <!--                    <image class="merchant-card-content-top-btn-bg" src="https://jms.85gui7.com/kahe-202510/merchant/btn.png" />-->
-          <text class="merchant-card-content-top-btn-text theme-font"
-            >进店看看</text
-          >
+          <!--                    <image class="merchant-card-content-top-btn-bg" src="https://jms.85gui7.com/kahe-202510/merchant/btn.png" /> -->
+          <text class="merchant-card-content-top-btn-text theme-font">
+            进店看看
+          </text>
         </view>
       </view>
       <scroll-view
@@ -42,31 +45,31 @@
         :scroll-x="true"
         :enable-flex="true"
       >
-        <!--        <view class="merchant-card-content-list-coupon">-->
-        <!--          <image-->
-        <!--            class="merchant-card-content-list-coupon-img"-->
-        <!--            src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/coupon-bg.png"-->
-        <!--          />-->
-        <!--          <view class="merchant-card-content-list-coupon-content">-->
-        <!--            <view class="merchant-card-content-list-coupon-content-title"-->
-        <!--              >每日福利券</view-->
-        <!--            >-->
-        <!--            <view class="merchant-card-content-list-coupon-content-price">-->
-        <!--              ¥<text style="font-size: 28px">7</text>-->
-        <!--            </view>-->
-        <!--            <view class="merchant-card-content-list-coupon-content-subTitle"-->
-        <!--              >满8可用</view-->
-        <!--            >-->
-        <!--            <view class="merchant-card-content-list-coupon-content-btn">-->
-        <!--              去领取</view-->
-        <!--            >-->
-        <!--          </view>-->
-        <!--        </view>-->
+        <!--        <view class="merchant-card-content-list-coupon"> -->
+        <!--          <image -->
+        <!--            class="merchant-card-content-list-coupon-img" -->
+        <!--            src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/coupon-bg.png" -->
+        <!--          /> -->
+        <!--          <view class="merchant-card-content-list-coupon-content"> -->
+        <!--            <view class="merchant-card-content-list-coupon-content-title" -->
+        <!--              >每日福利券</view -->
+        <!--            > -->
+        <!--            <view class="merchant-card-content-list-coupon-content-price"> -->
+        <!--              ¥<text style="font-size: 28px">7</text> -->
+        <!--            </view> -->
+        <!--            <view class="merchant-card-content-list-coupon-content-subTitle" -->
+        <!--              >满8可用</view -->
+        <!--            > -->
+        <!--            <view class="merchant-card-content-list-coupon-content-btn"> -->
+        <!--              去领取</view -->
+        <!--            > -->
+        <!--          </view> -->
+        <!--        </view> -->
         <view
-          class="merchant-card-content-list-item"
           v-for="(box, index) in item.box"
-          :key="'goods' + box.id"
-          :id="'box:' + box.id"
+          :id="`box:${box.id}`"
+          :key="`goods${box.id}`"
+          class="merchant-card-content-list-item"
         >
           <Goods :item="box" @tap.stop="emits('didClickItem', box)" />
         </view>
@@ -76,19 +79,20 @@
 </template>
 
 <script lang="ts" setup>
-import { type PropType } from "vue";
-import Goods from "../goods/index.vue";
+import type { PropType } from 'vue'
 import type {
+  MerchantInfoModel,
   UIMallListItemModel,
   UIProductModel,
-  MerchantInfoModel,
-} from "@/model";
+} from '@/model'
 import {
   getLevelName,
   getTagBg,
   getTagBgColor,
   getTagIcon,
-} from "@/pages/merchant/index";
+} from '@/pages/merchant/index'
+import Goods from '../goods/index.vue'
+
 defineProps({
   item: {
     default: {} as MerchantInfoModel,
@@ -102,9 +106,9 @@ defineProps({
     default: {} as UIProductModel[] | UIMallListItemModel[],
     type: Object as PropType<UIProductModel[] | UIMallListItemModel[]>,
   },
-});
+})
 
-const emits = defineEmits(["didClickItem", "didClickInfo"]);
+const emits = defineEmits(['didClickItem', 'didClickInfo'])
 </script>
 
 <style lang="scss" scoped>

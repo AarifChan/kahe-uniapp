@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { showInGroupImage } from "@/utils/tools";
+import { ref } from 'vue'
+import { showInGroupImage } from '@/utils/tools'
 
-
-const emits = defineEmits(["didTapAction", "didTapContact"]);
+const emits = defineEmits(['didTapAction', 'didTapContact'])
 enum ItemType {
   inGroup,
   contact,
@@ -23,20 +22,20 @@ enum ItemType {
   rollIn,
 }
 interface ItemModel {
-  icon: string;
-  title: string;
-  type: ItemType;
+  icon: string
+  title: string
+  type: ItemType
 }
 const itemList = ref([
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service1.png",
-    title: "用户协议",
+    icon: 'https://jms.85gui7.com/kahe-202510/mine/service1.png',
+    title: '用户协议',
     type: ItemType.protocol,
   },
 
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service2.png",
-    title: "投诉渠道",
+    icon: 'https://jms.85gui7.com/kahe-202510/mine/service2.png',
+    title: '投诉渠道',
     type: ItemType.contact,
   },
   // {
@@ -45,19 +44,19 @@ const itemList = ref([
   //   type: ItemType.inGroup,
   // },
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service3.png",
-    title: "地址管理",
+    icon: 'https://jms.85gui7.com/kahe-202510/mine/service3.png',
+    title: '地址管理',
     type: ItemType.address,
   },
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service4.png",
-    title: "特惠礼包",
+    icon: 'https://jms.85gui7.com/kahe-202510/mine/service4.png',
+    title: '特惠礼包',
     type: ItemType.giftPack,
   },
 
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service5.png",
-    title: "排行奖励",
+    icon: 'https://jms.85gui7.com/kahe-202510/mine/service5.png',
+    title: '排行奖励',
     type: ItemType.rank,
   },
 
@@ -67,102 +66,102 @@ const itemList = ref([
   //   type: ItemType.income,
   // },
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service7.png",
+    icon: 'https://jms.85gui7.com/kahe-202510/mine/service7.png',
     // title: "商城",
     // type: ItemType.store,
-    title: "未成年投诉",
+    title: '未成年投诉',
     type: ItemType.under18,
   },
 
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service8.png",
-    title: "宝箱",
+    icon: 'https://jms.85gui7.com/kahe-202510/mine/service8.png',
+    title: '宝箱',
     type: ItemType.chest,
   },
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service9.png",
-    title: "入驻了解",
+    icon: 'https://jms.85gui7.com/kahe-202510/mine/service9.png',
+    title: '入驻了解',
     type: ItemType.rollIn,
   },
-]);
+])
 
-const handleClick = (item: ItemModel) => {
-  console.log("handleClick:", item);
+function handleClick(item: ItemModel) {
+  console.log('handleClick:', item)
   switch (item.type) {
     case ItemType.inGroup:
-      showInGroupImage();
-      break;
+      showInGroupImage()
+      break
     case ItemType.address:
       uni.navigateTo({
-        url: "/subPackages/mine/address/index",
-      });
-      break;
+        url: '/subPackages/mine/address/index',
+      })
+      break
     case ItemType.rollIn:
       uni.previewImage({
         current:
-          "https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png",
+          'https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png',
         urls: [
-          "https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png",
+          'https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png',
         ],
-      });
-      break;
+      })
+      break
     case ItemType.coupon:
       uni.navigateTo({
-        url: "/subPackages/mine/coupon/index",
-      });
-      break;
+        url: '/subPackages/mine/coupon/index',
+      })
+      break
     case ItemType.protocol:
       // showModalType(1);
-      emits("didTapAction", 1);
-      break;
+      emits('didTapAction', 1)
+      break
     case ItemType.rank:
       uni.navigateTo({
-        url: "/subPackages/mine/rank/index",
-      });
-      break;
+        url: '/subPackages/mine/rank/index',
+      })
+      break
     case ItemType.favorite:
       uni.navigateTo({
-        url: "/subPackages/mine/favorite/index",
-      });
-      break;
+        url: '/subPackages/mine/favorite/index',
+      })
+      break
     case ItemType.invite:
       uni.navigateTo({
-        url: "/subPackages/mine/invite/index",
-      });
-      break;
+        url: '/subPackages/mine/invite/index',
+      })
+      break
     case ItemType.under18:
-      emits("didTapAction", 7);
-      break;
+      emits('didTapAction', 7)
+      break
     case ItemType.giftPack:
-      console.log("特惠礼包");
+      console.log('特惠礼包')
       uni.navigateTo({
-        url: "/subPackages/gift/index",
-      });
-      break;
+        url: '/subPackages/gift/index',
+      })
+      break
     case ItemType.income:
-      console.log("联盟收益");
+      console.log('联盟收益')
       uni.navigateTo({
-        url: "/subPackages/mine/invite/index",
-      });
+        url: '/subPackages/mine/invite/index',
+      })
       // uni.previewImage({
       //     current: "https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png",
       //     urls: ["https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png"],
       // });
-      break;
+      break
     case ItemType.store:
       uni.navigateTo({
-        url: "/subPackages/mall/index",
-      });
-      break;
+        url: '/subPackages/mall/index',
+      })
+      break
     case ItemType.contact:
-      emits("didTapContact");
-      break;
+      emits('didTapContact')
+      break
     case ItemType.chest:
-      uni.navigateTo({ url: "/subPackages/box/box/index?tab=3" });
+      uni.navigateTo({ url: '/subPackages/box/box/index?tab=3' })
     default:
-      break;
+      break
   }
-};
+}
 </script>
 
 <template>
@@ -176,20 +175,20 @@ const handleClick = (item: ItemModel) => {
     </view>
     <view class="grid-container">
       <view
-        class="grid-item"
         v-for="(item, index) in itemList"
-        :key="index"
         :id="item.title"
+        :key="index"
+        class="grid-item"
         @click="handleClick(item)"
       >
-        <!--        <button-->
-        <!--          class="optionList-item"-->
-        <!--          openType="contact"-->
-        <!--          v-if="item.type === ItemType.contact"-->
-        <!--        >-->
-        <!--          <image class="optionList-item-icon" :src="item.icon" />-->
-        <!--          <text class="optionList-item-title">{{ item.title }}</text>-->
-        <!--        </button>-->
+        <!--        <button -->
+        <!--          class="optionList-item" -->
+        <!--          openType="contact" -->
+        <!--          v-if="item.type === ItemType.contact" -->
+        <!--        > -->
+        <!--          <image class="optionList-item-icon" :src="item.icon" /> -->
+        <!--          <text class="optionList-item-title">{{ item.title }}</text> -->
+        <!--        </button> -->
         <view class="optionList-item">
           <image class="optionList-item-icon" :src="item.icon" />
           <text class="optionList-item-title">{{ item.title }}</text>

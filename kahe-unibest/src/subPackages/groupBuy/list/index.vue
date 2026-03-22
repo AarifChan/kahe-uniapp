@@ -1,50 +1,56 @@
 <template>
   <view class="groupBuyList">
-    <!--    <image class="groupBuyList-bg" src="https://jms.85gui7.com/kahe-202510/groupBuy/groupBuyBg.png" />-->
+    <!--    <image class="groupBuyList-bg" src="https://jms.85gui7.com/kahe-202510/groupBuy/groupBuyBg.png" /> -->
     <view class="groupBuyList-content">
       <view class="groupBuyList-content-top">
-        <search placeholder="" @did-tap-search="handleSearch" :black="true" />
+        <search placeholder="" :black="true" @did-tap-search="handleSearch" />
       </view>
       <view class="groupBuyList-content-main">
         <scroll-view class="groupBuyList-content-main-table" scroll-x scroll-y>
           <view class="groupBuyList-content-main-table-head">
-            <view class="groupBuyList-content-main-table-head-item">#序号</view>
-            <view class="groupBuyList-content-main-table-head-item"
-              >卡密名称</view
-            >
-            <!--                        <view class="groupBuyList-content-main-table-head-item">卡密等级</view>-->
-            <view class="groupBuyList-content-main-table-head-item"
-              >卡密编号</view
-            >
-            <!--                        <view class="groupBuyList-content-main-table-head-item">系列编号</view>-->
-            <view class="groupBuyList-content-main-table-head-item"
-              >系列名称</view
-            >
+            <view class="groupBuyList-content-main-table-head-item">
+              #序号
+            </view>
+            <view class="groupBuyList-content-main-table-head-item">
+              卡密名称
+            </view>
+            <!--                        <view class="groupBuyList-content-main-table-head-item">卡密等级</view> -->
+            <view class="groupBuyList-content-main-table-head-item">
+              卡密编号
+            </view>
+            <!--                        <view class="groupBuyList-content-main-table-head-item">系列编号</view> -->
+            <view class="groupBuyList-content-main-table-head-item">
+              系列名称
+            </view>
           </view>
           <view class="groupBuyList-content-main-table-content">
             <view
               v-for="(item, index) in cardList"
-              :key="'k' + index"
+              :key="`k${index}`"
               class="groupBuyList-content-main-table-content-row"
             >
               <view
                 class="groupBuyList-content-main-table-content-row-item text-flow-ellipsis-single"
-                >{{ item.id }}</view
               >
+                {{ item.id }}
+              </view>
               <view
                 class="groupBuyList-content-main-table-content-row-item text-flow-ellipsis-single"
-                >{{ item.name }}</view
               >
-              <!--                            <view class="groupBuyList-content-main-table-content-row-item">{{ getNormalLevelNameByLevel(item.level) }}</view>-->
+                {{ item.name }}
+              </view>
+              <!--                            <view class="groupBuyList-content-main-table-content-row-item">{{ getNormalLevelNameByLevel(item.level) }}</view> -->
               <view
                 class="groupBuyList-content-main-table-content-row-item text-flow-ellipsis-single"
-                >#{{ item.number }}</view
               >
-              <!--                            <view class="groupBuyList-content-main-table-content-row-item">{{item.sid}}</view>-->
+                #{{ item.number }}
+              </view>
+              <!--                            <view class="groupBuyList-content-main-table-content-row-item">{{item.sid}}</view> -->
               <view
                 class="groupBuyList-content-main-table-content-row-item text-flow-ellipsis-single"
-                >{{ item.sname }}</view
               >
+                {{ item.sname }}
+              </view>
             </view>
           </view>
         </scroll-view>
@@ -52,32 +58,36 @@
     </view>
     <view class="groupBuyList-bottom">
       <view class="groupBuyList-bottom-side" @tap.stop="changePage(true)">
-        <!--        <image-->
-        <!--          class="groupBuyList-bottom-side-bg"-->
-        <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/btn5.png"-->
-        <!--        />-->
-        <view class="groupBuyList-bottom-side-title theme-font">上一页</view>
+        <!--        <image -->
+        <!--          class="groupBuyList-bottom-side-bg" -->
+        <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/btn5.png" -->
+        <!--        /> -->
+        <view class="groupBuyList-bottom-side-title theme-font">
+          上一页
+        </view>
       </view>
-      <view class="groupBuyList-bottom-title theme-font"
-        >{{ queryParams.page }}/{{ totalPage }}</view
-      >
+      <view class="groupBuyList-bottom-title theme-font">
+        {{ queryParams.page }}/{{ totalPage }}
+      </view>
       <view class="groupBuyList-bottom-side" @tap.stop="changePage(false)">
-        <!--        <image-->
-        <!--          class="groupBuyList-bottom-side-bg"-->
-        <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/btn5.png"-->
-        <!--        />-->
-        <view class="groupBuyList-bottom-side-title theme-font">下一页</view>
+        <!--        <image -->
+        <!--          class="groupBuyList-bottom-side-bg" -->
+        <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/btn5.png" -->
+        <!--        /> -->
+        <view class="groupBuyList-bottom-side-title theme-font">
+          下一页
+        </view>
       </view>
     </view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import { useGroupBuy } from "@/subPackages/groupBuy";
-import { onMounted } from "vue";
-import Search from "@/components/search/index.vue";
-import { getPageOptions } from "@/utils/tools";
-import { useEnum } from "@/composables/enum";
+import { onMounted } from 'vue'
+import Search from '@/components/search/index.vue'
+import { useEnum } from '@/composables/enum'
+import { useGroupBuy } from '@/subPackages/groupBuy'
+import { getPageOptions } from '@/utils/tools'
 
 const {
   currentSid,
@@ -86,21 +96,21 @@ const {
   totalPage,
   changePage,
   queryParams,
-} = useGroupBuy();
-const { getNormalLevelNameByLevel } = useEnum();
+} = useGroupBuy()
+const { getNormalLevelNameByLevel } = useEnum()
 onMounted(() => {
-  const id = getPageOptions().id;
-  console.log("groupBuyId:", id);
+  const id = getPageOptions().id
+  console.log('groupBuyId:', id)
   if (id) {
-    currentSid.value = id;
-    getGroupBuyCardList();
+    currentSid.value = id
+    getGroupBuyCardList()
   }
-});
-const handleSearch = (value: string) => {
-  queryParams.value.keyword = value;
-  queryParams.value.page = 1;
-  getGroupBuyCardList();
-};
+})
+function handleSearch(value: string) {
+  queryParams.value.keyword = value
+  queryParams.value.page = 1
+  getGroupBuyCardList()
+}
 </script>
 
 <style lang="scss" scoped>

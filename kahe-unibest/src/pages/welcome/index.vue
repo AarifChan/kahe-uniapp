@@ -8,12 +8,12 @@
 </template>
 
 <script lang="ts" setup>
-import { onLoad } from "@dcloudio/uni-app";
+import { onLoad } from '@dcloudio/uni-app'
 
 onLoad(() => {
   setTimeout(() => {
     uni.reLaunch({
-      url: "/pages/index/index",
+      url: '/pages/index/index',
       success: () => {
         // uni.hideTabBar({
         //   animation: false, // 离线打包建议先关闭动画尝试
@@ -21,9 +21,9 @@ onLoad(() => {
         //   fail: (err) => console.log("隐藏失败", err),
         // });
       },
-    });
-  }, 200);
-});
+    })
+  }, 200)
+})
 </script>
 
 <style lang="scss" scoped>

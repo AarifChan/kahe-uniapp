@@ -9,9 +9,9 @@
       <view class="welfare-content-top" />
       <view class="welfare-content-padding">
         <view
-          class="welfare-content-padding-item"
           v-for="(item, index) in itemList"
-          :key="'card' + index"
+          :key="`card${index}`"
+          class="welfare-content-padding-item"
           @tap.stop="clickItem(item)"
         >
           <image
@@ -21,8 +21,9 @@
           <view class="welfare-content-padding-item-content">
             <view
               class="welfare-content-padding-item-content-title other-font"
-              >{{ item.title }}</view
             >
+              {{ item.title }}
+            </view>
             <image
               class="welfare-content-padding-item-content-icon"
               :src="item.image"
@@ -36,15 +37,17 @@
 </template>
 
 <script lang="ts" setup>
-import { useUserStore } from '@/store/user'
-import { useAppStore } from '@/store/app'
-import { eventBus } from "@/utils/event";
-import { ref } from "vue";
+import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
+import { ref } from 'vue'
+import NavBar from '@/components/navBar/index.vue'
+import TabBar from '@/components/tabBar/index.vue'
 
-import { ShowToast } from "@/utils";
-import NavBar from "@/components/navBar/index.vue";
-import TabBar from "@/components/tabBar/index.vue";
-import { onShareAppMessage, onShareTimeline } from "@dcloudio/uni-app";
+import { useAppStore } from '@/store/app'
+import { useUserStore } from '@/store/user'
+import { ShowToast } from '@/utils'
+
+const appStore = useAppStore()
+const userStore = useUserStore()
 
 enum WelfareItemType {
   vip = 0,
@@ -59,81 +62,81 @@ enum WelfareItemType {
   invite = 9,
 }
 export interface WelfareItem {
-  itemType: WelfareItemType;
-  image: string;
+  itemType: WelfareItemType
+  image: string
 }
-const clickItem = (item: WelfareItem) => {
+function clickItem(item: WelfareItem) {
   switch (item.itemType) {
     case WelfareItemType.vip:
       uni.navigateTo({
-        url: "/subPackages/mine/vip/index",
-      });
-      break;
+        url: '/subPackages/mine/vip/index',
+      })
+      break
     case WelfareItemType.activity:
       uni.navigateTo({
-        url: "/subPackages/activity/index",
-      });
-      break;
+        url: '/subPackages/activity/index',
+      })
+      break
     case WelfareItemType.integral:
       uni.navigateTo({
-        url: "/subPackages/infinite/index",
-      });
-      break;
+        url: '/subPackages/infinite/index',
+      })
+      break
     case WelfareItemType.invite:
       uni.navigateTo({
-        url: "/subPackages/mine/invite/index",
-      });
-      break;
+        url: '/subPackages/mine/invite/index',
+      })
+      break
     case WelfareItemType.collect:
       uni.navigateTo({
-        url: "/subPackages/collect/index",
-      });
-      break;
+        url: '/subPackages/collect/index',
+      })
+      break
     case WelfareItemType.dailyCoupon:
       uni.navigateTo({
-        url: "/subPackages/dailyWelfare/index",
-      });
-      break;
+        url: '/subPackages/dailyWelfare/index',
+      })
+      break
     case WelfareItemType.redBag:
       uni.navigateTo({
-        url: "/subPackages/gift/index",
-      });
-      break;
+        url: '/subPackages/gift/index',
+      })
+      break
     case WelfareItemType.chest:
-      uni.navigateBack();
+      uni.navigateBack()
       setTimeout(() => {
-        appStore.changeBoxTabIndex(3);
-        appStore.changeCurrentTabIndex(3);
-      });
+        appStore.changeBoxTabIndex(3)
+        appStore.changeCurrentTabIndex(3)
+      })
 
-      break;
+      break
     case WelfareItemType.rank:
       uni.navigateTo({
-        url: "/subPackages/mine/rank/index",
-      });
-      break;
+        url: '/subPackages/mine/rank/index',
+      })
+      break
     case WelfareItemType.discount:
-      ShowToast("正在准备中，尽请期待");
-      return;
+      ShowToast('正在准备中，尽请期待')
+      return
       uni.navigateTo({
-        url: "/subPackages/discount/index",
-      });
-      break;
+        url: '/subPackages/discount/index',
+      })
+      break
     default:
-      break;
+      break
   }
-};
+}
 
 const itemList = ref([
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item1.png",
+    image: 'https://jms.85gui7.com/kahe-202510/ka-he/welfare/item1.png',
     itemType: WelfareItemType.integral,
-    title: "积分专区",
+    title: '积分专区',
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item2.png",
+    image: 'https://jms.85gui7.com/kahe-202510/ka-he/welfare/item2.png',
     itemType: WelfareItemType.vip,
-    title: "会员权益",
+    title: '会员权益',
   },
   // {
   //   image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item3.png",
@@ -141,49 +144,49 @@ const itemList = ref([
   //   title: "联盟收益",
   // },
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item4.png",
+    image: 'https://jms.85gui7.com/kahe-202510/ka-he/welfare/item4.png',
     itemType: WelfareItemType.redBag,
-    title: "特惠礼包",
+    title: '特惠礼包',
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item5.png",
+    image: 'https://jms.85gui7.com/kahe-202510/ka-he/welfare/item5.png',
     itemType: WelfareItemType.activity,
-    title: "福利抽选",
+    title: '福利抽选',
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item6.png",
+    image: 'https://jms.85gui7.com/kahe-202510/ka-he/welfare/item6.png',
     itemType: WelfareItemType.dailyCoupon,
-    title: "每日放券",
+    title: '每日放券',
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item7.png",
+    image: 'https://jms.85gui7.com/kahe-202510/ka-he/welfare/item7.png',
     itemType: WelfareItemType.collect,
-    title: "集赏行动",
+    title: '集赏行动',
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item8.png",
+    image: 'https://jms.85gui7.com/kahe-202510/ka-he/welfare/item8.png',
     itemType: WelfareItemType.rank,
-    title: "排名奖励",
+    title: '排名奖励',
   },
-]);
+])
 onShareAppMessage(() => {
   return {
     title: `${
-      userStore.userInfo?.nickname ?? ""
+      userStore.userInfo?.nickname ?? ''
     }邀请你来卡核抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
-    path: "/pages/welcome/index",
-  };
-});
+    imageUrl: 'https://jms.85gui7.com/kahe-202510/common/share.jpg',
+    path: '/pages/welcome/index',
+  }
+})
 onShareTimeline(() => {
   return {
     title: `${
-      userStore.userInfo?.nickname ?? ""
+      userStore.userInfo?.nickname ?? ''
     }邀请你来卡核抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
-    path: "/pages/welcome/index",
-  };
-});
+    imageUrl: 'https://jms.85gui7.com/kahe-202510/common/share.jpg',
+    path: '/pages/welcome/index',
+  }
+})
 </script>
 
 <style lang="scss" scoped>

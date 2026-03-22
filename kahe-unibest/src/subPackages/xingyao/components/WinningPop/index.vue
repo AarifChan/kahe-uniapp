@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import TnPopup from "@tuniao/tnui-vue3-uniapp/components/popup/src/popup.vue";
-import CustomGoods from "../CustomGoods/index.vue";
-import { PropType } from "vue";
-import { ShingingLog } from "../../api";
-import Empty from "@/components/empty/index.vue";
-const modelValue = defineModel<boolean>();
+import type { PropType } from 'vue'
+import type { ShingingLog } from '../../api'
+import TnPopup from '@tuniao/tnui-vue3-uniapp/components/popup/src/popup.vue'
+import Empty from '@/components/empty/index.vue'
+import CustomGoods from '../CustomGoods/index.vue'
+
 defineProps({
   list: {
     default: () => [],
@@ -14,8 +14,9 @@ defineProps({
     default: 2,
     type: Number,
   },
-});
-const emits = defineEmits(["scrolltolower"]);
+})
+const emits = defineEmits(['scrolltolower'])
+const modelValue = defineModel<boolean>()
 </script>
 
 <template>
@@ -43,8 +44,8 @@ const emits = defineEmits(["scrolltolower"]);
         <view class="container-content">
           <CustomGoods
             v-for="(item, index) in list"
-            :key="item.id"
             :id="item.id"
+            :key="item.id"
             :item="item"
             :type="type"
           />
@@ -54,6 +55,7 @@ const emits = defineEmits(["scrolltolower"]);
     </view>
   </TnPopup>
 </template>
+
 <style lang="scss" scoped>
 .pop {
   width: 100%;

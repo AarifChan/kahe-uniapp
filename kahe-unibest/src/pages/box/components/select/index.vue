@@ -11,14 +11,14 @@ defineProps({
     type: Boolean,
   },
   color: {
-    default: "white",
+    default: 'white',
     type: String,
   },
   size: {
-    default: "58rpx",
+    default: '58rpx',
     type: String,
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

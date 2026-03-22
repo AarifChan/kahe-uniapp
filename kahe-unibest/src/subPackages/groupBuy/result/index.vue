@@ -12,14 +12,16 @@
             class="groupBuyResult-content-top-tab-item theme-font"
             :class="current === 1 ? 'active-tab' : ''"
             @tap.stop="didClickTab(1)"
-            >其他卡片</view
           >
+            其他卡片
+          </view>
           <view
             class="groupBuyResult-content-top-tab-item theme-font"
             :class="current === 2 ? 'active-tab' : ''"
             @tap.stop="didClickTab(2)"
-            >精美卡片</view
           >
+            精美卡片
+          </view>
         </view>
       </view>
       <scroll-view
@@ -28,9 +30,9 @@
         @scrolltolower="handleScrollToLower"
       >
         <view
-          class="groupBuyResult-content-list-item"
           v-for="(item, index) in mindCardList"
-          :key="'recordList' + index"
+          :key="`recordList${index}`"
+          class="groupBuyResult-content-list-item"
         >
           <view class="groupBuyResult-content-list-item-left">
             <view class="groupBuyResult-content-list-item-left-top">
@@ -41,17 +43,20 @@
                 />
                 <view
                   class="groupBuyResult-content-list-item-left-top-left-title"
-                  >{{ item.user.nickname }}</view
                 >
+                  {{ item.user.nickname }}
+                </view>
               </view>
-              <view class="groupBuyResult-content-list-item-left-top-right">{{
-                item.updateTime
-              }}</view>
+              <view class="groupBuyResult-content-list-item-left-top-right">
+                {{
+                  item.updateTime
+                }}
+              </view>
             </view>
             <view class="groupBuyResult-content-list-item-left-bottom">
-              <view class="groupBuyResult-content-list-item-left-bottom-title"
-                >#{{ item.number }} {{ item.name }}</view
-              >
+              <view class="groupBuyResult-content-list-item-left-bottom-title">
+                #{{ item.number }} {{ item.name }}
+              </view>
             </view>
           </view>
           <image
@@ -66,11 +71,11 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
-import { getPageOptions } from "@/utils/tools";
-import { useGroupBuy } from "@/subPackages/groupBuy";
+import { onMounted, ref } from 'vue'
+import { useGroupBuy } from '@/subPackages/groupBuy'
+import { getPageOptions } from '@/utils/tools'
 
-const current = ref(1);
+const current = ref(1)
 
 const {
   mindCardList,
@@ -81,30 +86,30 @@ const {
   queryParams,
   getGroupBuyDetail,
   groupBuyDetail,
-} = useGroupBuy();
+} = useGroupBuy()
 
-const didClickTab = (index: number) => {
-  current.value = index;
-  logLevel.value = index;
-  queryParams.value.page = 1;
-  getGroupBuyMineLog();
-};
-const showLiveAddress = () => {
+function didClickTab(index: number) {
+  current.value = index
+  logLevel.value = index
+  queryParams.value.page = 1
+  getGroupBuyMineLog()
+}
+function showLiveAddress() {
   uni.previewImage({
     current: groupBuyDetail.value.liveAddress,
     urls: [groupBuyDetail.value.liveAddress],
-  });
-};
+  })
+}
 
 onMounted(() => {
-  const id = getPageOptions().id;
+  const id = getPageOptions().id
   if (id) {
-    currentSid.value = id;
-    logLevel.value = current.value;
-    getGroupBuyDetail(Number(id));
-    getGroupBuyMineLog();
+    currentSid.value = id
+    logLevel.value = current.value
+    getGroupBuyDetail(Number(id))
+    getGroupBuyMineLog()
   }
-});
+})
 </script>
 
 <style lang="scss" scoped>

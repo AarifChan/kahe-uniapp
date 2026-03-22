@@ -14,28 +14,33 @@
     >
       <view class="favorite-content-list">
         <view
-          class="favorite-content-list-item"
           v-for="(item, index) in dataList"
-          :key="'index' + index"
+          :key="`index${index}`"
+          class="favorite-content-list-item"
           @tap.stop="handleClickItem(item)"
         >
           <image class="favorite-content-list-item-logo" :src="item.logo" />
           <view class="favorite-content-list-item-info">
-            <view class="favorite-content-list-item-info-title theme-font">{{
-              item.title
-            }}</view>
-            <view class="favorite-content-list-item-info-subTitle theme-font"
-              >编号{{ item.boxSeqNo }}</view
-            >
-            <view class="favorite-content-list-item-info-price price-font">{{
-              item.price
-            }}</view>
+            <view class="favorite-content-list-item-info-title theme-font">
+              {{
+                item.title
+              }}
+            </view>
+            <view class="favorite-content-list-item-info-subTitle theme-font">
+              编号{{ item.boxSeqNo }}
+            </view>
+            <view class="favorite-content-list-item-info-price price-font">
+              {{
+                item.price
+              }}
+            </view>
           </view>
           <view
             class="favorite-content-list-item-btn theme-font"
             @tap.stop="handleRemove(item.productId)"
-            >移出收藏</view
           >
+            移出收藏
+          </view>
         </view>
       </view>
       <empty :show="dataList.length === 0" />
@@ -44,10 +49,11 @@
 </template>
 
 <script lang="ts" setup>
-import Tab from "./components/tab/index.vue";
-import Empty from "@/components/empty/index.vue";
-import { onMounted } from "vue";
-import { useFavorite } from "@/composables/favorite";
+import { onMounted } from 'vue'
+import Empty from '@/components/empty/index.vue'
+import { useFavorite } from '@/composables/favorite'
+import Tab from './components/tab/index.vue'
+
 const {
   getFavoriteList,
   cancelFavorite,
@@ -56,20 +62,20 @@ const {
   dataList,
   current,
   tabList,
-} = useFavorite();
+} = useFavorite()
 
 onMounted(() => {
-  getFavoriteList();
-});
+  getFavoriteList()
+})
 
-const handleRemove = async (pId: number) => {
-  console.log("remove:", pId);
-  await cancelFavorite(pId);
-};
+async function handleRemove(pId: number) {
+  console.log('remove:', pId)
+  await cancelFavorite(pId)
+}
 
-const handleClick = () => {
-  getFavoriteList();
-};
+function handleClick() {
+  getFavoriteList()
+}
 </script>
 
 <style lang="scss" scoped>

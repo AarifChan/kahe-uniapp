@@ -1,18 +1,4 @@
 import type { IUserInfoRes } from '@/api/types/login'
-import {
-  completeRechargeRequest,
-  createRechargePlanRequest,
-  getCouponListRequest,
-  getRechargePlanRequest,
-  loginRequest,
-  logoutRequest,
-  orderCancelRequest,
-  orderSubmitRequest,
-  receiveVipRequest,
-  userInfoRequest,
-  vipLevelListRequest,
-} from '@/api/'
-import { useTokenStore } from './token'
 import type {
   CouponRequestParams,
   FavoriteModel,
@@ -26,14 +12,30 @@ import type {
   VipsLevelModel,
 } from '@/model/'
 import type { PageParams } from '@/model/base'
-import { ShowToast } from '@/utils/Toast'
-import { currentEnv } from '@/utils'
-import { formatPrice } from '@/utils/tools/util'
-import { parseTime } from '@/utils/tools'
-import { eventBus } from '@/utils/event'
-import { pollPaymentStatus } from '@/utils/pay'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
+import {
+  completeRechargeRequest,
+  createRechargePlanRequest,
+  getCouponListRequest,
+  getRechargePlanRequest,
+  loginByMobile,
+  loginByPassword,
+  loginByWxApp,
+  loginRequest,
+  orderCancelRequest,
+  orderSubmitRequest,
+  receiveVipRequest,
+  userInfoRequest,
+  vipLevelListRequest,
+} from '@/api/'
+import { currentEnv } from '@/utils'
+import { eventBus } from '@/utils/event'
+import { pollPaymentStatus } from '@/utils/pay'
+import { ShowToast } from '@/utils/Toast'
+import { parseTime } from '@/utils/tools'
+import { formatPrice } from '@/utils/tools/util'
+import { useTokenStore } from './token'
 
 // 初始化状态
 const userInfoState: IUserInfoRes = {
@@ -72,6 +74,39 @@ export const useUserStore = defineStore(
       userInfo.value = {} as UserInfo
       loginStatus.value = false
       uni.removeStorageSync('user')
+    }
+
+    const getVipReceived = async () => {
+      const vipRes = await receiveVipRequest()
+      if (vipRes.code === 200) {
+        const list: UIDayVIPItem[] = []
+        for (const item of vipRes.data) {
+          const type = item.id === 3 ? 1 : item.id > 10000 ? 2 : 3
+          let image = ''
+          if (item.id === 1)
+            image = 'https://jms.85gui7.com/kahe-202510/images/vip-item1.png'
+          else if (item.id >= 1000 && item.id < 10000)
+            image = 'https://jms.85gui7.com/swcw/common/coupon.jpg'
+          else if (item.id === 2)
+            image = 'https://jms.85gui7.com/kahe-202510/images/vip-item3.png'
+          else if (item.id === 6)
+            image = 'https://jms.85gui7.com/swcw/common/integral.jpg'
+          else if (item.id >= 10000)
+            image = (item as any).logo
+          list.push({ type, name: item.name, num: item.num, id: item.id, image })
+        }
+        vipDayList.value = list
+        receivedVipShow.value = true
+      }
+    }
+
+    const getFavorite = async () => {
+      const data = uni.getStorageSync('favorite')
+      if (data) {
+        const items = JSON.parse(data)
+        if (items && items.length > 0)
+          favoriteList.value = items
+      }
     }
 
     const fetchUserInfo = async () => {
@@ -138,36 +173,10 @@ export const useUserStore = defineStore(
     }
 
     const checkLogin = () => {
-      if (loginStatus.value) return true
+      if (loginStatus.value)
+        return true
       uni.navigateTo({ url: '/pages/login/index' })
       return false
-    }
-
-    const getVipReceived = async () => {
-      const vipRes = await receiveVipRequest()
-      if (vipRes.code === 200) {
-        const list: UIDayVIPItem[] = []
-        for (const item of vipRes.data) {
-          const type = item.id === 3 ? 1 : item.id > 10000 ? 2 : 3
-          let image = ''
-          if (item.id === 1) image = 'https://jms.85gui7.com/kahe-202510/images/vip-item1.png'
-          else if (item.id >= 1000 && item.id < 10000) image = 'https://jms.85gui7.com/swcw/common/coupon.jpg'
-          else if (item.id === 2) image = 'https://jms.85gui7.com/kahe-202510/images/vip-item3.png'
-          else if (item.id === 6) image = 'https://jms.85gui7.com/swcw/common/integral.jpg'
-          else if (item.id >= 10000) image = (item as any).logo
-          list.push({ type, name: item.name, num: item.num, id: item.id, image })
-        }
-        vipDayList.value = list
-        receivedVipShow.value = true
-      }
-    }
-
-    const getFavorite = async () => {
-      const data = uni.getStorageSync('favorite')
-      if (data) {
-        const items = JSON.parse(data)
-        if (items && items.length > 0) favoriteList.value = items
-      }
     }
 
     const addFavorite = (item: FavoriteModel) => {
@@ -204,7 +213,7 @@ export const useUserStore = defineStore(
             type: item.type,
             useMinPrice: formatPrice(item.useMinPrice),
             price: formatPrice(item.couponPrice),
-            time: startTime + '-' + item.endTime,
+            time: `${startTime}-${item.endTime}`,
             status: item.status,
           })
         }
@@ -221,52 +230,60 @@ export const useUserStore = defineStore(
 
     const handleWxPay = async (orderId: string, pid = 0): Promise<string | null> => {
       const appStore = (await import('./app')).useAppStore()
-      return new Promise(async (resolve) => {
-        let payType = ''
-        // #ifdef MP-WEIXIN
-        payType = import.meta.env.VITE_APP_PLATFORM || 'wx_ma_2'
-        // #endif
+      let payType = ''
+      // #ifdef MP-WEIXIN
+      payType = import.meta.env.VITE_APP_PLATFORM || 'wx_ma_2'
+      // #endif
 
-        // #ifdef H5
-        payType = appStore.payType === 1 ? 'wx_h5' : 'ali_h5'
-        if (currentEnv() === 'h5-weixin' || currentEnv() === 'mp-weixin') {
-          resolve('请在别的浏览器尝试')
-          return
+      // #ifdef H5
+      payType = appStore.payType === 1 ? 'wx_h5' : 'ali_h5'
+      if (currentEnv() === 'h5-weixin' || currentEnv() === 'mp-weixin')
+        return '请在别的浏览器尝试'
+      // #endif
+
+      // #ifdef APP
+      payType = appStore.payType === 1 ? 'wx_app' : 'ali_app'
+      // #endif
+
+      const params = { from: 'routine', orderId, payType } as OrderSubmitParams
+      if (payType === 'ali_h5') {
+        let aliReturnUrl = window.location.href
+        if (pid)
+          aliReturnUrl += `&pid=${pid}`
+        params.aliReturnUrl = `${aliReturnUrl}&orderId=${orderId}`
+      }
+
+      const orderResp = await orderSubmitRequest(params)
+      if (orderResp.code !== 200) {
+        await orderCancelRequest(orderId)
+        ShowToast(orderResp.msg)
+        return `${orderResp.msg}error~`
+      }
+
+      if (payType === 'ali_h5') {
+        const url = (orderResp.data as any).jsConfig.url
+        if (url) {
+          window.location.href = url
+          return null
         }
-        // #endif
+        return '支付出错，请联系客服'
+      }
 
-        // #ifdef APP
-        payType = appStore.payType === 1 ? 'wx_app' : 'ali_app'
-        // #endif
-
-        const params = { from: 'routine', orderId, payType } as OrderSubmitParams
-        if (payType === 'ali_h5') {
-          let aliReturnUrl = window.location.href
-          if (pid) aliReturnUrl += '&pid=' + pid
-          params.aliReturnUrl = aliReturnUrl + `&orderId=${orderId}`
-        }
-
-        const orderResp = await orderSubmitRequest(params)
-        if (orderResp.code !== 200) {
-          await orderCancelRequest(orderId)
-          resolve(orderResp.msg + 'error~')
-          ShowToast(orderResp.msg)
-          return
-        }
-
+      return new Promise<string | null>((resolve) => {
         if (payType === 'ali_app') {
           const orderString = (orderResp.data as any).jsConfig?.orderString ?? ''
           uni.requestPayment({
             provider: 'alipay',
             orderInfo: orderString,
-            success: async () => { ShowToast('支付成功'); resolve(null) },
-            fail: async (err: any) => { await orderCancelRequest(orderId); resolve('取消支付' + JSON.stringify(err)) },
+            success: async () => {
+              ShowToast('支付成功')
+              resolve(null)
+            },
+            fail: async (err: any) => {
+              await orderCancelRequest(orderId)
+              resolve(`取消支付${JSON.stringify(err)}`)
+            },
           })
-        }
-        else if (payType === 'ali_h5') {
-          const url = (orderResp.data as any).jsConfig.url
-          if (url) { window.location.href = url }
-          else { resolve('支付出错，请联系客服') }
         }
         else if (payType === 'wx_app') {
           const payParams = (orderResp.data as any).jsConfig as OrderWechatPayParams
@@ -288,7 +305,10 @@ export const useUserStore = defineStore(
                 .then(res => resolve(res === 'success' ? null : '订单查询失败'))
                 .catch(() => resolve('订单查询失败'))
             },
-            fail: async () => { await orderCancelRequest(orderId); resolve('取消支付') },
+            fail: async () => {
+              await orderCancelRequest(orderId)
+              resolve('取消支付')
+            },
           })
         }
         else {
@@ -307,7 +327,10 @@ export const useUserStore = defineStore(
                 .then(res => resolve(res === 'success' ? null : '订单查询失败'))
                 .catch(() => resolve('订单查询失败'))
             },
-            fail: async () => { await orderCancelRequest(orderId); resolve('取消支付') },
+            fail: async () => {
+              await orderCancelRequest(orderId)
+              resolve('取消支付')
+            },
           })
         }
       })
@@ -318,7 +341,8 @@ export const useUserStore = defineStore(
       if (resp.code === 200) {
         const orderId = (resp.data as any).orderId
         const wxRes = await handleWxPay(orderId)
-        if (wxRes) return wxRes
+        if (wxRes)
+          return wxRes
         const completeResp = await completeRechargeRequest(orderId)
         if (completeResp.code === 200) {
           await fetchUserInfo()
@@ -327,6 +351,69 @@ export const useUserStore = defineStore(
         return completeResp.msg
       }
       return resp.msg
+    }
+
+    const logout = async (isShow = true) => {
+      const tokenStore = useTokenStore()
+      loginStatus.value = false
+      userInfo.value = {} as UserInfo
+
+      await tokenStore.logout()
+      if (isShow) {
+        uni.navigateTo({
+          url: '/pages/login/index',
+        })
+      }
+      else {
+        uni.navigateBack()
+      }
+    }
+
+    const getCode = () => {
+      // WeChat code is obtained inside preLogin/handlePhoneLogin as needed
+    }
+
+    const getUserInfo = () => fetchUserInfo()
+
+    const handlePhoneLogin = async (params: { iv: string, encryptedData: string }) => {
+      const tokenStore = useTokenStore()
+      const logRes = await loginByWxApp({
+        code: (params as any).code || '',
+        phoneIv: params.iv,
+        phoneEncryptedData: params.encryptedData,
+        plat: import.meta.env.VITE_APP_PLATFORM || 'wx_ma_2',
+      } as any)
+      if (logRes.code === 200) {
+        tokenStore.setTokenInfo({ token: logRes.data.token, expiresIn: 86400 * 30 } as any)
+        loginStatus.value = true
+        await fetchUserInfo()
+        return null
+      }
+      return logRes.msg
+    }
+
+    const handleLoginByPhone = async (params: { phone: string, password: string, type: number }) => {
+      const tokenStore = useTokenStore()
+      const logRes = params.type === 0 ? await loginByMobile(params as any) : await loginByPassword(params)
+      if (logRes.code === 200) {
+        tokenStore.setTokenInfo({ token: (logRes.data as any).token, expiresIn: 86400 * 30 } as any)
+        loginStatus.value = true
+        await fetchUserInfo()
+        return false
+      }
+      return logRes.msg
+    }
+
+    const handleAppWechatLogin = async (params: { code: string }) => {
+      const tokenStore = useTokenStore()
+      const logRes = await loginRequest({ code: params.code, plat: 'wx_app' } as any)
+      if (logRes.code === 200) {
+        tokenStore.setTokenInfo({ token: (logRes.data as any).token, expiresIn: 86400 * 30 } as any)
+        loginStatus.value = true
+        await fetchUserInfo()
+        return null
+      }
+      return logRes.msg
     }
 
     return {
@@ -353,6 +440,12 @@ export const useUserStore = defineStore(
       getRechargeList,
       handleWxPay,
       rechargePlanAction,
+      logout,
+      getCode,
+      getUserInfo,
+      handlePhoneLogin,
+      handleLoginByPhone,
+      handleAppWechatLogin,
     }
   },
   { persist: true },

@@ -5,8 +5,9 @@
       <view class="merchant-info">
         <view
           class="merchant-info-title theme-font text-flow-ellipsis-single"
-          >{{ merchant?.name }}</view
         >
+          {{ merchant?.name }}
+        </view>
         <view
           class="merchant-info-bar"
           :style="{
@@ -17,34 +18,37 @@
             class="merchant-info-bar-tag"
             :src="getTagIcon(merchant.tag)"
           />
-          <text class="merchant-info-bar-title">{{
-            getLevelName(merchant.tag)
-          }}</text>
+          <text class="merchant-info-bar-title">
+            {{
+              getLevelName(merchant.tag)
+            }}
+          </text>
         </view>
       </view>
     </view>
-    <view class="merchant-btn theme-font" @tap.stop="didClickMerchant(merchant)"
-      >进店看看</view
-    >
+    <view class="merchant-btn theme-font" @tap.stop="didClickMerchant(merchant)">
+      进店看看
+    </view>
   </view>
 </template>
 
 <script lang="ts" setup>
+import type { PropType } from 'vue'
+import type { MerchantModel } from '@/model'
 import {
   getLevelName,
   getTagBgColor,
   getTagIcon,
-} from "@/pages/merchant/index";
-import { MerchantModel } from "@/model";
-import { PropType } from "vue";
-import { useMerchant } from "@/pages/merchant/index";
-const { didClickMerchant } = useMerchant();
+  useMerchant,
+} from '@/pages/merchant/index'
+
 defineProps({
   merchant: {
     default: {} as MerchantModel,
     type: Object as PropType<MerchantModel>,
   },
-});
+})
+const { didClickMerchant } = useMerchant()
 </script>
 
 <style lang="scss" scoped>

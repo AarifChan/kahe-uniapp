@@ -1,6 +1,6 @@
 <template>
   <!-- :opacity="navOpacity" -->
-  <!--  <NavBar title="首页" :opacity="1" position="sticky" />-->
+  <!--  <NavBar title="首页" :opacity="1" position="sticky" /> -->
   <scroll-view
     class="home"
     :scroll-y="true"
@@ -17,9 +17,9 @@
         @longpress="handleLogoLongPress"
       />
       <Search
-        @did-tap-search="handleSearch"
         placeholder="请输入你想要搜索的内容"
         style="flex: 1"
+        @did-tap-search="handleSearch"
       />
     </view>
     <!-- 公告 -->
@@ -62,46 +62,47 @@
 </template>
 
 <script lang="ts" setup>
-import { useUserStore } from '@/store/user'
+import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
+import { computed, onMounted, ref } from 'vue'
+import bulletinar from '@/components/bulletinar/index.vue'
+import Empty from '@/components/empty/index.vue'
+import Search from '@/components/search/index.vue'
+import TabBar from '@/components/tabBar/index.vue'
+import { useGoods } from '@/composables/goods'
+import { useGroupBuy } from '@/composables/groupBuy'
+import { useLog } from '@/composables/useLog'
+import Recommend from '@/pages/home/components/recommend/index.vue'
 import { useAppStore } from '@/store/app'
-import bulletinar from "@/components/bulletinar/index.vue";
-import Search from "@/components/search/index.vue";
-import TabBar from "@/components/tabBar/index.vue";
-import Tab from "./components/tab/index.vue";
-import Items from "./components/module/index.vue";
-import Goods from "./components/goods/index.vue";
-import { useGoods } from "@/composables/goods";
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
-import Banner from "./components/banner/index.vue";
-import Recommend from "@/pages/home/components/recommend/index.vue";
-import Empty from "@/components/empty/index.vue";
-import NavBar from "@/components/navBar/index.vue";
-import { useMerchant } from "@/pages/merchant/index";
+import { useUserStore } from '@/store/user'
+import Banner from './components/banner/index.vue'
 
-import { useGroupBuy } from "@/composables/groupBuy";
-import { onShareAppMessage, onShareTimeline } from "@dcloudio/uni-app";
+import Goods from './components/goods/index.vue'
+import Items from './components/module/index.vue'
 
-import { useLog } from "@/composables/useLog";
-const { groupBuyList, getGroupBuyListByHot } = useGroupBuy();
+import Tab from './components/tab/index.vue'
+
+const appStore = useAppStore()
+const userStore = useUserStore()
+const { groupBuyList, getGroupBuyListByHot } = useGroupBuy()
 
 // 使用日志插件
-const { logger, getStats } = useLog({ tag: 'HomePage' });
+const { logger, getStats } = useLog({ tag: 'HomePage' })
 
 const scrollThreshold = computed(() => {
-  return appStore.statusBarHeight + appStore.navBarHeight;
-});
+  return appStore.statusBarHeight + appStore.navBarHeight
+})
 
-const scrollView = ref<HTMLElement | null>(null);
+const scrollView = ref<HTMLElement | null>(null)
 
-const scrollToItem = (itemId: string) => {
-  const element = document.getElementById(itemId);
+function scrollToItem(itemId: string) {
+  const element = document.getElementById(itemId)
   if (scrollView.value && element) {
     scrollView.value.scrollTo({
-      behavior: "smooth",
+      behavior: 'smooth',
       top: element.offsetTop - scrollView.value.offsetTop,
-    });
+    })
   }
-};
+}
 
 const {
   tapLampAction,
@@ -117,48 +118,48 @@ const {
   current,
   goodsParams,
   goodsTapClick,
-} = useGoods();
-const currentVew = ref("");
+} = useGoods()
+const currentVew = ref('')
 onMounted(async () => {
-  logger.info('首页加载开始');
-  const startTime = Date.now();
-  
-  current.value = appStore.productTabIndex;
-  getGroupBuyListByHot();
-  await getGoodsList(goodsTabList.value[current.value].value);
-  await getHomeList();
-  
-  const loadTime = Date.now() - startTime;
-  logger.info(`首页加载完成，耗时: ${loadTime}ms`);
-  
+  logger.info('首页加载开始')
+  const startTime = Date.now()
+
+  current.value = appStore.productTabIndex
+  getGroupBuyListByHot()
+  await getGoodsList(goodsTabList.value[current.value].value)
+  await getHomeList()
+
+  const loadTime = Date.now() - startTime
+  logger.info(`首页加载完成，耗时: ${loadTime}ms`)
+
   if (appStore.productTabIndex !== 0) {
     setTimeout(() => {
-      currentVew.value = "currentTab";
-      appStore.changeProductTabIndex(0);
-    }, 500);
+      currentVew.value = 'currentTab'
+      appStore.changeProductTabIndex(0)
+    }, 500)
   }
-});
+})
 // onShow(() => {
 //     getHomeList()
 // })
 
-const handleSearch = (content: string) => {
-  logger.info(`搜索关键词: ${content}`);
-  goodsParams.value.key = content;
-  goodsParams.value.page = 1;
+function handleSearch(content: string) {
+  logger.info(`搜索关键词: ${content}`)
+  goodsParams.value.key = content
+  goodsParams.value.page = 1
 
-  getGoodsList(goodsTabList.value[current.value].value);
-};
-const navOpacity = ref(0);
-const handleScroll = (e: any) => {
-  const scrollTop = e.detail.scrollTop;
-  navOpacity.value = Math.min(scrollTop / scrollThreshold.value, 1);
-};
+  getGoodsList(goodsTabList.value[current.value].value)
+}
+const navOpacity = ref(0)
+function handleScroll(e: any) {
+  const scrollTop = e.detail.scrollTop
+  navOpacity.value = Math.min(scrollTop / scrollThreshold.value, 1)
+}
 
 // 长按 Logo 导出日志（调试用）
-const handleLogoLongPress = async () => {
+async function handleLogoLongPress() {
   try {
-    const stats = await getStats();
+    const stats = await getStats()
     if (stats) {
       uni.showModal({
         title: '日志信息',
@@ -166,35 +167,36 @@ const handleLogoLongPress = async () => {
         confirmText: '导出',
         success: async (res) => {
           if (res.confirm) {
-            const { exportLogs } = useLog();
-            const path = await exportLogs();
-            uni.showToast({ title: '导出成功', icon: 'success' });
+            const { exportLogs } = useLog()
+            const path = await exportLogs()
+            uni.showToast({ title: '导出成功', icon: 'success' })
           }
-        }
-      });
+        },
+      })
     }
-  } catch (error) {
-    logger.error('获取日志统计失败', error);
   }
-};
+  catch (error) {
+    logger.error('获取日志统计失败', error)
+  }
+}
 onShareAppMessage(() => {
   return {
     title: `${
-      userStore.userInfo?.nickname ?? ""
+      userStore.userInfo?.nickname ?? ''
     }邀请你来卡核抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
-    path: "/pages/welcome/index",
-  };
-});
+    imageUrl: 'https://jms.85gui7.com/kahe-202510/common/share.jpg',
+    path: '/pages/welcome/index',
+  }
+})
 onShareTimeline(() => {
   return {
     title: `${
-      userStore.userInfo?.nickname ?? ""
+      userStore.userInfo?.nickname ?? ''
     }邀请你来卡核抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
-    path: "/pages/welcome/index",
-  };
-});
+    imageUrl: 'https://jms.85gui7.com/kahe-202510/common/share.jpg',
+    path: '/pages/welcome/index',
+  }
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,22 +1,22 @@
 <template>
   <view class="groupBuySubmit">
     <scroll-view class="groupBuySubmit-content" scroll-y>
-      <!--            <view class="groupBuySubmit-content-address" @tap.stop="navToSelectAddress">-->
-      <!--                <view class="groupBuySubmit-content-address-left">-->
-      <!--                    <image class="groupBuySubmit-content-address-left-img" src="https://jms.85gui7.com/kahe-202510/groupBuy/address.png" />-->
-      <!--                    <view>-->
-      <!--                        <view class="groupBuySubmit-content-address-left-value">{{ selectAddress ? selectAddress.province + selectAddress.city + selectAddress.district + selectAddress.detail  : '请选择地址' }} </view>-->
-      <!--                        <view class="groupBuySubmit-content-address-left-value">{{ selectAddress ? selectAddress.realName + '  ' + selectAddress.phone  : '' }} </view>-->
-      <!--                    </view>-->
+      <!--            <view class="groupBuySubmit-content-address" @tap.stop="navToSelectAddress"> -->
+      <!--                <view class="groupBuySubmit-content-address-left"> -->
+      <!--                    <image class="groupBuySubmit-content-address-left-img" src="https://jms.85gui7.com/kahe-202510/groupBuy/address.png" /> -->
+      <!--                    <view> -->
+      <!--                        <view class="groupBuySubmit-content-address-left-value">{{ selectAddress ? selectAddress.province + selectAddress.city + selectAddress.district + selectAddress.detail  : '请选择地址' }} </view> -->
+      <!--                        <view class="groupBuySubmit-content-address-left-value">{{ selectAddress ? selectAddress.realName + '  ' + selectAddress.phone  : '' }} </view> -->
+      <!--                    </view> -->
 
-      <!--                </view>-->
-      <!--                <image class="groupBuySubmit-content-address-right" src="https://jms.85gui7.com/kahe-202510/groupBuy/arrow-1.png" />-->
-      <!--            </view>-->
+      <!--                </view> -->
+      <!--                <image class="groupBuySubmit-content-address-right" src="https://jms.85gui7.com/kahe-202510/groupBuy/arrow-1.png" /> -->
+      <!--            </view> -->
       <view class="groupBuySubmit-content-group">
-        <!--                <view class="groupBuySubmit-content-merchant">-->
-        <!--                    <image class="groupBuySubmit-content-merchant-logo" />-->
-        <!--                    <view class="groupBuySubmit-content-merchant-title">阿里嘎多卡社</view>-->
-        <!--                </view>-->
+        <!--                <view class="groupBuySubmit-content-merchant"> -->
+        <!--                    <image class="groupBuySubmit-content-merchant-logo" /> -->
+        <!--                    <view class="groupBuySubmit-content-merchant-title">阿里嘎多卡社</view> -->
+        <!--                </view> -->
         <view class="groupBuySubmit-content-info">
           <view class="groupBuySubmit-content-info-left">
             <image
@@ -27,40 +27,45 @@
               <view
                 class="groupBuySubmit-content-info-left-subInfo-title"
                 style="margin-top: 10px"
-                >{{ groupBuyDetail.title }}</view
               >
-              <view
-                class="groupBuySubmit-content-info-left-subInfo-price"
-                v-if="payPrice !== groupBuyDetail.price"
-              >
-                <view class="groupBuySubmit-content-info-left-subInfo-price-p1"
-                  >¥{{ payPrice }}</view
-                >
-                <view
-                  class="groupBuySubmit-content-info-left-subInfo-price-p2"
-                  >{{ groupBuyDetail.price }}</view
-                >
+                {{ groupBuyDetail.title }}
               </view>
               <view
+                v-if="payPrice !== groupBuyDetail.price"
                 class="groupBuySubmit-content-info-left-subInfo-price"
-                v-else
               >
-                <view class="groupBuySubmit-content-info-left-subInfo-price-p1"
-                  >¥{{ groupBuyDetail.price }}</view
+                <view class="groupBuySubmit-content-info-left-subInfo-price-p1">
+                  ¥{{ payPrice }}
+                </view>
+                <view
+                  class="groupBuySubmit-content-info-left-subInfo-price-p2"
                 >
+                  {{ groupBuyDetail.price }}
+                </view>
+              </view>
+              <view
+                v-else
+                class="groupBuySubmit-content-info-left-subInfo-price"
+              >
+                <view class="groupBuySubmit-content-info-left-subInfo-price-p1">
+                  ¥{{ groupBuyDetail.price }}
+                </view>
               </view>
               <view
                 class="groupBuySubmit-content-info-left-subInfo-subTitle"
                 style="margin-top: 15px"
-                >库存:{{ groupBuyDetail.total - groupBuyDetail.sales }}</view
               >
-              <view class="groupBuySubmit-content-info-left-subInfo-subTitle"
-                >规格 | 1 张</view
-              >
+                库存:{{ groupBuyDetail.total - groupBuyDetail.sales }}
+              </view>
+              <view class="groupBuySubmit-content-info-left-subInfo-subTitle">
+                规格 | 1 张
+              </view>
             </view>
           </view>
           <view class="groupBuySubmit-content-info-right">
-            <view class="groupBuySubmit-content-info-right-num">数量×1</view>
+            <view class="groupBuySubmit-content-info-right-num">
+              数量×1
+            </view>
             <image
               class="groupBuySubmit-content-info-right-arrow"
               src="https://jms.85gui7.com/kahe-202510/groupBuy/right-arrow.png"
@@ -68,44 +73,50 @@
           </view>
         </view>
         <view class="groupBuySubmit-content-other">
-          <view class="groupBuySubmit-content-other-title theme-font"
-            >赠送卡密</view
-          >
+          <view class="groupBuySubmit-content-other-title theme-font">
+            赠送卡密
+          </view>
           <view class="groupBuySubmit-content-other-line" />
         </view>
-        <view class="groupBuySubmit-content-detail"
-          >{{ groupBuyDetail.title }} 卡密一张</view
-        >
-        <!--                <view class="groupBuySubmit-content-price">{{payPrice}}</view>-->
+        <view class="groupBuySubmit-content-detail">
+          {{ groupBuyDetail.title }} 卡密一张
+        </view>
+        <!--                <view class="groupBuySubmit-content-price">{{payPrice}}</view> -->
         <view class="groupBuySubmit-content-num">
           <view
             class="groupBuySubmit-content-num-item"
             @tap.stop="
               changeNum(true, groupBuyDetail.total - groupBuyDetail.sales)
             "
-            >➖</view
           >
-          <view class="groupBuySubmit-content-num-value">{{ selectNum }}</view>
+            ➖
+          </view>
+          <view class="groupBuySubmit-content-num-value">
+            {{ selectNum }}
+          </view>
           <view
             class="groupBuySubmit-content-num-item"
             @tap.stop="
               changeNum(false, groupBuyDetail.total - groupBuyDetail.sales)
             "
-            >➕</view
           >
-          <view class="groupBuySubmit-content-num-sock"
-            >库存:{{ groupBuyDetail.total - groupBuyDetail.sales }}</view
-          >
+            ➕
+          </view>
+          <view class="groupBuySubmit-content-num-sock">
+            库存:{{ groupBuyDetail.total - groupBuyDetail.sales }}
+          </view>
         </view>
-        <view class="groupBuySubmit-content-title">优惠套餐</view>
+        <view class="groupBuySubmit-content-title">
+          优惠套餐
+        </view>
         <view class="groupBuySubmit-content-list">
           <view
+            v-for="(item, index) in groupBuyDetail.prices"
+            :key="`index${index}`"
             class="groupBuySubmit-content-list-item"
             :class="
               item.num === selectNum ? 'groupBuySubmit-content-list-select' : ''
             "
-            v-for="(item, index) in groupBuyDetail.prices"
-            :key="'index' + index"
             @tap.stop="handleSelectNum(item)"
           >
             <view
@@ -115,8 +126,9 @@
                   ? 'groupBuySubmit-content-list-select-color'
                   : ''
               "
-              >{{ item.num }}份</view
             >
+              {{ item.num }}份
+            </view>
             <view
               class="groupBuySubmit-content-list-item-price"
               :class="
@@ -124,24 +136,25 @@
                   ? 'groupBuySubmit-content-list-select-color'
                   : ''
               "
-              >单价{{ item.price }}</view
             >
+              单价{{ item.price }}
+            </view>
           </view>
         </view>
       </view>
-      <!--            <view class="groupBuySubmit-content-group">-->
-      <!--                <view class="groupBuySubmit-content-line">-->
-      <!--                    <view class="groupBuySubmit-content-line-value">运费</view>-->
-      <!--                    <view class="groupBuySubmit-content-line-value">拼团完成后支付(可累计)</view>-->
-      <!--                </view>-->
-      <!--                <view class="groupBuySubmit-content-line" style="margin-top: 12px">-->
-      <!--                    <view class="groupBuySubmit-content-line-value">商家优惠券</view>-->
-      <!--                    <view style="display: flex;flex-direction: row">-->
-      <!--                        <view class="groupBuySubmit-content-line-value">暂无可用商家优惠券</view>-->
-      <!--                        <image class="groupBuySubmit-content-line-arrow" src="https://jms.85gui7.com/kahe-202510/groupBuy/arrow.png" />-->
-      <!--                    </view>-->
-      <!--                </view>-->
-      <!--            </view>-->
+      <!--            <view class="groupBuySubmit-content-group"> -->
+      <!--                <view class="groupBuySubmit-content-line"> -->
+      <!--                    <view class="groupBuySubmit-content-line-value">运费</view> -->
+      <!--                    <view class="groupBuySubmit-content-line-value">拼团完成后支付(可累计)</view> -->
+      <!--                </view> -->
+      <!--                <view class="groupBuySubmit-content-line" style="margin-top: 12px"> -->
+      <!--                    <view class="groupBuySubmit-content-line-value">商家优惠券</view> -->
+      <!--                    <view style="display: flex;flex-direction: row"> -->
+      <!--                        <view class="groupBuySubmit-content-line-value">暂无可用商家优惠券</view> -->
+      <!--                        <image class="groupBuySubmit-content-line-arrow" src="https://jms.85gui7.com/kahe-202510/groupBuy/arrow.png" /> -->
+      <!--                    </view> -->
+      <!--                </view> -->
+      <!--            </view> -->
     </scroll-view>
     <view class="groupBuySubmit-bottom">
       <view class="groupBuySubmit-bottom-tips">
@@ -160,40 +173,43 @@
           />
         </view>
         <view class="groupBuySubmit-bottom-tips-content">
-          <text class="groupBuySubmit-bottom-tips-content-value1"
-            >我已阅读并同意</text
-          >
-          <!--                    <text class="groupBuySubmit-bottom-tips-content-value2" @tap.stop="clickRule">《活动规则》</text>-->
-          <!--                    <text class="groupBuySubmit-bottom-tips-content-value1">、</text>-->
+          <text class="groupBuySubmit-bottom-tips-content-value1">
+            我已阅读并同意
+          </text>
+          <!--                    <text class="groupBuySubmit-bottom-tips-content-value2" @tap.stop="clickRule">《活动规则》</text> -->
+          <!--                    <text class="groupBuySubmit-bottom-tips-content-value1">、</text> -->
           <text
             class="groupBuySubmit-bottom-tips-content-value2"
             @tap.stop="clickRule"
-            >《购买须知》</text
           >
-          <text class="groupBuySubmit-bottom-tips-content-value1"
-            >;您所购商品因其
+            《购买须知》
+          </text>
+          <text class="groupBuySubmit-bottom-tips-content-value1">
+            ;您所购商品因其
             属性及价格的特殊性，同意购买商品后不支持7天无理由退款;我已知晓本产品checklist由商家自定义，并已查阅产品卡密列表
-            的详细信息。</text
-          >
+            的详细信息。
+          </text>
         </view>
       </view>
       <view class="groupBuySubmit-bottom-line">
         <view class="groupBuySubmit-bottom-line-left">
           <view class="groupBuySubmit-bottom-line-left-row">
-            <view class="groupBuySubmit-bottom-line-left-value1 SimHei-font"
-              >共{{ selectNum }}份</view
-            >
+            <view class="groupBuySubmit-bottom-line-left-value1 SimHei-font">
+              共{{ selectNum }}份
+            </view>
             <view class="groupBuySubmit-bottom-line-left-line" />
-            <view class="groupBuySubmit-bottom-line-left-value1 SimHei-font"
-              >优惠：{{ discountPrice }}</view
-            >
+            <view class="groupBuySubmit-bottom-line-left-value1 SimHei-font">
+              优惠：{{ discountPrice }}
+            </view>
           </view>
 
           <view class="groupBuySubmit-bottom-line-left-row">
-            <view class="groupBuySubmit-bottom-line-left-value1">合计：</view>
-            <view class="groupBuySubmit-bottom-line-left-value2"
-              >¥{{ totalPrice }}</view
-            >
+            <view class="groupBuySubmit-bottom-line-left-value1">
+              合计：
+            </view>
+            <view class="groupBuySubmit-bottom-line-left-value2">
+              ¥{{ totalPrice }}
+            </view>
           </view>
         </view>
         <view
@@ -204,9 +220,9 @@
             class="groupBuySubmit-bottom-line-right-img"
             src="https://jms.85gui7.com/kahe-202510/groupBuy/btn.png"
           />
-          <view class="groupBuySubmit-bottom-line-right-title theme-font"
-            >提交订单</view
-          >
+          <view class="groupBuySubmit-bottom-line-right-title theme-font">
+            提交订单
+          </view>
         </view>
       </view>
     </view>
@@ -217,23 +233,24 @@
     />
     <reward
       v-if="rewardShow"
-      @did-click-again="handleClickAgain"
       :list="purchaseCardList"
+      @did-click-again="handleClickAgain"
       @did-click-detail="handleClickDetail"
     />
   </view>
 </template>
 
 <script lang="ts" setup>
-import { useGroupBuySubmit } from "./index";
-import Reward from "../components/reward/index.vue";
-import { useGroupBuy } from "@/subPackages/groupBuy";
-import { onMounted, ref } from "vue";
-import { getPageOptions } from "@/utils/tools";
-import CommonModal from "@/components/modal/index.vue";
-import { useModal, ModalType } from "@/composables/modal";
-const { modalShow, modalTitle, modalContent, showModalType } = useModal();
-const { getGroupBuyDetail, groupBuyDetail, navToMinePage } = useGroupBuy();
+import { onMounted, ref } from 'vue'
+import CommonModal from '@/components/modal/index.vue'
+import { ModalType, useModal } from '@/composables/modal'
+import { useGroupBuy } from '@/subPackages/groupBuy'
+import { getPageOptions } from '@/utils/tools'
+import Reward from '../components/reward/index.vue'
+import { useGroupBuySubmit } from './index'
+
+const { modalShow, modalTitle, modalContent, showModalType } = useModal()
+const { getGroupBuyDetail, groupBuyDetail, navToMinePage } = useGroupBuy()
 
 const {
   discountPrice,
@@ -248,34 +265,34 @@ const {
   handleSelectNum,
   didTapSubmit,
   purchaseCardList,
-} = useGroupBuySubmit();
-const clickRule = () => {
-  showModalType(ModalType.GroupBuyRule);
-};
-const valueId = ref<number>(0);
-const handleClickAgain = () => {
-  rewardShow.value = false;
-  fetchPageData();
-};
-const handleClickDetail = () => {
-  navToMinePage(valueId.value);
-  fetchPageData();
-};
+} = useGroupBuySubmit()
+function clickRule() {
+  showModalType(ModalType.GroupBuyRule)
+}
+const valueId = ref<number>(0)
+function handleClickAgain() {
+  rewardShow.value = false
+  fetchPageData()
+}
+function handleClickDetail() {
+  navToMinePage(valueId.value)
+  fetchPageData()
+}
 
 onMounted(async () => {
-  fetchPageData();
-});
+  fetchPageData()
+})
 
-const fetchPageData = async () => {
-  const id = getPageOptions().id;
-  console.log("groupBuyId:", id);
+async function fetchPageData() {
+  const id = getPageOptions().id
+  console.log('groupBuyId:', id)
   if (id) {
-    valueId.value = id;
-    await getGroupBuyDetail(id);
+    valueId.value = id
+    await getGroupBuyDetail(id)
   }
-  priceList.value = groupBuyDetail.value.prices;
-  payPrice.value = originPrice.value = groupBuyDetail.value.price;
-};
+  priceList.value = groupBuyDetail.value.prices
+  payPrice.value = originPrice.value = groupBuyDetail.value.price
+}
 </script>
 
 <style lang="scss" scoped>
@@ -514,7 +531,7 @@ const fetchPageData = async () => {
         width: 140rpx;
         height: 73rpx;
         border-radius: 10rpx;
-        background-image: url("https://jms.85gui7.com/kahe-202510/groupBuy/buy-item.png");
+        background-image: url('https://jms.85gui7.com/kahe-202510/groupBuy/buy-item.png');
         background-size: 100% 100%;
         background-repeat: no-repeat;
         display: flex;
@@ -569,7 +586,7 @@ const fetchPageData = async () => {
     padding: 16rpx 16rpx env(safe-area-inset-bottom);
     box-sizing: border-box;
 
-    background-image: url("https://jms.85gui7.com/kahe-202510/groupBuy/pay-bg.png");
+    background-image: url('https://jms.85gui7.com/kahe-202510/groupBuy/pay-bg.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     &-tips {

@@ -4,12 +4,12 @@
       class="homeGoods-bg"
       src="https://jms.85gui7.com/kahe-202510/ka-he/home/item-bg.png"
     />
-    <!--        <view class="homeGoods-empty" v-if="item.isSellout">-->
-    <!--            <image-->
-    <!--                style="width:137rpx;height: 63rpx"-->
-    <!--                src="https://jms.85gui7.com/jos/1214/sell-out.png"-->
-    <!--            />-->
-    <!--        </view>-->
+    <!--        <view class="homeGoods-empty" v-if="item.isSellout"> -->
+    <!--            <image -->
+    <!--                style="width:137rpx;height: 63rpx" -->
+    <!--                src="https://jms.85gui7.com/jos/1214/sell-out.png" -->
+    <!--            /> -->
+    <!--        </view> -->
 
     <view class="homeGoods-cover">
       <view class="homeGoods-cover-top">
@@ -23,7 +23,7 @@
       <view class="homeGoods-cover-pattern">
         <image
           v-for="(label, index) in item.labels"
-          :key="'labels:' + index"
+          :key="`labels:${index}`"
           :src="formatLabelImage(label)"
           class="homeGoods-cover-pattern-img"
         />
@@ -34,8 +34,9 @@
         <view class="homeGoods-info-content-bottom">
           <view
             class="homeGoods-info-content-bottom-title text-flow-ellipsis-multiple"
-            >{{ item.name }}</view
           >
+            {{ item.name }}
+          </view>
           <view class="homeGoods-info-content-bottom-row1">
             <view class="homeGoods-info-content-bottom-row1-price">
               <image
@@ -44,9 +45,10 @@
               />
               <text
                 class="homeGoods-info-content-bottom-row1-price-title price-font"
-                >{{ isFromMall ? "" : "" }}{{ item.price
-                }}{{ isFromMall ? "/点券" : "" }}</text
               >
+                {{ isFromMall ? "" : "" }}{{ item.price
+                }}{{ isFromMall ? "/点券" : "" }}
+              </text>
             </view>
           </view>
         </view>
@@ -57,18 +59,20 @@
           />
           <view
             class="homeGoods-info-content-merchant-name text-flow-ellipsis-single"
-            >{{ item.merchant?.name }}</view
           >
+            {{ item.merchant?.name }}
+          </view>
         </view>
       </view>
     </view>
-    <image class="homeGoods-tags" v-if="showTag" :src="item.mainTagImage" />
+    <image v-if="showTag" class="homeGoods-tags" :src="item.mainTagImage" />
   </view>
 </template>
 
 <script lang="ts" setup>
-import type { PropType } from "vue";
-import type { UIMallListItemModel, UIProductModel } from "@/model";
+import type { PropType } from 'vue'
+import type { UIProductModel } from '@/model'
+
 defineProps({
   item: {
     default: {} as UIProductModel,
@@ -82,11 +86,11 @@ defineProps({
     default: false,
     type: Boolean,
   },
-});
+})
 
-const formatLabelImage = (index: number) => {
-  return "https://jms.85gui7.com/kahe-202510/tags/mode" + index + ".png";
-};
+function formatLabelImage(index: number) {
+  return `https://jms.85gui7.com/kahe-202510/tags/mode${index}.png`
+}
 </script>
 
 <style lang="scss" scoped>

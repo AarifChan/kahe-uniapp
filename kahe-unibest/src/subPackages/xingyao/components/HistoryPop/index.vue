@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import TnPopup from "@tuniao/tnui-vue3-uniapp/components/popup/src/popup.vue";
-import HistoryItem from "../HistoryItem/index.vue";
-import { PropType } from "vue";
-import { ShingingInfo } from "../../api";
-import Empty from "@/components/empty/index.vue";
-const modelValue = defineModel<boolean>();
+import type { PropType } from 'vue'
+import type { ShingingInfo } from '../../api'
+import TnPopup from '@tuniao/tnui-vue3-uniapp/components/popup/src/popup.vue'
+import HistoryItem from '../HistoryItem/index.vue'
+
 defineProps({
   list: {
     default: () => [],
     type: Array as PropType<Array<ShingingInfo>>,
   },
-});
-const emits = defineEmits(["scrolltolower"]);
+})
+const emits = defineEmits(['scrolltolower'])
+const modelValue = defineModel<boolean>()
 </script>
 
 <template>
@@ -45,8 +45,8 @@ const emits = defineEmits(["scrolltolower"]);
             <div v-for="(zItem, zIndex) in item.prizePool">
               <HistoryItem
                 v-for="(user, userIndex) in zItem.users"
-                :key="index + `${item.id}` + zIndex + userIndex"
-                :id="index + `${item.id}` + zIndex + userIndex"
+                :id="`${index}${item.id}${zIndex}${userIndex}`"
+                :key="`${index}${item.id}${zIndex}${userIndex}`"
                 :a-id="item.id"
                 :user="user"
                 :item="zItem"
@@ -58,6 +58,7 @@ const emits = defineEmits(["scrolltolower"]);
     </view>
   </TnPopup>
 </template>
+
 <style lang="scss" scoped>
 .pop {
   width: 100%;

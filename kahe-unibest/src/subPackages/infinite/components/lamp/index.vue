@@ -1,11 +1,11 @@
 <template>
-  <view class="lamp" v-if="list && list.length">
+  <view v-if="list && list.length" class="lamp">
     <view
       v-for="(item, index) in list"
       :key="index"
       class="ma1"
       :class="item.action ? `anmt1 ${item.class}` : ''"
-      :style="['animation-duration:' + animationTime + 's']"
+      :style="[`animation-duration:${animationTime}s`]"
       @tap.stop="emits('tapLampAction', item)"
     >
       <view class="ma1-content">
@@ -13,16 +13,24 @@
           class="ma1-content-bg"
           src="https://jms.85gui7.com/kahe-202510/ka-he/integral/infinite-bg.png"
         />
-        <view class="ma1-content-title theme-font">欧皇来袭</view>
+        <view class="ma1-content-title theme-font">
+          欧皇来袭
+        </view>
         <view class="ma1-content-info">
-          <view class="userName text-flow-ellipsis-single">{{
-            item.userName
-          }}</view>
-          <view class="title">获得</view>
-          <image class="level" :src="getLevelImageByLevel(item.level)"></image>
-          <view class="info text-flow-ellipsis-single">{{
-            item.goodsName
-          }}</view>
+          <view class="userName text-flow-ellipsis-single">
+            {{
+              item.userName
+            }}
+          </view>
+          <view class="title">
+            获得
+          </view>
+          <image class="level" :src="getLevelImageByLevel(item.level)" />
+          <view class="info text-flow-ellipsis-single">
+            {{
+              item.goodsName
+            }}
+          </view>
         </view>
       </view>
     </view>
@@ -30,21 +38,15 @@
 </template>
 
 <script setup lang="ts">
-import { onUnmounted } from "vue";
-import { type PropType } from "vue";
-import { type UIBarrageModel } from "@/model";
-import { useEnum } from "@/composables/enum";
-const emits = defineEmits(["tapLampAction"]);
-const { getLevelImageByLevel } = useEnum();
-interface BarrageUIType extends UIBarrageModel {
-  class: string;
-  action: boolean;
-}
+import type { PropType } from 'vue'
+import type { UIBarrageModel } from '@/model'
+import { onUnmounted } from 'vue'
+import { useEnum } from '@/composables/enum'
 
 defineProps({
   backGround: {
     type: String,
-    default: "",
+    default: '',
   },
   border: {
     type: Number,
@@ -54,55 +56,63 @@ defineProps({
     type: Array as PropType<BarrageUIType[]>,
     default: () => [],
   },
-});
+})
+const emits = defineEmits(['tapLampAction'])
+const { getLevelImageByLevel } = useEnum()
+interface BarrageUIType extends UIBarrageModel {
+  class: string
+  action: boolean
+}
 
-const play = (list: UIBarrageModel[], num: number) => {
+function play(list: UIBarrageModel[], num: number) {
   if (list.length) {
-    actionMa(list as BarrageUIType[], num);
+    actionMa(list as BarrageUIType[], num)
   }
-};
-let timer: any = null;
-const animationTime = 8;
-const actionMa = (list: BarrageUIType[], num: number) => {
-  let second = 0;
+}
+let timer: any = null
+const animationTime = 8
+function actionMa(list: BarrageUIType[], num: number) {
+  let second = 0
   if (num === 1) {
-    second = 3;
-  } else {
-    second = 5;
+    second = 3
   }
-  let actionMa1Index = 0;
-  if (timer) clearInterval(timer);
+  else {
+    second = 5
+  }
+  let actionMa1Index = 0
+  if (timer)
+    clearInterval(timer)
   timer = setInterval(() => {
-    const index = actionMa1Index % list.length;
+    const index = actionMa1Index % list.length
     if (!list[index].action) {
-      list[index].action = true;
-      list[index].class = "action_" + ((actionMa1Index % num) + 1);
+      list[index].action = true
+      list[index].class = `action_${(actionMa1Index % num) + 1}`
       setTimeout(
         () => {
-          list[index].action = false;
+          list[index].action = false
         },
-        animationTime * 1000 - 100
-      );
+        animationTime * 1000 - 100,
+      )
       setTimeout(
         () => {
-          actionMa1Index++;
+          actionMa1Index++
           if (actionMa1Index === num * list.length) {
-            actionMa1Index = 0;
+            actionMa1Index = 0
           }
         },
-        (second * 1000) / num
-      );
+        (second * 1000) / num,
+      )
     }
-  }, 300);
-};
+  }, 300)
+}
 defineExpose({
   play,
-});
+})
 onUnmounted(() => {
   if (timer) {
-    clearInterval(timer);
+    clearInterval(timer)
   }
-});
+})
 </script>
 
 <style lang="scss" scoped>

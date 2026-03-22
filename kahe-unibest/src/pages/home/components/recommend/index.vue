@@ -5,34 +5,39 @@
       <!-- <image class="recommend-box-img" src="https://jms.85gui7.com/kahe-202510/ka-he/home/kami-title1.png" />
             <image class="recommend-box-go" src="https://jms.85gui7.com/kahe-202510/ka-he/home/kami-go1.png" @tap.stop="handleGroupBuyPage" /> -->
       <view class="top">
-        <view class="top-title theme-font">热门拼团</view>
+        <view class="top-title theme-font">
+          热门拼团
+        </view>
         <view class="top-hot">
-          <view class="line"></view>
+          <view class="line" />
           <text>正在火热活动中!!!</text>
         </view>
         <view class="top-wrapper">
-          <view class="dot"></view>
-          <view class="line"></view>
-          <view class="dot"></view>
+          <view class="dot" />
+          <view class="line" />
+          <view class="dot" />
         </view>
-        <view class="top-more" @tap.stop="handleGroupBuyPage">more</view>
+        <view class="top-more" @tap.stop="handleGroupBuyPage">
+          more
+        </view>
       </view>
     </view>
     <scroll-view class="recommend-scroll" :scroll-x="true">
       <group-buy
         v-for="(item, index) in groupList"
+        :id="`groupItem:${item.id}`"
+        :key="`groupItem:${item.id}`"
         :item="item"
-        :id="'groupItem:' + item.id"
-        :key="'groupItem:' + item.id"
         @tap.stop="handleClickItem(item)"
       />
     </scroll-view>
   </view>
 </template>
+
 <script lang="ts" setup>
-import type { UIRecommendModel, GroupBuyItem } from "@/model";
-import { PropType } from "vue";
-import GroupBuy from "./components/groupBuy.vue";
+import type { PropType } from 'vue'
+import type { GroupBuyItem, UIRecommendModel } from '@/model'
+import GroupBuy from './components/groupBuy.vue'
 
 defineProps({
   list: {
@@ -43,20 +48,21 @@ defineProps({
     type: Array as PropType<GroupBuyItem[]>,
     default: () => [],
   },
-});
+})
 
-const handleGroupBuyPage = () => {
+function handleGroupBuyPage() {
   uni.navigateTo({
-    url: "/subPackages/groupBuy/index/index",
-  });
-};
+    url: '/subPackages/groupBuy/index/index',
+  })
+}
 
-const handleClickItem = (item: GroupBuyItem) => {
+function handleClickItem(item: GroupBuyItem) {
   uni.navigateTo({
     url: `/subPackages/groupBuy/detail/index?id=${item.id}`,
-  });
-};
+  })
+}
 </script>
+
 <style lang="scss" scoped>
 .recommend {
   margin: 18rpx 0 0 16rpx;

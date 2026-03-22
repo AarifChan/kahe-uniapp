@@ -1,196 +1,196 @@
 export function useEnum() {
   const getLevelImageByLevel = (level: number): string => {
     if (level > 120) {
-      return getLevelImage(level);
+      return getLevelImage(level)
     }
     switch (level) {
       case 120:
       case 119:
       case 118:
-        return "https://jms.85gui7.com/kahe-202510/level/normal1.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/normal1.png'
       case 117:
-        return "https://jms.85gui7.com/kahe-202510/level/normal2.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/normal2.png'
       case 116:
-        return "https://jms.85gui7.com/kahe-202510/level/normal3.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/normal3.png'
       case 115:
-        return "https://jms.85gui7.com/kahe-202510/level/normal4.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/normal4.png'
       default:
-        return "https://jms.85gui7.com/kahe-202510/level/normal5.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/normal5.png'
     }
-  };
+  }
 
   const getLevelImageNameByLevel = (level: number): string => {
     if (level > 120) {
-      return getLevelImage(level);
+      return getLevelImage(level)
     }
     switch (level) {
       case 120:
       case 119:
       case 118:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite1.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/infinite1.png'
       case 117:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite2.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/infinite2.png'
       case 116:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite3.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/infinite3.png'
       case 115:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite4.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/infinite4.png'
       default:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite5.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/infinite5.png'
     }
-  };
+  }
 
   const getNormalLevelNameByLevel = (level: number): string => {
     if (level > 120) {
-      return getHighLevelName(level);
+      return getHighLevelName(level)
     }
     switch (level) {
       case -1:
-        return "全部";
+        return '全部'
       case 206:
-        return "天选赏";
+        return '天选赏'
       case 120:
       case 119:
       case 118:
-        return "SAR";
+        return 'SAR'
       case 117:
-        return "UR";
+        return 'UR'
       case 116:
-        return "SSR";
+        return 'SSR'
       case 115:
-        return "SR";
+        return 'SR'
       default:
-        return "R";
+        return 'R'
     }
-  };
+  }
 
   const getSpecLevelBgTitleByLevel = (level: number): string => {
     switch (level) {
       case 120:
       case 119:
       case 118:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite-bg1.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/infinite-bg1.png'
       case 117:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite-bg2.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/infinite-bg2.png'
       case 116:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite-bg3.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/infinite-bg3.png'
       case 115:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite-bg4.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/infinite-bg4.png'
       default:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite-bg5.png";
+        return 'https://jms.85gui7.com/kahe-202510/level/infinite-bg5.png'
     }
-  };
+  }
 
   const getLevelImage = (level: number): string => {
-    return "https://jms.85gui7.com/kahe-202510/level/" + getLevelName(level) + ".png";
-  };
+    return `https://jms.85gui7.com/kahe-202510/level/${getLevelName(level)}.png`
+  }
 
   const getHighLevelName = (level: number) => {
     switch (level) {
       case 502:
       case 401:
       case 302:
-        return "First赏";
+        return 'First赏'
       case 501:
       case 402:
       case 301:
-        return "Last赏";
+        return 'Last赏'
       case 205:
-        return "串串赏";
+        return '串串赏'
       case 204:
-        return "非酋赏";
+        return '非酋赏'
       case 203:
-        return "展示";
+        return '展示'
       case 202:
-        return "终赏";
+        return '终赏'
       case 201:
-        return "全局赏";
+        return '全局赏'
       default:
-        return "";
+        return ''
     }
-  };
+  }
 
   const getLevelName = (level: number): string => {
     switch (level) {
       case 502:
       case 401:
       case 302:
-        return "first";
+        return 'first'
       case 501:
       case 402:
       case 301:
-        return "last";
+        return 'last'
       case 206:
-        return "tianxuan";
+        return 'tianxuan'
       case 205:
-        return "strandGoods";
+        return 'strandGoods'
       case 204:
-        return "fei";
+        return 'fei'
       case 203:
-        return "show";
+        return 'show'
       case 202:
-        return "end";
+        return 'end'
       case 201:
-        return "all";
+        return 'all'
       case 120:
       case 119:
       case 118:
-        return "sp";
+        return 'sp'
       case 117:
-        return "a";
+        return 'a'
       case 116:
-        return "b";
+        return 'b'
       case 115:
-        return "c";
+        return 'c'
       case 114:
-        return "d";
+        return 'd'
       case 113:
-        return "e";
+        return 'e'
       case 112:
-        return "f";
+        return 'f'
       case 111:
-        return "g";
+        return 'g'
       case 110:
-        return "h";
+        return 'h'
       case 109:
-        return "i";
+        return 'i'
       case 108:
-        return "j";
+        return 'j'
       case 107:
-        return "k";
+        return 'k'
       case 106:
-        return "l";
+        return 'l'
       case 105:
-        return "m";
+        return 'm'
       case 104:
-        return "n";
+        return 'n'
       case 103:
-        return "o";
+        return 'o'
       case 102:
-        return "p";
+        return 'p'
       case 101:
-        return "q";
+        return 'q'
       case 100:
-        return "r";
+        return 'r'
       default:
-        return "r";
+        return 'r'
     }
-  };
+  }
   const levelTypeBg = (level: number) => {
     switch (level) {
       case 118:
-        return "https://jms.85gui7.com/kahe-202510/images/goods-item-decorate.png";
+        return 'https://jms.85gui7.com/kahe-202510/images/goods-item-decorate.png'
       case 117:
-        return "https://jms.85gui7.com/kahe-202510/images/goods-item-decorate1.png";
+        return 'https://jms.85gui7.com/kahe-202510/images/goods-item-decorate1.png'
       case 116:
-        return "https://jms.85gui7.com/kahe-202510/images/goods-item-decorate2.png";
+        return 'https://jms.85gui7.com/kahe-202510/images/goods-item-decorate2.png'
       case 115:
-        return "https://jms.85gui7.com/kahe-202510/images/goods-item-decorate3.png";
+        return 'https://jms.85gui7.com/kahe-202510/images/goods-item-decorate3.png'
       case 114:
-        return "https://jms.85gui7.com/kahe-202510/images/goods-item-decorate4.png";
+        return 'https://jms.85gui7.com/kahe-202510/images/goods-item-decorate4.png'
       default:
-        return "https://jms.85gui7.com/kahe-202510/images/goods-item-decorate5.png";
+        return 'https://jms.85gui7.com/kahe-202510/images/goods-item-decorate5.png'
     }
-  };
+  }
   return {
     levelTypeBg,
     getLevelName,
@@ -199,5 +199,5 @@ export function useEnum() {
     getNormalLevelNameByLevel,
     getSpecLevelBgTitleByLevel,
     getLevelImageNameByLevel,
-  };
+  }
 }

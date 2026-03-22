@@ -18,9 +18,9 @@
           class="reward-content-bg"
           src="https://jms.85gui7.com/kahe-202510/reward/reward-bg.png"
         />
-        <text class="reward-content-title"
-          >恭喜您,获得以下物品,可在赏袋查看。</text
-        >
+        <text class="reward-content-title">
+          恭喜您,获得以下物品,可在赏袋查看。
+        </text>
         <scroll-view
           :enable-flex="true"
           :scroll-y="true"
@@ -28,13 +28,13 @@
           class="reward-content-list"
         >
           <view
-            class="reward-content-list-single"
             v-if="goodsList.length === 1"
+            class="reward-content-list-single"
           >
             <view
+              v-for="(item, index) in goodsList"
+              :key="`goodsList${index}`"
               class="reward-content-list-single-item"
-              v-for="(item, index) in goodsList"
-              :key="'goodsList' + index"
             >
               <goods-box
                 :item="item"
@@ -46,13 +46,13 @@
             </view>
           </view>
           <view
-            class="reward-content-list-two"
             v-else-if="goodsList.length === 2"
+            class="reward-content-list-two"
           >
             <view
-              class="reward-content-list-two-item"
               v-for="(item, index) in goodsList"
-              :key="'goodsList' + index"
+              :key="`goodsList${index}`"
+              class="reward-content-list-two-item"
             >
               <goods-box
                 :item="item"
@@ -64,8 +64,8 @@
             </view>
           </view>
           <view
-            class="reward-content-list-three"
             v-else-if="goodsList.length === 3"
+            class="reward-content-list-three"
           >
             <view class="reward-content-list-three-row1">
               <view class="reward-content-list-three-row1-item">
@@ -99,11 +99,11 @@
               </view>
             </view>
           </view>
-          <view class="reward-content-list-content" v-else>
+          <view v-else class="reward-content-list-content">
             <view
-              class="reward-content-list-content-item"
               v-for="(item, index) in goodsList"
-              :key="'goodsList' + index"
+              :key="`goodsList${index}`"
+              class="reward-content-list-content-item"
             >
               <goods-box
                 :item="item"
@@ -130,8 +130,9 @@
             />
             <text
               class="reward-content-bottom-item-title text-stroke-main theme-font"
-              >继续开赏</text
             >
+              继续开赏
+            </text>
           </view>
           <view
             v-if="featureSmashRefundEnabled"
@@ -144,22 +145,23 @@
             />
             <text
               class="reward-content-bottom-item-title text-stroke-main theme-font"
-              >一键退货</text
             >
+              一键退货
+            </text>
           </view>
         </view>
         <view
+          v-if="hasRedBag"
           class="reward-content-redBag"
           @tap.stop="emits('didClickRedBag')"
-          v-if="hasRedBag"
         >
           <image
             class="reward-content-redBag-bg"
             src="https://jms.85gui7.com/kahe-202510/redEnvelope/btn-style3.png"
           />
-          <text class="reward-content-redBag-title theme-font text-stroke"
-            >去发红包</text
-          >
+          <text class="reward-content-redBag-title theme-font text-stroke">
+            去发红包
+          </text>
         </view>
       </view>
     </view>
@@ -167,15 +169,15 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from '@/store/app'
-import { computed, ref, watch } from "vue";
-import GoodsBox from "@/components/box/index.vue";
-
 import type {
-  UIProductOpenBoxModel,
-  UIProductBoxModel,
   UIOpenListModel,
-} from "@/model";
+  UIProductBoxModel,
+  UIProductOpenBoxModel,
+} from '@/model'
+import { computed, ref, watch } from 'vue'
+import GoodsBox from '@/components/box/index.vue'
+
+import { useAppStore } from '@/store/app'
 
 const props = defineProps({
   show: {
@@ -205,15 +207,24 @@ const props = defineProps({
     default: false,
     type: Boolean,
   },
-});
+})
 
-const vShow = ref(false);
+const emits = defineEmits([
+  'update:show',
+  'didClickSmash',
+  'didClickRedBag',
+  'didClickContinue',
+])
+
+const appStore = useAppStore()
+
+const vShow = ref(false)
 watch(
   () => props.show,
   (value) => {
-    vShow.value = value;
-  }
-);
+    vShow.value = value
+  },
+)
 
 const goodsList = computed((): UIProductBoxModel[] => {
   return props.rewardList.map((item) => {
@@ -229,20 +240,13 @@ const goodsList = computed((): UIProductBoxModel[] => {
       hasRedBag: item.hasRedBag ?? false,
       isLucky: item.isLucky,
       isHide: item.isHide,
-    } as any;
-  });
-});
+    } as any
+  })
+})
 
 const featureSmashRefundEnabled = computed(() => {
-  return appStore.featureSmashRefundEnabled;
-});
-
-const emits = defineEmits([
-  "update:show",
-  "didClickSmash",
-  "didClickRedBag",
-  "didClickContinue",
-]);
+  return appStore.featureSmashRefundEnabled
+})
 </script>
 
 <style lang="scss" scoped>

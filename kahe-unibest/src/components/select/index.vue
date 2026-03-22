@@ -17,15 +17,15 @@
                 type="digit"
                 clearable
                 :maxlength="11"
-                :placeholder="'最大' + item.num"
+                :placeholder="`最大${item.num}`"
                 :border="false"
                 height="80"
                 label-class="boxSelect-wrapper-content-center-input"
               />
             </view>
-            <text class="boxSelect-wrapper-content-center-title theme-font"
-              >个</text
-            >
+            <text class="boxSelect-wrapper-content-center-title theme-font">
+              个
+            </text>
           </view>
           <view class="boxSelect-wrapper-content-bottom">
             <custom-button
@@ -41,16 +41,17 @@
 </template>
 
 <script lang="ts" setup>
-import CustomButton from "@/components/custom/button/index.vue";
-import type { UIMineChestModel } from "@/model";
-import { ShowToast } from "@/utils";
-import type { PropType } from "vue";
-import { ref, watch } from "vue";
-import TnInput from "@tuniao/tnui-vue3-uniapp/components/input/src/input.vue";
+import type { PropType } from 'vue'
+import type { UIMineChestModel } from '@/model'
+import TnInput from '@tuniao/tnui-vue3-uniapp/components/input/src/input.vue'
+import { ref, watch } from 'vue'
+import CustomButton from '@/components/custom/button/index.vue'
+import { ShowToast } from '@/utils'
+
 const props = defineProps({
   title: {
     type: String,
-    default: "选中该数量",
+    default: '选中该数量',
   },
   show: {
     default: false,
@@ -71,63 +72,63 @@ const props = defineProps({
   tips: {
     type: String,
   },
-});
+})
 
-const vShow = ref(false);
+const emits = defineEmits([
+  'update:show',
+  'update:item',
+  'update:num',
+  'didTapConfirm',
+])
+
+const vShow = ref(false)
 
 watch(
   () => props.show,
   (value) => {
-    vShow.value = value;
-  }
-);
+    vShow.value = value
+  },
+)
 
-const input = ref(1);
+const input = ref(1)
 
-const emits = defineEmits([
-  "update:show",
-  "update:item",
-  "update:num",
-  "didTapConfirm",
-]);
+function onChange(e: { detail: string }) {
+  input.value = Number(e.detail) ?? 0
+}
 
-const onChange = (e: { detail: string }) => {
-  input.value = Number(e.detail) ?? 0;
-};
-
-const didTapConfirm = () => {
-  const num = Number(input.value) ?? 0;
+function didTapConfirm() {
+  const num = Number(input.value) ?? 0
   if (num > props.item.num) {
-    ShowToast("数量输入有误");
-    return;
+    ShowToast('数量输入有误')
+    return
   }
   if (num === 0) {
-    ShowToast("请选择");
-    return;
+    ShowToast('请选择')
+    return
   }
-  const item = props.item;
-  item.selectNum = Number(input.value);
-  emits("update:item", item);
-  emits("update:show", false);
+  const item = props.item
+  item.selectNum = Number(input.value)
+  emits('update:item', item)
+  emits('update:show', false)
   if (props.tips) {
-    emits("didTapConfirm", item.selectNum);
+    emits('didTapConfirm', item.selectNum)
   }
-};
+}
 watch(
   () => props.item.num,
   () => {
-    input.value = props.item.num;
-  }
-);
+    input.value = props.item.num
+  },
+)
 
 watch(
   () => props.show,
   (val) => {
     if (val === false) {
-      input.value = props.item.num;
+      input.value = props.item.num
     }
-  }
-);
+  },
+)
 </script>
 
 <style lang="scss" scoped>

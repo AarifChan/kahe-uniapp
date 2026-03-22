@@ -15,9 +15,9 @@ setActivePinia(store)
 
 export default store
 
+export * from './address'
+export * from './app'
+export * from './pet'
 // 模块统一导出
 export * from './token'
 export * from './user'
-export * from './app'
-export * from './pet'
-export * from './address'

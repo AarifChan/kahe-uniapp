@@ -12,7 +12,9 @@
           src="https://jms.85gui7.com/kahe-202510/ka-he/common/right-arrow.png"
           @tap.stop="emits('update:show', false)"
         />
-        <view class="pay-head-title">确认购买</view>
+        <view class="pay-head-title">
+          确认购买
+        </view>
       </view>
       <scroll-view
         class="pay-scroll"
@@ -25,91 +27,117 @@
           <view class="pay-scroll-info-top">
             <image class="pay-scroll-info-top-logo" :src="goods.image" />
             <view class="pay-scroll-info-top-right">
-              <text class="pay-scroll-info-top-right-title">{{
-                goods.title
-              }}</text>
+              <text class="pay-scroll-info-top-right-title">
+                {{
+                  goods.title
+                }}
+              </text>
               <text
-                class="pay-scroll-info-top-right-price theme-font"
                 v-if="!goods.isIntegral"
-                >¥{{ goods.totalPrice }}</text
+                class="pay-scroll-info-top-right-price theme-font"
               >
-              <text class="pay-scroll-info-top-right-price theme-font" v-else
-                >{{ goods.totalPrice }}积分</text
-              >
+                ¥{{ goods.totalPrice }}
+              </text>
+              <text v-else class="pay-scroll-info-top-right-price theme-font">
+                {{ goods.totalPrice }}积分
+              </text>
             </view>
           </view>
           <view class="pay-scroll-info-bottom">
             <view class="pay-scroll-info-bottom-row">
-              <view class="pay-scroll-info-bottom-row-title">优惠券</view>
+              <view class="pay-scroll-info-bottom-row-title">
+                优惠券
+              </view>
               <view
                 class="pay-scroll-info-bottom-row-right"
                 @tap.stop="emits('didTapCoupon')"
               >
-                <view class="pay-scroll-info-bottom-row-value">{{
-                  goods.coupon
-                    ? goods.coupon.title
-                    : hasValidCoupon
-                      ? "请选择优惠券"
-                      : "暂无可用优惠券"
-                }}</view>
+                <view class="pay-scroll-info-bottom-row-value">
+                  {{
+                    goods.coupon
+                      ? goods.coupon.title
+                      : hasValidCoupon
+                        ? "请选择优惠券"
+                        : "暂无可用优惠券"
+                  }}
+                </view>
               </view>
             </view>
             <view class="pay-scroll-info-bottom-row">
-              <view class="pay-scroll-info-bottom-row-title">点券</view>
-              <view class="pay-scroll-info-bottom-row-value"
-                >{{ userInfo.money }}(抵扣{{ goods.usedMoney }})</view
-              >
+              <view class="pay-scroll-info-bottom-row-title">
+                点券
+              </view>
+              <view class="pay-scroll-info-bottom-row-value">
+                {{ userInfo.money }}(抵扣{{ goods.usedMoney }})
+              </view>
             </view>
             <view class="pay-scroll-info-bottom-row">
-              <view class="pay-scroll-info-bottom-row-title">绑定点券</view>
-              <view class="pay-scroll-info-bottom-row-value"
-                >{{ userInfo.coin }}(抵扣{{ goods.usedCoin }})</view
-              >
+              <view class="pay-scroll-info-bottom-row-title">
+                绑定点券
+              </view>
+              <view class="pay-scroll-info-bottom-row-value">
+                {{ userInfo.coin }}(抵扣{{ goods.usedCoin }})
+              </view>
             </view>
             <view class="pay-scroll-info-bottom-row">
-              <view class="pay-scroll-info-bottom-row-title">积分</view>
-              <view class="pay-scroll-info-bottom-row-value"
-                >{{ userInfo.integral }}(抵扣{{ goods.usedIntegral }})</view
-              >
+              <view class="pay-scroll-info-bottom-row-title">
+                积分
+              </view>
+              <view class="pay-scroll-info-bottom-row-value">
+                {{ userInfo.integral }}(抵扣{{ goods.usedIntegral }})
+              </view>
             </view>
             <view class="pay-scroll-info-bottom-row">
-              <view class="pay-scroll-info-bottom-row-title">共计</view>
+              <view class="pay-scroll-info-bottom-row-title">
+                共计
+              </view>
               <view
                 class="pay-scroll-info-bottom-row-value"
                 style="color: #ff0000"
-                >{{ goods.usedPrice }}</view
               >
+                {{ goods.usedPrice }}
+              </view>
             </view>
           </view>
         </view>
         <view class="pay-scroll-save">
-          <view class="pay-scroll-save-title">购买后存至</view>
+          <view class="pay-scroll-save-title">
+            购买后存至
+          </view>
           <view class="pay-scroll-save-right">
             <view class="row">
               <image
                 :src="merchant?.icon"
                 style="width: 32rpx; height: 32rpx; border-radius: 50%"
               />
-              <view class="black-text">{{ merchant?.name }}寄存柜</view>
+              <view class="black-text">
+                {{ merchant?.name }}寄存柜
+              </view>
             </view>
 
             <view class="row" style="margin-top: 16rpx">
               <view class="row" style="margin-right: 8rpx">
-                <view class="black-text">极速发货 </view>
+                <view class="black-text">
+                  极速发货
+                </view>
                 <image
                   class="ok-icon"
                   src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png"
                 />
               </view>
               <view class="row" style="margin-right: 8rpx">
-                <view class="black-text">品质保证 </view>
+                <view class="black-text">
+                  品质保证
+                </view>
                 <image
                   class="ok-icon"
                   src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png"
                 />
               </view>
               <view class="row">
-                <view class="black-text">售后无忧 </view>
+                <view class="black-text">
+                  售后无忧
+                </view>
                 <image
                   class="ok-icon"
                   src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png"
@@ -137,11 +165,15 @@
           </view>
         </view>
         <view class="pay-scroll-save">
-          <view class="pay-scroll-save-title">购买需知</view>
+          <view class="pay-scroll-save-title">
+            购买需知
+          </view>
           <view class="pay-scroll-save-right">
-            <view class="gray-text">我已知悉未成年人禁止购买 </view>
-            <view class="gray-text group-text"
-              >严禁未满8周岁未成年人购买，8周岁及以上未成年人的一
+            <view class="gray-text">
+              我已知悉未成年人禁止购买
+            </view>
+            <view class="gray-text group-text">
+              严禁未满8周岁未成年人购买，8周岁及以上未成年人的一
               切消费行为必须由监护人同意并在其陪同下进行。
             </view>
             <view class="gray-text">
@@ -152,18 +184,22 @@
               不适用于7天无理由退货。若存在质量问题或错发、漏发
               等售后问题，可联系客服提供商品开箱视频进行售后处理。
             </view>
-            <view class="gray-text"> 我已知悉该商品发货规则及自动收货规则</view>
+            <view class="gray-text">
+              我已知悉该商品发货规则及自动收货规则
+            </view>
             <view class="gray-text group-text">
               所有商品均需自行申请发货，您可在“寄存柜-待处理”查
               看并申请发货，发货邮费为12元，仅支持发货到中国大陆
-              区域(港、澳、台、及海外地区暂不支持)。</view
-            >
-            <view class="gray-text"> 我已知悉该商品概率详情</view>
+              区域(港、澳、台、及海外地区暂不支持)。
+            </view>
+            <view class="gray-text">
+              我已知悉该商品概率详情
+            </view>
 
             <view class="gray-text group-text">
               抽卡机、一番赏、盲盒类商品抽取存在概率性，付款请谨
-              慎查看各系列商品的获取概率不同。</view
-            >
+              慎查看各系列商品的获取概率不同。
+            </view>
           </view>
         </view>
       </scroll-view>
@@ -178,8 +214,10 @@
           />
         </view>
 
-        <view class="pay-type" v-if="showPayType">
-          <view class="pay-type-title">选择支付方式</view>
+        <view v-if="showPayType" class="pay-type">
+          <view class="pay-type-title">
+            选择支付方式
+          </view>
           <view class="pay-type-list">
             <!-- #ifdef APP-PLUS || H5 -->
             <!-- 微信支付 -->
@@ -197,17 +235,21 @@
                   />
                 </view>
                 <view class="pay-type-info">
-                  <view class="pay-type-name">微信支付</view>
-                  <view class="pay-type-desc">{{
-                    isApp ? "微信APP支付" : "微信H5支付"
-                  }}</view>
+                  <view class="pay-type-name">
+                    微信支付
+                  </view>
+                  <view class="pay-type-desc">
+                    {{
+                      isApp ? "微信APP支付" : "微信H5支付"
+                    }}
+                  </view>
                 </view>
               </view>
               <view class="pay-type-check">
-                <view class="pay-type-check-circle" v-if="payType === 1">
-                  <view class="pay-type-check-dot"></view>
+                <view v-if="payType === 1" class="pay-type-check-circle">
+                  <view class="pay-type-check-dot" />
                 </view>
-                <view class="pay-type-check-empty" v-else></view>
+                <view v-else class="pay-type-check-empty" />
               </view>
             </view>
 
@@ -226,17 +268,21 @@
                   />
                 </view>
                 <view class="pay-type-info">
-                  <view class="pay-type-name">支付宝支付</view>
-                  <view class="pay-type-desc">{{
-                    isApp ? "支付宝APP支付" : "支付宝H5支付"
-                  }}</view>
+                  <view class="pay-type-name">
+                    支付宝支付
+                  </view>
+                  <view class="pay-type-desc">
+                    {{
+                      isApp ? "支付宝APP支付" : "支付宝H5支付"
+                    }}
+                  </view>
                 </view>
               </view>
               <view class="pay-type-check">
-                <view class="pay-type-check-circle" v-if="payType === 0">
-                  <view class="pay-type-check-dot"></view>
+                <view v-if="payType === 0" class="pay-type-check-circle">
+                  <view class="pay-type-check-dot" />
                 </view>
-                <view class="pay-type-check-empty" v-else></view>
+                <view v-else class="pay-type-check-empty" />
               </view>
             </view>
             <!-- #endif -->
@@ -244,70 +290,76 @@
         </view>
         <div class="pay-bottom-pay">
           <view class="pay-bottom-info">
-            <view class="pay-bottom-info-price">¥{{ goods.payPrice }}</view>
-            <view class="pay-bottom-info-title">订单合计</view>
+            <view class="pay-bottom-info-price">
+              ¥{{ goods.payPrice }}
+            </view>
+            <view class="pay-bottom-info-title">
+              订单合计
+            </view>
           </view>
           <view class="pay-bottom-btn" @tap.stop="didTapConfirm">
-            <view class="pay-bottom-btn-title">立即付款</view>
-            <view class="pay-bottom-btn-subTitle"
-              >已抵扣{{ goods.usedPrice }}</view
-            >
+            <view class="pay-bottom-btn-title">
+              立即付款
+            </view>
+            <view class="pay-bottom-btn-subTitle">
+              已抵扣{{ goods.usedPrice }}
+            </view>
           </view>
         </div>
       </view>
-      <!--      <view>-->
-      <!--        <view class="pay-top">-->
-      <!--          <view class="pay-top-info">-->
-      <!--            <text class="pay-top-info-subTitle"-->
-      <!--              >购买明信片附赠礼品 未成年禁止下单</text-->
-      <!--            >-->
-      <!--          </view>-->
-      <!--        </view>-->
-      <!--        <view class="pay-options">-->
-      <!--          <pay-option-->
-      <!--            title="优惠券"-->
-      <!--            :value="-->
-      <!--              goods.coupon-->
-      <!--                ? goods.coupon.title-->
-      <!--                : hasValidCoupon-->
-      <!--                  ? '请选择优惠券'-->
-      <!--                  : '暂无可用优惠券'-->
-      <!--            "-->
-      <!--            @tap.stop="emits('didTapCoupon')"-->
-      <!--            color="black"-->
-      <!--          />-->
-      <!--        </view>-->
-      <!--      </view>-->
-      <!--      <view-->
-      <!--        style="-->
-      <!--          height: 120px;-->
-      <!--          display: flex;-->
-      <!--          flex-direction: column;-->
-      <!--          justify-content: space-between;-->
-      <!--        "-->
-      <!--      >-->
-      <!--        <agreement v-model:checked="agree" @did-tap-protocol="didTapProtocol" />-->
-      <!--        <agreement-->
-      <!--          v-if="showSkip"-->
-      <!--          v-model:checked="isSkip"-->
-      <!--          title="跳过翻牌"-->
-      <!--          sub-title=""-->
-      <!--        />-->
-      <!--        <view-->
-      <!--          class="pay-userMoney"-->
-      <!--          style="margin: 0 auto; font-size: 20rpx; color: #000"-->
-      <!--          >当前拥有<text style="color: #4b71ff">{{ userInfo.integral }}</text-->
-      <!--          >积分，<text style="color: #4b71ff">{{ userInfo.money }}</text-->
-      <!--          >点券，<text style="color: #4b71ff">{{ userInfo.coin }}</text-->
-      <!--          >绑定点券</view-->
-      <!--        >-->
+      <!--      <view> -->
+      <!--        <view class="pay-top"> -->
+      <!--          <view class="pay-top-info"> -->
+      <!--            <text class="pay-top-info-subTitle" -->
+      <!--              >购买明信片附赠礼品 未成年禁止下单</text -->
+      <!--            > -->
+      <!--          </view> -->
+      <!--        </view> -->
+      <!--        <view class="pay-options"> -->
+      <!--          <pay-option -->
+      <!--            title="优惠券" -->
+      <!--            :value=" -->
+      <!--              goods.coupon -->
+      <!--                ? goods.coupon.title -->
+      <!--                : hasValidCoupon -->
+      <!--                  ? '请选择优惠券' -->
+      <!--                  : '暂无可用优惠券' -->
+      <!--            " -->
+      <!--            @tap.stop="emits('didTapCoupon')" -->
+      <!--            color="black" -->
+      <!--          /> -->
+      <!--        </view> -->
+      <!--      </view> -->
+      <!--      <view -->
+      <!--        style=" -->
+      <!--          height: 120px; -->
+      <!--          display: flex; -->
+      <!--          flex-direction: column; -->
+      <!--          justify-content: space-between; -->
+      <!--        " -->
+      <!--      > -->
+      <!--        <agreement v-model:checked="agree" @did-tap-protocol="didTapProtocol" /> -->
+      <!--        <agreement -->
+      <!--          v-if="showSkip" -->
+      <!--          v-model:checked="isSkip" -->
+      <!--          title="跳过翻牌" -->
+      <!--          sub-title="" -->
+      <!--        /> -->
+      <!--        <view -->
+      <!--          class="pay-userMoney" -->
+      <!--          style="margin: 0 auto; font-size: 20rpx; color: #000" -->
+      <!--          >当前拥有<text style="color: #4b71ff">{{ userInfo.integral }}</text -->
+      <!--          >积分，<text style="color: #4b71ff">{{ userInfo.money }}</text -->
+      <!--          >点券，<text style="color: #4b71ff">{{ userInfo.coin }}</text -->
+      <!--          >绑定点券</view -->
+      <!--        > -->
 
-      <!--        <pay-button-->
-      <!--          :price="goods.payPrice"-->
-      <!--          :discount-price="goods.usedPrice"-->
-      <!--          @tap.stop="didTapConfirm"-->
-      <!--        />-->
-      <!--      </view>-->
+      <!--        <pay-button -->
+      <!--          :price="goods.payPrice" -->
+      <!--          :discount-price="goods.usedPrice" -->
+      <!--          @tap.stop="didTapConfirm" -->
+      <!--        /> -->
+      <!--      </view> -->
     </view>
   </tn-popup>
   <common-modal
@@ -318,22 +370,17 @@
 </template>
 
 <script lang="ts" setup>
-import { useUserStore } from '@/store/user'
+import type { PropType } from 'vue'
+import type { UIMerchant, UIProductPayModel } from '@/model'
+import { computed, onMounted, ref, watch } from 'vue'
+import Agreement from '@/components/agreement/index.vue'
+import CommonModal from '@/components/modal/index.vue'
+import { useCoupon } from '@/composables/coupon'
+import { useModal } from '@/composables/modal'
 import { useAppStore } from '@/store/app'
-import PayOption from "./components/option.vue";
-import Agreement from "@/components/agreement/index.vue";
-import PayButton from "./components/button.vue";
-import { UIMerchant, UIProductPayModel } from "@/model";
-import CommonModal from "@/components/modal/index.vue";
-import { type PropType, ref, watch, computed, onMounted } from "vue";
-import { useModal } from "@/composables/modal";
-import { useCoupon } from "@/composables/coupon";
+import { useUserStore } from '@/store/user'
+import { ShowToast } from '@/utils'
 
-import { ShowToast } from "@/utils";
-
-const { modalShow, modalTitle, modalContent, showModalType } = useModal();
-const { getCoupon, hasValidCoupon } = useCoupon();
-const userInfo = computed(() => userStore.userInfo);
 const props = defineProps({
   show: {
     default: false,
@@ -359,93 +406,99 @@ const props = defineProps({
     default: {} as UIMerchant,
     type: Object as PropType<UIMerchant>,
   },
-});
+})
+const emits = defineEmits([
+  'update:show',
+  'didTapCoupon',
+  'didTapPay',
+  'update:skipChecked',
+  'didTapPayWithType',
+])
+const appStore = useAppStore()
+const userStore = useUserStore()
 
-const agree = ref(false);
-const payType = ref(0); // 默认支付宝
-const showPayType = ref(false); // 是否显示支付方式选择（App/H5 显示）
-const payTypeHeight = ref(0); // 支付方式区域高度
+const { modalShow, modalTitle, modalContent, showModalType } = useModal()
+const { getCoupon, hasValidCoupon } = useCoupon()
+const userInfo = computed(() => userStore.userInfo)
+const agree = ref(false)
+const payType = ref(0) // 默认支付宝
+const showPayType = ref(false) // 是否显示支付方式选择（App/H5 显示）
+const payTypeHeight = ref(0) // 支付方式区域高度
 
 // 判断当前运行环境
-const isApp = ref(false);
-const checkEnv = () => {
+const isApp = ref(false)
+function checkEnv() {
   // #ifdef APP-PLUS
-  isApp.value = true;
-  showPayType.value = true;
-  payTypeHeight.value = 324;
+  isApp.value = true
+  showPayType.value = true
+  payTypeHeight.value = 324
   // #endif
   // #ifdef H5
-  isApp.value = false;
-  showPayType.value = true;
-  payTypeHeight.value = 324;
+  isApp.value = false
+  showPayType.value = true
+  payTypeHeight.value = 324
   // #endif
   // #ifndef APP-PLUS || H5
-  isApp.value = false;
-  showPayType.value = false;
-  payTypeHeight.value = 0;
+  isApp.value = false
+  showPayType.value = false
+  payTypeHeight.value = 0
   // #endif
-};
+}
 
-const isSkip = ref(props.skipChecked);
-const vShow = ref(false);
+const isSkip = ref(props.skipChecked)
+const vShow = ref(false)
 watch(
   () => props.show,
   (value) => {
-    vShow.value = value;
-  }
-);
+    vShow.value = value
+  },
+)
 watch(
   () => isSkip.value,
   (value) => {
-    emits("update:skipChecked", value);
-  }
-);
+    emits('update:skipChecked', value)
+  },
+)
 
-const selectPayType = (type: number) => {
-  payType.value = type;
-  appStore.setPayType(type);
-};
+function selectPayType(type: number) {
+  payType.value = type
+  appStore.setPayType(type)
+}
 
-const didTapConfirm = () => {
+function didTapConfirm() {
   if (!agree.value) {
-    ShowToast("请阅读并允许协议");
-    return;
+    ShowToast('请阅读并允许协议')
+    return
   }
   // 非 App 环境只传商品ID，App 环境额外传支付方式
   if (isApp.value) {
-    emits("didTapPay", props.goods.id);
-  } else {
-    emits("didTapPay", props.goods.id);
+    emits('didTapPay', props.goods.id)
   }
-};
+  else {
+    emits('didTapPay', props.goods.id)
+  }
+}
 
-const didTapClose = () => {
-  emits("update:show", false);
-};
-const didTapProtocol = () => {
-  modalShow.value = true;
-  showModalType(1);
-};
-const emits = defineEmits([
-  "update:show",
-  "didTapCoupon",
-  "didTapPay",
-  "update:skipChecked",
-  "didTapPayWithType",
-]);
+function didTapClose() {
+  emits('update:show', false)
+}
+function didTapProtocol() {
+  modalShow.value = true
+  showModalType(1)
+}
 watch(
   () => props.show,
   async (v) => {
     if (v) {
-      await getCoupon();
-      await userStore.getUserInfo();
+      await getCoupon()
+      await userStore.getUserInfo()
     }
-  }
-);
+  },
+)
 
 onMounted(() => {
-  checkEnv();
-});
+  checkEnv()
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,39 +1,40 @@
 <template>
   <view class="all">
     <view
-      class="all-tabItem"
       v-for="(item, index) in sortList"
       :key="index"
-      @tap.stop="sortTabAction(item)"
+      class="all-tabItem"
       :class="sortIndex === item.value ? 'active' : ''"
+      @tap.stop="sortTabAction(item)"
     >
       <text
         class="all-tabItem-text"
         :class="sortIndex === item.value ? 'textColor' : ''"
         :style="{ opacity: sortIndex === item.value ? 1 : 0.45 }"
-        >{{ getNormalLevelNameByLevel(item.value) }}</text
       >
+        {{ getNormalLevelNameByLevel(item.value) }}
+      </text>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { useEnum } from "@/composables/enum";
+import { ref } from 'vue'
+import { useEnum } from '@/composables/enum'
 
-const { getNormalLevelNameByLevel } = useEnum();
 defineProps({
   sortList: {
     type: Array as any,
     default: [],
   },
-});
-const sortIndex = ref(-1);
-const emits = defineEmits(["sortTabAction"]);
-const sortTabAction = (i: any) => {
-  sortIndex.value = i.value;
-  emits("sortTabAction", i);
-};
+})
+const emits = defineEmits(['sortTabAction'])
+const { getNormalLevelNameByLevel } = useEnum()
+const sortIndex = ref(-1)
+function sortTabAction(i: any) {
+  sortIndex.value = i.value
+  emits('sortTabAction', i)
+}
 </script>
 
 <style lang="scss" scoped>

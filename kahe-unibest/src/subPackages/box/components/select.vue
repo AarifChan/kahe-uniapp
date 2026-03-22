@@ -9,9 +9,9 @@
       <image class="boxSelect-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/common/select-bg.png" />
       <view class="boxSelect-wrapper">
         <view class="boxSelect-wrapper-content">
-          <view class="boxSelect-wrapper-content-title other-font"
-            >输入数量</view
-          >
+          <view class="boxSelect-wrapper-content-title other-font">
+            输入数量
+          </view>
           <view class="boxSelect-wrapper-content-center">
             <view class="boxSelect-wrapper-content-center-input">
               <tn-input
@@ -19,15 +19,15 @@
                 type="digit"
                 clearable
                 :maxlength="11"
-                :placeholder="'最大' + item.num"
+                :placeholder="`最大${item.num}`"
                 :border="false"
                 height="80"
                 label-class="boxSelect-wrapper-content-center-input"
               />
             </view>
-            <text class="boxSelect-wrapper-content-center-title other-font"
-              >个</text
-            >
+            <text class="boxSelect-wrapper-content-center-title other-font">
+              个
+            </text>
           </view>
           <view class="boxSelect-wrapper-content-bottom">
             <view
@@ -47,11 +47,11 @@
 </template>
 
 <script lang="ts" setup>
-import type { UserGoodsModel } from "@/model";
-import type { PropType } from "vue";
-import { ref, watch } from "vue";
-import { ShowToast } from "@/utils";
-import TnInput from "@tuniao/tnui-vue3-uniapp/components/input/src/input.vue";
+import type { PropType } from 'vue'
+import type { UserGoodsModel } from '@/model'
+import TnInput from '@tuniao/tnui-vue3-uniapp/components/input/src/input.vue'
+import { ref, watch } from 'vue'
+import { ShowToast } from '@/utils'
 
 const props = defineProps({
   show: {
@@ -62,51 +62,51 @@ const props = defineProps({
     default: {} as UserGoodsModel,
     type: Object as PropType<UserGoodsModel>,
   },
-});
+})
 
-const vShow = ref(false);
+const emits = defineEmits(['update:show', 'update:item'])
+
+const vShow = ref(false)
 
 watch(
   () => props.show,
   (value) => {
-    vShow.value = value;
-  }
-);
+    vShow.value = value
+  },
+)
 
-const input = ref(0);
+const input = ref(0)
 
-const emits = defineEmits(["update:show", "update:item"]);
+function onChange(e: { detail: string }) {
+  input.value = Number(e.detail) ?? 0
+}
 
-const onChange = (e: { detail: string }) => {
-  input.value = Number(e.detail) ?? 0;
-};
-
-const didTapConfirm = () => {
-  const num = Number(input.value) ?? 0;
+function didTapConfirm() {
+  const num = Number(input.value) ?? 0
   if (num > props.item.num) {
-    ShowToast("数量输入有误");
-    return;
+    ShowToast('数量输入有误')
+    return
   }
-  const item = props.item;
-  item.selectNum = Number(input.value);
-  emits("update:item", item);
-  emits("update:show", false);
-};
+  const item = props.item
+  item.selectNum = Number(input.value)
+  emits('update:item', item)
+  emits('update:show', false)
+}
 watch(
   () => props.item.num,
   () => {
-    input.value = props.item.num;
-  }
-);
+    input.value = props.item.num
+  },
+)
 
 watch(
   () => props.show,
   (val) => {
     if (val === false) {
-      input.value = props.item.num;
+      input.value = props.item.num
     }
-  }
-);
+  },
+)
 </script>
 
 <style lang="scss" scoped>

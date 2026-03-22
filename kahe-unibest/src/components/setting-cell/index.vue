@@ -12,20 +12,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
+
 interface Props {
   /** 标题 */
-  title: string;
+  title: string
   /** 描述文字 */
-  desc?: string;
+  desc?: string
   /** 描述文字颜色 */
-  descColor?: string;
+  descColor?: string
   /** 是否显示箭头 */
-  showArrow?: boolean;
+  showArrow?: boolean
   /** 是否禁用 */
-  disabled?: boolean;
+  disabled?: boolean
   /** 是否居中 */
-  center?: boolean;
+  center?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -34,20 +35,21 @@ const props = withDefaults(defineProps<Props>(), {
   showArrow: true,
   disabled: false,
   center: false,
-});
+})
 
 const emit = defineEmits<{
-  (e: 'click'): void;
-}>();
+  (e: 'click'): void
+}>()
 
 const descStyle = computed(() => {
-  return { color: props.descColor };
-});
+  return { color: props.descColor }
+})
 
-const handleClick = () => {
-  if (props.disabled) return;
-  emit('click');
-};
+function handleClick() {
+  if (props.disabled)
+    return
+  emit('click')
+}
 </script>
 
 <style lang="scss" scoped>

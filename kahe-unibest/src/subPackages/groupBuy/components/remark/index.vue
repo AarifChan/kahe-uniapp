@@ -3,16 +3,24 @@
     <image class="remark-bg" src="https://jms.85gui7.com/kahe-202510/groupBuy/remark-bg.png" />
     <view class="remark-content">
       <view class="remark-content-info">
-        <view class="title">随机卡密</view>
+        <view class="title">
+          随机卡密
+        </view>
         <image class="icon" src="https://jms.85gui7.com/kahe-202510/groupBuy/info.png" />
       </view>
       <image class="remark-content-gift" src="https://jms.85gui7.com/kahe-202510/groupBuy/gift.png" />
-      <view class="remark-content-title">{{ detail.title }}卡密一张</view>
+      <view class="remark-content-title">
+        {{ detail.title }}卡密一张
+      </view>
       <view class="remark-content-content" @tap.stop="emits('didClick')">
-        <view class="remark-content-content-title theme-font">备注</view>
-        <view class="remark-content-content-detail">{{
-          stripHTMLTags(detail.remark)
-        }}</view>
+        <view class="remark-content-content-title theme-font">
+          备注
+        </view>
+        <view class="remark-content-content-detail">
+          {{
+            stripHTMLTags(detail.remark)
+          }}
+        </view>
         <image
           class="remark-content-content-right"
           src="https://jms.85gui7.com/kahe-202510/groupBuy/right-arrow.png"
@@ -23,21 +31,21 @@
 </template>
 
 <script setup lang="ts">
-import { GroupBuyDetail } from "@/model";
-import { PropType } from "vue";
+import type { PropType } from 'vue'
+import type { GroupBuyDetail } from '@/model'
 
 defineProps({
   detail: {
     default: {} as GroupBuyDetail,
     type: Object as PropType<GroupBuyDetail>,
   },
-});
+})
 
-const emits = defineEmits(["didClick"]);
+const emits = defineEmits(['didClick'])
 
-const stripHTMLTags = (html: string) => {
-  return html?.replace(/<[^>]*>/g, "") ?? "";
-};
+function stripHTMLTags(html: string) {
+  return html?.replace(/<[^>]*>/g, '') ?? ''
+}
 </script>
 
 <style scoped lang="scss">

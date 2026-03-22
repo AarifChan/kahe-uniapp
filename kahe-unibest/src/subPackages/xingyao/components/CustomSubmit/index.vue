@@ -4,7 +4,7 @@
       v-model="textValue"
       placeholder="请输入券码参与活动"
       class="input-placeholder"
-    />
+    >
     <view class="submit-btn" @tap.stop="tapSubmit">
       <image src="https://jms.85gui7.com/kahe-202510/shine/yellow.png" mode="scaleToFill" class="btn_bg" />
       <text>提交</text>
@@ -13,21 +13,23 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref } from "vue";
-import { ShingingInfo } from "@/subPackages/xingyao/api";
+import type { PropType } from 'vue'
+import type { ShingingInfo } from '@/subPackages/xingyao/api'
+import { ref } from 'vue'
+
 defineProps({
   info: {
     default: {},
     type: Object as PropType<ShingingInfo>,
   },
-});
+})
 const emit = defineEmits<{
-  (e: "tapSubmit", value: string): void;
-}>();
-const textValue = ref("");
-const tapSubmit = () => {
-  emit("tapSubmit", textValue.value);
-};
+  (e: 'tapSubmit', value: string): void
+}>()
+const textValue = ref('')
+function tapSubmit() {
+  emit('tapSubmit', textValue.value)
+}
 </script>
 
 <style lang="scss" scoped>

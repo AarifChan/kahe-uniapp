@@ -9,9 +9,9 @@
     </view>
     <view class="orders-ordersList">
       <view
-        class="orders-ordersList-list"
         v-for="(item, index) in ordersList"
         :key="index"
+        class="orders-ordersList-list"
         @tap.stop="clickOrdersTap(index)"
       >
         <image class="orders-ordersList-list-img" :src="item.image" />
@@ -20,30 +20,32 @@
     </view>
   </view>
 </template>
+
 <script lang="ts" setup>
-import { ref } from "vue";
-const emits = defineEmits(["clickOrdersTap"]);
+import { ref } from 'vue'
+
+const emits = defineEmits(['clickOrdersTap'])
 const ordersList = ref([
   {
-    image: "https://jms.85gui7.com/kahe-202510/mine/row-item1.png",
-    name: "待处理",
+    image: 'https://jms.85gui7.com/kahe-202510/mine/row-item1.png',
+    name: '待处理',
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/mine/row-item2.png",
-    name: "已发货",
+    image: 'https://jms.85gui7.com/kahe-202510/mine/row-item2.png',
+    name: '已发货',
   },
   // {
   //   image: "https://jms.85gui7.com/kahe-202510/mine/row-item3.png",
   //   name: "宝箱",
   // },
   {
-    image: "https://jms.85gui7.com/kahe-202510/mine/row-item3.png",
-    name: "购买明细",
+    image: 'https://jms.85gui7.com/kahe-202510/mine/row-item3.png',
+    name: '购买明细',
   },
-]);
-const clickOrdersTap = (index: number) => {
-  emits("clickOrdersTap", index);
-};
+])
+function clickOrdersTap(index: number) {
+  emits('clickOrdersTap', index)
+}
 </script>
 
 <style lang="scss" scoped>

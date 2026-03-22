@@ -1,55 +1,57 @@
-import { getPageOptions } from "@/utils/tools";
-import { getMerchantInfoRequest } from "@/api";
-import { ref } from "vue";
-import type { MerchantInfoModel } from "@/model";
+import type { MerchantInfoModel } from '@/model'
+import { ref } from 'vue'
+import { getMerchantInfoRequest } from '@/api'
+import { getPageOptions } from '@/utils/tools'
 
 export function useMerchantDetail() {
-  const detail = ref({} as MerchantInfoModel);
+  const detail = ref({} as MerchantInfoModel)
 
-  const loading = ref(false);
+  const loading = ref(false)
 
   const getMerchantDetail = async () => {
-    loading.value = true;
-    const merchantId = getPageOptions().merchantId;
-    console.log("merchantId:", merchantId);
+    loading.value = true
+    const merchantId = getPageOptions().merchantId
+    console.log('merchantId:', merchantId)
     if (!merchantId) {
-      console.error("merchantId not found");
-      return;
+      console.error('merchantId not found')
+      return
     }
     try {
-      const resp = await getMerchantInfoRequest(merchantId);
-      detail.value = resp.data;
-    } catch (e) {
-    } finally {
-      loading.value = false;
+      const resp = await getMerchantInfoRequest(merchantId)
+      detail.value = resp.data
     }
-  };
+    catch (e) {
+    }
+    finally {
+      loading.value = false
+    }
+  }
 
   const handleClickItem = (index: number) => {
     switch (index) {
       case 0:
         uni.navigateTo({
           url: `/subPackages/activity/index?merchantId=${detail.value.id}`,
-        });
-        break;
+        })
+        break
       case 1:
         uni.navigateTo({
           url: `/subPackages/infinite/index?merchantId=${detail.value.id}`,
-        });
-        break;
+        })
+        break
       case 2:
         uni.navigateTo({
           url: `/subPackages/dailyWelfare/index?merchantId=${detail.value.id}`,
-        });
-        break;
+        })
+        break
       default:
-        break;
+        break
     }
-  };
+  }
 
   return {
     getMerchantDetail,
     detail,
     handleClickItem,
-  };
+  }
 }

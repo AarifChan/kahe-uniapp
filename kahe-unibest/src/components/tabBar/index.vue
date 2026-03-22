@@ -7,8 +7,8 @@
     <view class="tab-bar-content">
       <view
         v-for="(item, index) in tabList"
-        :id="index + 'tabBarId'"
-        :key="index + 'tabBarKey'"
+        :id="`${index}tabBarId`"
+        :key="`${index}tabBarKey`"
         class="tab-bar-content-item"
         @tap.stop="switchTab(item.selectPath, index)"
       >
@@ -29,26 +29,24 @@
           <image
             v-show="index === currentIndex"
             :src="item.iconSelected"
-            :class="[
-              'tab-bar-content-item-info-img',
+            class="tab-bar-content-item-info-img" :class="[
               index === 3 || index === 4 ? 'margin' : '',
             ]"
           />
           <image
             v-show="index !== currentIndex"
             :src="item.iconNormal"
-            :class="[
-              'tab-bar-content-item-info-img',
+            class="tab-bar-content-item-info-img" :class="[
               index === 3 || index === 4 ? 'margin' : '',
             ]"
           />
           <text
             :style="{ color: index === currentIndex ? '#A86114' : '#8B8B8B' }"
-            :class="[
-              'tab-bar-content-item-info-text',
+            class="tab-bar-content-item-info-text" :class="[
               index === 0 || index === 1 ? 'move_right' : '',
             ]"
-            >{{ item.text }}
+          >
+            {{ item.text }}
           </text>
         </view>
       </view>
@@ -58,97 +56,97 @@
 </template>
 
 <script setup lang="ts">
-import { useAppStore } from '@/store/app'
-const appStore = useAppStore()
-import { computed, onMounted, ref, watch } from "vue";
+import type { TabBarItem } from '@/model'
+import { computed, onMounted, watch } from 'vue'
 
-import type { TabBarItem } from "@/model";
-import { getPageOptions } from "@/utils/tools";
-import { getLastPage } from "@/utils";
+import { useAppStore } from '@/store/app'
+import { getLastPage } from '@/utils'
+
+const appStore = useAppStore()
 
 const currentIndex = computed(() => {
-  return appStore.currentTabIndex;
-});
+  return appStore.currentTabIndex
+})
 
 onMounted(() => {
-  let lastPage = getLastPage();
+  const lastPage = getLastPage()
 
-  let index = tabList
-    .map((item) => item.selectPath)
-    .indexOf(`/${lastPage.route}`);
+  const index = tabList
+    .map(item => item.selectPath)
+    .indexOf(`/${lastPage.route}`)
   // console.log("page:", lastPage.route, index);
   // appStore.changeCurrentTabIndex(index);
 
   uni.setNavigationBarTitle({
     title: tabList[appStore.currentTabIndex].title,
-  });
-});
+  })
+})
 watch(
   () => appStore.currentTabIndex,
   (oldIndex, newIndex) => {
     if (newIndex !== oldIndex) {
       uni.setNavigationBarTitle({
         title: tabList[newIndex].title,
-      });
+      })
     }
-  }
-);
+  },
+)
 
 const tabList: TabBarItem[] = [
   {
-    text: "首页",
-    title: "首页",
-    selectPath: "/pages/home/index",
-    iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item1.png",
+    text: '首页',
+    title: '首页',
+    selectPath: '/pages/home/index',
+    iconNormal: 'https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item1.png',
     iconSelected:
-      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item1-active.png",
+      'https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item1-active.png',
   },
   {
-    text: "商家",
-    title: "商家",
-    selectPath: "/pages/merchant/index",
-    iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item2.png",
+    text: '商家',
+    title: '商家',
+    selectPath: '/pages/merchant/index',
+    iconNormal: 'https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item2.png',
     iconSelected:
-      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item2-active.png",
+      'https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item2-active.png',
   },
   {
-    text: "抽卡机",
-    title: "抽卡机",
-    selectPath: "/pages/machine/index",
+    text: '抽卡机',
+    title: '抽卡机',
+    selectPath: '/pages/machine/index',
     iconNormal:
-      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item3-active.png",
+      'https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item3-active.png',
     iconSelected:
-      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item3-active.png",
+      'https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item3-active.png',
   },
   {
-    text: "盒柜",
-    title: "盒柜",
-    selectPath: "/pages/box/index",
-    iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item4.png",
+    text: '盒柜',
+    title: '盒柜',
+    selectPath: '/pages/box/index',
+    iconNormal: 'https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item4.png',
     iconSelected:
-      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item4-active.png",
+      'https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item4-active.png',
   },
   {
-    text: "我的",
-    title: "我的",
-    selectPath: "/pages/mine/index",
-    iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item5.png",
+    text: '我的',
+    title: '我的',
+    selectPath: '/pages/mine/index',
+    iconNormal: 'https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item5.png',
     iconSelected:
-      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item5-active.png",
+      'https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item5-active.png',
   },
-];
+]
 
-const switchTab = (path: string, index: number) => {
+function switchTab(path: string, index: number) {
   // uni.switchTab({
   //   url: path,
   //   complete(result) {
   //     // uni.hideLoading();
   //   },
   // });
-  console.log(path, index);
-  appStore.changeCurrentTabIndex(index);
+  console.log(path, index)
+  appStore.changeCurrentTabIndex(index)
   // uni.showLoading();
-};
+}
 </script>
 
 <style lang="scss" scoped>

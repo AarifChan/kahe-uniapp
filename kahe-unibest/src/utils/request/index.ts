@@ -6,11 +6,9 @@
  * @see src/http/interceptor.ts
  */
 
-type BaseResponse<T> = { code: number; data: T; msg: string }
+interface BaseResponse<T> { code: number, data: T, msg: string }
 
-const request = <R = any, T = any>(
-  { methodType = 'GET', url = '', data = {} as T }: { methodType?: string; url: string; data?: T },
-): Promise<BaseResponse<R>> => {
+function request<R = any, T = any>({ methodType = 'GET', url = '', data = {} as T }: { methodType?: string, url: string, data?: T }): Promise<BaseResponse<R>> {
   return new Promise((resolve) => {
     uni.request({
       url,
@@ -35,14 +33,12 @@ const request = <R = any, T = any>(
   })
 }
 
-export const get = <R = any, T = any>(
-  url: string,
-  data?: T,
-): Promise<BaseResponse<R>> =>
-  request<R, T>({ methodType: 'GET', url, data })
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function get<R = any, T = any>(url: string, data?: T, _opts?: any): Promise<BaseResponse<R>> {
+  return request<R, T>({ methodType: 'GET', url, data })
+}
 
-export const post = <R = any, T = any>(
-  url: string,
-  data?: T,
-): Promise<BaseResponse<R>> =>
-  request<R, T>({ methodType: 'POST', url, data })
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function post<R = any, T = any>(url: string, data?: T, _opts?: any): Promise<BaseResponse<R>> {
+  return request<R, T>({ methodType: 'POST', url, data })
+}

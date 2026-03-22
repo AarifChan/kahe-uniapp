@@ -4,12 +4,13 @@
       <image class="integral-top-img" src="https://jms.85gui7.com/kahe-202510/ka-he/integral/top-bg.png" />
       <view class="integral-top-tips">
         <view>线上or到店消费</view>
-        <view
-          >均可获赠<text style="color: #ff3b1b">积分</text>兑海量<text
+        <view>
+          均可获赠<text style="color: #ff3b1b">积分</text>兑海量<text
             style="color: #ff3b1b"
-            >好礼</text
-          ></view
-        >
+          >
+            好礼
+          </text>
+        </view>
       </view>
     </view>
 
@@ -18,9 +19,9 @@
       <scroll-view class="integral-content" :scroll-y="true">
         <view class="integral-padding">
           <view
-            class="integral-padding-item"
             v-for="(item, index) in goodsList"
             :key="index"
+            class="integral-padding-item"
             @tap.stop="goodsTapClick(item)"
           >
             <Item :item="item" />
@@ -31,14 +32,15 @@
     </view>
   </view>
 </template>
-<script setup lang="ts">
-import Tab from "./components/tab/index.vue";
-import Item from "./components/goods/index.vue";
-import Empty from "@/components/empty/index.vue";
 
-import { useGoods } from "@/composables/goods";
-import { onMounted } from "vue";
-import { getPageOptions } from "@/utils/tools";
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import Empty from '@/components/empty/index.vue'
+import { useGoods } from '@/composables/goods'
+
+import { getPageOptions } from '@/utils/tools'
+import Item from './components/goods/index.vue'
+import Tab from './components/tab/index.vue'
 
 const {
   goodsList,
@@ -46,20 +48,21 @@ const {
   getBarrageList,
   getGoodsListByCid,
   barrageList,
-} = useGoods();
+} = useGoods()
 
-const handleTabDidChange = (isLeft: boolean) => {
-  const ops = getPageOptions();
-  const merchantId = Number(ops.merchantId);
-  const cid = 5;
-  getGoodsListByCid(cid, merchantId);
-};
+function handleTabDidChange(isLeft: boolean) {
+  const ops = getPageOptions()
+  const merchantId = Number(ops.merchantId)
+  const cid = 5
+  getGoodsListByCid(cid, merchantId)
+}
 
 onMounted(() => {
-  getBarrageList(101);
-  handleTabDidChange(true);
-});
+  getBarrageList(101)
+  handleTabDidChange(true)
+})
 </script>
+
 <style lang="scss" scoped>
 .integral {
   position: relative;

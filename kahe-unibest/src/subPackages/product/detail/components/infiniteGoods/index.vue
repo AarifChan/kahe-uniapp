@@ -13,34 +13,30 @@
         class="scroll-list-top-name"
         :src="getLevelImageNameByLevel(item.level)"
       />
-      <text class="scroll-list-top-prob"
-        >概率 {{ item.prob }}%(此概率为当前款式概率)</text
-      >
+      <text class="scroll-list-top-prob">
+        概率 {{ item.prob }}%(此概率为当前款式概率)
+      </text>
     </view>
     <view class="scroll-list-content">
       <goods-item
-        class="general-content-list-item"
         v-for="(goods, index) in item.items"
-        @tap.stop="emits('clickDetail', goods)"
-        :is-infinite="true"
         :key="index"
+        class="general-content-list-item"
+        :is-infinite="true"
         :goods-price="product.payType === 8 ? goods.price : product.price"
         :item="goods"
+        @tap.stop="emits('clickDetail', goods)"
       />
     </view>
   </view>
 </template>
+
 <script setup lang="ts">
-import { type PropType } from "vue";
-import type { UIProductDetailLevelGroup, UIProductDetailModel } from "@/model";
-import { useEnum } from "@/composables/enum";
-import GoodsItem from "./../generalGoods/index.vue";
-const {
-  getSpecLevelBgTitleByLevel,
-  getLevelImageByLevel,
-  getLevelImageNameByLevel,
-} = useEnum();
-const emits = defineEmits(["clickDetail"]);
+import type { PropType } from 'vue'
+import type { UIProductDetailLevelGroup, UIProductDetailModel } from '@/model'
+import { useEnum } from '@/composables/enum'
+import GoodsItem from './../generalGoods/index.vue'
+
 defineProps({
   product: {
     default: {} as UIProductDetailModel,
@@ -50,8 +46,15 @@ defineProps({
     type: Object as PropType<UIProductDetailLevelGroup>,
     default: {} as UIProductDetailLevelGroup,
   },
-});
+})
+const emits = defineEmits(['clickDetail'])
+const {
+  getSpecLevelBgTitleByLevel,
+  getLevelImageByLevel,
+  getLevelImageNameByLevel,
+} = useEnum()
 </script>
+
 <style lang="scss" scoped>
 .scroll {
   box-sizing: border-box;

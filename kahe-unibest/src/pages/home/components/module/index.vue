@@ -6,9 +6,9 @@
     </view> -->
   <view class="newItem-row2">
     <view
-      class="goods"
       v-for="(item, index) in goodsList"
       :key="index"
+      class="goods"
       @tap.stop="handleItem(item.type)"
     >
       <view v-if="item.tag" class="goods-tag">
@@ -19,8 +19,9 @@
       <text
         class="goods-texts theme-font"
         :style="item.tag ? 'margin-top: 8rpx;' : 'margin-top: 45rpx;'"
-        >{{ item.text }}</text
       >
+        {{ item.text }}
+      </text>
     </view>
   </view>
   <in-group-modal v-model:show="showModal" @show-image="showInGroupImage" />
@@ -28,9 +29,9 @@
 </template>
 
 <script lang="ts" setup>
-import { showInGroupImage } from "@/utils/tools";
-import InGroupModal from "@/components/modal/inGroup/index.vue";
-import { ref } from "vue";
+import { ref } from 'vue'
+import InGroupModal from '@/components/modal/inGroup/index.vue'
+import { showInGroupImage } from '@/utils/tools'
 
 enum HomeItemType {
   dailyWelfare = 0,
@@ -46,89 +47,89 @@ enum HomeItemType {
   xingyao = 10,
 }
 
-const showModal = ref(false);
+const showModal = ref(false)
 // ✅ 把所有按钮配置放在数组中
 const goodsList = ref([
   {
-    src: "https://jms.85gui7.com/kahe-202510/ka-he/home/g1.png",
+    src: 'https://jms.85gui7.com/kahe-202510/ka-he/home/g1.png',
     type: HomeItemType.activity,
-    tag: "https://jms.85gui7.com/kahe-202510/ka-he/home/m3.png",
-    text: "抽选",
-    context: "海量福利",
+    tag: 'https://jms.85gui7.com/kahe-202510/ka-he/home/m3.png',
+    text: '抽选',
+    context: '海量福利',
   },
   {
-    src: "https://jms.85gui7.com/kahe-202510/ka-he/home/g2.png",
+    src: 'https://jms.85gui7.com/kahe-202510/ka-he/home/g2.png',
     type: HomeItemType.xingyao,
-    text: "欧皇",
+    text: '欧皇',
   },
   {
-    src: "https://jms.85gui7.com/kahe-202510/ka-he/home/g3.png",
+    src: 'https://jms.85gui7.com/kahe-202510/ka-he/home/g3.png',
     type: HomeItemType.integral,
-    tag: "https://jms.85gui7.com/kahe-202510/ka-he/home/m2.png",
-    text: "宝藏岛",
-    context: "免费夺宝",
+    tag: 'https://jms.85gui7.com/kahe-202510/ka-he/home/m2.png',
+    text: '宝藏岛',
+    context: '免费夺宝',
   },
   {
-    src: "https://jms.85gui7.com/kahe-202510/ka-he/home/g4.png",
+    src: 'https://jms.85gui7.com/kahe-202510/ka-he/home/g4.png',
     type: HomeItemType.dailyWelfare,
-    text: "领券",
+    text: '领券',
   },
   {
-    src: "https://jms.85gui7.com/kahe-202510/ka-he/home/g5.png",
+    src: 'https://jms.85gui7.com/kahe-202510/ka-he/home/g5.png',
     type: HomeItemType.collect,
-    tag: "https://jms.85gui7.com/kahe-202510/ka-he/home/m1.png",
-    text: "集赏",
-    context: "以物换物",
+    tag: 'https://jms.85gui7.com/kahe-202510/ka-he/home/m1.png',
+    text: '集赏',
+    context: '以物换物',
   },
-]);
-const handleItem = (index: HomeItemType) => {
-  let url = "";
+])
+function handleItem(index: HomeItemType) {
+  let url = ''
   switch (index) {
     case HomeItemType.dailyWelfare:
-      url = "/subPackages/dailyWelfare/index";
-      break;
+      url = '/subPackages/dailyWelfare/index'
+      break
     case HomeItemType.activity:
-      url = "/subPackages/activity/index";
-      break;
+      url = '/subPackages/activity/index'
+      break
     case HomeItemType.center:
       uni.switchTab({
-        url: "/pages/welfare/index",
-      });
-      return;
+        url: '/pages/welfare/index',
+      })
+      return
     case HomeItemType.xingyao:
-      url = "/subPackages/xingyao/index";
-      break;
+      url = '/subPackages/xingyao/index'
+      break
     case HomeItemType.invite:
       uni.previewImage({
-        current: "https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.pn",
-        urls: ["https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png"],
-      });
-      return;
+        current: 'https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.pn',
+        urls: ['https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png'],
+      })
+      return
     case HomeItemType.mall:
-      url = "/subPackages/mall/index";
-      break;
+      url = '/subPackages/mall/index'
+      break
     case HomeItemType.rank:
-      url = "/subPackages/infinite/index";
-      break;
+      url = '/subPackages/infinite/index'
+      break
     case HomeItemType.collect:
-      url = "/subPackages/collect/index";
-      break;
+      url = '/subPackages/collect/index'
+      break
     case HomeItemType.welfare:
-      url = "/subPackages/welfare/index";
-      break;
+      url = '/subPackages/welfare/index'
+      break
     case HomeItemType.inGroup:
-      showModal.value = true;
-      return;
+      showModal.value = true
+      return
     case HomeItemType.integral:
-      url = "/subPackages/infinite/index";
-      break;
+      url = '/subPackages/infinite/index'
+      break
     default:
-      break;
+      break
   }
   uni.navigateTo({
-    url: url,
-  });
-};
+    url,
+  })
+}
 </script>
 
 <style lang="scss" scoped>

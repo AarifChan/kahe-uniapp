@@ -9,9 +9,9 @@
       <Top :goods="barrageList" />
       <view class="infinite-padding">
         <view
-          class="infinite-padding-item"
           v-for="(item, index) in goodsList"
           :key="index"
+          class="infinite-padding-item"
           @tap.stop="goodsTapClick(item)"
         >
           <Item :item="item" />
@@ -21,13 +21,14 @@
     </scroll-view>
   </view>
 </template>
-<script setup lang="ts">
-import Top from "./components/top.vue";
-import Item from "@/components/goods/index.vue";
-import Empty from "@/components/empty/index.vue";
 
-import { useGoods } from "@/composables/goods";
-import { onMounted } from "vue";
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import Empty from '@/components/empty/index.vue'
+import Item from '@/components/goods/index.vue'
+
+import { useGoods } from '@/composables/goods'
+import Top from './components/top.vue'
 
 const {
   infiniteScrollToLower,
@@ -36,13 +37,14 @@ const {
   goodsTapClick,
   getBarrageList,
   barrageList,
-} = useGoods();
+} = useGoods()
 
 onMounted(() => {
-  getBarrageList();
-  getGoodsList(1);
-});
+  getBarrageList()
+  getGoodsList(1)
+})
 </script>
+
 <style lang="scss" scoped>
 .infinite {
   position: relative;
@@ -66,10 +68,7 @@ onMounted(() => {
     width: calc(100% - 60rpx);
     padding: 0 30rpx;
     display: grid;
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax(40%, 1fr)
-    ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
+    grid-template-columns: repeat(auto-fill, minmax(40%, 1fr)); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
     grid-gap: 10px; // 这是网格间的间隙，根据需要调整
   }
 }

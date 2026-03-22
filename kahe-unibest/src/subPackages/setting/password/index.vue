@@ -23,7 +23,7 @@
             :disabled="isPhoneReadonly"
             maxlength="11"
             placeholder="请输入手机号"
-          />
+          >
         </view>
 
         <!-- 验证码输入 -->
@@ -34,7 +34,7 @@
             type="number"
             maxlength="6"
             placeholder="请输入验证码"
-          />
+          >
           <view
             class="password-content-form-smsBtn"
             :class="{ disabled: maxTime > 0 }"
@@ -61,7 +61,7 @@
             class="password-content-form-input"
             :password="!showPassword"
             placeholder="请输入新密码"
-          />
+          >
           <view class="password-content-form-eye" @tap.stop="showPassword = !showPassword">
             <text class="password-content-form-eye-icon">{{ showPassword ? '👁' : '👁️‍🗨️' }}</text>
           </view>
@@ -74,7 +74,7 @@
             class="password-content-form-input"
             :password="!showAgainPassword"
             placeholder="请再次输入新密码"
-          />
+          >
           <view class="password-content-form-eye" @tap.stop="showAgainPassword = !showAgainPassword">
             <text class="password-content-form-eye-icon">{{ showAgainPassword ? '👁' : '👁️‍🗨️' }}</text>
           </view>
@@ -93,125 +93,129 @@
 </template>
 
 <script setup lang="ts">
+import { onLoad } from '@dcloudio/uni-app'
+import TnCountDown from '@tuniao/tnui-vue3-uniapp/components/count-down/src/count-down.vue'
+import { computed, onMounted, ref, watch } from 'vue'
+import { getSmsCodeRequest, resetPassword } from '@/api'
 import { useUserStore } from '@/store/user'
+
+import { ShowToast } from '@/utils'
+
 const userStore = useUserStore()
-import TnCountDown from "@tuniao/tnui-vue3-uniapp/components/count-down/src/count-down.vue";
-import { computed, onMounted, ref, watch } from "vue";
-import { getSmsCodeRequest, resetPassword } from "@/api";
-import { ShowToast } from "@/utils";
 
-import { onLoad } from "@dcloudio/uni-app";
-
-const showPassword = ref(false);
-const showAgainPassword = ref(false);
-const fromLogin = ref(false);
+const showPassword = ref(false)
+const showAgainPassword = ref(false)
+const fromLogin = ref(false)
 
 onLoad((options: any) => {
-  fromLogin.value = options?.from === "login";
-});
+  fromLogin.value = options?.from === 'login'
+})
 
 const isPhoneReadonly = computed(() => {
   // 从登录页进入时允许输入手机号；否则（设置页）默认不允许改手机号
-  return !fromLogin.value;
-});
+  return !fromLogin.value
+})
 
 const formData = ref({
-  phone: userStore.userInfo.phone || "",
-  password: "",
-  again: "",
-  code: "",
-});
+  phone: userStore.userInfo.phone || '',
+  password: '',
+  again: '',
+  code: '',
+})
 
 watch(
   () => userStore.userInfo,
   (value) => {
     if (!fromLogin.value) {
-      formData.value.phone = value.phone || "";
+      formData.value.phone = value.phone || ''
     }
-  }
-);
+  },
+)
 
 onMounted(() => {
-  userStore.getUserInfo();
-});
+  userStore.getUserInfo()
+})
 
-const maxTime = ref(0);
+const maxTime = ref(0)
 
-const getSmsCodeAction = async () => {
-  if (maxTime.value > 0) return;
-  
-  const phone = formData.value.phone;
+async function getSmsCodeAction() {
+  if (maxTime.value > 0)
+    return
+
+  const phone = formData.value.phone
   if (!phone || phone.length !== 11) {
-    ShowToast("请输入正确的手机号");
-    return;
+    ShowToast('请输入正确的手机号')
+    return
   }
-  
+
   const resp = await getSmsCodeRequest({
     phone,
-    type: "reset_pwd",
-  });
-  
-  if (resp.code === 200) {
-    maxTime.value = 120;
-    setTimeout(() => {
-      maxTime.value = 0;
-    }, 60 * 2 * 1000);
-  } else {
-    ShowToast(resp.msg ?? "发送失败");
-  }
-};
+    type: 'reset_pwd',
+  })
 
-const handleConfirm = () => {
+  if (resp.code === 200) {
+    maxTime.value = 120
+    setTimeout(() => {
+      maxTime.value = 0
+    }, 60 * 2 * 1000)
+  }
+  else {
+    ShowToast(resp.msg ?? '发送失败')
+  }
+}
+
+function handleConfirm() {
   // 表单验证
-  const phone = formData.value.phone.trim();
-  const code = formData.value.code.trim();
-  const password = formData.value.password;
-  const again = formData.value.again;
+  const phone = formData.value.phone.trim()
+  const code = formData.value.code.trim()
+  const password = formData.value.password
+  const again = formData.value.again
 
   if (!phone || phone.length !== 11) {
-    ShowToast("请输入正确的手机号");
-    return;
+    ShowToast('请输入正确的手机号')
+    return
   }
 
   if (!code) {
-    ShowToast("请输入验证码");
-    return;
+    ShowToast('请输入验证码')
+    return
   }
 
   if (!password) {
-    ShowToast("请输入新密码");
-    return;
+    ShowToast('请输入新密码')
+    return
   }
 
   if (password.length < 6 || password.length > 16) {
-    ShowToast("密码长度应在 6 到 16 个字符之间");
-    return;
+    ShowToast('密码长度应在 6 到 16 个字符之间')
+    return
   }
 
   if (password !== again) {
-    ShowToast("两次输入的密码不一致");
-    return;
+    ShowToast('两次输入的密码不一致')
+    return
   }
 
   const params = {
     captcha: code,
-    password: password,
-    phone: phone,
-  };
+    password,
+    phone,
+  }
 
   resetPassword(params).then(({ msg, code }) => {
     if (code === 200) {
-      ShowToast("修改成功");
+      ShowToast('修改成功')
       setTimeout(() => {
         uni.redirectTo({
-          url: "/pages/login/index",
-        });
-      }, 1000);
-    } else {
-      ShowToast(msg);
+          url: '/pages/login/index',
+        })
+      }, 1000)
     }
-  });
-};
+    else {
+      ShowToast(msg)
+    }
+  })
+}
 </script>
 
 <style scoped lang="scss">

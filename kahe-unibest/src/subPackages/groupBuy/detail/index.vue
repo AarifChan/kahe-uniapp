@@ -23,101 +23,101 @@
       </view>
       <TopCard :detail="groupBuyDetail" />
       <Remark :detail="groupBuyDetail" @did-click="showModal" />
-      <!--      <view class="groupBuyDetail-content-base">-->
-      <!--        <image-->
-      <!--          class="groupBuyDetail-content-base-img"-->
-      <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/card1.png"-->
-      <!--        />-->
-      <!--        <view class="groupBuyDetail-content-base-line1">-->
-      <!--          <view class="groupBuyDetail-content-base-line1-title">{{-->
-      <!--            groupBuyDetail.title-->
-      <!--          }}</view>-->
-      <!--          &lt;!&ndash;                    <image class="groupBuyDetail-content-base-line1-icon" src="https://jms.85gui7.com/kahe-202510/groupBuy/arrow.png" />&ndash;&gt;-->
-      <!--        </view>-->
-      <!--        <view class="groupBuyDetail-content-base-time">-->
-      <!--          <view class="groupBuyDetail-content-base-time-title">{{-->
-      <!--            isOver ? "已经结束" : "距结束还剩"-->
-      <!--          }}</view>-->
-      <!--          <view v-if="!isOver" class="groupBuyDetail-content-base-time-title">{{-->
-      <!--            remainingTime-->
-      <!--          }}</view>-->
-      <!--        </view>-->
-      <!--        <view class="groupBuyDetail-content-base-other">-->
-      <!--          <view class="groupBuyDetail-content-base-other-row1">-->
-      <!--            <view-->
-      <!--              style="display: flex; flex-direction: row; align-items: baseline"-->
-      <!--            >-->
-      <!--              <view class="groupBuyDetail-content-base-other-row1-price"-->
-      <!--                >¥</view-->
-      <!--              >-->
-      <!--              <view class="groupBuyDetail-content-base-other-row1-title">{{-->
-      <!--                groupBuyDetail.price-->
-      <!--              }}</view>-->
-      <!--            </view>-->
+      <!--      <view class="groupBuyDetail-content-base"> -->
+      <!--        <image -->
+      <!--          class="groupBuyDetail-content-base-img" -->
+      <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/card1.png" -->
+      <!--        /> -->
+      <!--        <view class="groupBuyDetail-content-base-line1"> -->
+      <!--          <view class="groupBuyDetail-content-base-line1-title">{{ -->
+      <!--            groupBuyDetail.title -->
+      <!--          }}</view> -->
+      <!--          &lt;!&ndash;                    <image class="groupBuyDetail-content-base-line1-icon" src="https://jms.85gui7.com/kahe-202510/groupBuy/arrow.png" />&ndash;&gt; -->
+      <!--        </view> -->
+      <!--        <view class="groupBuyDetail-content-base-time"> -->
+      <!--          <view class="groupBuyDetail-content-base-time-title">{{ -->
+      <!--            isOver ? "已经结束" : "距结束还剩" -->
+      <!--          }}</view> -->
+      <!--          <view v-if="!isOver" class="groupBuyDetail-content-base-time-title">{{ -->
+      <!--            remainingTime -->
+      <!--          }}</view> -->
+      <!--        </view> -->
+      <!--        <view class="groupBuyDetail-content-base-other"> -->
+      <!--          <view class="groupBuyDetail-content-base-other-row1"> -->
+      <!--            <view -->
+      <!--              style="display: flex; flex-direction: row; align-items: baseline" -->
+      <!--            > -->
+      <!--              <view class="groupBuyDetail-content-base-other-row1-price" -->
+      <!--                >¥</view -->
+      <!--              > -->
+      <!--              <view class="groupBuyDetail-content-base-other-row1-title">{{ -->
+      <!--                groupBuyDetail.price -->
+      <!--              }}</view> -->
+      <!--            </view> -->
 
-      <!--            <view class="groupBuyDetail-content-base-other-row1-subTitle"-->
-      <!--              >编号：{{ groupBuyDetail.sid }}</view-->
-      <!--            >-->
-      <!--          </view>-->
-      <!--          <view-->
-      <!--            class="groupBuyDetail-content-base-other-progress"-->
-      <!--            style="margin-top: 5rpx"-->
-      <!--          >-->
-      <!--            <view-->
-      <!--              v-if="groupBuyDetail.total > 0"-->
-      <!--              class="groupBuyDetail-content-base-other-progress-value"-->
-      <!--              :style="{-->
-      <!--                width: `${((groupBuyDetail.total - groupBuyDetail.sales) / groupBuyDetail.total) * 100.0}%`,-->
-      <!--              }"-->
-      <!--            ></view>-->
-      <!--          </view>-->
-      <!--          <view class="groupBuyDetail-content-base-other-row1">-->
-      <!--            <view class="groupBuyDetail-content-base-other-row1-subTitle"-->
-      <!--              >开售 {{ groupBuyDetail.openTime }}</view-->
-      <!--            >-->
-      <!--            <view class="groupBuyDetail-content-base-other-row1-subTitle"-->
-      <!--              >余{{ groupBuyDetail.total - groupBuyDetail.sales }}/共{{-->
-      <!--                groupBuyDetail.total-->
-      <!--              }}</view-->
-      <!--            >-->
-      <!--          </view>-->
-      <!--          <view class="groupBuyDetail-content-base-other-row2">-->
-      <!--            <view-->
-      <!--              v-for="(item, index) in groupBuyDetail.prices"-->
-      <!--              :key="'price' + index"-->
-      <!--              class="groupBuyDetail-content-base-other-row2-price"-->
-      <!--              >单笔满{{ item.num }}份｜{{ item.price }}/份</view-->
-      <!--            >-->
-      <!--          </view>-->
-      <!--        </view>-->
-      <!--      </view>-->
-      <!--      <view class="groupBuyDetail-content-group">-->
-      <!--        <view class="groupBuyDetail-content-group-card1">-->
-      <!--          <view class="groupBuyDetail-content-group-card1-top">-->
-      <!--            <image-->
-      <!--              class="groupBuyDetail-content-group-card1-top-left"-->
-      <!--              src="https://jms.85gui7.com/kahe-202510/groupBuy/item3.png"-->
-      <!--            />-->
-      <!--            <view-->
-      <!--              class="groupBuyDetail-content-group-card1-top-right SimHei-font"-->
-      <!--            >-->
-      <!--              {{ groupBuyDetail.title }} 卡密一张-->
-      <!--            </view>-->
-      <!--          </view>-->
-      <!--          <view-->
-      <!--            class="groupBuyDetail-content-group-card1-bottom"-->
-      <!--            @tap.stop="showModal"-->
-      <!--          >-->
-      <!--            <view-->
-      <!--              class="groupBuyDetail-content-group-card1-bottom-left text-flow-ellipsis-single"-->
-      <!--              >{{ stripHTMLTags(groupBuyDetail.remark) }}</view-->
-      <!--            >-->
-      <!--            <image-->
-      <!--              class="groupBuyDetail-content-group-card1-bottom-right"-->
-      <!--              src="https://jms.85gui7.com/kahe-202510/groupBuy/arrow-1.png"-->
-      <!--            />-->
-      <!--          </view>-->
-      <!--        </view>-->
+      <!--            <view class="groupBuyDetail-content-base-other-row1-subTitle" -->
+      <!--              >编号：{{ groupBuyDetail.sid }}</view -->
+      <!--            > -->
+      <!--          </view> -->
+      <!--          <view -->
+      <!--            class="groupBuyDetail-content-base-other-progress" -->
+      <!--            style="margin-top: 5rpx" -->
+      <!--          > -->
+      <!--            <view -->
+      <!--              v-if="groupBuyDetail.total > 0" -->
+      <!--              class="groupBuyDetail-content-base-other-progress-value" -->
+      <!--              :style="{ -->
+      <!--                width: `${((groupBuyDetail.total - groupBuyDetail.sales) / groupBuyDetail.total) * 100.0}%`, -->
+      <!--              }" -->
+      <!--            ></view> -->
+      <!--          </view> -->
+      <!--          <view class="groupBuyDetail-content-base-other-row1"> -->
+      <!--            <view class="groupBuyDetail-content-base-other-row1-subTitle" -->
+      <!--              >开售 {{ groupBuyDetail.openTime }}</view -->
+      <!--            > -->
+      <!--            <view class="groupBuyDetail-content-base-other-row1-subTitle" -->
+      <!--              >余{{ groupBuyDetail.total - groupBuyDetail.sales }}/共{{ -->
+      <!--                groupBuyDetail.total -->
+      <!--              }}</view -->
+      <!--            > -->
+      <!--          </view> -->
+      <!--          <view class="groupBuyDetail-content-base-other-row2"> -->
+      <!--            <view -->
+      <!--              v-for="(item, index) in groupBuyDetail.prices" -->
+      <!--              :key="'price' + index" -->
+      <!--              class="groupBuyDetail-content-base-other-row2-price" -->
+      <!--              >单笔满{{ item.num }}份｜{{ item.price }}/份</view -->
+      <!--            > -->
+      <!--          </view> -->
+      <!--        </view> -->
+      <!--      </view> -->
+      <!--      <view class="groupBuyDetail-content-group"> -->
+      <!--        <view class="groupBuyDetail-content-group-card1"> -->
+      <!--          <view class="groupBuyDetail-content-group-card1-top"> -->
+      <!--            <image -->
+      <!--              class="groupBuyDetail-content-group-card1-top-left" -->
+      <!--              src="https://jms.85gui7.com/kahe-202510/groupBuy/item3.png" -->
+      <!--            /> -->
+      <!--            <view -->
+      <!--              class="groupBuyDetail-content-group-card1-top-right SimHei-font" -->
+      <!--            > -->
+      <!--              {{ groupBuyDetail.title }} 卡密一张 -->
+      <!--            </view> -->
+      <!--          </view> -->
+      <!--          <view -->
+      <!--            class="groupBuyDetail-content-group-card1-bottom" -->
+      <!--            @tap.stop="showModal" -->
+      <!--          > -->
+      <!--            <view -->
+      <!--              class="groupBuyDetail-content-group-card1-bottom-left text-flow-ellipsis-single" -->
+      <!--              >{{ stripHTMLTags(groupBuyDetail.remark) }}</view -->
+      <!--            > -->
+      <!--            <image -->
+      <!--              class="groupBuyDetail-content-group-card1-bottom-right" -->
+      <!--              src="https://jms.85gui7.com/kahe-202510/groupBuy/arrow-1.png" -->
+      <!--            /> -->
+      <!--          </view> -->
+      <!--        </view> -->
       <view class="groupBuyDetail-content-group-card2">
         <view class="groupBuyDetail-content-group-card2-top">
           <image
@@ -132,7 +132,7 @@
         >
           <view
             v-for="(item, index) in recordList"
-            :key="'record' + index"
+            :key="`record${index}`"
             class="groupBuyDetail-content-group-card2-content-item"
           >
             <view class="groupBuyDetail-content-group-card2-content-item-left">
@@ -145,29 +145,31 @@
               >
                 <view
                   class="groupBuyDetail-content-group-card2-content-item-left-info-nickName text-flow-ellipsis-single"
-                  >{{ item.user.nickname }}</view
                 >
+                  {{ item.user.nickname }}
+                </view>
                 <view
                   class="groupBuyDetail-content-group-card2-content-item-left-info-title"
-                  >{{ getFormatTime(item.createTime) }}</view
                 >
+                  {{ getFormatTime(item.createTime) }}
+                </view>
               </view>
             </view>
-            <view class="groupBuyDetail-content-group-card2-content-item-num"
-              >X{{ item.num }}</view
-            >
+            <view class="groupBuyDetail-content-group-card2-content-item-num">
+              X{{ item.num }}
+            </view>
           </view>
         </view>
-        <view v-else class="groupBuyDetail-content-group-card2-empty"
-          >暂无记录</view
-        >
+        <view v-else class="groupBuyDetail-content-group-card2-empty">
+          暂无记录
+        </view>
       </view>
       <merchant :merchant="groupBuyDetail.merchant" />
-      <!--            </view>-->
-      <!--            <view class="groupBuyDetail-content-intro">-->
-      <!--                <view class="groupBuyDetail-content-intro-title theme-font">商品介绍</view>-->
-      <!--                <view class="groupBuyDetail-content-intro-detail">{{groupBuyDetail.remark}}</view>-->
-      <!--            </view>-->
+      <!--            </view> -->
+      <!--            <view class="groupBuyDetail-content-intro"> -->
+      <!--                <view class="groupBuyDetail-content-intro-title theme-font">商品介绍</view> -->
+      <!--                <view class="groupBuyDetail-content-intro-detail">{{groupBuyDetail.remark}}</view> -->
+      <!--            </view> -->
     </scroll-view>
     <view class="groupBuyDetail-bottom">
       <image
@@ -184,9 +186,9 @@
               class="groupBuyDetail-bottom-line-left-item-icon"
               src="https://jms.85gui7.com/kahe-202510/groupBuy/kami-item1.png"
             />
-            <view class="groupBuyDetail-bottom-line-left-item-title"
-              >卡密列表</view
-            >
+            <view class="groupBuyDetail-bottom-line-left-item-title">
+              卡密列表
+            </view>
           </view>
           <view
             class="groupBuyDetail-bottom-line-left-item"
@@ -196,33 +198,35 @@
               class="groupBuyDetail-bottom-line-left-item-icon"
               src="https://jms.85gui7.com/kahe-202510/groupBuy/kami-item2.png"
             />
-            <view class="groupBuyDetail-bottom-line-left-item-title"
-              >我的卡密</view
-            >
+            <view class="groupBuyDetail-bottom-line-left-item-title">
+              我的卡密
+            </view>
           </view>
           <view
             class="groupBuyDetail-bottom-line-left-item"
             @tap.stop="showInGroupImage"
           >
-            <view class="groupBuyDetail-bottom-line-left-item-tips"
-              >开播通知</view
-            >
+            <view class="groupBuyDetail-bottom-line-left-item-tips">
+              开播通知
+            </view>
             <image
               class="groupBuyDetail-bottom-line-left-item-icon"
               src="https://jms.85gui7.com/kahe-202510/groupBuy/kami-item3.png"
             />
-            <view class="groupBuyDetail-bottom-line-left-item-title"
-              >加入群聊</view
-            >
+            <view class="groupBuyDetail-bottom-line-left-item-title">
+              加入群聊
+            </view>
           </view>
         </view>
         <view
           class="groupBuyDetail-bottom-line-right"
           @tap.stop="didClickBottom"
         >
-          <view class="groupBuyDetail-bottom-line-right-title STHupo-font">{{
-            isOver ? "查看详情" : "报名参加"
-          }}</view>
+          <view class="groupBuyDetail-bottom-line-right-title STHupo-font">
+            {{
+              isOver ? "查看详情" : "报名参加"
+            }}
+          </view>
         </view>
       </view>
     </view>
@@ -231,29 +235,31 @@
       :title="modalTitle"
       :content="modalContent"
     />
-    <!--    <login v-model:show="loginShow" @did-tap-login="handleLogin" />-->
+    <!--    <login v-model:show="loginShow" @did-tap-login="handleLogin" /> -->
   </view>
 </template>
 
 <script lang="ts" setup>
+import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
+import { computed, onMounted, ref } from 'vue'
+import CommonModal from '@/components/modal/index.vue'
+import { useTimeCount } from '@/composables/countTime'
+
+import { useLogin } from '@/composables/login'
+import { useModal } from '@/composables/modal'
 import { useUserStore } from '@/store/user'
-import { useGroupBuy } from "@/subPackages/groupBuy";
-import { ref, computed, onMounted } from "vue";
-import { getFormatTime, getPageOptions } from "@/utils/tools";
+import { useGroupBuy } from '@/subPackages/groupBuy'
+import { eventBus } from '@/utils/event'
+import { getFormatTime, getPageOptions } from '@/utils/tools'
+import Merchant from '../components/merchant/index.vue'
+import Remark from '../components/remark/index.vue'
 
-import CommonModal from "@/components/modal/index.vue";
-import { useModal } from "@/composables/modal";
 // import Login from "@/components/login/index.vue";
-import TopCard from "../components/topInfo/index.vue";
-import Remark from "../components/remark/index.vue";
-import Merchant from "../components/merchant/index.vue";
-import { useLogin } from "@/composables/login";
-import { eventBus } from "@/utils/event";
-import { onShareAppMessage, onShareTimeline, onShow } from "@dcloudio/uni-app";
+import TopCard from '../components/topInfo/index.vue'
 
-import { useTimeCount } from "@/composables/countTime";
-const { startTimeRemain, remainingTime, isTimeout } = useTimeCount();
-const { modalShow, modalTitle, modalContent } = useModal();
+const userStore = useUserStore()
+const { startTimeRemain, remainingTime, isTimeout } = useTimeCount()
+const { modalShow, modalTitle, modalContent } = useModal()
 
 const {
   detailBanner,
@@ -266,74 +272,74 @@ const {
   navToSubmitPage,
   stripHTMLTags,
   showInGroupImage,
-} = useGroupBuy();
+} = useGroupBuy()
 
-const valueId = ref<number>(0);
-const { loginShow, handleLogin } = useLogin();
+const valueId = ref<number>(0)
+const { loginShow, handleLogin } = useLogin()
 // onShow(() => {
 //   loadData();
 // });
 
-eventBus.on("groupBuyUpdate", () => {
-  loadData();
-});
+eventBus.on('groupBuyUpdate', () => {
+  loadData()
+})
 
-eventBus.on("didLogin", (_) => {
-  loadData();
-});
+eventBus.on('didLogin', (_) => {
+  loadData()
+})
 
 onMounted(() => {
-  loadData();
-});
+  loadData()
+})
 
 const isOver = computed(() => {
-  const num = groupBuyDetail.value.total - groupBuyDetail.value.sales;
-  return num === 0 || isTimeout.value;
-});
+  const num = groupBuyDetail.value.total - groupBuyDetail.value.sales
+  return num === 0 || isTimeout.value
+})
 
-const didClickBottom = () => {
-  const pid = valueId.value;
+function didClickBottom() {
+  const pid = valueId.value
   if (isOver.value) {
     uni.navigateTo({
       url: `/subPackages/groupBuy/result/index?id=${pid}`,
-    });
-    return;
+    })
+    return
   }
-  navToSubmitPage(valueId.value);
-};
+  navToSubmitPage(valueId.value)
+}
 
-const loadData = async () => {
-  const id = getPageOptions().id;
+async function loadData() {
+  const id = getPageOptions().id
   // console.log('groupBuyId:', id)
   if (id) {
-    valueId.value = Number(id);
-    await getGroupBuyDetail(valueId.value);
-    await getGroupBuyDetailRecord(valueId.value);
-    startTimeRemain(groupBuyDetail.value.openTime);
+    valueId.value = Number(id)
+    await getGroupBuyDetail(valueId.value)
+    await getGroupBuyDetailRecord(valueId.value)
+    startTimeRemain(groupBuyDetail.value.openTime)
   }
-};
+}
 
-const showModal = () => {
-  modalTitle.value = "活动说明";
-  modalContent.value = groupBuyDetail.value.remark;
-  modalShow.value = true;
-};
+function showModal() {
+  modalTitle.value = '活动说明'
+  modalContent.value = groupBuyDetail.value.remark
+  modalShow.value = true
+}
 onShareAppMessage(() => {
-  const userId = userStore.userInfo.uid;
+  const userId = userStore.userInfo.uid
   return {
     title: groupBuyDetail.value.title,
     imageUrl: groupBuyDetail.value?.logo,
     path: `/subPackages/groupBuy/detail/index?id=${groupBuyDetail.value?.id}&uid=${userId}`,
-  };
-});
+  }
+})
 onShareTimeline(() => {
-  const userId = userStore.userInfo.uid;
+  const userId = userStore.userInfo.uid
   return {
     title: groupBuyDetail.value.title,
     imageUrl: groupBuyDetail.value?.logo,
     path: `/subPackages/groupBuy/detail/index?id=${groupBuyDetail.value?.id}&uid=${userId}`,
-  };
-});
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -663,7 +669,7 @@ onShareTimeline(() => {
             left: -20rpx;
             width: 132rpx;
             height: 49rpx;
-            background-image: url("https://jms.85gui7.com/kahe-202510/groupBuy/bunddle.png");
+            background-image: url('https://jms.85gui7.com/kahe-202510/groupBuy/bunddle.png');
             background-size: 100% 100%;
             background-repeat: no-repeat;
             text-align: center;

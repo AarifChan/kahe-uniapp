@@ -20,10 +20,12 @@
           class="invite-content-info-item"
           src="https://jms.85gui7.com/kahe-202510/invite/invite-item1.png"
         />
-        <view class="invite-content-info-title theme-font">我的盟主</view>
-        <view class="invite-content-info-subTitle"
-          >和盟主一起畅玩，不再孤单！</view
-        >
+        <view class="invite-content-info-title theme-font">
+          我的盟主
+        </view>
+        <view class="invite-content-info-subTitle">
+          和盟主一起畅玩，不再孤单！
+        </view>
         <view class="invite-content-info-agent">
           <view class="invite-content-info-agent-info">
             <view class="invite-content-info-agent-info-avatar">
@@ -36,9 +38,11 @@
                 :src="agentInfo?.agent?.user.avatar"
               />
             </view>
-            <view class="invite-content-info-agent-info-nick">{{
-              agentInfo?.agent?.user?.nickname ?? "待绑定"
-            }}</view>
+            <view class="invite-content-info-agent-info-nick">
+              {{
+                agentInfo?.agent?.user?.nickname ?? "待绑定"
+              }}
+            </view>
           </view>
           <view class="invite-content-info-agent-record">
             <view class="invite-content-info-agent-record-item">
@@ -46,38 +50,40 @@
                 class="invite-content-info-agent-record-item-row1"
                 src="https://jms.85gui7.com/kahe-202510/invite/invite-row1.png"
               />
-              <view class="invite-content-info-agent-record-item-title"
-                >累计奖励</view
-              >
+              <view class="invite-content-info-agent-record-item-title">
+                累计奖励
+              </view>
               <view
                 class="invite-content-info-agent-record-item-value theme-font"
-                >{{ agentInfo?.agent?.getCoin }}</view
               >
+                {{ agentInfo?.agent?.getCoin }}
+              </view>
             </view>
             <view class="invite-content-info-agent-record-item">
               <image
                 class="invite-content-info-agent-record-item-row2"
                 src="https://jms.85gui7.com/kahe-202510/invite/invite-row2.png"
               />
-              <view class="invite-content-info-agent-record-item-title"
-                >累计人数</view
-              >
+              <view class="invite-content-info-agent-record-item-title">
+                累计人数
+              </view>
               <view
                 class="invite-content-info-agent-record-item-value theme-font"
-                >{{ agentInfo?.agent?.userNum }}</view
               >
+                {{ agentInfo?.agent?.userNum }}
+              </view>
             </view>
           </view>
         </view>
         <view class="invite-content-info-invite">
           <view class="invite-content-info-invite-input">
             <input
+              v-model="agentUid"
               class="invite-content-info-invite-input-item"
               :inputBorder="false"
-              v-model="agentUid"
               placeholder="填写盟主ID"
               :placeholderStyle="placeholderStyle"
-            />
+            >
           </view>
           <view
             class="invite-content-info-invite-btn"
@@ -87,9 +93,9 @@
               class="invite-content-info-invite-btn-bg"
               src="https://jms.85gui7.com/kahe-202510/invite/invite-tag.png"
             />
-            <view class="invite-content-info-invite-btn-text theme-font"
-              >确认邀请</view
-            >
+            <view class="invite-content-info-invite-btn-text theme-font">
+              确认邀请
+            </view>
           </view>
         </view>
       </view>
@@ -102,10 +108,12 @@
           class="invite-content-info-item"
           src="https://jms.85gui7.com/kahe-202510/invite/invite-item2.png"
         />
-        <view class="invite-content-info-title theme-font">我的联盟</view>
-        <view class="invite-content-info-subTitle"
-          >优质盟友越多，奖励越多!</view
-        >
+        <view class="invite-content-info-title theme-font">
+          我的联盟
+        </view>
+        <view class="invite-content-info-subTitle">
+          优质盟友越多，奖励越多!
+        </view>
         <view class="invite-content-info-content">
           <view class="invite-content-info-content-info">
             <view class="invite-content-info-content-info-avatar">
@@ -118,9 +126,11 @@
                 :src="agentInfo?.user?.user.avatar"
               />
             </view>
-            <view class="invite-content-info-content-info-nick">{{
-              agentInfo?.user?.user.nickname
-            }}</view>
+            <view class="invite-content-info-content-info-nick">
+              {{
+                agentInfo?.user?.user.nickname
+              }}
+            </view>
           </view>
           <view class="invite-content-info-content-record">
             <view class="invite-content-info-content-record-item">
@@ -129,15 +139,16 @@
                 src="https://jms.85gui7.com/kahe-202510/invite/invite-row1.png"
               />
 
-              <view class="invite-content-info-content-record-item-title"
-                >今日奖励</view
-              >
+              <view class="invite-content-info-content-record-item-title">
+                今日奖励
+              </view>
               <view
                 class="invite-content-info-content-record-item-value theme-font"
-                >{{
-                  agentInfo?.user?.getCoinDay + agentInfo?.user?.putCoinUserDay
-                }}</view
               >
+                {{
+                  agentInfo?.user?.getCoinDay + agentInfo?.user?.putCoinUserDay
+                }}
+              </view>
             </view>
             <view class="invite-content-info-content-record-item">
               <image
@@ -145,28 +156,30 @@
                 src="https://jms.85gui7.com/kahe-202510/invite/invite-row2.png"
               />
 
-              <view class="invite-content-info-content-record-item-title"
-                >累积奖励</view
-              >
+              <view class="invite-content-info-content-record-item-title">
+                累积奖励
+              </view>
               <view
                 class="invite-content-info-content-record-item-value theme-font"
-                >{{
-                  agentInfo?.user?.getCoin + agentInfo?.user?.putCoinUser
-                }}</view
               >
+                {{
+                  agentInfo?.user?.getCoin + agentInfo?.user?.putCoinUser
+                }}
+              </view>
             </view>
             <view class="invite-content-info-content-record-item">
               <image
                 class="invite-content-info-content-record-item-row3"
                 src="https://jms.85gui7.com/kahe-202510/invite/invite-row3.png"
               />
-              <view class="invite-content-info-content-record-item-title"
-                >盟友人数</view
-              >
+              <view class="invite-content-info-content-record-item-title">
+                盟友人数
+              </view>
               <view
                 class="invite-content-info-content-record-item-value theme-font"
-                >{{ agentInfo?.user?.userNum }}</view
               >
+                {{ agentInfo?.user?.userNum }}
+              </view>
             </view>
           </view>
         </view>
@@ -176,7 +189,9 @@
           class="invite-content-list-bg"
           src="https://jms.85gui7.com/kahe-202510/invite/invite-2-bg.png"
         />
-        <view class="invite-content-list-title theme-font">联盟成员</view>
+        <view class="invite-content-list-title theme-font">
+          联盟成员
+        </view>
         <scroll-view
           class="invite-content-list-content"
           :scroll-y="true"
@@ -184,85 +199,99 @@
         >
           <view class="invite-content-list-content-items">
             <view
-              class="invite-content-list-content-items-item"
               v-for="(item, index) in agentInfo?.list?.content"
-              :key="'invite-content-list-content-items-item' + index"
+              :key="`invite-content-list-content-items-item${index}`"
+              class="invite-content-list-content-items-item"
             >
               <image
                 class="invite-content-list-content-items-item-avatar"
                 :src="item.user.avatar"
               />
-              <view class="invite-content-list-content-items-item-nick">{{
-                item.user.nickname
-              }}</view>
-              <view class="invite-content-list-content-items-item-mark"
-                >累计为您提供{{ item.putCoin }}点券</view
-              >
+              <view class="invite-content-list-content-items-item-nick">
+                {{
+                  item.user.nickname
+                }}
+              </view>
+              <view class="invite-content-list-content-items-item-mark">
+                累计为您提供{{ item.putCoin }}点券
+              </view>
             </view>
           </view>
         </scroll-view>
         <pager class="invite-content-list-page" />
       </view>
       <view class="invite-content-rule price-font">
-        <view class="invite-content-rule-title">规则说明</view>
-        <view class="invite-content-rule-subTitle">【邀请方法】</view>
-        <view class="invite-content-rule-row">
-          <view class="invite-content-rule-row-text"
-            >【1】盟主分享本页面给好友即可邀请对方加入联盟。</view
-          >
+        <view class="invite-content-rule-title">
+          规则说明
+        </view>
+        <view class="invite-content-rule-subTitle">
+          【邀请方法】
         </view>
         <view class="invite-content-rule-row">
-          <view class="invite-content-rule-row-text"
-            >【2】在本页输入盟主ID也可加入加盟。</view
-          >
-        </view>
-        <view class="invite-content-rule-subTitle">【奖励分成】</view>
-        <view class="invite-content-rule-row">
-          <view class="invite-content-rule-row-text"
-            >【1】盟友每一笔消费都会额外奖励</view
-          >
-          <view class="invite-content-rule-row-value"
-            >{{ Number(agentInfo?.cfg?.agent_user_rate) * 100 }}%</view
-          >
-          <view class="invite-content-rule-row-text">的点券给自己</view>
-          <view class="invite-content-rule-row-text">同时额外奖励盟主</view>
-          <view class="invite-content-rule-row-value"
-            >{{ Number(agentInfo?.cfg?.agent_agent_rate * 100) }}%</view
-          >
-          <view class="invite-content-rule-row-text">的点券。</view>
+          <view class="invite-content-rule-row-text">
+            【1】盟主分享本页面给好友即可邀请对方加入联盟。
+          </view>
         </view>
         <view class="invite-content-rule-row">
-          <view class="invite-content-rule-row-text"
-            >【2】每天24点统一发放奖励；盟友不设上限。</view
-          >
+          <view class="invite-content-rule-row-text">
+            【2】在本页输入盟主ID也可加入加盟。
+          </view>
+        </view>
+        <view class="invite-content-rule-subTitle">
+          【奖励分成】
         </view>
         <view class="invite-content-rule-row">
-          <view class="invite-content-rule-row-text"
-            >【3】目前仅统计封面标识有“联盟奖励”的箱子。</view
-          >
+          <view class="invite-content-rule-row-text">
+            【1】盟友每一笔消费都会额外奖励
+          </view>
+          <view class="invite-content-rule-row-value">
+            {{ Number(agentInfo?.cfg?.agent_user_rate) * 100 }}%
+          </view>
+          <view class="invite-content-rule-row-text">
+            的点券给自己
+          </view>
+          <view class="invite-content-rule-row-text">
+            同时额外奖励盟主
+          </view>
+          <view class="invite-content-rule-row-value">
+            {{ Number(agentInfo?.cfg?.agent_agent_rate * 100) }}%
+          </view>
+          <view class="invite-content-rule-row-text">
+            的点券。
+          </view>
+        </view>
+        <view class="invite-content-rule-row">
+          <view class="invite-content-rule-row-text">
+            【2】每天24点统一发放奖励；盟友不设上限。
+          </view>
+        </view>
+        <view class="invite-content-rule-row">
+          <view class="invite-content-rule-row-text">
+            【3】目前仅统计封面标识有“联盟奖励”的箱子。
+          </view>
         </view>
       </view>
     </view>
     <invite-bind
       v-model:show="bindModalShow"
       :nickname="bindAgentInfo.nickname"
-      @didTapConfirm="didTapConfirm"
+      @did-tap-confirm="didTapConfirm"
     />
 
-    <!--        <login v-model:show="loginShow" @did-tap-login="handleLogin" />-->
+    <!--        <login v-model:show="loginShow" @did-tap-login="handleLogin" /> -->
   </view>
 </template>
 
 <script lang="ts" setup>
-// import Login from '@/components/login/index.vue'
-import { useLogin } from "@/composables/login";
+import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
 
-import InviteBind from "./components/bind/index.vue";
-import Pager from "./components/page/index.vue";
-import { useInvite } from "./invite";
-import { onShareTimeline, onShareAppMessage } from "@dcloudio/uni-app";
-import { eventBus } from "@/utils/event";
-const { loginShow, handleLogin } = useLogin();
+// import Login from '@/components/login/index.vue'
+import { useLogin } from '@/composables/login'
+import InviteBind from './components/bind/index.vue'
+import Pager from './components/page/index.vue'
+import { useInvite } from './invite'
+
+const { loginShow, handleLogin } = useLogin()
 
 const {
   agentInfo,
@@ -272,24 +301,24 @@ const {
   bindAgentInfo,
   didTapConfirm,
   getBindAgentInfo,
-} = useInvite();
+} = useInvite()
 
 onShareAppMessage(() => {
-  const userId = agentInfo.value?.user?.user.username;
+  const userId = agentInfo.value?.user?.user.username
   return {
-    title: "和我成为盟友，一起瓜分收益！",
-    imageUrl: "https://jms.85gui7.com/kahe-202510/resources/share-img.jpg",
+    title: '和我成为盟友，一起瓜分收益！',
+    imageUrl: 'https://jms.85gui7.com/kahe-202510/resources/share-img.jpg',
     path: `/subPackages/mine/invite/index?agent=${userId}`,
-  };
-});
+  }
+})
 onShareTimeline(() => {
-  const userId = agentInfo.value?.user?.user.username;
+  const userId = agentInfo.value?.user?.user.username
   return {
-    title: "和我成为盟友，一起瓜分收益！",
-    imageUrl: "https://jms.85gui7.com/kahe-202510/resources/share-img.jpg",
+    title: '和我成为盟友，一起瓜分收益！',
+    imageUrl: 'https://jms.85gui7.com/kahe-202510/resources/share-img.jpg',
     path: `/subPackages/mine/invite/index?agent=${userId}`,
-  };
-});
+  }
+})
 </script>
 
 <style lang="scss" scoped>

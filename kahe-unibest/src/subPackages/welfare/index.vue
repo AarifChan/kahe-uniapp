@@ -5,10 +5,10 @@
       <image class="welfare-content-top" src="https://jms.85gui7.com/kahe-202510/welfare/top-bg.png" />
       <view class="welfare-content-padding">
         <image
-          class="welfare-content-padding-item"
           v-for="(item, index) in itemList"
-          :key="'card' + index"
-          :src="'https://jms.85gui7.com/kahe-202510/welfare/card' + (index + 1) + '.png'"
+          :key="`card${index}`"
+          class="welfare-content-padding-item"
+          :src="`https://jms.85gui7.com/kahe-202510/welfare/card${index + 1}.png`"
           @tap.stop="clickItem(item)"
         />
       </view>
@@ -17,11 +17,13 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
 import { useAppStore } from '@/store/app'
-import { eventBus } from "@/utils/event";
-import { ref } from "vue";
+import { ShowToast } from '@/utils'
 
-import { ShowToast } from "@/utils";
+import { eventBus } from '@/utils/event'
+
+const appStore = useAppStore()
 enum WelfareItemType {
   vip = 0,
   activity = 1,
@@ -31,79 +33,79 @@ enum WelfareItemType {
   discount = 5,
 }
 export interface WelfareItem {
-  itemType: WelfareItemType;
-  image: string;
+  itemType: WelfareItemType
+  image: string
 }
-const clickItem = (item: WelfareItem) => {
+function clickItem(item: WelfareItem) {
   switch (item.itemType) {
     case WelfareItemType.vip:
       uni.navigateTo({
-        url: "/subPackages/mine/vip/index",
-      });
-      break;
+        url: '/subPackages/mine/vip/index',
+      })
+      break
     case WelfareItemType.activity:
       uni.navigateTo({
-        url: "/subPackages/product/welfare/index",
-      });
-      break;
+        url: '/subPackages/product/welfare/index',
+      })
+      break
     case WelfareItemType.integral:
-      uni.navigateBack();
-      eventBus.emit("reloadProductTab", 4);
-      break;
+      uni.navigateBack()
+      eventBus.emit('reloadProductTab', 4)
+      break
     case WelfareItemType.redBag:
-      uni.navigateBack();
+      uni.navigateBack()
       setTimeout(() => {
-        appStore.changeBoxTabIndex(4);
-        appStore.changeCurrentTabIndex(3);
-      }, 200);
+        appStore.changeBoxTabIndex(4)
+        appStore.changeCurrentTabIndex(3)
+      }, 200)
 
-      break;
+      break
     case WelfareItemType.chest:
-      uni.navigateBack();
+      uni.navigateBack()
       setTimeout(() => {
-        appStore.changeBoxTabIndex(3);
-        appStore.changeCurrentTabIndex(3);
-      });
+        appStore.changeBoxTabIndex(3)
+        appStore.changeCurrentTabIndex(3)
+      })
 
-      break;
+      break
     case WelfareItemType.discount:
-      ShowToast("正在准备中，尽请期待");
-      return;
+      ShowToast('正在准备中，尽请期待')
+      return
       uni.navigateTo({
-        url: "/subPackages/discount/index",
-      });
-      break;
+        url: '/subPackages/discount/index',
+      })
+      break
     default:
-      break;
+      break
   }
-};
+}
 
 const itemList = ref([
   {
-    image: "https://jms.85gui7.com/kahe-202510/welfare/card1.png",
+    image: 'https://jms.85gui7.com/kahe-202510/welfare/card1.png',
     itemType: WelfareItemType.vip,
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/welfare/card2.png",
+    image: 'https://jms.85gui7.com/kahe-202510/welfare/card2.png',
     itemType: WelfareItemType.activity,
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/welfare/card3.png",
+    image: 'https://jms.85gui7.com/kahe-202510/welfare/card3.png',
     itemType: WelfareItemType.integral,
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/welfare/card4.png",
+    image: 'https://jms.85gui7.com/kahe-202510/welfare/card4.png',
     itemType: WelfareItemType.redBag,
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/welfare/card5.png",
+    image: 'https://jms.85gui7.com/kahe-202510/welfare/card5.png',
     itemType: WelfareItemType.chest,
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/welfare/card6.png",
+    image: 'https://jms.85gui7.com/kahe-202510/welfare/card6.png',
     itemType: WelfareItemType.discount,
   },
-]);
+])
 </script>
 
 <style lang="scss" scoped>

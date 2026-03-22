@@ -6,15 +6,19 @@
         :src="item.goods.image"
         mode="heightFix"
       />
-      <view class="collect-goods-top-num">X{{ item.num }}</view>
+      <view class="collect-goods-top-num">
+        X{{ item.num }}
+      </view>
     </view>
     <view class="collect-goods-bottom">
-      <view class="collect-goods-bottom-title text-flow-ellipsis-multiple">{{
-        item.goods.name
-      }}</view>
-      <view class="collect-goods-bottom-subTitle"
-        >助力值:{{ Number(item.goods.price * item.num).toFixed(2) }}</view
-      >
+      <view class="collect-goods-bottom-title text-flow-ellipsis-multiple">
+        {{
+          item.goods.name
+        }}
+      </view>
+      <view class="collect-goods-bottom-subTitle">
+        助力值:{{ Number(item.goods.price * item.num).toFixed(2) }}
+      </view>
     </view>
 
     <image class="collect-goods-bg" src="https://jms.85gui7.com/kahe-202510/collect/card-bg.png" />
@@ -25,16 +29,16 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from "vue";
-import { UserGoodsSelectModel } from "@/subPackages/collect/detail/index";
+import type { PropType } from 'vue'
+import type { UserGoodsSelectModel } from '@/subPackages/collect/detail/index'
 
 defineProps({
   item: {
     default: {} as UserGoodsSelectModel,
     type: Object as PropType<UserGoodsSelectModel>,
   },
-});
-const emits = defineEmits(["didSelect"]);
+})
+const emits = defineEmits(['didSelect'])
 </script>
 
 <style lang="scss" scoped>

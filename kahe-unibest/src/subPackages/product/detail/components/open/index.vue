@@ -8,43 +8,64 @@
   >
     <view class="open">
       <view class="open-content">
-        <view class="open-content-title theme-font"
-          >购买成功，等待公布结果</view
-        >
-        <!--        <view class="open-content-subTitle">已成功购买{{ num }}张商品卡</view>-->
+        <view class="open-content-title theme-font">
+          购买成功，等待公布结果
+        </view>
+        <!--        <view class="open-content-subTitle">已成功购买{{ num }}张商品卡</view> -->
         <image
           class="open-content-img"
           src="https://jms.85gui7.com/kahe-202510/ka-he/product/all-open.png"
         />
-        <view class="open-content-title1 theme-font">距最晚公布结果</view>
+        <view class="open-content-title1 theme-font">
+          距最晚公布结果
+        </view>
         <view class="open-content-time">
-          <view class="open-content-time-value">{{ day }}</view>
-          <view class="open-content-time-title">天</view>
-          <view class="open-content-time-value">{{ hour }}</view>
-          <view class="open-content-time-title">时</view>
-          <view class="open-content-time-value">{{ minute }}</view>
-          <view class="open-content-time-title">分</view>
-          <view class="open-content-time-value">{{ second }}</view>
-          <view class="open-content-time-title">秒</view>
+          <view class="open-content-time-value">
+            {{ day }}
+          </view>
+          <view class="open-content-time-title">
+            天
+          </view>
+          <view class="open-content-time-value">
+            {{ hour }}
+          </view>
+          <view class="open-content-time-title">
+            时
+          </view>
+          <view class="open-content-time-value">
+            {{ minute }}
+          </view>
+          <view class="open-content-time-title">
+            分
+          </view>
+          <view class="open-content-time-value">
+            {{ second }}
+          </view>
+          <view class="open-content-time-title">
+            秒
+          </view>
         </view>
         <view class="open-content-row1">
           <image class="icon" src="https://jms.85gui7.com/kahe-202510/ka-he/product/open-info.png" />
-          <view class="open-content-row1-title"
-            >若提前售完，将立即公布结果；若未能售完，将对所有订单退款</view
-          >
+          <view class="open-content-row1-title">
+            若提前售完，将立即公布结果；若未能售完，将对所有订单退款
+          </view>
         </view>
-        <view class="open-content-title2 theme-font"
-          >积分将在揭晓结果后获得，可在积分专区兑好礼！</view
-        >
+        <view class="open-content-title2 theme-font">
+          积分将在揭晓结果后获得，可在积分专区兑好礼！
+        </view>
         <button class="btn" open-type="share">
           <image class="btn-img" src="https://jms.85gui7.com/kahe-202510/ka-he/product/open-btn.png" />
-          <view class="btn-title theme-font">分享并加速开奖</view>
+          <view class="btn-title theme-font">
+            分享并加速开奖
+          </view>
         </button>
         <view
           class="open-content-title3"
           @tap.stop="emits('update:show', false)"
-          >继续购买</view
         >
+          继续购买
+        </view>
       </view>
       <image class="open-decorate1" src="https://jms.85gui7.com/kahe-202510/ka-he/product/open2.png" />
       <image class="open-decorate2" src="https://jms.85gui7.com/kahe-202510/ka-he/product/open1.png" />
@@ -58,11 +79,11 @@
 </template>
 
 <script lang="ts" setup>
-import { type PropType, ref, watch } from "vue";
-import type { UIProductDetailModel } from "@/model";
-import { useTimeCount } from "@/composables/countTime";
-const { startTimeRemain, hour, day, second, minute, isTimeout } =
-  useTimeCount();
+import type { PropType } from 'vue'
+import type { UIProductDetailModel } from '@/model'
+import { ref, watch } from 'vue'
+import { useTimeCount } from '@/composables/countTime'
+
 const props = defineProps({
   show: {
     default: false,
@@ -76,18 +97,18 @@ const props = defineProps({
     default: 1,
     type: Number,
   },
-});
-
-const vShow = ref(false);
+})
+const emits = defineEmits(['update:show'])
+const { startTimeRemain, hour, day, second, minute, isTimeout }
+  = useTimeCount()
+const vShow = ref(false)
 watch(
   () => props.show,
   (value) => {
-    vShow.value = value;
-    startTimeRemain(props.product.settleTime);
-  }
-);
-
-const emits = defineEmits(["update:show"]);
+    vShow.value = value
+    startTimeRemain(props.product.settleTime)
+  },
+)
 </script>
 
 <style lang="scss" scoped>

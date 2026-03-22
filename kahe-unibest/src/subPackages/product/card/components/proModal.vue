@@ -2,23 +2,27 @@
   <view class="pro">
     <view class="pro-level">
       <view
-        class="pro-level-item"
         v-for="(item, index) in levelGroupList"
         :key="index"
-        @tap.stop="sortTabAction(index)"
+        class="pro-level-item"
         :class="sortIndex === index ? 'active' : ''"
+        @tap.stop="sortTabAction(index)"
       >
-        <view class="pro-level-item-title">{{
-          getNormalLevelNameByLevel(item.level)
-        }}</view>
-        <view class="pro-level-item-pros">{{ item.prob }}</view>
+        <view class="pro-level-item-title">
+          {{
+            getNormalLevelNameByLevel(item.level)
+          }}
+        </view>
+        <view class="pro-level-item-pros">
+          {{ item.prob }}
+        </view>
       </view>
     </view>
     <view class="pro-list">
       <view
-        class="pro-list-goods"
         v-for="(item, index) in levelGroupList[sortIndex].items"
         :key="index"
+        class="pro-list-goods"
         @tap.stop="didClickItem(item)"
       >
         <image class="pro-list-goods-item" :src="item.image" />
@@ -27,30 +31,17 @@
     <detail-modal v-model:show="infoShow" :item="currentBox" />
   </view>
 </template>
+
 <script setup lang="ts">
 import type {
   UIProductBoxModel,
   UIProductDetailLevelGroup,
   UIProductDetailLevelGroupItem,
   UIProductDetailLevelList,
-  UserGoodsModel,
-} from "@/model";
-import { ref } from "vue";
-import DetailModal from "@/components/modal/detail/index.vue";
-import { useEnum } from "@/composables/enum";
-
-const { getNormalLevelNameByLevel } = useEnum();
-
-defineEmits(["sortTabAction"]);
-
-const currentBox = ref({} as UIProductDetailLevelGroupItem);
-
-const infoShow = ref(false);
-
-const didClickItem = (item: UIProductDetailLevelGroupItem) => {
-  currentBox.value = item;
-  infoShow.value = true;
-};
+} from '@/model'
+import { ref } from 'vue'
+import DetailModal from '@/components/modal/detail/index.vue'
+import { useEnum } from '@/composables/enum'
 
 defineProps({
   list: {
@@ -65,13 +56,27 @@ defineProps({
     type: Array as () => UIProductDetailLevelList[],
     default: [] as UIProductDetailLevelList[],
   },
-});
+})
 
-const sortIndex = ref(0);
-const sortTabAction = (i: number) => {
-  sortIndex.value = i;
-};
+defineEmits(['sortTabAction'])
+
+const { getNormalLevelNameByLevel } = useEnum()
+
+const currentBox = ref({} as UIProductDetailLevelGroupItem)
+
+const infoShow = ref(false)
+
+function didClickItem(item: UIProductDetailLevelGroupItem) {
+  currentBox.value = item
+  infoShow.value = true
+}
+
+const sortIndex = ref(0)
+function sortTabAction(i: number) {
+  sortIndex.value = i
+}
 </script>
+
 <style lang="scss" scoped>
 .pro {
   position: relative;
@@ -110,10 +115,7 @@ const sortTabAction = (i: number) => {
     width: calc(100% - 18rpx);
     position: relative;
     display: grid;
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax(20%, 1fr)
-    ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
+    grid-template-columns: repeat(auto-fill, minmax(20%, 1fr)); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
     grid-gap: 18rpx; // 这是网格间的间隙，根据需要调整
     margin-top: 38rpx;
     box-sizing: border-box;

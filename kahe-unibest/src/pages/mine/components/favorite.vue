@@ -21,28 +21,31 @@
           src="https://jms.85gui7.com/kahe-202510/ka-he/mine/contact.png"
         />
         <text class="favorite-content-item-title">联系客服</text>
-        <view v-if="unReadNum > 0" class="favorite-content-item-num">{{
-          unReadNum
-        }}</view>
+        <view v-if="unReadNum > 0" class="favorite-content-item-num">
+          {{
+            unReadNum
+          }}
+        </view>
       </view>
-      <!--      <button class="favorite-content-item" openType="contact">-->
-      <!--        <image-->
-      <!--          class="favorite-content-item-img"-->
-      <!--          src="https://jms.85gui7.com/kahe-202510/ka-he/mine/contact.png"-->
-      <!--        />-->
-      <!--        <text class="favorite-content-item-title">联系客服</text>-->
-      <!--      </button>-->
+      <!--      <button class="favorite-content-item" openType="contact"> -->
+      <!--        <image -->
+      <!--          class="favorite-content-item-img" -->
+      <!--          src="https://jms.85gui7.com/kahe-202510/ka-he/mine/contact.png" -->
+      <!--        /> -->
+      <!--        <text class="favorite-content-item-title">联系客服</text> -->
+      <!--      </button> -->
     </view>
   </view>
 </template>
+
 <script setup lang="ts">
 defineProps({
   unReadNum: {
     default: 0,
     type: Number,
   },
-});
-defineEmits(["didClickFavorite", "didClickCoupon", "didClickContact"]);
+})
+defineEmits(['didClickFavorite', 'didClickCoupon', 'didClickContact'])
 </script>
 
 <style scoped lang="scss">

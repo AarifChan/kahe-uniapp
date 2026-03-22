@@ -14,20 +14,24 @@
           class="goodsBox-top-numBg-bg"
           src="https://jms.85gui7.com/kahe-202510/ka-he/common/num_bg.png"
         />
-        <text class="goodsBox-top-numBg-num" v-if="item.isSky">{{
-          item.num
-        }}</text>
-        <text class="goodsBox-top-numBg-num" v-else-if="item.isStrand"
-          >串{{ item.total }}</text
-        >
-        <text class="goodsBox-top-numBg-num" v-else
-          >{{ item.last }}/{{ item.total }}</text
-        >
+        <text v-if="item.isSky" class="goodsBox-top-numBg-num">
+          {{
+            item.num
+          }}
+        </text>
+        <text v-else-if="item.isStrand" class="goodsBox-top-numBg-num">
+          串{{ item.total }}
+        </text>
+        <text v-else class="goodsBox-top-numBg-num">
+          {{ item.last }}/{{ item.total }}
+        </text>
       </view>
-      <view class="goodsBox-top-quality">{{
-        getTitleByQuality(item.quality)
-      }}</view>
-      <view class="goodsBox-top-empty" v-if="item.isSellOut">
+      <view class="goodsBox-top-quality">
+        {{
+          getTitleByQuality(item.quality)
+        }}
+      </view>
+      <view v-if="item.isSellOut" class="goodsBox-top-empty">
         <image
           style="width: 132rpx; height: 113rpx"
           src="https://jms.85gui7.com/kahe-202510/product/sell-out.png"
@@ -49,28 +53,32 @@
       <view
         class="goodsBox-info-title text-flow-ellipsis-single"
         :style="{ color: showPrice ? '#000000' : '#ffffff' }"
-        >{{ item.title }}</view
       >
+        {{ item.title }}
+      </view>
       <view v-if="showPrice">
-        <view class="goodsBox-info-subTitle" v-if="!item.isHide"
-          >参考价: {{ goodsPrice }}</view
-        >
-        <view class="goodsBox-info-prob" v-if="item.isSky"
-          >{{ item.prob }}~{{ item.weight }}抽完赠送</view
-        >
-        <view class="goodsBox-info-prob" v-else-if="item.isSpec">只赠不售</view>
-        <view class="goodsBox-info-prob" v-else> 获得概率{{ item.prob }}%</view>
+        <view v-if="!item.isHide" class="goodsBox-info-subTitle">
+          参考价: {{ goodsPrice }}
+        </view>
+        <view v-if="item.isSky" class="goodsBox-info-prob">
+          {{ item.prob }}~{{ item.weight }}抽完赠送
+        </view>
+        <view v-else-if="item.isSpec" class="goodsBox-info-prob">
+          只赠不售
+        </view>
+        <view v-else class="goodsBox-info-prob">
+          获得概率{{ item.prob }}%
+        </view>
       </view>
     </view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import type { UIProductBoxModel } from "@/model";
-import type { PropType } from "vue";
-import { useEnum } from "@/composables/enum";
-import { getTitleByQuality } from "@/utils/index";
-const { getLevelImageByLevel } = useEnum();
+import type { PropType } from 'vue'
+import type { UIProductBoxModel } from '@/model'
+import { useEnum } from '@/composables/enum'
+import { getTitleByQuality } from '@/utils/index'
 
 defineProps({
   goodsPrice: {
@@ -109,7 +117,9 @@ defineProps({
     default: 0,
     type: Number,
   },
-});
+})
+
+const { getLevelImageByLevel } = useEnum()
 </script>
 
 <style lang="scss" scoped>
@@ -125,7 +135,7 @@ defineProps({
     border-radius: 10rpx;
     border: 5rpx solid #fcd570;
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       left: 0;

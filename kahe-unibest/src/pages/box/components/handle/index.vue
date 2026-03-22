@@ -9,7 +9,9 @@
             class="box-handle-content-all-select-value"
           />
         </view>
-        <view class="box-handle-content-all-title">全选</view>
+        <view class="box-handle-content-all-title">
+          全选
+        </view>
       </view>
       <view
         style="
@@ -19,7 +21,7 @@
           gap: 16px;
         "
       >
-        <!--        <custom-button title="退货" @tap.stop="emits('didTapItem', 1)" />-->
+        <!--        <custom-button title="退货" @tap.stop="emits('didTapItem', 1)" /> -->
         <custom-button title="提货" @tap.stop="emits('didTapItem', 2)" />
       </view>
     </view>
@@ -27,16 +29,15 @@
 </template>
 
 <script lang="ts" setup>
-import CustomButton from "../button/index.vue";
-import SelectItem from "../select/index.vue";
+import CustomButton from '../button/index.vue'
 // didTapItem 0: 全选，1：外仓发货 2：发货
 defineProps({
   isSelectAll: {
     default: false,
     type: Boolean,
   },
-});
-const emits = defineEmits(["didTapItem"]);
+})
+const emits = defineEmits(['didTapItem'])
 </script>
 
 <style lang="scss" scoped>

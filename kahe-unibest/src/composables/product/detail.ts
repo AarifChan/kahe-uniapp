@@ -1,15 +1,5 @@
-import {
-  orderCancelRequest,
-  productDeliverRequest,
-  productDetailRequest,
-  productOrderRequest,
-  productPurchaseRequest,
-  productPurchaseSubmitRequest,
-  productRecordRequest,
-  productSwapBoxRequest,
-  userGoodsDeleteRequest,
-  userGoodsRecycleConfirmRequest,
-} from "@/api";
+import type { Ref } from 'vue'
+import type { LotteryModel } from '@/components/lottery/index.vue'
 import type {
   BoxGoodsSubmitParams,
   BoxGoodsSubmitResponse,
@@ -34,14 +24,24 @@ import type {
   UIProductSwapLevelItem,
   UIProductSwapModel,
   UserGoodsModel,
-} from "@/model";
-import { hideLoading, showLoading, ShowToast } from "@/utils";
+} from '@/model'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import {
-  getLevelCNName,
-  getLevelFullImagePath,
-  getLevelName,
-  limitLevelName,
-} from "@/utils/tools/image";
+  orderCancelRequest,
+  orderInfoRequest,
+  productDeliverRequest,
+  productDetailRequest,
+  productOrderRequest,
+  productPurchaseRequest,
+  productPurchaseSubmitRequest,
+  productRecordRequest,
+  productSwapBoxRequest,
+  userGoodsDeleteRequest,
+  userGoodsRecycleConfirmRequest,
+} from '@/api'
+import { useUserStore } from '@/store/user'
+import { hideLoading, showLoading, ShowToast } from '@/utils'
+import { eventBus } from '@/utils/event'
 import {
   formatNumToString,
   formatPrice,
@@ -50,22 +50,32 @@ import {
   parseTime,
   shuffle,
   useSortFun,
-} from "@/utils/tools";
-import type { LotteryModel } from "@/components/lottery/index.vue";
-import { UserModule, checkOrderInfo } from "@/store/modules/user";
-import { useEnum } from "../enum/index";
-import { computed, onMounted, onUnmounted, ref, type Ref, watch } from "vue";
-import { eventBus } from "@/utils/event";
-import { useUserStore } from '@/store/user'
-const userStore = useUserStore()
+} from '@/utils/tools'
+import {
+  getLevelCNName,
+  getLevelFullImagePath,
+  limitLevelName,
+} from '@/utils/tools/image'
+import { useEnum } from '../enum/index'
 
-const {
-  getLevelImage,
-  levelTypeBg,
-  getNormalLevelNameByLevel,
-  getLevelImageByLevel,
-} = useEnum();
-const checkIsSpecByLevel = (level: number) => {
+async function checkInfoRequest(orderId: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const res = await orderInfoRequest(orderId)
+      resolve(res.code === 200 && (res.data as any)?.payed === true)
+    }, 2000)
+  })
+}
+
+async function checkOrderInfo(orderId: string): Promise<boolean> {
+  for (let i = 0; i < 6; i++) {
+    const ok = await checkInfoRequest(orderId)
+    if (ok)
+      return true
+  }
+  return false
+}
+function checkIsSpecByLevel(level: number) {
   switch (level) {
     case 502:
     case 401:
@@ -78,50 +88,57 @@ const checkIsSpecByLevel = (level: number) => {
     case 203:
     case 204:
     case 205:
-      return true;
+      return true
     default:
-      return false;
+      return false
   }
-};
+}
 
 export function useProductDetail() {
+  const userStore = useUserStore()
+  const {
+    getLevelImage,
+    levelTypeBg,
+    getNormalLevelNameByLevel,
+    getLevelImageByLevel,
+  } = useEnum()
   /// 是否无限赏
-  const isInfinite = ref(true);
+  const isInfinite = ref(true)
   /// 是否开启选号模式
-  const isSelectNum = ref(false);
-  const currentBox = ref({} as UserGoodsModel);
+  const isSelectNum = ref(false)
+  const currentBox = ref({} as UserGoodsModel)
   /// 箱子物品等级
-  const levelList = ref([] as UIProductDetailLevelList[]);
+  const levelList = ref([] as UIProductDetailLevelList[])
   /// 箱子物品
-  const goodsList = ref([] as UIProductBoxModel[]);
+  const goodsList = ref([] as UIProductBoxModel[])
   /// 抽卡次数
-  const cardsList = ref([] as UIProductPriceCard[]);
+  const cardsList = ref([] as UIProductPriceCard[])
 
   // 卡牌效果
-  const lotteryList = ref([] as LotteryModel[]);
+  const lotteryList = ref([] as LotteryModel[])
   /// 箱子详情
-  const productDetail = ref({} as UIProductDetailModel);
+  const productDetail = ref({} as UIProductDetailModel)
 
-  const swapModalShow = ref(false);
+  const swapModalShow = ref(false)
 
-  const payShow = ref(false);
+  const payShow = ref(false)
 
-  const lotteryShow = ref(false);
+  const lotteryShow = ref(false)
 
   /**
    * 开赏结果
    */
-  const rewardShow = ref(false);
+  const rewardShow = ref(false)
 
-  const openShow = ref(false);
+  const openShow = ref(false)
 
-  const smashShow = ref(false);
+  const smashShow = ref(false)
 
-  const currentTab = ref(0);
-  const detailShow = ref(false);
+  const currentTab = ref(0)
+  const detailShow = ref(false)
 
   /// 该盲盒的箱子
-  const boxList = ref([] as UIProductSwapItemModel[]);
+  const boxList = ref([] as UIProductSwapItemModel[])
   // 换箱参数
   const boxParams = ref({
     level: -1,
@@ -129,10 +146,10 @@ export function useProductDetail() {
     max: 50,
     min: 1,
     page: 1,
-    sort: "asc",
+    sort: 'asc',
     sflag: 2,
     total: 1,
-  });
+  })
 
   // 盲盒记录所需参数
   const recordParams = ref({
@@ -140,81 +157,84 @@ export function useProductDetail() {
     limit: 10,
     page: 1,
     total: 1,
-  });
+  })
   // 支付数据信息
-  const payItem = ref({} as UIProductPayModel);
+  const payItem = ref({} as UIProductPayModel)
 
   /// 退货订单
-  const smashItem = ref({} as BoxGoodsSubmitResponse);
+  const smashItem = ref({} as BoxGoodsSubmitResponse)
 
-  const recordList = ref([] as UIProductRecordModel[]);
+  const recordList = ref([] as UIProductRecordModel[])
 
-  const orderList = ref([] as UIProductRecordModel[]);
+  const orderList = ref([] as UIProductRecordModel[])
 
-  const boxRangeList = ref([] as UIProductBoxRangeType[]);
+  const boxRangeList = ref([] as UIProductBoxRangeType[])
 
-  const originList = ref([] as UIProductOpenBoxModel[]);
+  const originList = ref([] as UIProductOpenBoxModel[])
 
-  const rewardList = ref([] as UIProductOpenBoxModel[]);
+  const rewardList = ref([] as UIProductOpenBoxModel[])
   // 退货数据
-  const recycleGoods = ref([] as SubmitGoodsModel[]);
+  const recycleGoods = ref([] as SubmitGoodsModel[])
 
-  const rewardTicket = ref(0);
+  const rewardTicket = ref(0)
 
-  const rewardRedBag = ref([] as OpenRedBagModel[]);
+  const rewardRedBag = ref([] as OpenRedBagModel[])
 
-  const skipLottery = ref(false);
+  const skipLottery = ref(false)
 
   const luckProgress = computed(() => {
     /// 无限赏的进度
-    const luckProgress = productDetail?.value.luckProgress * 100;
+    const luckProgress = productDetail?.value.luckProgress * 100
 
     /// 普通赏的进度
     // const pros = (props.product.num / props.product.total) * 100
     // console.log('progress:', pros, props.product.num, props.product.total)
-    return `width:${luckProgress}%`;
-  });
+    return `width:${luckProgress}%`
+  })
 
   const normalProgress = computed(() => {
-    const proogress =
-      (productDetail.value?.num / (productDetail.value.total ?? 1)) * 100;
-    return `width:${proogress}%`;
-  });
+    const proogress
+      = (productDetail.value?.num / (productDetail.value.total ?? 1)) * 100
+    return `width:${proogress}%`
+  })
   const handleCancelCurrentOrder = async () => {
-    const orderId = payItem.value.id;
+    const orderId = payItem.value.id
     if (orderId) {
-      await orderCancelRequest(orderId);
+      await orderCancelRequest(orderId)
     }
-  };
+  }
 
   const showOpenBoxResult = async () => {
     if (isInfinite.value && !skipLottery.value) {
-      await showLottery();
-    } else {
+      await showLottery()
+    }
+    else {
       if (productDetail.value.type === 4) {
-        openShow.value = true;
-      } else {
-        rewardShow.value = true;
+        openShow.value = true
+      }
+      else {
+        rewardShow.value = true
       }
     }
-    await reloadCurrentPage();
-  };
+    await reloadCurrentPage()
+  }
 
   const scrollToLower = async () => {
     if (
-      currentTab.value === 1 &&
-      recordParams.value.page < recordParams.value.total
+      currentTab.value === 1
+      && recordParams.value.page < recordParams.value.total
     ) {
-      recordParams.value.page++;
-      await loadRecordList();
-    } else if (recordParams.value.page < recordParams.value.total) {
-      recordParams.value.page++;
-      await loadRecordList();
+      recordParams.value.page++
+      await loadRecordList()
     }
-  };
+    else if (recordParams.value.page < recordParams.value.total) {
+      recordParams.value.page++
+      await loadRecordList()
+    }
+  }
 
   const showLottery = async () => {
-    const tempList = originList.value.sort((n1, n2) => n2.level - n1.level);
+    const tempList = originList.value.sort((n1, n2) => n2.level - n1.level)
     const list = shuffle(tempList).map((item) => {
       return {
         image: item.image,
@@ -222,53 +242,55 @@ export function useProductDetail() {
         level: item.level,
         rawLevel: item.level,
         levelImage: item.levelImage,
-      } as LotteryModel;
-    });
+      } as LotteryModel
+    })
     if (list.length <= 10) {
-      lotteryList.value = list;
-      lotteryShow.value = true;
-    } else {
-      rewardShow.value = true;
+      lotteryList.value = list
+      lotteryShow.value = true
     }
-  };
+    else {
+      rewardShow.value = true
+    }
+  }
 
   const handleSmashGoods = async () => {
-    const orderId = smashItem.value.orderId;
+    const orderId = smashItem.value.orderId
     const resp = await userGoodsDeleteRequest({
       orderId,
-    });
+    })
     if (resp.code === 200) {
-      await ShowToast("操作成功", 1500);
-      smashShow.value = false;
-    } else {
-      await ShowToast(resp.msg, 1500);
+      await ShowToast('操作成功', 1500)
+      smashShow.value = false
     }
-  };
+    else {
+      await ShowToast(resp.msg, 1500)
+    }
+  }
 
   /// 点击一键退货
   const didTapSmashRightNow = async () => {
     const briefs = rewardList.value
-      .filter((n) => n.level !== 0)
+      .filter(n => n.level !== 0)
       .map((item) => {
         return {
           boxId: productDetail.value.boxId,
           gid: item.id,
           num: item.num,
-        } as GoodsBrief;
-      });
+        } as GoodsBrief
+      })
     const params: BoxGoodsSubmitParams = {
       briefs,
       type: 3,
-    };
-    showLoading();
-    const res = await userGoodsRecycleConfirmRequest(params);
-    hideLoading();
-    if (res.code !== 200) {
-      await ShowToast(res.msg);
     }
-    smashItem.value = res.data;
+    showLoading()
+    const res = await userGoodsRecycleConfirmRequest(params)
+    hideLoading()
+    if (res.code !== 200) {
+      await ShowToast(res.msg)
+    }
+    smashItem.value = res.data
     if (res.code === 200) {
-      const list: SubmitGoodsModel[] = JSON.parse(res.data.detail);
+      const list: SubmitGoodsModel[] = JSON.parse(res.data.detail)
       recycleGoods.value = list.map((item) => {
         return Object.assign(
           {
@@ -276,19 +298,19 @@ export function useProductDetail() {
           },
           {
             levelImage: getLevelImageByLevel(item.level),
-          }
-        );
-      });
-      rewardShow.value = false;
-      smashShow.value = true;
+          },
+        )
+      })
+      rewardShow.value = false
+      smashShow.value = true
     }
-  };
+  }
 
   const levelGroupList = computed(() => {
-    const groupList: UIProductDetailLevelGroup[] = [];
+    const groupList: UIProductDetailLevelGroup[] = []
     levelList.value.forEach((item) => {
-      const tempGroup =
-        goodsList.value.filter((n) => item.level === n.level) ?? [];
+      const tempGroup
+        = goodsList.value.filter(n => item.level === n.level) ?? []
       groupList.push({
         levelName: limitLevelName(item.level),
         prob: item.prob,
@@ -306,29 +328,29 @@ export function useProductDetail() {
             level: val.level,
             price: val.price,
             isDemon: val.isDemon,
-          } as unknown as UIProductDetailLevelGroupItem;
+          } as unknown as UIProductDetailLevelGroupItem
         }),
-      });
-    });
-    return groupList;
-  });
+      })
+    })
+    return groupList
+  })
   const currentSubmit: Ref<ProductPurchaseSubmitParams> = ref(
-    {} as ProductPurchaseSubmitParams
-  );
+    {} as ProductPurchaseSubmitParams,
+  )
 
   /// 点击购买
   const didTapPurchaseNum = async (
     item: ProductPurchaseSubmitParams,
-    coupon?: UICouponModel
+    coupon?: UICouponModel,
   ) => {
     const res = await productPurchaseSubmitRequest({
       couponId: coupon?.id,
       id: productDetail.value.id,
       num: item.num,
       selNum: item.selNum,
-    });
-    currentSubmit.value = item;
-    const { data, code } = res;
+    })
+    currentSubmit.value = item
+    const { data, code } = res
     if (code === 200) {
       payItem.value = {
         usedIntegral: data.usedIntegral,
@@ -341,33 +363,34 @@ export function useProductDetail() {
         isIntegral: productDetail.value.payType === 8,
         price: formatPrice(productDetail.value.price),
         usedPrice:
-          Number(data.usedMoney) +
-          Number(data.usedCoin) +
-          Number(data.usedIntegral),
+          Number(data.usedMoney)
+          + Number(data.usedCoin)
+          + Number(data.usedIntegral),
         usedMoney: data.usedMoney,
         usedCoin: data.usedCoin,
         fromMall: false,
-        coupon: coupon,
-      };
-      payShow.value = true;
-    } else {
-      await ShowToast(res.msg);
+        coupon,
+      }
+      payShow.value = true
     }
-  };
+    else {
+      await ShowToast(res.msg)
+    }
+  }
 
   const handleOpenResult = async (orderId: string) => {
     // playAudio()
-    const deliverRes = await productDeliverRequest(orderId);
+    const deliverRes = await productDeliverRequest(orderId)
     if (deliverRes.code === 200) {
-      payShow.value = false;
-      await ShowToast("支付成功");
+      payShow.value = false
+      await ShowToast('支付成功')
       // 支付完成需要展示
-      let list: UIProductOpenBoxModel[] = Array<UIProductOpenBoxModel>();
+      let list: UIProductOpenBoxModel[] = new Array<UIProductOpenBoxModel>()
       for (const item of deliverRes.data.goods) {
-        const isLucky =
-          productDetail.value.demonKing.gid.filter(
-            (n) => n === item.goodsDto.id
-          ).length > 0;
+        const isLucky
+          = productDetail.value.demonKing.gid.filter(
+            n => n === item.goodsDto.id,
+          ).length > 0
         list.push({
           id: item.goodsDto.id,
           name: item.goodsDto.name,
@@ -375,19 +398,19 @@ export function useProductDetail() {
           levelImage: getLevelImage(item.goodsDto.level),
           levelBg: levelTypeBg(item.level),
           image: item.goodsDto.image,
-          isLucky: isLucky,
+          isLucky,
           num: 1,
           uGIds: [],
           uGId: item.ugid,
           isHide: false,
-        });
+        })
       }
-      const originOpenList = [...list];
+      const originOpenList = [...list]
       for (const item of deliverRes.data.attachGoods ?? []) {
-        const isLucky =
-          productDetail.value.demonKing.gid.filter(
-            (n) => n === item.goodsDto.id
-          ).length > 0;
+        const isLucky
+          = productDetail.value.demonKing.gid.filter(
+            n => n === item.goodsDto.id,
+          ).length > 0
         list.push({
           id: item.goodsDto.id,
           name: item.goodsDto.name,
@@ -395,19 +418,19 @@ export function useProductDetail() {
           levelImage: getLevelImage(item.goodsDto.level),
           levelBg: levelTypeBg(item.level),
           image: item.goodsDto.image,
-          isLucky: isLucky,
+          isLucky,
           num: 1,
           uGIds: [],
           uGId: item.ugid,
           isHide: true,
-        });
+        })
       }
       for (const item of deliverRes.data.chest) {
         list.push({
           id: item.chestDto.id,
           name: item.chestDto.title,
           level: 0,
-          levelImage: "https://jms.85gui7.com/jos/common/mibao.png",
+          levelImage: 'https://jms.85gui7.com/jos/common/mibao.png',
           image: item.chestDto.logo,
           isLucky: false,
           num: 1,
@@ -415,105 +438,110 @@ export function useProductDetail() {
           uGId: item.id,
           isHide: false,
           levelBg: levelTypeBg(item.chestDto.goods.level),
-        });
+        })
       }
-      const obj: { [key: number]: number[] } = {};
+      const obj: { [key: number]: number[] } = {}
       list = list.reduce<UIProductOpenBoxModel[]>((item, next) => {
         if (!obj[next.id]) {
-          item.push(next);
-          obj[next.id] = [next.uGId!];
-        } else {
-          obj[next.id].push(next.uGId!);
+          item.push(next)
+          obj[next.id] = [next.uGId!]
         }
-        return item;
-      }, []);
-      const redBagList = deliverRes.data.redbag ?? [];
+        else {
+          obj[next.id].push(next.uGId!)
+        }
+        return item
+      }, [])
+      const redBagList = deliverRes.data.redbag ?? []
       list.forEach((item) => {
-        item.num = obj[item.id].length;
-        item.uGIds = obj[item.id];
-        item.hasRedBag = redBagList.filter((n) => n.gid === item.id).length > 0;
-      });
+        item.num = obj[item.id].length
+        item.uGIds = obj[item.id]
+        item.hasRedBag = redBagList.filter(n => n.gid === item.id).length > 0
+      })
       list.sort(
         (n1: UIProductOpenBoxModel, n2: UIProductOpenBoxModel) =>
-          n2.level - n1.level
-      );
-      rewardTicket.value = deliverRes.data.ticket;
-      rewardList.value = list;
-      rewardRedBag.value = redBagList;
-      originList.value = originOpenList;
+          n2.level - n1.level,
+      )
+      rewardTicket.value = deliverRes.data.ticket
+      rewardList.value = list
+      rewardRedBag.value = redBagList
+      originList.value = originOpenList
 
-      await showOpenBoxResult();
+      await showOpenBoxResult()
     }
-  };
+  }
   const playAudio = () => {
-    const audio = uni.createInnerAudioContext();
-    audio.src = "https://jms.85gui7.com/tycw-mp/resources/play.mp3";
-    audio.play();
-  };
+    const audio = uni.createInnerAudioContext()
+    audio.src = 'https://jms.85gui7.com/tycw-mp/resources/play.mp3'
+    audio.play()
+  }
 
   const didTapChangeBoxRange = async (params: any) => {
-    boxParams.value.min = params.min;
-    boxParams.value.max = params.max;
-    console.log("didTapChangeBoxRange:", params);
-    await loadBoxList();
-  };
+    boxParams.value.min = params.min
+    boxParams.value.max = params.max
+    console.log('didTapChangeBoxRange:', params)
+    await loadBoxList()
+  }
 
   const didTapPay = async (orderId: string) => {
-    const resp = await productPurchaseRequest(orderId);
+    const resp = await productPurchaseRequest(orderId)
     if (resp.code === 200) {
       if (resp.data.status === 1) {
-        await handleOpenResult(orderId);
-      } else {
-        showLoading("正在支付");
+        await handleOpenResult(orderId)
+      }
+      else {
+        showLoading('正在支付')
         const wxRes = await userStore.handleWxPay(
           orderId,
-          productDetail.value.pid
-        );
-        hideLoading();
+          productDetail.value.pid,
+        )
+        hideLoading()
         if (!wxRes) {
-          await handleOpenResult(orderId);
-        } else {
-          await ShowToast(wxRes ?? "支付失败", 1500);
+          await handleOpenResult(orderId)
+        }
+        else {
+          await ShowToast(wxRes ?? '支付失败', 1500)
         }
       }
-    } else {
+    }
+    else {
       // 退货
       const resp = await userGoodsDeleteRequest({
         orderId,
-      });
+      })
       if (resp.code === 200) {
-        await ShowToast("操作成功", 1500);
-        payShow.value = false;
-      } else {
-        await ShowToast(resp.msg, 1500);
+        await ShowToast('操作成功', 1500)
+        payShow.value = false
+      }
+      else {
+        await ShowToast(resp.msg, 1500)
       }
     }
-  };
+  }
   // 优惠卷
   const didTapCoupon = () => {
     uni.navigateTo({
       url: `/subPackages/mine/coupon/index?needSelect=${true}`,
-    });
-  };
+    })
+  }
   const loadProductDetail = async (params: ProductDetailParams) => {
-    showLoading();
-    const res = await productDetailRequest(params);
-    hideLoading();
-    const { code, data } = res;
+    showLoading()
+    const res = await productDetailRequest(params)
+    hideLoading()
+    const { code, data } = res
     if (code === 200) {
       // 详情等级排序
-      let levelArray = [] as Array<UIProductDetailLevelList>;
+      let levelArray = [] as Array<UIProductDetailLevelList>
       // 详情页的盲盒数据
-      let boxList = [] as Array<UIProductBoxModel>;
-      const demonGid = data.product.demonKingDto?.gid ?? [];
+      let boxList = [] as Array<UIProductBoxModel>
+      const demonGid = data.product.demonKingDto?.gid ?? []
       const allGoodsList = [
         ...data.product.goods,
         ...data.product.specGoods,
         ...(data.product.strandGoods ?? []),
-      ];
+      ]
       for (const item of allGoodsList) {
         // 概率
-        const prob = item.prob ? item.prob * 100 : 0;
+        const prob = item.prob ? item.prob * 100 : 0
         levelArray.push({
           level: item.goodsDto.level,
           levelImgPath: getLevelFullImagePath(item.goodsDto.level),
@@ -522,11 +550,11 @@ export function useProductDetail() {
           name: item.goodsDto.name,
           image: item.goodsDto.image,
           list: [],
-          price: item.goodsDto.price + "",
-        });
+          price: `${item.goodsDto.price}`,
+        })
       }
       for (const item of data.product.goods ?? []) {
-        const prob = item.prob ? item.prob * 100 : 0;
+        const prob = item.prob ? item.prob * 100 : 0
 
         boxList.push({
           id: item.goodsDto.id,
@@ -546,12 +574,12 @@ export function useProductDetail() {
             data.product.payType === 8
               ? item.goodsDto.price
               : data.product.price,
-          isDemon: demonGid.filter((n) => n === item.goodsDto.id).length > 0,
-        });
+          isDemon: demonGid.filter(n => n === item.goodsDto.id).length > 0,
+        })
       }
 
       for (const item of data.product.specGoods ?? []) {
-        const prob = item.prob ? item.prob * 100 : 0;
+        const prob = item.prob ? item.prob * 100 : 0
 
         boxList.push({
           id: item.goodsDto.id,
@@ -571,8 +599,8 @@ export function useProductDetail() {
             data.product.payType === 8
               ? item.goodsDto.price
               : data.product.price,
-          isDemon: demonGid.filter((n) => n === item.goodsDto.id).length > 0,
-        });
+          isDemon: demonGid.filter(n => n === item.goodsDto.id).length > 0,
+        })
       }
       for (const item of data.product.destinedConfig ?? []) {
         boxList.push({
@@ -597,11 +625,11 @@ export function useProductDetail() {
             data.product.payType === 8
               ? item.goodsDto.price
               : data.product.price,
-          isDemon: demonGid.filter((n) => n === item.goodsDto.id).length > 0,
-        });
+          isDemon: demonGid.filter(n => n === item.goodsDto.id).length > 0,
+        })
       }
       for (const item of data.product.strandGoods ?? []) {
-        const prob = item.prob ? item.prob * 100 : 0;
+        const prob = item.prob ? item.prob * 100 : 0
         boxList.push({
           id: item.goodsDto.id,
           title: item.goodsDto.name,
@@ -621,83 +649,84 @@ export function useProductDetail() {
             data.product.payType === 8
               ? item.goodsDto.salePrice
               : data.product.price,
-          isDemon: demonGid.filter((n) => n === item.goodsDto.id).length > 0,
-        });
+          isDemon: demonGid.filter(n => n === item.goodsDto.id).length > 0,
+        })
       }
       // 隐藏奖励
-      const attachList = [] as Array<UIProductBoxModel>;
+      const attachList = [] as Array<UIProductBoxModel>
       for (const item of data.product.attachGoods ?? []) {
         attachList.push({
           id: item.id,
-          title: "隐藏奖励",
+          title: '隐藏奖励',
           price: 0,
-          prob: "每抽概率附赠",
+          prob: '每抽概率附赠',
           level: 999,
-          levelImage: "",
-          image: "https://jms.85gui7.com/kahe-202510/tags/hide-show-img.jpg",
+          levelImage: '',
+          image: 'https://jms.85gui7.com/kahe-202510/tags/hide-show-img.jpg',
           last: item.num ?? 0,
           total: item.total ?? 0,
           isSpec: false,
           isSellOut: item.num === 0,
           isHide: true,
-        });
-        break;
+        })
+        break
       }
       // 奖品累加处理
-      const obj: { [key: number]: UIProductDetailLevelList } = {};
+      const obj: { [key: number]: UIProductDetailLevelList } = {}
       levelArray = levelArray.reduce<UIProductDetailLevelList[]>(
         (item, next) => {
           if (!obj[next.level]) {
-            item.push(next);
+            item.push(next)
             next.list.push({
               name: next.name,
               image: next.image,
-            });
-            obj[next.level] = next;
-          } else {
+            })
+            obj[next.level] = next
+          }
+          else {
             obj[next.level].prob = (
               Number(obj[next.level].prob) + Number(next.prob)
-            ).toFixed(4);
+            ).toFixed(4)
             obj[next.level].list.push({
               name: next.name,
               image: next.image,
-            });
+            })
           }
-          return item;
+          return item
         },
-        []
-      );
-      levelArray = levelArray.sort((n1, n2) => n2.level - n1.level);
-      levelList.value = levelArray;
-      boxList = useSortFun(boxList);
-      goodsList.value = [...attachList, ...boxList];
-      console.log("goodList:", goodsList.value);
+        [],
+      )
+      levelArray = levelArray.sort((n1, n2) => n2.level - n1.level)
+      levelList.value = levelArray
+      boxList = useSortFun(boxList)
+      goodsList.value = [...attachList, ...boxList]
+      console.log('goodList:', goodsList.value)
       // 魔王物品:
       // const coinType = data.product.payType === 8 ? '积分' : '水晶'
-      const coinType = "积分";
+      const coinType = '积分'
       const king: UIDemonKing = {
         exist: data.product.demonKingDto?.user != null,
         nickname: data.product.demonKingDto?.user?.nickname,
-        coin: data.product.demonKingDto?.amount + "" + (coinType ?? ""),
-        avatar: data.product.demonKingDto?.user?.avatar ?? "",
+        coin: `${data.product.demonKingDto?.amount}${coinType ?? ''}`,
+        avatar: data.product.demonKingDto?.user?.avatar ?? '',
         time: getPassTime(data.product.demonKingDto?.time ?? 0),
         gid: data.product.demonKingDto?.gid ?? [],
         goods: data.product.demonKingDto
           ? goodsList.value.filter(
-              (n) => n.id === data.product.demonKingDto?.gid[0]
-            )[0]
+            n => n.id === data.product.demonKingDto?.gid[0],
+          )[0]
           : null,
-      };
-      let luckyList: UIProductBoxModel[] = [];
+      }
+      let luckyList: UIProductBoxModel[] = []
       if (data.product.luckyLevel) {
         luckyList = goodsList.value.filter(
-          (n) => n.level >= data.product.luckyLevel
-        );
+          n => n.level >= data.product.luckyLevel,
+        )
       }
-      const attachGoodsList: UIProductBoxModel[] = [];
+      const attachGoodsList: UIProductBoxModel[] = []
       if (data.product.attachGoods && data.product.attachGoods.length > 0) {
         data.product.attachGoods.forEach((item) => {
-          const prob = item.prob ? item.prob * 100 : 0;
+          const prob = item.prob ? item.prob * 100 : 0
           attachGoodsList.push({
             id: item.goodsDto.id,
             title: item.goodsDto.name,
@@ -713,9 +742,9 @@ export function useProductDetail() {
             isSellOut: item.num === 0,
             goodDesc: item.goodsDto?.goodDesc,
             salePrice: item.goodsDto?.salePrice,
-            isDemon: demonGid.filter((n) => n === item.goodsDto.id).length > 0,
-          });
-        });
+            isDemon: demonGid.filter(n => n === item.goodsDto.id).length > 0,
+          })
+        })
       }
       // 接口返回的所有数据
       const detail: UIProductDetailModel = {
@@ -731,7 +760,7 @@ export function useProductDetail() {
         payType: data.product.payType,
         isIntegral: data.box.subTag === 5,
         attachList: attachGoodsList,
-        luckyList: luckyList,
+        luckyList,
         levelList: levelArray,
         title: data.box.title,
         image: data.box.logo,
@@ -759,43 +788,44 @@ export function useProductDetail() {
         nextLevelValue: data.product.luckyLevel,
         catId: data.box.cateId,
         winNum: data.product.winNum,
-      };
+      }
       // 接口返回的所有数据
-      productDetail.value = detail;
+      productDetail.value = detail
       // 判断是不是无限盒子
-      isInfinite.value = detail.isDemon;
-      isSelectNum.value = data.product.selectNum === 1;
+      isInfinite.value = detail.isDemon
+      isSelectNum.value = data.product.selectNum === 1
       // cards
-      let cardsArray = [] as Array<UIProductPriceCard>;
-      const last = data.product.total - data.product.sales;
+      let cardsArray = [] as Array<UIProductPriceCard>
+      const last = data.product.total - data.product.sales
       for (const item of data.product.onceTimes) {
         cardsArray.push({
           num: item,
           price:
             item === -1
-              ? ""
+              ? ''
               : Number(Number(item) * Number(data.product.price)).toFixed(2),
-          last: last,
+          last,
           formatNum: formatNumToString(item),
-        });
+        })
       }
-      cardsArray = cardsArray.reverse();
-      cardsList.value = cardsArray;
-    } else {
-      ShowToast(res.msg);
+      cardsArray = cardsArray.reverse()
+      cardsList.value = cardsArray
     }
-  };
+    else {
+      ShowToast(res.msg)
+    }
+  }
 
   onMounted(() => {
-    //@ts-ignore
-    eventBus.on("didSelectCoupon", async (item: UICouponModel) => {
-      console.log("didSelectCoupon:", item);
-      await didTapPurchaseNum(currentSubmit.value, item);
-    });
-  });
+    // @ts-ignore
+    eventBus.on('didSelectCoupon', async (item: UICouponModel) => {
+      console.log('didSelectCoupon:', item)
+      await didTapPurchaseNum(currentSubmit.value, item)
+    })
+  })
   onUnmounted(() => {
-    eventBus.off("didSelectCoupon");
-  });
+    eventBus.off('didSelectCoupon')
+  })
 
   // 获取箱子列表
   const loadBoxList = async () => {
@@ -807,124 +837,124 @@ export function useProductDetail() {
       page: 1,
       sflag: boxParams.value.sflag,
       sort: boxParams.value.sort,
-    };
+    }
     if (boxParams.value.level !== -1) {
       params = Object.assign({
         ...params,
         level: boxParams.value.level,
-      });
+      })
     }
-    const BoxRequest = await productSwapBoxRequest(params);
+    const BoxRequest = await productSwapBoxRequest(params)
     if (BoxRequest.code === 200) {
-      const total = productDetail.value.lastSeq;
-      const rangeList = [] as UIProductBoxRangeType[];
-      const swapBoxList = [] as UIProductSwapItemModel[];
+      const total = productDetail.value.lastSeq
+      const rangeList = [] as UIProductBoxRangeType[]
+      const swapBoxList = [] as UIProductSwapItemModel[]
       if (total) {
-        const count = Math.ceil(total / 50);
+        const count = Math.ceil(total / 50)
         for (let i = 0; i < count; i++) {
           rangeList.push({
             title: `${i * 50 + 1}-${(i + 1) * 50}`,
             page: i + 1,
-          } as UIProductBoxRangeType);
+          } as UIProductBoxRangeType)
         }
       }
       if (rangeList.length === 0) {
         rangeList.push({
-          title: "1-50",
+          title: '1-50',
           page: 1,
-        });
+        })
       }
       for (const item of BoxRequest.data.content) {
-        const tmp: UIProductSwapItemModel = <UIProductSwapItemModel>{};
-        tmp.num = item.num;
-        tmp.total = item.total;
-        tmp.id = item.id;
-        tmp.boxSeqNo = item.boxSeqNo;
-        tmp.isCurrent = item.boxSeqNo === productDetail.value.current;
-        const levelList: number[] = [];
+        const tmp: UIProductSwapItemModel = <UIProductSwapItemModel>{}
+        tmp.num = item.num
+        tmp.total = item.total
+        tmp.id = item.id
+        tmp.boxSeqNo = item.boxSeqNo
+        tmp.isCurrent = item.boxSeqNo === productDetail.value.current
+        const levelList: number[] = []
         for (const tmpElement of item.goods) {
-          levelList.push(tmpElement.level);
+          levelList.push(tmpElement.level)
         }
-        let result: number[] = [];
+        let result: number[] = []
         levelList.forEach((levelItem) => {
-          if (result.indexOf(levelItem) === -1) {
-            result.push(levelItem);
+          if (!result.includes(levelItem)) {
+            result.push(levelItem)
           }
-        });
-        result = result.sort((n1, n2) => n2 - n1);
-        const map: UIProductSwapLevelItem[] = Array<UIProductSwapLevelItem>();
+        })
+        result = result.sort((n1, n2) => n2 - n1)
+        const map: UIProductSwapLevelItem[] = new Array<UIProductSwapLevelItem>()
         result.forEach((level) => {
-          let num = 0;
-          let total = 0;
+          let num = 0
+          let total = 0
           item.goods.forEach((goods) => {
             if (goods.level === level) {
-              num = num + goods.num;
-              total = total + goods.total;
+              num = num + goods.num
+              total = total + goods.total
             }
-          });
+          })
           map.push({
             title: getNormalLevelNameByLevel(level),
-            num: num,
-            total: total,
-          });
-        });
-        tmp.list = map;
-        swapBoxList.push(tmp);
+            num,
+            total,
+          })
+        })
+        tmp.list = map
+        swapBoxList.push(tmp)
       }
       const model: UIProductSwapModel = {
         boxRange: rangeList,
         boxList: swapBoxList,
-      };
-      boxRangeList.value = model.boxRange;
-      boxList.value = model.boxList;
+      }
+      boxRangeList.value = model.boxRange
+      boxList.value = model.boxList
     }
-    recordParams.value.page = 1;
-    await loadRecordList();
-  };
+    recordParams.value.page = 1
+    await loadRecordList()
+  }
   const clickItem = (item: UserGoodsModel) => {
-    detailShow.value = true;
-    currentBox.value = item;
-  };
+    detailShow.value = true
+    currentBox.value = item
+  }
 
   const currentTabDidChange = async (index: number) => {
-    currentTab.value = index;
-    await reloadCurrentPage();
-  };
+    currentTab.value = index
+    await reloadCurrentPage()
+  }
 
   const sortList = computed(() => {
-    const levelList = [] as Array<any>;
+    const levelList = [] as Array<any>
     levelList.push({
-      name: "全部",
+      name: '全部',
       value: -1,
-    });
+    })
     if (productDetail.value && productDetail.value.levelList) {
       productDetail.value.levelList.forEach((item) => {
         levelList.push({
           name: item.levelName,
           value: item.level,
-        });
-      });
+        })
+      })
     }
-    return levelList;
-  });
+    return levelList
+  })
   const sortTabAction = async (i: any) => {
-    recordParams.value.level = i.value;
-    recordParams.value.page = 1;
-    await loadRecordList();
-  };
+    recordParams.value.level = i.value
+    recordParams.value.page = 1
+    await loadRecordList()
+  }
 
   const loadOrderList = async () => {
     const param = {
       pid: productDetail.value.id,
       limit: recordParams.value.limit,
       page: recordParams.value.page,
-    };
-    const res = await productOrderRequest(param);
-    console.log("ProductOrder:", res.data);
-    const { data, code } = res;
+    }
+    const res = await productOrderRequest(param)
+    console.log('ProductOrder:', res.data)
+    const { data, code } = res
     if (code === 200) {
-      const list =
-        param.page === 1 ? ([] as UIProductRecordModel[]) : recordList.value;
+      const list
+        = param.page === 1 ? ([] as UIProductRecordModel[]) : recordList.value
       // const isLucky = productDetail.value.type === 1;
       for (const item of data.content) {
         list.push({
@@ -936,7 +966,7 @@ export function useProductDetail() {
           // level: ,
           // levelImage: getLevelImage(item.goodsLevel),
           // isFree: item.isFree === 1,
-          time: parseTime(item.createTime, "{m}/{d} {h}:{i}") ?? "",
+          time: parseTime(item.createTime, '{m}/{d} {h}:{i}') ?? '',
           // isLucky: isLucky,
           vip: item.user.vip,
           // sales:
@@ -945,32 +975,33 @@ export function useProductDetail() {
           //         : item.sales,
           // isHide: isHide,
           // isSpec: checkIsSpecByLevel(item.goodsLevel),
-        });
+        })
       }
-      orderList.value = list;
-      recordParams.value.total = Math.ceil(data.totalElements / param.limit);
-    } else {
-      recordParams.value.total = 0;
+      orderList.value = list
+      recordParams.value.total = Math.ceil(data.totalElements / param.limit)
     }
-  };
+    else {
+      recordParams.value.total = 0
+    }
+  }
   // 获取盲盒记录
   const loadRecordList = async () => {
-    showLoading();
+    showLoading()
     const param = {
       pid: productDetail.value.id,
       level: recordParams.value.level,
       limit: recordParams.value.limit,
       page: recordParams.value.page,
-    };
-    const res = await productRecordRequest(param);
-    hideLoading();
-    const { data, code } = res;
+    }
+    const res = await productRecordRequest(param)
+    hideLoading()
+    const { data, code } = res
     if (code === 200) {
-      const list =
-        param.page === 1 ? ([] as UIProductRecordModel[]) : recordList.value;
-      const isLucky = productDetail.value.type === 1;
+      const list
+        = param.page === 1 ? ([] as UIProductRecordModel[]) : recordList.value
+      const isLucky = productDetail.value.type === 1
       for (const item of data.content) {
-        const isHide = isLucky ? item.extra.is_attach : false;
+        const isHide = isLucky ? item.extra.is_attach : false
         list.push({
           id: item.id,
           nickName: item.nickname,
@@ -980,110 +1011,114 @@ export function useProductDetail() {
           level: item.goodsLevel,
           levelImage: getLevelImage(item.goodsLevel),
           isFree: item.isFree === 1,
-          time: parseTime(item.createTime, "{m}/{d} {h}:{i}") ?? "",
-          isLucky: isLucky,
+          time: parseTime(item.createTime, '{m}/{d} {h}:{i}') ?? '',
+          isLucky,
           vip: item.vip,
           sales:
             productDetail.value.type === 2 || productDetail.value.type === 4
               ? item.extra.selectNum
               : item.sales,
-          isHide: isHide,
+          isHide,
           isSpec: checkIsSpecByLevel(item.goodsLevel),
-        });
+        })
       }
-      recordList.value = list;
-      recordParams.value.total = Math.ceil(data.totalElements / param.limit);
-    } else {
-      recordParams.value.total = 0;
+      recordList.value = list
+      recordParams.value.total = Math.ceil(data.totalElements / param.limit)
     }
-  };
+    else {
+      recordParams.value.total = 0
+    }
+  }
   watch(
     () => swapModalShow.value,
     async (value) => {
       if (value) {
-        await loadBoxList();
+        await loadBoxList()
       }
-    }
-  );
+    },
+  )
 
   const reloadCurrentPage = async () => {
     await loadProductDetail({
       pid: productDetail.value.id,
-    });
+    })
     if (currentTab.value === 1) {
-      await loadRecordList();
+      await loadRecordList()
     }
     if (currentTab.value === 2) {
-      await loadOrderList();
+      await loadOrderList()
     }
-  };
+  }
 
   const didSelectBox = async (pid: number) => {
-    productDetail.value.id = pid;
-    await reloadCurrentPage();
-  };
-  eventBus.on("didLogin", async (_: any) => {
-    await loadData();
-  });
+    productDetail.value.id = pid
+    await reloadCurrentPage()
+  }
+  eventBus.on('didLogin', async (_: any) => {
+    await loadData()
+  })
 
   const loadData = async () => {
-    const ops = getPageOptions();
-    const boxid = ops.boxid;
-    const pid = ops.pid;
-    const orderId = ops.orderId;
+    const ops = getPageOptions()
+    const boxid = ops.boxid
+    const pid = ops.pid
+    const orderId = ops.orderId
     if (productDetail.value.pid) {
       await loadProductDetail({
         pid: productDetail.value.pid,
-      });
-    } else if (boxid) {
+      })
+    }
+    else if (boxid) {
       await loadProductDetail({
         boxid,
-      });
-    } else if (pid) {
+      })
+    }
+    else if (pid) {
       await loadProductDetail({
         pid,
-      });
+      })
     }
     if (productDetail.value.title) {
       await uni.setNavigationBarTitle({
         title: productDetail.value.title,
-      });
+      })
     }
 
-    const already = uni.getStorageSync(orderId);
+    const already = uni.getStorageSync(orderId)
     if (orderId && !already) {
-      showLoading("查询支付结果");
-      const resp = await checkOrderInfo(orderId);
-      hideLoading();
+      showLoading('查询支付结果')
+      const resp = await checkOrderInfo(orderId)
+      hideLoading()
       if (resp) {
-        await handleOpenResult(orderId);
-        uni.setStorageSync(orderId, true);
+        await handleOpenResult(orderId)
+        uni.setStorageSync(orderId, true)
       }
     }
-  };
+  }
 
   const didClickContinue = async () => {
     if (currentSubmit.value) {
-      rewardShow.value = false;
-      await didTapPurchaseNum(currentSubmit.value);
+      rewardShow.value = false
+      await didTapPurchaseNum(currentSubmit.value)
     }
-  };
+  }
 
   const didClickChangeBox = async (isLeft: boolean) => {
-    let pid;
+    let pid
     if (isLeft) {
-      pid = productDetail.value.preId;
-    } else {
-      pid = productDetail.value.nextId;
+      pid = productDetail.value.preId
+    }
+    else {
+      pid = productDetail.value.nextId
     }
     if (!pid) {
-      await ShowToast("没有更多箱子了");
-      return;
+      await ShowToast('没有更多箱子了')
+      return
     }
-    productDetail.value.id = pid;
+    productDetail.value.id = pid
 
-    await reloadCurrentPage();
-  };
+    await reloadCurrentPage()
+  }
 
   return {
     openShow,
@@ -1135,5 +1170,5 @@ export function useProductDetail() {
     scrollToLower,
     skipLottery,
     rewardRedBag,
-  };
+  }
 }

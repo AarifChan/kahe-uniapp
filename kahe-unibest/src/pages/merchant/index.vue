@@ -1,5 +1,5 @@
 <template>
-  <!--  <NavBar :opacity="1" title="商家" position="sticky" />-->
+  <!--  <NavBar :opacity="1" title="商家" position="sticky" /> -->
   <scroll-view
     :scroll-y="true"
     class="merchant"
@@ -14,21 +14,21 @@
           src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/logo.png"
         />
         <view class="merchant-content-search">
-          <Search @did-tap-search="didTapSearch" placeholder="请输入商家名称" />
+          <Search placeholder="请输入商家名称" @did-tap-search="didTapSearch" />
         </view>
       </view>
 
       <view class="merchant-content-list">
         <view class="merchant-content-tab">
           <Tab
-            :list="merchantCateList"
             v-model:current="currentTab"
+            :list="merchantCateList"
             @did-click="didClickTab"
           />
         </view>
         <Card
           v-for="(item, index) in merchantList"
-          :key="'merchant-item' + index"
+          :key="`merchant-item${index}`"
           :level="item.tag"
           :item="item"
           @did-click-info="didClickMerchant"
@@ -41,20 +41,22 @@
 </template>
 
 <script lang="ts" setup>
-import { useUserStore } from '@/store/user'
+import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
+import { computed, onMounted, ref } from 'vue'
+import Search from '@/components/search/index.vue'
+import TabBar from '@/components/tabBar/index.vue'
+import { useGoods } from '@/composables/goods'
+import { useMerchant } from '@/pages/merchant/index'
 import { useAppStore } from '@/store/app'
-import Search from "@/components/search/index.vue";
-import Tab from "./components/tab/index.vue";
-import Card from "./components/card/index.vue";
-import NavBar from "@/components/navBar/index.vue";
-import TabBar from "@/components/tabBar/index.vue";
-import { computed, onMounted, ref } from "vue";
-import { useMerchant } from "@/pages/merchant/index";
-import { useGoods } from "@/composables/goods";
+import { useUserStore } from '@/store/user'
+import Card from './components/card/index.vue'
 
-import { onShareAppMessage, onShareTimeline } from "@dcloudio/uni-app";
+import Tab from './components/tab/index.vue'
 
-const { goodsTapClick } = useGoods();
+const appStore = useAppStore()
+const userStore = useUserStore()
+
+const { goodsTapClick } = useGoods()
 const {
   getMerchantList,
   merchantList,
@@ -64,38 +66,38 @@ const {
   didClickTab,
   didTapSearch,
   handleMallScrollToLower,
-} = useMerchant();
+} = useMerchant()
 
 onMounted(() => {
-  getMerchantList();
-});
+  getMerchantList()
+})
 
 const scrollThreshold = computed(() => {
-  return appStore.statusBarHeight + appStore.navBarHeight;
-});
-const navOpacity = ref(0);
-const handleScroll = (e) => {
-  const scrollTop = e.detail.scrollTop;
-  navOpacity.value = Math.min(scrollTop / scrollThreshold.value, 1);
-};
+  return appStore.statusBarHeight + appStore.navBarHeight
+})
+const navOpacity = ref(0)
+function handleScroll(e) {
+  const scrollTop = e.detail.scrollTop
+  navOpacity.value = Math.min(scrollTop / scrollThreshold.value, 1)
+}
 onShareAppMessage(() => {
   return {
     title: `${
-      userStore.userInfo?.nickname ?? ""
+      userStore.userInfo?.nickname ?? ''
     }邀请你来卡核抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
-    path: "/pages/welcome/index",
-  };
-});
+    imageUrl: 'https://jms.85gui7.com/kahe-202510/common/share.jpg',
+    path: '/pages/welcome/index',
+  }
+})
 onShareTimeline(() => {
   return {
     title: `${
-      userStore.userInfo?.nickname ?? ""
+      userStore.userInfo?.nickname ?? ''
     }邀请你来卡核抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
-    path: "/pages/welcome/index",
-  };
-});
+    imageUrl: 'https://jms.85gui7.com/kahe-202510/common/share.jpg',
+    path: '/pages/welcome/index',
+  }
+})
 </script>
 
 <style lang="scss" scoped>

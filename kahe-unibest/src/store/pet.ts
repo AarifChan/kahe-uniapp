@@ -1,7 +1,7 @@
 import type { PetEggsModel, PetModel } from '@/composables/pet/model'
-import { getMinePetListRequest, getPetConfigRequest } from '@/api/pet'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { getPetConfigRequest } from '@/api/pet'
 
 export const usePetStore = defineStore('pet', () => {
   const petCfgDict = ref<Map<string, PetModel>>(new Map())

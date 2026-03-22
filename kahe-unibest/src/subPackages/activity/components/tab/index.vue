@@ -1,10 +1,10 @@
 <template>
   <view class="activityTab">
     <view
-      class="activityTab-item"
       v-for="(item, index) in tabList"
-      :key="'id' + index"
-      :id="'id' + index"
+      :id="`id${index}`"
+      :key="`id${index}`"
+      class="activityTab-item"
       @tap.stop="didClick(index)"
     >
       <image
@@ -21,10 +21,12 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref } from "vue";
+import type { PropType } from 'vue'
+import { ref } from 'vue'
+
 export interface TabItem {
-  title: string;
-  value: number;
+  title: string
+  value: number
 }
 const props = defineProps({
   current: {
@@ -35,16 +37,15 @@ const props = defineProps({
     default: [],
     type: Array as PropType<TabItem[]>,
   },
-});
+})
 
-const current = ref(0);
-const didClick = (index: number) => {
-  current.value = index;
-  emits("update:current", index);
-  emits("didClick", index);
-};
-
-const emits = defineEmits(["update:current", "didClick"]);
+const emits = defineEmits(['update:current', 'didClick'])
+const current = ref(0)
+function didClick(index: number) {
+  current.value = index
+  emits('update:current', index)
+  emits('didClick', index)
+}
 </script>
 
 <style lang="scss" scoped>

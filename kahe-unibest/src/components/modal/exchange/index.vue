@@ -15,28 +15,32 @@
         <view class="mallPay-top-info">
           <text
             class="mallPay-top-info-name theme-font text-flow-ellipsis-multiple"
-            >{{ goods.title }}</text
           >
+            {{ goods.title }}
+          </text>
           <view class="mallPay-top-info-sub">
             <text class="mallPay-top-info-sub-title">需支付</text>
-            <text class="mallPay-top-info-sub-value theme-font">{{
-              goods.price
-            }}</text>
+            <text class="mallPay-top-info-sub-value theme-font">
+              {{
+                goods.price
+              }}
+            </text>
             <text class="mallPay-top-info-sub-title">点券</text>
           </view>
         </view>
       </view>
-      <view style="flex: 1"></view>
+      <view style="flex: 1" />
       <view class="mallPay-forbidden" style="transform: translateY(-50rpx)">
         <view class="mallPay-forbidden-side">
           <text class="mallPay-forbidden-side-title">商品兑换声明</text>
           <text
             class="mallPay-forbidden-side-subTitle text-flow-ellipsis-multiple"
-            >注：商品兑换，需消耗相应余额，一经兑换无法撤回</text
           >
-          <text class="mallPay-forbidden-side-danger"
-            >未成年人请在监护人陪同下操作</text
-          >
+            注：商品兑换，需消耗相应余额，一经兑换无法撤回
+          </text>
+          <text class="mallPay-forbidden-side-danger">
+            未成年人请在监护人陪同下操作
+          </text>
         </view>
         <image
           class="mallPay-forbidden-img"
@@ -57,9 +61,9 @@
           class="mallPay-button-img"
           src="https://jms.85gui7.com/kahe-202510/images/reward-btn1.png"
         />
-        <text class="mallPay-button-title theme-font text-stroke-main"
-          >确定兑换</text
-        >
+        <text class="mallPay-button-title theme-font text-stroke-main">
+          确定兑换
+        </text>
       </view>
     </view>
   </tn-popup>
@@ -71,13 +75,14 @@
 </template>
 
 <script lang="ts" setup>
-import type { UIProductPayModel } from "@/model";
-import { type PropType, ref, watch } from "vue";
-import CommonModal from "@/components/modal/index.vue";
-import Agreement from "@/components/agreement/index.vue";
-import { useModal } from "@/composables/modal";
-import { ShowToast } from "@/utils";
-const { modalShow, modalTitle, modalContent, showModalType } = useModal();
+import type { PropType } from 'vue'
+import type { UIProductPayModel } from '@/model'
+import { ref, watch } from 'vue'
+import Agreement from '@/components/agreement/index.vue'
+import CommonModal from '@/components/modal/index.vue'
+import { useModal } from '@/composables/modal'
+import { ShowToast } from '@/utils'
+
 const props = defineProps({
   show: {
     default: false,
@@ -91,28 +96,29 @@ const props = defineProps({
     default: false,
     type: Boolean,
   },
-});
-const vShow = ref(false);
+})
+const emits = defineEmits(['update:show', 'didTapSmash'])
+const { modalShow, modalTitle, modalContent, showModalType } = useModal()
+const vShow = ref(false)
 watch(
   () => props.show,
   (value) => {
-    vShow.value = value;
-  }
-);
-const agree = ref(false);
-const emits = defineEmits(["update:show", "didTapSmash"]);
-const didTapProtocol = () => {
-  modalShow.value = true;
-  showModalType(1);
-};
+    vShow.value = value
+  },
+)
+const agree = ref(false)
+function didTapProtocol() {
+  modalShow.value = true
+  showModalType(1)
+}
 
-const didTapConfirm = () => {
+function didTapConfirm() {
   if (!agree.value) {
-    ShowToast("请阅读并允许协议");
-    return;
+    ShowToast('请阅读并允许协议')
+    return
   }
-  emits("didTapSmash", props.goods.id);
-};
+  emits('didTapSmash', props.goods.id)
+}
 </script>
 
 <style lang="scss" scoped>

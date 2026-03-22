@@ -1,29 +1,29 @@
 <template>
   <view>
     <button
+      v-if="buttonType === 1"
       class="custom-btn"
       open-type="getPhoneNumber"
       @getphonenumber="getPhoneNumber"
-      v-if="buttonType === 1"
     >
       <image class="custom-btn-bg" src="https://jms.85gui7.com/kahe-202510/login/btn1.png" />
-      <!--      <view class="custom-btn-title theme-font">{{ title }}</view>-->
-      <!--      <view class="custom-btn-other">-->
-      <!--        <slot />-->
-      <!--      </view>-->
+      <!--      <view class="custom-btn-title theme-font">{{ title }}</view> -->
+      <!--      <view class="custom-btn-other"> -->
+      <!--        <slot /> -->
+      <!--      </view> -->
     </button>
-    <view class="custom-btn" v-else>
+    <view v-else class="custom-btn">
       <image class="custom-btn-bg" src="https://jms.85gui7.com/kahe-202510/login/btn2.png" />
-      <!--            <view class="custom-btn-title theme-font">{{ title }}</view>-->
-      <!--      <view class="custom-btn-other">-->
-      <!--        <slot />-->
-      <!--      </view>-->
+      <!--            <view class="custom-btn-title theme-font">{{ title }}</view> -->
+      <!--      <view class="custom-btn-other"> -->
+      <!--        <slot /> -->
+      <!--      </view> -->
     </view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import { ShowToast } from "@/utils";
+import { ShowToast } from '@/utils'
 
 enum LoginButtonType {
   normal = 0,
@@ -33,32 +33,32 @@ enum LoginButtonType {
 defineProps({
   title: {
     type: String,
-    default: "",
+    default: '',
   },
   buttonType: {
     default: 0,
     type: Number,
   },
-});
+})
 
-const emits = defineEmits(["didGetPhoneParams"]);
+const emits = defineEmits(['didGetPhoneParams'])
 
-const getPhoneNumber = (e: {
-  detail: { encryptedData: string; iv: string; code: string; errMsg?: string };
-}) => {
-  const detail = e.detail;
-  console.log("detail", detail);
+function getPhoneNumber(e: {
+  detail: { encryptedData: string, iv: string, code: string, errMsg?: string }
+}) {
+  const detail = e.detail
+  console.log('detail', detail)
   if (!detail.encryptedData || !detail.iv) {
-    ShowToast("登录失败");
-    return;
+    ShowToast('登录失败')
+    return
   }
   const params = {
     code: detail.code,
     encryptedData: detail.encryptedData,
     iv: detail.iv,
-  };
-  emits("didGetPhoneParams", params);
-};
+  }
+  emits('didGetPhoneParams', params)
+}
 </script>
 
 <style lang="scss" scoped>

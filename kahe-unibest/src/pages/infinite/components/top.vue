@@ -9,7 +9,9 @@
     <image v-else class="top-center" src="https://jms.85gui7.com/kahe-202510/images/card-girl.gif" />
     <view class="top-left">
       <image class="top-left-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/machine/card-item-bg.png" />
-      <view class="top-left-tips">vip客服-可可</view>
+      <view class="top-left-tips">
+        vip客服-可可
+      </view>
       <view v-if="types" class="top-left-title">
         主人，请选择心仪的抽卡机，海量卡牌任您挑选。
       </view>
@@ -22,10 +24,12 @@
     </view>
   </view>
 </template>
+
 <script setup lang="ts">
-import Barrage from "@/components/barrage/index.vue";
-import type { UIBarrageModel } from "@/model";
-import type { PropType } from "vue";
+import type { PropType } from 'vue'
+import type { UIBarrageModel } from '@/model'
+import Barrage from '@/components/barrage/index.vue'
+
 defineProps({
   goods: {
     type: Array as PropType<UIBarrageModel[]>,
@@ -35,8 +39,9 @@ defineProps({
     type: Boolean,
     default: true,
   },
-});
+})
 </script>
+
 <style lang="scss" scoped>
 .top {
   position: relative;

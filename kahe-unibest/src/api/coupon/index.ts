@@ -1,16 +1,15 @@
-import { get, post } from "@/utils/request";
-import { PageParams, ListObject } from "@/model";
-import { CouponModel } from "@/model";
+import type { CouponModel, ListObject, PageParams } from '@/model'
+import { get, post } from '@/utils/request'
 
 export interface CouponParams extends PageParams {
-  merchantId?: string | null;
+  merchantId?: string | null
 }
 
 /* 优惠券 */
-export const getCouponListRequest = async (params: CouponParams) => {
-  return await get<ListObject<CouponModel>>("coupon/list", params);
-};
+export async function getCouponListRequest(params: CouponParams) {
+  return await get<ListObject<CouponModel>>('coupon/list', params)
+}
 
-export const receiveCouponRequest = async (params: any) => {
-  return await post("coupon/receive", params);
-};
+export async function receiveCouponRequest(params: any) {
+  return await post('coupon/receive', params)
+}

@@ -1,32 +1,32 @@
 export interface PageParams {
-  limit: number;
-  page: number;
+  limit: number
+  page: number
 }
 
 export interface PetPageParams extends PageParams {
-  level?: number;
-  status?: number;
+  level?: number
+  status?: number
 }
 
 export interface BoxPageParams extends PageParams {
-  mid: number;
+  mid: number
 }
 
 export interface MerchantParams extends PageParams {
-  box?: number;
-  cate?: number;
-  key?: string;
+  box?: number
+  cate?: number
+  key?: string
 }
 
 export interface ListObject<T> {
-  param: any;
-  page: number;
-  content: T[];
-  totalElements: number;
+  param: any
+  page: number
+  content: T[]
+  totalElements: number
 }
 
 export interface PageModel {
-  page: number;
-  limit: number;
-  total: number;
+  page: number
+  limit: number
+  total: number
 }

@@ -7,28 +7,32 @@
         :src="item?.goods?.image"
         @tap.passive="emits('didTapDetail', item)"
       />
-      <view class="boxItem-top-quality">{{
-        getTitleByQuality(item.goods.quality)
-      }}</view>
+      <view class="boxItem-top-quality">
+        {{
+          getTitleByQuality(item.goods.quality)
+        }}
+      </view>
 
-      <!--            <view class="boxItem-top-levelBg">-->
-      <!--                <image mode="heightFix"  class="boxItem-top-levelBg-level" :src="getLevelImage(item?.goods?.level ?? 0)" />-->
-      <!--            </view>-->
+      <!--            <view class="boxItem-top-levelBg"> -->
+      <!--                <image mode="heightFix"  class="boxItem-top-levelBg-level" :src="getLevelImage(item?.goods?.level ?? 0)" /> -->
+      <!--            </view> -->
     </view>
     <view class="boxItem-info">
-      <text class="boxItem-info-title text-flow-ellipsis-single">{{
-        item?.goods?.name
-      }}</text>
+      <text class="boxItem-info-title text-flow-ellipsis-single">
+        {{
+          item?.goods?.name
+        }}
+      </text>
       <view class="boxItem-info-ticket">
-        <!--                <image class="boxItem-info-ticket-img" src="https://jms.85gui7.com/kahe/mine/icon2.png" />-->
+        <!--                <image class="boxItem-info-ticket-img" src="https://jms.85gui7.com/kahe/mine/icon2.png" /> -->
         <text class="boxItem-info-ticket-title price-font">
-          {{ item?.goods?.price ?? 0 }}</text
-        >
+          {{ item?.goods?.price ?? 0 }}
+        </text>
       </view>
       <text class="boxItem-info-num">数量：{{ item?.num }}</text>
-      <text v-if="item?.goods?.type === 1" class="boxItem-info-num"
-        >仅限发货</text
-      >
+      <text v-if="item?.goods?.type === 1" class="boxItem-info-num">
+        仅限发货
+      </text>
     </view>
     <view class="boxItem-lock" @tap.stop="emits('didTapLock', item)">
       <image
@@ -47,21 +51,22 @@
 </template>
 
 <script lang="ts" setup>
-import type { UserGoodsModel } from "@/model";
-import type { PropType } from "vue";
-import { useEnum } from "@/composables/enum";
-import SelectItem from "@/subPackages/box/box/components/select/index.vue";
-import { getTitleByQuality } from "@/utils";
-const { getLevelImage } = useEnum();
+import type { PropType } from 'vue'
+import type { UserGoodsModel } from '@/model'
+import { useEnum } from '@/composables/enum'
+import SelectItem from '@/subPackages/box/box/components/select/index.vue'
+import { getTitleByQuality } from '@/utils'
 
 defineProps({
   item: {
     default: {} as UserGoodsModel,
     type: Object as PropType<UserGoodsModel>,
   },
-});
+})
 
-const emits = defineEmits(["didTapSelect", "didTapLock", "didTapDetail"]);
+const emits = defineEmits(['didTapSelect', 'didTapLock', 'didTapDetail'])
+
+const { getLevelImage } = useEnum()
 </script>
 
 <style lang="scss" scoped>

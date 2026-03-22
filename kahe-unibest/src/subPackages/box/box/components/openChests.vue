@@ -13,8 +13,7 @@
               class="goodsContent-list-goods-info-top-img"
               :src="item.logo"
               :lazy-load="true"
-            >
-            </image>
+            />
           </view>
           <view class="goodsContent-list-goods-info-content">
             <text
@@ -26,11 +25,11 @@
               <image class="goodsContent-list-goods-info-content-row-img" />
               <text
                 class="goodsContent-list-goods-info-content-row-title"
-              ></text>
+              />
             </view>
             <view class="goodsContent-list-goods-info-content-row">
-              <text class="goodsContent-list-goods-info-content-row-title"
-                >数量:{{ item.num }}
+              <text class="goodsContent-list-goods-info-content-row-title">
+                数量:{{ item.num }}
               </text>
             </view>
           </view>
@@ -39,16 +38,18 @@
     </view>
   </view>
 </template>
+
 <script lang="ts" setup>
-import type { UIChestModel } from "@/model";
-import type { PropType } from "vue";
-const emits = defineEmits(["selectItem"]);
+import type { PropType } from 'vue'
+import type { UIChestModel } from '@/model'
+
 defineProps({
-    list: {
-        type: Array as PropType<UIChestModel[]>,
-        default: () => [],
-    },
-});
+  list: {
+    type: Array as PropType<UIChestModel[]>,
+    default: () => [],
+  },
+})
+const emits = defineEmits(['selectItem'])
 </script>
 
 <style lang="scss" scoped>

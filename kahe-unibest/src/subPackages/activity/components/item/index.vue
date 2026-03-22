@@ -7,13 +7,17 @@
         class="activityItem-top-bg"
         src="https://jms.85gui7.com/kahe-202510/ka-he/welfare/title-bg.png"
       />
-      <view class="activityItem-top-title">{{ item.title }}</view>
+      <view class="activityItem-top-title">
+        {{ item.title }}
+      </view>
     </view>
     <view class="activityItem-info">
       <image class="activityItem-info-img" :src="item.merchant?.icon" />
-      <view class="activityItem-info-title text-flow-ellipsis-single">{{
-        item.merchant?.name
-      }}</view>
+      <view class="activityItem-info-title text-flow-ellipsis-single">
+        {{
+          item.merchant?.name
+        }}
+      </view>
     </view>
     <scroll-view
       class="activityItem-list"
@@ -22,9 +26,9 @@
       scroll-with-animation
     >
       <image
-        class="activityItem-list-item"
         v-for="(zItem, index) in item.goods"
         :key="zItem.goodsDto.id"
+        class="activityItem-list-item"
         :src="zItem.goodsDto.image"
         mode="heightFix"
       />
@@ -35,22 +39,24 @@
         class="activityItem-btn-img"
         src="https://jms.85gui7.com/kahe-202510/ka-he/welfare/btn-bg.png"
       />
-      <view class="activityItem-btn-title theme-font">立即进入</view>
+      <view class="activityItem-btn-title theme-font">
+        立即进入
+      </view>
     </view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import { PropType } from "vue";
-import { UIWelfareList } from "@/model";
+import type { PropType } from 'vue'
+import type { UIWelfareList } from '@/model'
 
 defineProps({
   item: {
     default: {},
     type: Object as PropType<UIWelfareList>,
   },
-});
-const emits = defineEmits(["didClickItem"]);
+})
+const emits = defineEmits(['didClickItem'])
 </script>
 
 <style lang="scss" scoped>

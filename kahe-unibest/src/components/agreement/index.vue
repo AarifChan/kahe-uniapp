@@ -5,8 +5,9 @@
       <text
         class="agreement-title agreement-subTitle"
         @tap.stop="emits('didTapProtocol')"
-        >{{ subTitle }}</text
       >
+        {{ subTitle }}
+      </text>
     </view>
 
     <image
@@ -28,16 +29,16 @@ defineProps({
     type: Boolean,
   },
   title: {
-    default: "已阅读并同意",
+    default: '已阅读并同意',
     type: String,
   },
   subTitle: {
-    default: "《用户使用协议》",
+    default: '《用户使用协议》',
     type: String,
   },
-});
+})
 
-const emits = defineEmits(["didTapProtocol", "update:checked"]);
+const emits = defineEmits(['didTapProtocol', 'update:checked'])
 </script>
 
 <style lang="scss" scoped>

@@ -21,11 +21,11 @@
     <Infinite
       v-else-if="isInfinite"
       :sort-list="sortList"
-      :luckProgress="luckProgress"
+      :luck-progress="luckProgress"
       :product="productDetail"
       :cards-array="cardsList"
       :record-list="recordList"
-      :levelGroupList="levelGroupList"
+      :level-group-list="levelGroupList"
       :goods-list="goodsList"
       :level-list="levelList"
       @click-item="clickItem"
@@ -55,20 +55,20 @@
       @did-click-remark="handleClickRemark"
     />
     <Handles
-      @did-tap-reload="reloadCurrentPage"
       :product="productDetail"
       :un-read-count="unreadNum"
+      @did-tap-reload="reloadCurrentPage"
     />
     <detail-modal v-model:show="detailShow" :item="currentBox" />
-    <!--    <login v-model:show="loginShow" @did-tap-login="handleLogin" />-->
+    <!--    <login v-model:show="loginShow" @did-tap-login="handleLogin" /> -->
     <pay
       v-model:show="payShow"
+      v-model:skip-checked="skipLottery"
       :goods="payItem"
-      @did-tap-pay="didTapPay"
-      @did-tap-coupon="didTapCoupon"
       :show-skip="isInfinite"
       :merchant="productDetail.merchant"
-      v-model:skip-checked="skipLottery"
+      @did-tap-pay="didTapPay"
+      @did-tap-coupon="didTapCoupon"
     />
     <swap
       v-model:show="swapModalShow"
@@ -89,7 +89,7 @@
     />
     <smash
       v-model:show="smashShow"
-      :recycleGoods="recycleGoods"
+      :recycle-goods="recycleGoods"
       @did-tap-smash="handleSmashGoods"
     />
     <common-modal
@@ -100,7 +100,7 @@
     <Open v-model:show="openShow" :product="productDetail" />
     <lottery
       v-model:show="lotteryShow"
-      :skipGif="skipLottery"
+      :skip-gif="skipLottery"
       :list="lotteryList"
       :is-skip="false"
       @did-tap-continue="didTapContinue"
@@ -109,58 +109,61 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from '@/store/app'
-import { useProductDetail } from "@/composables/product/detail";
-import { nextTick, onMounted, ref } from "vue";
-import SelectNum from "./components/selectNum.vue";
+import { onShareAppMessage, onShareTimeline, onShow } from '@dcloudio/uni-app'
+import { nextTick, onMounted, ref } from 'vue'
+import { getUnreadNum } from '@/api'
+import Lottery from '@/components/lottery/index.vue'
+import DetailModal from '@/components/modal/detail/index.vue'
+import CommonModal from '@/components/modal/index.vue'
 // import Login from "@/components/login/index.vue";
-import Pay from "@/components/modal/pay/index.vue";
-import Open from "./components/open/index.vue";
-import Handles from "./components/handles/index.vue";
-import Swap from "@/components/modal/swap/index.vue";
-import Reward from "@/components/modal/reward/index.vue";
-import Smash from "@/components/modal/smash/index.vue";
-import Lottery from "@/components/lottery/index.vue";
-import General from "./components/general.vue";
-import Infinite from "./components/Infinite.vue";
-import { ModalType, useModal } from "@/composables/modal";
-import CommonModal from "@/components/modal/index.vue";
-import { ProductDetailButtonType } from "@/model";
-import { useLogin } from "@/composables/login";
-import { onShareAppMessage, onShareTimeline, onShow } from "@dcloudio/uni-app";
-import DetailModal from "@/components/modal/detail/index.vue";
+import Pay from '@/components/modal/pay/index.vue'
+import Reward from '@/components/modal/reward/index.vue'
+import Smash from '@/components/modal/smash/index.vue'
+import Swap from '@/components/modal/swap/index.vue'
+import { useLogin } from '@/composables/login'
+import { ModalType, useModal } from '@/composables/modal'
+import { useProductDetail } from '@/composables/product/detail'
+import { ProductDetailButtonType } from '@/model'
+import { useAppStore } from '@/store/app'
+import { eventBus } from '@/utils/event'
+import General from './components/general.vue'
+import Handles from './components/handles/index.vue'
 
-import { eventBus } from "@/utils/event";
-import { ShowToast } from "@/utils";
-import { getUnreadNum } from "@/api";
-const { modalShow, modalTitle, modalContent, showModalType } = useModal();
-const { loginShow, handleLogin } = useLogin();
+import Infinite from './components/Infinite.vue'
+import Open from './components/open/index.vue'
+import SelectNum from './components/selectNum.vue'
 
-eventBus.on("didLogin", (_) => {
-  loadData();
-});
-const tapShowModel = (value: number) => {
+const appStore = useAppStore()
+const { modalShow, modalTitle, modalContent, showModalType } = useModal()
+const { loginShow, handleLogin } = useLogin()
+
+eventBus.on('didLogin', (_) => {
+  loadData()
+})
+function tapShowModel(value: number) {
   if (value === 0) {
-    showModalType(4);
-  } else if (value === 1) {
-    showModalType(2);
-  } else if (value === 2) {
+    showModalType(4)
+  }
+  else if (value === 1) {
+    showModalType(2)
+  }
+  else if (value === 2) {
     uni.navigateTo({
-      url: "/subPackages/product/state/index",
-    });
+      url: '/subPackages/product/state/index',
+    })
   }
-};
-const unreadNum = ref(0);
+}
+const unreadNum = ref(0)
 onShow(() => {
-  getUnReadCount();
-});
-const getUnReadCount = async () => {
-  const res = await getUnreadNum();
-  console.log("res:", res);
+  getUnReadCount()
+})
+async function getUnReadCount() {
+  const res = await getUnreadNum()
+  console.log('res:', res)
   if (res.code === 200) {
-    unreadNum.value = res.data.data ?? 0;
+    unreadNum.value = res.data.data ?? 0
   }
-};
+}
 const {
   openShow,
   skipLottery,
@@ -204,66 +207,66 @@ const {
   luckProgress,
   normalProgress,
   rewardRedBag,
-} = useProductDetail();
+} = useProductDetail()
 
-const didTapContinue = () => {
-  loginShow.value = false;
-  rewardShow.value = true;
-};
+function didTapContinue() {
+  loginShow.value = false
+  rewardShow.value = true
+}
 
 onMounted(() => {
-  loadData();
-});
+  loadData()
+})
 
-const didTapRedBag = () => {
-  uni.navigateBack();
+function didTapRedBag() {
+  uni.navigateBack()
   nextTick(() => {
-    appStore.changeCurrentTabIndex(3);
+    appStore.changeCurrentTabIndex(3)
     nextTick(() => {
-      appStore.changeBoxTabIndex(4);
-    });
-  });
-};
+      appStore.changeBoxTabIndex(4)
+    })
+  })
+}
 
-const handleClickRemark = () => {
-  modalContent.value = productDetail.value.remark ?? "";
-  modalTitle.value = "商品说明";
-  modalShow.value = true;
-};
+function handleClickRemark() {
+  modalContent.value = productDetail.value.remark ?? ''
+  modalTitle.value = '商品说明'
+  modalShow.value = true
+}
 
-const handleDidClickButton = (bType: ProductDetailButtonType) => {
+function handleDidClickButton(bType: ProductDetailButtonType) {
   switch (bType) {
     case ProductDetailButtonType.Reload:
-      reloadCurrentPage();
-      break;
+      reloadCurrentPage()
+      break
     case ProductDetailButtonType.HowToPlay:
-      showModalType(ModalType.HowToPlay);
-      break;
+      showModalType(ModalType.HowToPlay)
+      break
     case ProductDetailButtonType.Introduction:
-      showModalType(ModalType.PurchaseNotification);
-      break;
+      showModalType(ModalType.PurchaseNotification)
+      break
     case ProductDetailButtonType.ChangeBox:
-      swapModalShow.value = true;
-      break;
+      swapModalShow.value = true
+      break
     default:
-      break;
+      break
   }
-};
+}
 
 onShareAppMessage(() => {
   return {
     title: `【${productDetail.value.title}】这个箱子快出货了，速来！`,
     imageUrl: productDetail.value.image,
     path: `/subPackages/product/detail/index?pid=${productDetail.value.id}`,
-  };
-});
+  }
+})
 onShareTimeline(() => {
   return {
     title: `【${productDetail.value.title}】这个箱子快出货了，速来！`,
     imageUrl: productDetail.value.image,
     path: `/subPackages/product/detail/index?pid=${productDetail.value.id}`,
-  };
-});
+  }
+})
 </script>
 
 <style lang="scss" scoped>

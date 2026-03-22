@@ -1,43 +1,49 @@
 <template>
   <view class="item">
     <view
-      class="item-list"
       v-for="(item, index) in itemList"
       :key="`item-${index}`"
+      class="item-list"
     >
       <view class="box">
         <image src="https://jms.85gui7.com/kahe-202510/shine/item.png" mode="scaleToFill" class="box-bg" />
-        <view class="box-text">{{ item.text }}</view>
-        <view class="box-text">{{ item.content }}</view>
+        <view class="box-text">
+          {{ item.text }}
+        </view>
+        <view class="box-text">
+          {{ item.content }}
+        </view>
       </view>
       <image
-        class="arrow"
         v-if="index !== 2"
+        class="arrow"
         mode="scaleToFill"
         src="https://jms.85gui7.com/kahe-202510/shine/arrow.png"
-      ></image>
+      />
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { PropType, ref } from "vue";
-import { ShingingInfo } from "@/subPackages/xingyao/api";
+import type { PropType } from 'vue'
+import type { ShingingInfo } from '@/subPackages/xingyao/api'
+import { ref } from 'vue'
+
 defineProps({
   info: {
     default: {},
     type: Object as PropType<ShingingInfo>,
   },
-});
+})
 interface ItemIcon {
-  text: string;
-  content: string;
+  text: string
+  content: string
 }
 const itemList = ref<ItemIcon[]>([
-  { text: "领取", content: "奖券" },
-  { text: "提交", content: "券码" },
-  { text: "满人", content: "开奖" },
-]);
+  { text: '领取', content: '奖券' },
+  { text: '提交', content: '券码' },
+  { text: '满人', content: '开奖' },
+])
 </script>
 
 <style lang="scss" scoped>

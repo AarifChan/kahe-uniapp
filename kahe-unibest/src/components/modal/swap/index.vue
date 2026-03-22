@@ -2,24 +2,25 @@
   <tn-popup
     v-model="vShow"
     open-direction="center"
-    @close="emits('update:show', false)"
     bg-color="transparent"
+    @close="emits('update:show', false)"
   >
     <view class="swap">
       <image class="swap-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/product/swap-bg.png" />
       <view class="swap-content">
         <view class="swap-sort">
           <view
-            class="swap-sort-item"
             v-for="(item, index) in sortList"
-            :key="'sorted-item' + index"
+            :key="`sorted-item${index}`"
+            class="swap-sort-item"
             @tap.stop="didTapSort(index)"
           >
             <text
               class="swap-sort-item-title"
               :class="sortIndex === index ? 's_active' : ''"
-              >#{{ item.title }}</text
             >
+              #{{ item.title }}
+            </text>
             <image
               class="swap-sort-item-img"
               :src="
@@ -33,24 +34,26 @@
 
         <scroll-view class="swap-option" :enable-flex="true" :scroll-x="true">
           <view
-            class="swap-option-item"
             v-for="(item, index) in boxRangeList"
             :key="index"
+            class="swap-option-item"
             :class="tabIndex === index ? 't_active' : ''"
             @tap.stop="tabTapAction(index)"
-            >{{ item.title }}</view
           >
+            {{ item.title }}
+          </view>
         </scroll-view>
 
         <scroll-view class="swap-level" :enable-flex="true" :scroll-x="true">
           <view
-            class="swap-level-item"
             v-for="(item, index) in levelList"
-            :key="'swap-enum-item' + index"
+            :key="`swap-enum-item${index}`"
+            class="swap-level-item"
             :class="levelIndex === index ? 's_active' : ''"
             @tap.stop="tabLevelOption(index)"
-            >{{ getNormalLevelNameByLevel(item.level) }}</view
           >
+            {{ getNormalLevelNameByLevel(item.level) }}
+          </view>
         </scroll-view>
 
         <scroll-view
@@ -60,9 +63,9 @@
           class="swap-box"
         >
           <view
-            class="swap-box-item"
             v-for="(item, index) in boxList"
-            :key="'boxList-item' + index"
+            :key="`boxList-item${index}`"
+            class="swap-box-item"
             @tap.stop="didSelectBox(index)"
           >
             <image
@@ -71,12 +74,12 @@
             />
             <view class="swap-box-item-content">
               <view class="swap-box-item-content-top">
-                <view class="swap-box-item-content-top-left"
-                  >#{{ item.boxSeqNo }}</view
-                >
-                <view class="swap-box-item-content-top-right"
-                  >余{{ item.num }}抽</view
-                >
+                <view class="swap-box-item-content-top-left">
+                  #{{ item.boxSeqNo }}
+                </view>
+                <view class="swap-box-item-content-top-right">
+                  余{{ item.num }}抽
+                </view>
               </view>
               <scroll-view
                 class="swap-box-item-content-right"
@@ -86,17 +89,18 @@
               >
                 <view class="swap-box-item-content-right-content">
                   <text
-                    class="swap-box-item-content-right-content-item"
                     v-for="(lItem, lIndex) in item.list"
-                    :key="index + 'lIndex' + lIndex"
-                    >{{ lItem.title }}:{{ lItem.num }}/{{ lItem.total }}</text
+                    :key="`${index}lIndex${lIndex}`"
+                    class="swap-box-item-content-right-content-item"
                   >
+                    {{ lItem.title }}:{{ lItem.num }}/{{ lItem.total }}
+                  </text>
                 </view>
               </scroll-view>
             </view>
-            <view class="swap-box-item-current" v-if="item.isCurrent"
-              >当前</view
-            >
+            <view v-if="item.isCurrent" class="swap-box-item-current">
+              当前
+            </view>
           </view>
         </scroll-view>
       </view>
@@ -111,18 +115,16 @@
 </template>
 
 <script lang="ts" setup>
-import { type PropType, ref, watch } from "vue";
-import { useProductDetail } from "@/composables/product/detail";
-import { useEnum } from "@/composables/enum";
-
-const { getNormalLevelNameByLevel } = useEnum();
+import type { PropType } from 'vue'
 import type {
   UIProductBoxRangeType,
-  UIProductSwapItemModel,
   UIProductDetailLevelList,
-} from "@/model";
+  UIProductSwapItemModel,
+} from '@/model'
+import { ref, watch } from 'vue'
+import { useEnum } from '@/composables/enum'
+import { useProductDetail } from '@/composables/product/detail'
 
-const { boxParams } = useProductDetail();
 const props = defineProps({
   show: {
     default: false,
@@ -140,57 +142,62 @@ const props = defineProps({
     default: [] as UIProductBoxRangeType[],
     type: Array as PropType<UIProductBoxRangeType[]>,
   },
-});
-const vShow = ref(false);
+})
+
+const emits = defineEmits([
+  'update:show',
+  'didSelectBox',
+  'didTabChangeBoxRange',
+])
+
+const { getNormalLevelNameByLevel } = useEnum()
+
+const { boxParams } = useProductDetail()
+const vShow = ref(false)
 watch(
   () => props.show,
   (value) => {
-    vShow.value = value;
-  }
-);
+    vShow.value = value
+  },
+)
 
 /// 换箱操作
 const sortList = ref([
   {
-    title: "箱号",
+    title: '箱号',
     value: 2,
   },
   {
-    title: "余量",
+    title: '余量',
     value: 1,
   },
-]);
-const sortIndex = ref(0);
+])
+const sortIndex = ref(0)
 
-const tabIndex = ref(0);
-const levelIndex = ref(0);
+const tabIndex = ref(0)
+const levelIndex = ref(0)
 
-const emits = defineEmits([
-  "update:show",
-  "didSelectBox",
-  "didTabChangeBoxRange",
-]);
-const tabTapAction = async (index: number) => {
-  tabIndex.value = index;
+async function tabTapAction(index: number) {
+  tabIndex.value = index
 
-  emits("didTabChangeBoxRange", {
+  emits('didTabChangeBoxRange', {
     max: (index + 1) * 50,
     min: index * 50 + 1,
-  });
-};
-const didTapSort = async (index: number) => {
-  sortIndex.value = index;
-  boxParams.value.sflag = sortList.value[sortIndex.value].value;
-};
-const tabLevelOption = async (index: number) => {
-  levelIndex.value = index;
-  boxParams.value.level = props.levelList[levelIndex.value].level;
-};
+  })
+}
+async function didTapSort(index: number) {
+  sortIndex.value = index
+  boxParams.value.sflag = sortList.value[sortIndex.value].value
+}
+async function tabLevelOption(index: number) {
+  levelIndex.value = index
+  boxParams.value.level = props.levelList[levelIndex.value].level
+}
 
-const didSelectBox = (index: number) => {
-  emits("update:show", false);
-  emits("didSelectBox", props.boxList[index].id);
-};
+function didSelectBox(index: number) {
+  emits('update:show', false)
+  emits('didSelectBox', props.boxList[index].id)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -346,10 +353,7 @@ const didSelectBox = (index: number) => {
           height: calc(100% - 100rpx);
           &-content {
             display: grid;
-            grid-template-columns: repeat(
-              auto-fill,
-              minmax(30%, 1fr)
-            ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
+            grid-template-columns: repeat(auto-fill, minmax(30%, 1fr)); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
             grid-gap: 0; // 这是网格间的间隙，根据需要调整
             &-item {
               display: inline-block;

@@ -1,4 +1,4 @@
-import { OrderInfo, ProductGoodsModel, UIMerchant } from '@/model'
+import type { OrderInfo, ProductGoodsModel, UIMerchant } from '@/model'
 
 export interface ProductOrderModel {
   cateId: number

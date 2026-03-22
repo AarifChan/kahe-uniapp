@@ -3,14 +3,16 @@
     class="customNav"
     :style="{
       height: `${totalNavHeight}PX`,
-      opacity: opacity,
+      opacity,
       position: `${position}`,
       paddingTop: `${statusBarHeight}PX`,
       backgroundColor: `rgba(253, 239, 204, ${opacity})`,
     }"
   >
     <view class="customNav-bar" :style="{ lineHeight: `${navBarHeight}PX` }">
-      <view class="customNav-bar-title">{{ title }}</view>
+      <view class="customNav-bar-title">
+        {{ title }}
+      </view>
     </view>
   </view>
   <view
@@ -20,9 +22,8 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue'
 import { useAppStore } from '@/store/app'
-import { computed } from "vue";
-
 
 defineProps({
   topSafe: {
@@ -30,7 +31,7 @@ defineProps({
     type: Boolean,
   },
   title: {
-    default: "",
+    default: '',
     type: String,
   },
   custom: {
@@ -42,19 +43,22 @@ defineProps({
     type: Number,
   },
   position: {
-    default: "fixed",
+    default: 'fixed',
     type: String,
   },
-});
+})
+
+const appStore = useAppStore()
+
 const totalNavHeight = computed(() => {
-  return appStore.statusBarHeight + appStore.navBarHeight;
-});
+  return appStore.statusBarHeight + appStore.navBarHeight
+})
 const statusBarHeight = computed(() => {
-  return appStore.statusBarHeight;
-});
+  return appStore.statusBarHeight
+})
 const navBarHeight = computed(() => {
-  return appStore.navBarHeight;
-});
+  return appStore.navBarHeight
+})
 </script>
 
 <style lang="scss" scoped>

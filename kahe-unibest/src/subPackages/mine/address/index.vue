@@ -2,24 +2,26 @@
   <view class="address">
     <scroll-view class="address-content" :scroll-y="true">
       <view
-        class="address-content-item"
         v-for="(item, index) in addressList"
         :key="index"
+        class="address-content-item"
         @tap.stop="selectItem(item)"
       >
         <view class="address-content-item-content">
           <view class="address-content-item-content-side">
-            <text class="address-content-item-content-side-title">{{
-              item.detail
-            }}</text>
-            <text class="address-content-item-content-side-subTitle"
-              >{{ item.realName }} {{ handleMobile(item.phone) }}</text
-            >
+            <text class="address-content-item-content-side-title">
+              {{
+                item.detail
+              }}
+            </text>
+            <text class="address-content-item-content-side-subTitle">
+              {{ item.realName }} {{ handleMobile(item.phone) }}
+            </text>
           </view>
           <view
+            v-if="!needSelect"
             class="address-content-item-content-right"
             @tap.stop="handleEdit(item)"
-            v-if="!needSelect"
           >
             <view class="address-content-item-content-right-border" />
             <image
@@ -41,50 +43,53 @@
 </template>
 
 <script lang="ts" setup>
-import { useAddressStore } from '@/store/address'
-import CustomButton from "@/components/custom/button/index.vue";
-import { computed, ref, onMounted } from "vue";
+import type { AddressModel } from '@/model/address'
+import { computed, onMounted, ref } from 'vue'
+import CustomButton from '@/components/custom/button/index.vue'
 
-import type { AddressModel } from "@/model/address";
-import { handleMobile, getPageOptions } from "@/utils/tools";
-import { eventBus } from "@/utils/event";
-import Empty from "@/components/empty/index.vue";
+import Empty from '@/components/empty/index.vue'
+import { useAddressStore } from '@/store/address'
+import { eventBus } from '@/utils/event'
+import { getPageOptions, handleMobile } from '@/utils/tools'
+
+const addressStore = useAddressStore()
 
 const addressList = ref(
-  computed((): AddressModel[] => addressStore.addressList)
-);
+  computed((): AddressModel[] => addressStore.addressList),
+)
 
-const needSelect = ref(false);
+const needSelect = ref(false)
 
-const handleEdit = (item: AddressModel) => {
+function handleEdit(item: AddressModel) {
   if (item && item.id) {
     uni.navigateTo({
       url: `/subPackages/mine/address/detail?id=${item.id}`,
-    });
-  } else {
-    uni.navigateTo({
-      url: "/subPackages/mine/address/detail",
-    });
+    })
   }
-};
+  else {
+    uni.navigateTo({
+      url: '/subPackages/mine/address/detail',
+    })
+  }
+}
 
-const selectItem = (item: AddressModel) => {
-  console.log("selectItem===>", item);
+function selectItem(item: AddressModel) {
+  console.log('selectItem===>', item)
 
   if (needSelect.value) {
-    eventBus.emit("didSelectAddress", item);
-    uni.navigateBack();
+    eventBus.emit('didSelectAddress', item)
+    uni.navigateBack()
   }
-};
+}
 onMounted(async () => {
-  const op = getPageOptions();
-  const needSelects = op.needSelect;
+  const op = getPageOptions()
+  const needSelects = op.needSelect
   if (needSelects) {
-    needSelect.value = needSelects;
+    needSelect.value = needSelects
   }
-  await addressStore.getAddressList();
-  await addressStore.fetchCityList();
-});
+  await addressStore.getAddressList()
+  await addressStore.fetchCityList()
+})
 </script>
 
 <style lang="scss" scoped>

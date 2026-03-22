@@ -1,42 +1,48 @@
 <template>
   <view class="groupBuyMine">
-    <!--    <image class="groupBuyMine-bg" src="https://jms.85gui7.com/kahe-202510/groupBuy/groupBuyBg.png" />-->
+    <!--    <image class="groupBuyMine-bg" src="https://jms.85gui7.com/kahe-202510/groupBuy/groupBuyBg.png" /> -->
     <view class="groupBuyMine-content">
       <view class="groupBuyMine-content-top">
-        <search placeholder="" @did-tap-search="handleSearch" :black="true" />
+        <search placeholder="" :black="true" @did-tap-search="handleSearch" />
       </view>
       <view class="groupBuyMine-content-main">
         <scroll-view class="groupBuyMine-content-main-table" scroll-x scroll-y>
           <view class="groupBuyMine-content-main-table-head">
-            <view class="groupBuyMine-content-main-table-head-item">#序号</view>
-            <view class="groupBuyMine-content-main-table-head-item"
-              >卡密名称</view
-            >
-            <!--                        <view class="groupBuyMine-content-main-table-head-item">卡密等级</view>-->
-            <view class="groupBuyMine-content-main-table-head-item"
-              >卡密编号</view
-            >
-            <!--                        <view class="groupBuyMine-content-main-table-head-item">系列编号</view>-->
-            <!--                        <view class="groupBuyMine-content-main-table-head-item">系列名称</view>-->
+            <view class="groupBuyMine-content-main-table-head-item">
+              #序号
+            </view>
+            <view class="groupBuyMine-content-main-table-head-item">
+              卡密名称
+            </view>
+            <!--                        <view class="groupBuyMine-content-main-table-head-item">卡密等级</view> -->
+            <view class="groupBuyMine-content-main-table-head-item">
+              卡密编号
+            </view>
+            <!--                        <view class="groupBuyMine-content-main-table-head-item">系列编号</view> -->
+            <!--                        <view class="groupBuyMine-content-main-table-head-item">系列名称</view> -->
           </view>
           <view class="groupBuyMine-content-main-table-content">
             <view
               v-for="(item, index) in mindCardList"
-              :key="'k' + index"
+              :key="`k${index}`"
               class="groupBuyMine-content-main-table-content-row"
             >
-              <view class="groupBuyMine-content-main-table-content-row-item">{{
-                item.id
-              }}</view>
-              <view class="groupBuyMine-content-main-table-content-row-item">{{
-                item.name
-              }}</view>
-              <!--                            <view class="groupBuyMine-content-main-table-content-row-item">{{ getNormalLevelNameByLevel(item.level) }}</view>-->
-              <view class="groupBuyMine-content-main-table-content-row-item"
-                >#{{ item.number }}</view
-              >
-              <!--                            <view class="groupBuyMine-content-main-table-content-row-item">{{item.sid}}</view>-->
-              <!--                            <view class="groupBuyMine-content-main-table-content-row-item">{{item.sname}}</view>-->
+              <view class="groupBuyMine-content-main-table-content-row-item">
+                {{
+                  item.id
+                }}
+              </view>
+              <view class="groupBuyMine-content-main-table-content-row-item">
+                {{
+                  item.name
+                }}
+              </view>
+              <!--                            <view class="groupBuyMine-content-main-table-content-row-item">{{ getNormalLevelNameByLevel(item.level) }}</view> -->
+              <view class="groupBuyMine-content-main-table-content-row-item">
+                #{{ item.number }}
+              </view>
+              <!--                            <view class="groupBuyMine-content-main-table-content-row-item">{{item.sid}}</view> -->
+              <!--                            <view class="groupBuyMine-content-main-table-content-row-item">{{item.sname}}</view> -->
             </view>
           </view>
         </scroll-view>
@@ -44,44 +50,49 @@
     </view>
     <view class="groupBuyMine-bottom">
       <view class="groupBuyMine-bottom-side" @tap.stop="changePage(true)">
-        <!--        <image-->
-        <!--          class="groupBuyMine-bottom-side-bg"-->
-        <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/btn5.png"-->
-        <!--        />-->
-        <view class="groupBuyMine-bottom-side-title theme-font">上一页</view>
+        <!--        <image -->
+        <!--          class="groupBuyMine-bottom-side-bg" -->
+        <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/btn5.png" -->
+        <!--        /> -->
+        <view class="groupBuyMine-bottom-side-title theme-font">
+          上一页
+        </view>
       </view>
-      <view class="groupBuyMine-bottom-title theme-font"
-        >{{ queryParams.page }}/{{ totalPage }}</view
-      >
+      <view class="groupBuyMine-bottom-title theme-font">
+        {{ queryParams.page }}/{{ totalPage }}
+      </view>
       <view class="groupBuyMine-bottom-side" @tap.stop="changePage(false)">
-        <!--        <image-->
-        <!--          class="groupBuyMine-bottom-side-bg"-->
-        <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/btn5.png"-->
-        <!--        />-->
-        <view class="groupBuyMine-bottom-side-title theme-font">下一页</view>
+        <!--        <image -->
+        <!--          class="groupBuyMine-bottom-side-bg" -->
+        <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/btn5.png" -->
+        <!--        /> -->
+        <view class="groupBuyMine-bottom-side-title theme-font">
+          下一页
+        </view>
       </view>
     </view>
-    <!--        <view class="groupBuyMine-bottom">-->
-    <!--            <view class="groupBuyMine-bottom-line">-->
-    <!--                <view class="groupBuyMine-bottom-line-left">-->
-    <!--                </view>-->
-    <!--                <view class="groupBuyMine-bottom-line-right">-->
-    <!--                    <image class="groupBuyMine-bottom-line-right-img" src="https://jms.85gui7.com/kahe-202510/groupBuy/btn.png" />-->
-    <!--                    <view class="groupBuyMine-bottom-line-right-title text-stroke-main STHupo-font">去转赠</view>-->
-    <!--                </view>-->
-    <!--            </view>-->
-    <!--        </view>-->
+    <!--        <view class="groupBuyMine-bottom"> -->
+    <!--            <view class="groupBuyMine-bottom-line"> -->
+    <!--                <view class="groupBuyMine-bottom-line-left"> -->
+    <!--                </view> -->
+    <!--                <view class="groupBuyMine-bottom-line-right"> -->
+    <!--                    <image class="groupBuyMine-bottom-line-right-img" src="https://jms.85gui7.com/kahe-202510/groupBuy/btn.png" /> -->
+    <!--                    <view class="groupBuyMine-bottom-line-right-title text-stroke-main STHupo-font">去转赠</view> -->
+    <!--                </view> -->
+    <!--            </view> -->
+    <!--        </view> -->
   </view>
 </template>
 
 <script lang="ts" setup>
+import { onMounted } from 'vue'
+import Search from '@/components/search/index.vue'
+import { useEnum } from '@/composables/enum'
 import { useUserStore } from '@/store/user'
-import Search from "@/components/search/index.vue";
-import { useGroupBuy } from "@/subPackages/groupBuy";
-import { onMounted } from "vue";
-import { useEnum } from "@/composables/enum";
-import { getPageOptions } from "@/utils/tools";
+import { useGroupBuy } from '@/subPackages/groupBuy'
+import { getPageOptions } from '@/utils/tools'
 
+const userStore = useUserStore()
 
 const {
   isMine,
@@ -92,24 +103,24 @@ const {
   totalPage,
   changePage,
   queryParams,
-} = useGroupBuy();
-const { getNormalLevelNameByLevel } = useEnum();
+} = useGroupBuy()
+const { getNormalLevelNameByLevel } = useEnum()
 onMounted(() => {
-  const id = getPageOptions().id;
-  isMine.value = true;
-  console.log("groupBuyId:", id);
+  const id = getPageOptions().id
+  isMine.value = true
+  console.log('groupBuyId:', id)
   if (id) {
-    uid.value = userStore.userInfo.uid;
+    uid.value = userStore.userInfo.uid
 
-    currentSid.value = id;
-    getGroupBuyMineLog();
+    currentSid.value = id
+    getGroupBuyMineLog()
   }
-});
-const handleSearch = (value: string) => {
-  queryParams.value.keyword = value;
-  queryParams.value.page = 1;
-  getGroupBuyMineLog();
-};
+})
+function handleSearch(value: string) {
+  queryParams.value.keyword = value
+  queryParams.value.page = 1
+  getGroupBuyMineLog()
+}
 </script>
 
 <style lang="scss" scoped>

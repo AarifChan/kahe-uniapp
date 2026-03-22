@@ -19,7 +19,7 @@
               <image
                 class="modal-edit-content-info-head-img"
                 :src="avatarUrl"
-              ></image>
+              />
             </button>
             <!-- #endif -->
             <!-- #ifndef MP-WEIXIN -->
@@ -27,7 +27,7 @@
               <image
                 class="modal-edit-content-info-head-img"
                 :src="avatarUrl"
-              ></image>
+              />
             </button>
             <!-- #endif -->
 
@@ -49,9 +49,9 @@
             </button>
             <!-- #endif -->
             <view class="modal-edit-content-info-name">
-              <view class="modal-edit-content-info-name-title theme-font"
-                >用户昵称：</view
-              >
+              <view class="modal-edit-content-info-name-title theme-font">
+                用户昵称：
+              </view>
               <!-- #ifdef MP-WEIXIN -->
               <input
                 type="nickname"
@@ -61,7 +61,7 @@
                 :placeholderStyle="placeholderStyle"
                 :value="nickName"
                 @input="onNicknameInput"
-              />
+              >
               <!-- #endif -->
               <!-- #ifndef MP-WEIXIN -->
               <input
@@ -72,24 +72,24 @@
                 :placeholderStyle="placeholderStyle"
                 :value="nickName"
                 @input="onNicknameInput"
-              />
+              >
               <!-- #endif -->
             </view>
             <view class="modal-edit-content-bottom">
               <button formType="submit" class="modal-edit-content-bottom-item">
-                <!--                <custom-button type="red" form-type="submit" title="" />-->
-                <view class="modal-edit-content-bottom-item-confirm theme-font"
-                  >确认上传</view
-                >
+                <!--                <custom-button type="red" form-type="submit" title="" /> -->
+                <view class="modal-edit-content-bottom-item-confirm theme-font">
+                  确认上传
+                </view>
               </button>
               <button
                 class="modal-edit-content-bottom-item"
                 @tap.stop="closeAction"
               >
-                <view class="modal-edit-content-bottom-item-cancel theme-font"
-                  >暂不更新</view
-                >
-                <!--                <custom-button title="暂不更新" />-->
+                <view class="modal-edit-content-bottom-item-cancel theme-font">
+                  暂不更新
+                </view>
+                <!--                <custom-button title="暂不更新" /> -->
               </button>
             </view>
           </form>
@@ -100,127 +100,130 @@
 </template>
 
 <script lang="ts" setup>
+import { onMounted, reactive, ref, toRefs, watch } from 'vue'
+import { updateUserInfoRequest } from '@/api/'
+import { useTokenStore } from '@/store/token'
 import { useUserStore } from '@/store/user'
-import { reactive, toRefs, onMounted, watch, ref } from "vue";
-import { RequestConfig } from "@/config";
-import { updateUserInfoRequest } from "@/api/";
+import { ShowToast } from '@/utils/Toast'
 
-import { ShowToast } from "@/utils";
-import CustomButton from "@/components/custom/button/index.vue";
 const props = defineProps({
   show: Boolean,
-});
-
-const vShow = ref(props.show);
+})
+const emits = defineEmits(['update:show'])
+const userStore = useUserStore()
+const tokenStore = useTokenStore()
+const vShow = ref(props.show)
 watch(
   () => props.show,
   (value) => {
-    vShow.value = value;
-  }
-);
-const emits = defineEmits(["update:show"]);
+    vShow.value = value
+  },
+)
 const dataMap = reactive({
-  avatarUrl: "",
-  nickName: "",
+  avatarUrl: '',
+  nickName: '',
   placeholderStyle:
     'color: #C6C6C6; font-size: 15px;height:16px;font-family: "YouSheBiaoTiHei";',
-});
-const { avatarUrl, nickName, placeholderStyle } = toRefs(dataMap);
-const chooseImage = () => {
+})
+const { avatarUrl, nickName, placeholderStyle } = toRefs(dataMap)
+function chooseImage() {
   uni.chooseImage({
-    success: async function (res) {
-      const tempFilePaths = res.tempFilePaths;
+    async success(res) {
+      const tempFilePaths = res.tempFilePaths
       uni.uploadFile({
-        url: RequestConfig.baseUrl + "/tools/upload",
+        url: `${import.meta.env.VITE_SERVER_BASEURL}/tools/upload`,
         filePath: tempFilePaths[0],
-        name: "file",
+        name: 'file',
         header: {
-          Authorization: " Bearer " + userStore.token,
+          Authorization: ` Bearer ${(tokenStore.tokenInfo as any)?.token}`,
         },
         success: async (resp: any) => {
-          const data = JSON.parse(resp.data);
+          const data = JSON.parse(resp.data)
           if (data.status === 200) {
-            const fileUrl = data.data;
-            dataMap.avatarUrl = fileUrl;
-          } else {
-            ShowToast(data.msg);
+            const fileUrl = data.data
+            dataMap.avatarUrl = fileUrl
+          }
+          else {
+            ShowToast(data.msg)
           }
         },
-      });
+      })
     },
-  });
-};
-const onChooseAvatar = (e: any) => {
-  const { avatarUrl } = e.detail;
+  })
+}
+function onChooseAvatar(e: any) {
+  const { avatarUrl } = e.detail
   uni.uploadFile({
-    url: RequestConfig.baseUrl + "/tools/upload",
+    url: `${import.meta.env.VITE_SERVER_BASEURL}/tools/upload`,
     filePath: avatarUrl,
-    name: "file",
+    name: 'file',
     header: {
-      Authorization: " Bearer " + userStore.token,
+      Authorization: ` Bearer ${(tokenStore.tokenInfo as any)?.token}`,
     },
     success: async (resp: any) => {
-      const data = JSON.parse(resp.data);
+      const data = JSON.parse(resp.data)
       if (data.status === 200) {
-        const fileUrl = data.data;
-        dataMap.avatarUrl = fileUrl;
-      } else {
-        ShowToast(data.msg);
+        const fileUrl = data.data
+        dataMap.avatarUrl = fileUrl
+      }
+      else {
+        ShowToast(data.msg)
       }
     },
-  });
-};
+  })
+}
 // 实时同步昵称输入，避免依赖 form submit 事件取值
 // Why: APP 环境下 form submit 事件的 e.detail.value 可能为 null，
 //      导致解构报错 "Cannot destructure property 'nickname' from null"
-const onNicknameInput = (e: any) => {
-  dataMap.nickName = e.detail?.value ?? "";
-};
-const formSubmit = () => {
-  const { nickName, avatarUrl } = dataMap;
-  if (!nickName || nickName.trim() === "") {
-    ShowToast("请输入用户昵称");
-    return;
+function onNicknameInput(e: any) {
+  dataMap.nickName = e.detail?.value ?? ''
+}
+function formSubmit() {
+  const { nickName, avatarUrl } = dataMap
+  if (!nickName || nickName.trim() === '') {
+    ShowToast('请输入用户昵称')
+    return
   }
-  if (!avatarUrl || avatarUrl === "") {
-    ShowToast("请上传头像");
-    return;
+  if (!avatarUrl || avatarUrl === '') {
+    ShowToast('请上传头像')
+    return
   }
-  updateInfoAction();
-};
-const updateInfoAction = () => {
-  uploadInfo(dataMap.nickName, dataMap.avatarUrl);
-};
-const uploadInfo = async (nickName: string, avatarUrl: string) => {
-  if (nickName === "微信用户") {
-    ShowToast("不能使用默认昵称，请注册个昵称！");
-    return;
+  updateInfoAction()
+}
+function updateInfoAction() {
+  uploadInfo(dataMap.nickName, dataMap.avatarUrl)
+}
+async function uploadInfo(nickName: string, avatarUrl: string) {
+  if (nickName === '微信用户') {
+    ShowToast('不能使用默认昵称，请注册个昵称！')
+    return
   }
   const { code, msg } = await updateUserInfoRequest({
     nickname: nickName,
     avatar: avatarUrl,
-  });
+  })
   if (code === 200) {
-    await ShowToast("修改成功");
-    await userStore.getUserInfo();
-    emits("update:show", false);
-  } else {
-    await ShowToast(msg);
+    await ShowToast('修改成功')
+    await userStore.fetchUserInfo()
+    emits('update:show', false)
   }
-};
-const closeAction = () => {
-  emits("update:show", false);
-};
+  else {
+    await ShowToast(msg)
+  }
+}
+function closeAction() {
+  emits('update:show', false)
+}
 watch(
   () => userStore.userInfo,
   (val) => {
-    dataMap.avatarUrl = val.avatar;
-    dataMap.nickName = val.nickname;
-  }
-);
+    dataMap.avatarUrl = val.avatar
+    dataMap.nickName = val.nickname
+  },
+)
 onMounted(() => {
-  userStore.getCode();
-});
+
+})
 </script>
 
 <style lang="scss" scoped>

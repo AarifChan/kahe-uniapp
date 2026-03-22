@@ -1,20 +1,20 @@
 <template>
   <view class="box-record">
     <view class="box-record-content">
-      <text class="box-record-content-title"
-        >{{ item.recordType === 1 ? "发货订单号" : "单号" }}：{{
+      <text class="box-record-content-title">
+        {{ item.recordType === 1 ? "发货订单号" : "单号" }}：{{
           item.orderId
-        }}</text
-      >
-      <text class="box-record-content-title"
-        >{{ item.recordType === 1 ? "物流单号" : "总价" }}：{{
+        }}
+      </text>
+      <text class="box-record-content-title">
+        {{ item.recordType === 1 ? "物流单号" : "总价" }}：{{
           item.recordType === 1
             ? item.deliverySn
-              ? item.deliverySn + "," + item.deliveryId
+              ? `${item.deliverySn},${item.deliveryId}`
               : "未发货"
-            : item.totalPrice + ""
-        }}</text
-      >
+            : `${item.totalPrice}`
+        }}
+      </text>
       <scroll-view
         class="box-record-content-list"
         :scroll-x="true"
@@ -22,9 +22,9 @@
         scroll-with-animation
       >
         <view
-          class="box-record-content-list-item"
           v-for="(gItem, gIndex) in item.list"
           :key="gIndex"
+          class="box-record-content-list-item"
         >
           <view class="box-record-content-list-item-content">
             <view class="box-record-content-list-item-content-top">
@@ -37,15 +37,16 @@
                 class="box-record-content-list-item-content-top-level"
                 :src="getLevelImage(gItem?.goods?.level ?? 0)"
               />
-              <text class="box-record-content-list-item-content-top-num"
-                >x{{ gItem?.num ?? 1 }}</text
-              >
+              <text class="box-record-content-list-item-content-top-num">
+                x{{ gItem?.num ?? 1 }}
+              </text>
             </view>
 
             <text
               class="box-record-content-list-item-content-title text-flow-ellipsis-single"
-              >{{ gItem.name }}</text
             >
+              {{ gItem.name }}
+            </text>
           </view>
         </view>
       </scroll-view>
@@ -63,21 +64,21 @@ import type { UIMineBoxRecordModel } from '@/model'
 
 import { computed } from 'vue'
 import { useEnum } from '@/composables/enum'
-const { getLevelImage } = useEnum()
-const props = defineProps({
-    item: {
-        default: {
-        } as UIMineBoxRecordModel,
-        type: Object as PropType<UIMineBoxRecordModel>
-    }
-})
 
+const props = defineProps({
+  item: {
+    default: {
+    } as UIMineBoxRecordModel,
+    type: Object as PropType<UIMineBoxRecordModel>,
+  },
+})
+const { getLevelImage } = useEnum()
 const total = computed(() => {
-    let num = 0
-    props.item?.list?.forEach((item) => {
-        num = num + item.num
-    })
-    return num
+  let num = 0
+  props.item?.list?.forEach((item) => {
+    num = num + item.num
+  })
+  return num
 })
 </script>
 

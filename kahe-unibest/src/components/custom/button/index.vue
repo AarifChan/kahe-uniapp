@@ -1,10 +1,9 @@
 <template>
   <view
-    class="customButton"
-    :style="{ width: width, height: height, borderRadius }"
     v-if="size === 'small'"
+    class="customButton"
+    :style="{ width, height, borderRadius }"
   >
-   
     <view class="customButton-content">
       <image
         v-if="icon === 'wechat'"
@@ -22,11 +21,12 @@
           fontSize: themeFont ? '40rpx' : fontSize,
           color: textColor,
         }"
-        >{{ title }}</text
       >
+        {{ title }}
+      </text>
     </view>
   </view>
-  <view class="bottom-Button" v-else :style="{ position: position }">
+  <view v-else class="bottom-Button" :style="{ position }">
     <image
       class="customButton-button"
       src="https://jms.85gui7.com/kahe-202510/ka-he/common/long-btn-bg.png"
@@ -38,23 +38,23 @@
 <script lang="ts" setup>
 defineProps({
   title: {
-    default: "",
+    default: '',
     type: String,
   },
   width: {
-    default: "230rpx",
+    default: '230rpx',
     type: String,
   },
   height: {
-    default: "67rpx",
+    default: '67rpx',
     type: String,
   },
   textColor: {
-    default: "white",
+    default: 'white',
     type: String,
   },
   fontSize: {
-    default: "24rpx",
+    default: '24rpx',
     type: String,
   },
   themeFont: {
@@ -66,22 +66,22 @@ defineProps({
     type: Boolean,
   },
   size: {
-    default: "small",
+    default: 'small',
     type: String,
   },
   borderRadius: {
-    default: "4rpx",
+    default: '4rpx',
     type: String,
   },
   position: {
-    default: "relative",
+    default: 'relative',
     type: String,
   },
   icon: {
-    default: "none",
+    default: 'none',
     type: String,
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>
@@ -131,7 +131,6 @@ defineProps({
   align-items: center;
   justify-content: center;
   border-radius: 10rpx;
-  
 }
 .big-title {
   position: absolute;

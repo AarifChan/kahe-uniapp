@@ -8,25 +8,30 @@
       <view
         class="general-top-btn-item style1 theme-font"
         @tap.stop="tapShowModel(0)"
-        >发货须知</view
       >
+        发货须知
+      </view>
       <view
         class="general-top-btn-item style2 theme-font"
         @tap.stop="tapShowModel(1)"
-        >购买说明</view
       >
+        购买说明
+      </view>
       <view
         class="general-top-btn-item style3 theme-font"
         @tap.stop="tapShowModel(2)"
-        >品相定义</view
       >
+        品相定义
+      </view>
     </view>
     <view class="general-top-content">
       <image class="general-top-content-img" :src="product.image" />
       <view class="general-top-content-info">
-        <view class="general-top-content-info-title theme-font">{{
-          product.title
-        }}</view>
+        <view class="general-top-content-info-title theme-font">
+          {{
+            product.title
+          }}
+        </view>
         <view
           style="
             display: flex;
@@ -36,18 +41,22 @@
           "
         >
           <text
-            class="general-top-content-info-tag"
             v-if="product.payType !== 8"
-            >￥</text
-          >
-          <view class="general-top-content-info-center theme-font">{{
-            product.price
-          }}</view>
-          <text
             class="general-top-content-info-tag"
-            v-if="product.payType === 8"
-            >积分</text
           >
+            ￥
+          </text>
+          <view class="general-top-content-info-center theme-font">
+            {{
+              product.price
+            }}
+          </view>
+          <text
+            v-if="product.payType === 8"
+            class="general-top-content-info-tag"
+          >
+            积分
+          </text>
         </view>
         <view
           style="
@@ -57,8 +66,8 @@
             gap: 16rpx;
           "
         >
-          <view class="general-top-content-info-num" v-if="choose"
-            >商品余量:{{ product.num }}/{{ product.total }}
+          <view v-if="choose" class="general-top-content-info-num">
+            商品余量:{{ product.num }}/{{ product.total }}
           </view>
           <view
             class="general-top-content-info-people"
@@ -73,9 +82,9 @@
       </view>
     </view>
     <view
+      v-if="!choose"
       class="general-top-reload"
       @tap.stop="emits('didTapChange')"
-      v-if="!choose"
     >
       <image
         class="general-top-reload-icon"
@@ -89,11 +98,12 @@
     />
   </view>
 </template>
-<script setup lang="ts">
-import type { UIProductDetailModel } from "@/model";
-import { type PropType, computed } from "vue";
 
-const emits = defineEmits(["tapShowModel", "didTapReload", "didTapChange"]);
+<script setup lang="ts">
+import type { PropType } from 'vue'
+import type { UIProductDetailModel } from '@/model'
+import { computed } from 'vue'
+
 const props = defineProps({
   product: {
     default: {} as UIProductDetailModel,
@@ -103,14 +113,16 @@ const props = defineProps({
     default: false,
     type: Boolean,
   },
-});
+})
+const emits = defineEmits(['tapShowModel', 'didTapReload', 'didTapChange'])
 const widthStyle = computed(() => {
-  return `width:${(props.product.num / props.product.total) * 100}%`;
-});
-const tapShowModel = (value: number) => {
-  emits("tapShowModel", value);
-};
+  return `width:${(props.product.num / props.product.total) * 100}%`
+})
+function tapShowModel(value: number) {
+  emits('tapShowModel', value)
+}
 </script>
+
 <style lang="scss" scoped>
 .general-top {
   position: relative;

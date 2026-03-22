@@ -5,9 +5,11 @@
         <image class="avatar-img" :src="merchant?.icon" />
       </view>
       <view class="info">
-        <view class="info-name text-flow-ellipsis-single">{{
-          merchant?.name
-        }}</view>
+        <view class="info-name text-flow-ellipsis-single">
+          {{
+            merchant?.name
+          }}
+        </view>
         <view
           class="info-bar"
           :style="{
@@ -19,28 +21,29 @@
         </view>
       </view>
     </view>
-    <view class="right-btn theme-font" @tap.stop="didClickMerchant(merchant)"
-      >进店看看</view
-    >
+    <view class="right-btn theme-font" @tap.stop="didClickMerchant(merchant)">
+      进店看看
+    </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { UIMerchant } from "@/model";
-import { PropType } from "vue";
+import type { PropType } from 'vue'
+import type { UIMerchant } from '@/model'
 import {
   getLevelName,
   getTagBgColor,
   getTagIcon,
   useMerchant,
-} from "@/pages/merchant/index";
-const { didClickMerchant } = useMerchant();
+} from '@/pages/merchant/index'
+
 defineProps({
   merchant: {
     default: {} as UIMerchant,
     type: Object as PropType<UIMerchant>,
   },
-});
+})
+const { didClickMerchant } = useMerchant()
 </script>
 
 <style scoped lang="scss">
@@ -55,7 +58,7 @@ defineProps({
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-image: url("https://jms.85gui7.com/kahe-202510/groupBuy/merchat-bg.png");
+  background-image: url('https://jms.85gui7.com/kahe-202510/groupBuy/merchat-bg.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }

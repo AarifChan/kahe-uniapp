@@ -1,28 +1,30 @@
 <template>
   <view class="nav">
-    <!--    <Lamp-->
-    <!--      ref="lampRef"-->
-    <!--      backGround="rgba(128, 128, 128, 0.6)"-->
-    <!--      :border="0"-->
-    <!--      :list="lampList"-->
-    <!--      @tapLampAction="tapLampAction"-->
-    <!--    />-->
+    <!--    <Lamp -->
+    <!--      ref="lampRef" -->
+    <!--      backGround="rgba(128, 128, 128, 0.6)" -->
+    <!--      :border="0" -->
+    <!--      :list="lampList" -->
+    <!--      @tapLampAction="tapLampAction" -->
+    <!--    /> -->
     <view class="nav-box">
       <image src="https://jms.85gui7.com/kahe-202510/shine/nav.png" mode="scaleToFill" class="bg" />
 
       <!-- 这里是动态图片 -->
-      <!--      <image src="https://jms.85gui7.com/kahe-202510/shine/title.png" mode="scaleToFill" class="goods" />-->
+      <!--      <image src="https://jms.85gui7.com/kahe-202510/shine/title.png" mode="scaleToFill" class="goods" /> -->
       <image
         mode="aspectFit"
         class="goods"
         :src="info?.prizePool[0].goodsDto.image"
       />
       <view class="contont">
-        <view class="contont-triangle"></view>
-        <view class="contont-triangle1"></view>
+        <view class="contont-triangle" />
+        <view class="contont-triangle1" />
         <text class="contont-text">{{ info?.prizePool[0].goodsDto.name }}</text>
       </view>
-      <view class="texts"> 本期赠品 </view>
+      <view class="texts">
+        本期赠品
+      </view>
       <view class="top">
         <image src="https://jms.85gui7.com/kahe-202510/shine/top.png" mode="scaleToFill" class="top-bg" />
         <text>第{{ info?.id ?? 0 }}期</text>
@@ -30,27 +32,25 @@
     </view>
     <view class="nav-right">
       <view
-        class="item"
         v-for="item in itemList"
-        :key="item.key"
         :id="item.key"
+        :key="item.key"
+        class="item"
         @tap.stop="tapNav(item)"
       >
         <image :src="item.icon" mode="scaleToFill" class="item-icon" />
-        <view class="text">{{ item.text }}</view>
+        <view class="text">
+          {{ item.text }}
+        </view>
       </view>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import Lamp from "@/components/lamp/index.vue";
-import { ShingingInfo } from "../../api/index";
-import { PropType } from "vue";
+import type { onMounted, PropType, ref } from 'vue'
+import type { ShingingInfo } from '../../api/index'
 
-const emit = defineEmits<{
-  (e: "tapNav", item: any): void;
-}>();
 const props = defineProps({
   info: {
     default: {},
@@ -58,7 +58,7 @@ const props = defineProps({
   },
   backGround: {
     type: String,
-    default: "",
+    default: '',
   },
   border: {
     type: Number,
@@ -68,45 +68,46 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
-});
-import { onMounted, Prop, ref, watch } from "vue";
-
+})
+const emit = defineEmits<{
+  (e: 'tapNav', item: any): void
+}>()
 const itemList = ref([
-  { icon: "https://jms.85gui7.com/kahe-202510/shine/icon1.png", text: "规则", key: 1 },
-  { icon: "https://jms.85gui7.com/kahe-202510/shine/icon2.png", text: "往期", key: 2 },
-]);
-const lampRef = ref();
+  { icon: 'https://jms.85gui7.com/kahe-202510/shine/icon1.png', text: '规则', key: 1 },
+  { icon: 'https://jms.85gui7.com/kahe-202510/shine/icon2.png', text: '往期', key: 2 },
+])
+const lampRef = ref()
 const lampList = ref([
   {
-    avatar: "https://jms.85gui7.com/kahe-202510/shine/item.png",
-    userName: "啊权",
-    content: "hhhhhhhhhhh",
+    avatar: 'https://jms.85gui7.com/kahe-202510/shine/item.png',
+    userName: '啊权',
+    content: 'hhhhhhhhhhh',
   },
   {
-    avatar: "https://jms.85gui7.com/kahe-202510/shine/item.png",
-    userName: "啊权",
-    content: "hhhhhhhhhhh",
+    avatar: 'https://jms.85gui7.com/kahe-202510/shine/item.png',
+    userName: '啊权',
+    content: 'hhhhhhhhhhh',
   },
   {
-    avatar: "https://jms.85gui7.com/kahe-202510/shine/item.png",
-    userName: "啊权",
-    content: "hhhhhhhhhhh",
+    avatar: 'https://jms.85gui7.com/kahe-202510/shine/item.png',
+    userName: '啊权',
+    content: 'hhhhhhhhhhh',
   },
   {
-    avatar: "https://jms.85gui7.com/kahe-202510/shine/item.png",
-    userName: "啊权",
-    content: "hhhhhhhhhhh",
+    avatar: 'https://jms.85gui7.com/kahe-202510/shine/item.png',
+    userName: '啊权',
+    content: 'hhhhhhhhhhh',
   },
-]);
-const tapLampAction = (item: any) => {
-  console.log("tapLampAction===>", item);
-};
-const tapNav = (item: string) => {
-  emit("tapNav", item);
-};
+])
+function tapLampAction(item: any) {
+  console.log('tapLampAction===>', item)
+}
+function tapNav(item: string) {
+  emit('tapNav', item)
+}
 onMounted(() => {
-  lampRef.value?.play(lampList.value, 3);
-});
+  lampRef.value?.play(lampList.value, 3)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -231,7 +232,7 @@ onMounted(() => {
       position: relative;
       width: 82rpx;
       height: 94rpx;
-      background-image: url("https://jms.85gui7.com/kahe-202510/shine/btn.png");
+      background-image: url('https://jms.85gui7.com/kahe-202510/shine/btn.png');
       background-size: 100%;
       background-repeat: no-repeat;
       display: flex;

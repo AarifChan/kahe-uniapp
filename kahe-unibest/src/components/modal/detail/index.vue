@@ -27,45 +27,55 @@
         </view>
         <view class="modal-detail-content-info">
           <text
-            class="modal-detail-content-info-title theme-font"
             v-if="item?.title"
-            >{{ item.title }}</text
+            class="modal-detail-content-info-title theme-font"
           >
-          <text class="modal-detail-content-info-title theme-font" v-else>{{
-            item?.goods?.name
-          }}</text>
+            {{ item.title }}
+          </text>
+          <text v-else class="modal-detail-content-info-title theme-font">
+            {{
+              item?.goods?.name
+            }}
+          </text>
           <view class="modal-detail-content-info-row">
             <view class="modal-detail-content-info-row-item">
               <text
+                v-if="item?.salePrice"
                 class="modal-detail-content-info-row-item-title theme-font"
-                v-if="item?.salePrice"
-                >参考价：</text
               >
+                参考价：
+              </text>
               <text
-                class="modal-detail-content-info-row-item-value price-font"
                 v-if="item?.salePrice"
-                >{{ item?.salePrice }}</text
+                class="modal-detail-content-info-row-item-value price-font"
               >
-              <text class="modal-detail-content-info-row-item-value" v-else>{{
-                item?.goods?.salePrice
-              }}</text>
+                {{ item?.salePrice }}
+              </text>
+              <text v-else class="modal-detail-content-info-row-item-value">
+                {{
+                  item?.goods?.salePrice
+                }}
+              </text>
             </view>
             <view class="modal-detail-content-info-row-item">
               <text
+                v-if="item?.salePrice"
                 class="modal-detail-content-info-row-item-title theme-font"
-                v-if="item?.salePrice"
-                >入库编码：</text
               >
+                入库编码：
+              </text>
               <text
-                class="modal-detail-content-info-row-item-value price-font"
                 v-if="item?.salePrice"
-                >KH{{ item?.price }}</text
-              >
-              <text
                 class="modal-detail-content-info-row-item-value price-font"
+              >
+                KH{{ item?.price }}
+              </text>
+              <text
                 v-else
-                >KH{{ item?.goods?.price }}</text
+                class="modal-detail-content-info-row-item-value price-font"
               >
+                KH{{ item?.goods?.price }}
+              </text>
             </view>
           </view>
         </view>
@@ -75,8 +85,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { UserGoodsModel } from "@/model";
-import { type PropType, ref, watch } from "vue";
+import type { PropType } from 'vue'
+import type { UserGoodsModel } from '@/model'
+import { ref, watch } from 'vue'
 
 const props = defineProps({
   show: {
@@ -87,16 +98,15 @@ const props = defineProps({
     default: {} as UserGoodsModel,
     type: Object as PropType<UserGoodsModel>,
   },
-});
-const vShow = ref(false);
+})
+const emits = defineEmits(['update:show'])
+const vShow = ref(false)
 watch(
   () => props.show,
   (value) => {
-    vShow.value = value;
-  }
-);
-
-const emits = defineEmits(["update:show"]);
+    vShow.value = value
+  },
+)
 </script>
 
 <style lang="scss" scoped>

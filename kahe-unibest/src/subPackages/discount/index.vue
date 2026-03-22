@@ -1,6 +1,6 @@
 <template>
   <scroll-view class="discount" :scroll-y="true">
-    <image class="discount-bg" src="https://jms.85gui7.com/kahe-202510/common/bg.png"></image>
+    <image class="discount-bg" src="https://jms.85gui7.com/kahe-202510/common/bg.png" />
     <view class="discount-content">
       <view class="discount-content-top">
         <image
@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import Card from "./components/card/index.vue";
+import Card from './components/card/index.vue'
 </script>
 
 <style lang="scss" scoped>

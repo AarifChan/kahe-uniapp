@@ -8,10 +8,10 @@ export function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-export const showInGroupImage = () => {
+export function showInGroupImage() {
   uni.previewImage({
     current: 'https://jms.85gui7.com/kahe-202510/share-inGroup.jpg',
-    urls: ['https://jms.85gui7.com/kahe-202510/share-inGroup.jpg']
+    urls: ['https://jms.85gui7.com/kahe-202510/share-inGroup.jpg'],
   })
 }
 
@@ -26,9 +26,9 @@ export function calculateMD5(inputNumber: number, length: number): string {
   const uniqueString = hexString.substring(0, 8)
   return uniqueString.toUpperCase()
 }
-export const isValidURL = (url: string) => {
-  const reg =
-    /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/
+export function isValidURL(url: string) {
+  const reg
+    = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d?)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:\d+)*(\/($|[\w.,?'\\+&%$#=~-]+))*$/
   return reg.test(url)
 }
 
@@ -44,7 +44,7 @@ export function shuffle(arr: any[]) {
 export function duplicates(array: any[]) {
   const result: any[] = []
   array.forEach((item) => {
-    if (result.indexOf(item) == -1) {
+    if (!result.includes(item)) {
       result.push(item)
     }
   })
@@ -58,7 +58,7 @@ export function duplicates(array: any[]) {
     })
     map.push({
       level: item,
-      count: num
+      count: num,
     })
   })
   return map
@@ -66,11 +66,13 @@ export function duplicates(array: any[]) {
 
 export function formatPrice(price: number) {
   if (price < 10000) {
-    return price.toFixed(2) + ''
-  } else if (price < 10000 * 10000) {
-    return (price / 10000).toFixed(2) + '万'
-  } else {
-    return (price / (10000 * 10000)).toFixed(2) + '亿'
+    return `${price.toFixed(2)}`
+  }
+  else if (price < 10000 * 10000) {
+    return `${(price / 10000).toFixed(2)}万`
+  }
+  else {
+    return `${(price / (10000 * 10000)).toFixed(2)}亿`
   }
 }
 
@@ -78,16 +80,13 @@ export function isDate(val: any): val is Date {
   return toString.call(val) === '[object Date]'
 }
 
-export const getRandomNum = (min: number, max: number): number => {
+export function getRandomNum(min: number, max: number): number {
   const range = max - min
   const rand = Math.random()
   return min + Math.round(rand * range)
 }
 
-export const parseTime = (
-  time?: object | string | number | null,
-  cFormat?: string
-): string | null => {
+export function parseTime(time?: object | string | number | null, cFormat?: string): string | null {
   if (time === undefined || !time) {
     return null
   }
@@ -95,14 +94,16 @@ export const parseTime = (
   let date: Date
   if (typeof time === 'object') {
     date = time as Date
-  } else {
+  }
+  else {
     if (typeof time === 'string') {
       time = time.split('.')[0]
-      if (/^[0-9]+$/.test(time)) {
+      if (/^\d+$/.test(time)) {
         // support "1548221490638"
-        time = parseInt(time)
-      } else {
-        time = time.replace(new RegExp(/-/gm), '/')
+        time = Number.parseInt(time)
+      }
+      else {
+        time = time.replace(new RegExp(/-/g), '/')
       }
     }
     if (typeof time === 'number' && time.toString().length === 10) {
@@ -117,10 +118,10 @@ export const parseTime = (
     h: date.getHours(),
     i: date.getMinutes(),
     s: date.getSeconds(),
-    a: date.getDay()
+    a: date.getDay(),
   }
 
-  return format.replace(/{([ymdhisa])+}/g, (_, key) => {
+  return format.replace(/\{([ymdhisa])+\}/g, (_, key) => {
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
     if (key === 'a') {
@@ -154,18 +155,23 @@ export function getFormatTime(timeStamp: string) {
 
   if (milliseconds <= 1000 * 60) {
     timeSpanStr = '刚刚'
-  } else if (1000 * 60 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-    timeSpanStr = Math.round(milliseconds / (1000 * 60)) + '分钟前'
-  } else if (1000 * 60 * 60 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-    timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前'
-  } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-    timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前'
-  } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && year == now.getFullYear()) {
+  }
+  else if (1000 * 60 < milliseconds && milliseconds <= 1000 * 60 * 60) {
+    timeSpanStr = `${Math.round(milliseconds / (1000 * 60))}分钟前`
+  }
+  else if (1000 * 60 * 60 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
+    timeSpanStr = `${Math.round(milliseconds / (1000 * 60 * 60))}小时前`
+  }
+  else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
+    timeSpanStr = `${Math.round(milliseconds / (1000 * 60 * 60 * 24))}天前`
+  }
+  else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && year == now.getFullYear()) {
     // timeSpanStr = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
-    timeSpanStr = year + '-' + month + '-' + day
-  } else {
+    timeSpanStr = `${year}-${month}-${day}`
+  }
+  else {
     // timeSpanStr = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
-    timeSpanStr = year + '-' + month + '-' + day
+    timeSpanStr = `${year}-${month}-${day}`
   }
 
   return timeSpanStr
@@ -174,17 +180,21 @@ export function getFormatTime(timeStamp: string) {
 export function getPassTime(time: number): string {
   let timeSpanStr
   if (time <= 1000 * 60) {
-    timeSpanStr = Math.round(time / 1000) + '秒'
-  } else if (1000 * 60 < time && time <= 1000 * 60 * 60) {
-    timeSpanStr = Math.round(time / (1000 * 60)) + '分钟'
-  } else if (1000 * 60 * 60 < time && time <= 1000 * 60 * 60 * 24) {
-    timeSpanStr = Math.round(time / (1000 * 60 * 60)) + '小时'
-  } else if (1000 * 60 * 60 * 24 < time && time <= 1000 * 60 * 60 * 24 * 15) {
-    timeSpanStr = Math.round(time / (1000 * 60 * 60 * 24)) + '天'
-  } else {
-    timeSpanStr = Math.round(time / (1000 * 60 * 60 * 24)) + '天'
+    timeSpanStr = `${Math.round(time / 1000)}秒`
   }
-  return timeSpanStr + ''
+  else if (1000 * 60 < time && time <= 1000 * 60 * 60) {
+    timeSpanStr = `${Math.round(time / (1000 * 60))}分钟`
+  }
+  else if (1000 * 60 * 60 < time && time <= 1000 * 60 * 60 * 24) {
+    timeSpanStr = `${Math.round(time / (1000 * 60 * 60))}小时`
+  }
+  else if (1000 * 60 * 60 * 24 < time && time <= 1000 * 60 * 60 * 24 * 15) {
+    timeSpanStr = `${Math.round(time / (1000 * 60 * 60 * 24))}天`
+  }
+  else {
+    timeSpanStr = `${Math.round(time / (1000 * 60 * 60 * 24))}天`
+  }
+  return `${timeSpanStr}`
 }
 
 export function is(val: unknown, type: string) {
@@ -281,8 +291,8 @@ export const isServer = typeof window === 'undefined'
 export const isClient = !isServer
 
 export function isUrl(path: string): boolean {
-  const reg =
-    /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/
+  const reg
+    = /(((^https?:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-]*)?\??[-+=&;%@.\w]*(?:#\w*)?)?)$/
   return reg.test(path)
 }
 /** 电话脱敏 */

@@ -1,6 +1,6 @@
 <template>
   <view class="merchantInfoGoods">
-    <view class="merchantInfoGoods-empty" v-if="item.productNum === 0">
+    <view v-if="item.productNum === 0" class="merchantInfoGoods-empty">
       <image
         style="width: 137rpx; height: 63rpx"
         src="https://jms.85gui7.com/jos/1214/sell-out.png"
@@ -15,7 +15,7 @@
       <view class="merchantInfoGoods-cover-pattern">
         <image
           v-for="(label, index) in item.labels"
-          :key="'labels:' + index"
+          :key="`labels:${index}`"
           :src="formatLabelImage(label)"
           class="merchantInfoGoods-cover-pattern-img"
         />
@@ -26,29 +26,32 @@
         <view class="merchantInfoGoods-info-content-bottom">
           <view
             class="merchantInfoGoods-info-content-bottom-title text-flow-ellipsis-multiple"
-            >{{ item.name }}</view
           >
+            {{ item.name }}
+          </view>
           <view class="merchantInfoGoods-info-content-bottom-row1">
             <text
               class="merchantInfoGoods-info-content-bottom-row1-title price-font"
-              >{{ isFromMall ? "" : "" }}{{ item.price
-              }}{{ isFromMall ? "点券" : "" }}</text
             >
+              {{ isFromMall ? "" : "" }}{{ item.price
+              }}{{ isFromMall ? "点券" : "" }}
+            </text>
           </view>
         </view>
       </view>
     </view>
     <image
-      class="merchantInfoGoods-tags"
       v-if="showTag"
+      class="merchantInfoGoods-tags"
       :src="item.mainTagImage"
     />
   </view>
 </template>
 
 <script lang="ts" setup>
-import type { PropType } from "vue";
-import type { UIMallListItemModel, UIProductModel } from "@/model";
+import type { PropType } from 'vue'
+import type { UIMallListItemModel, UIProductModel } from '@/model'
+
 defineProps({
   item: {
     default: {} as UIProductModel | UIMallListItemModel,
@@ -62,11 +65,11 @@ defineProps({
     default: false,
     type: Boolean,
   },
-});
+})
 
-const formatLabelImage = (index: number) => {
-  return "https://jms.85gui7.com/kahe-202510/tags/mode" + index + ".png";
-};
+function formatLabelImage(index: number) {
+  return `https://jms.85gui7.com/kahe-202510/tags/mode${index}.png`
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,9 +1,9 @@
 <template>
   <view class="bottom">
     <view
-      class="bottom-btn"
       v-for="item in BtnIcon"
       :key="item"
+      class="bottom-btn"
       @tap.stop="tapAward(item)"
     >
       <view class="btn_icon">
@@ -21,25 +21,25 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from "vue";
-import { ShingingInfo } from "@/subPackages/xingyao/api";
+import type { PropType } from 'vue'
+import type { ShingingInfo } from '@/subPackages/xingyao/api'
 
 enum BtnIcon {
-  award = "award",
-  record = "record",
+  award = 'award',
+  record = 'record',
 }
 defineProps({
   info: {
     default: {},
     type: Object as PropType<ShingingInfo>,
   },
-});
+})
 const emit = defineEmits<{
-  (e: "tapAward", value: string): void;
-}>();
-const tapAward = (item: string) => {
-  emit("tapAward", item);
-};
+  (e: 'tapAward', value: string): void
+}>()
+function tapAward(item: string) {
+  emit('tapAward', item)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -60,7 +60,7 @@ const tapAward = (item: string) => {
     .btn_icon {
       width: 242rpx;
       height: 85rpx;
-      background-image: url("https://jms.85gui7.com/kahe-202510/shine/blue.png");
+      background-image: url('https://jms.85gui7.com/kahe-202510/shine/blue.png');
       background-size: 100% 100%;
       background-repeat: no-repeat;
       display: flex;

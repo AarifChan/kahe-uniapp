@@ -1,35 +1,40 @@
 <template>
   <view class="user-card">
-    <!--    <view class="num" v-if="type === 2">#{{ item.id }}</view>-->
+    <!--    <view class="num" v-if="type === 2">#{{ item.id }}</view> -->
     <view class="item">
       <view class="user-info">
         <image class="avatar" :src="item.user?.avatar" mode="aspectFill" />
         <text class="username">{{ item.user?.nickname }}</text>
       </view>
       <view class="user-time">
-        <view class="date" v-if="type === 3">第{{ item.aid }}期</view>
-        <text>{{
-          item.createTime ? dayjs(item.createTime).format("MM-DD HH:mm:ss") : ""
-        }}</text>
+        <view v-if="type === 3" class="date">
+          第{{ item.aid }}期
+        </view>
+        <text>
+          {{
+            item.createTime ? dayjs(item.createTime).format("MM-DD HH:mm:ss") : ""
+          }}
+        </text>
       </view>
     </view>
     <template v-if="type === 3">
-      <view class="line"></view>
+      <view class="line" />
       <view class="bottom">
         <view class="bottom-right">
           <image class="goods" :src="item.goodsDto?.image" mode="aspectFill" />
           <text>{{ item.goodsDto?.name }}</text>
         </view>
-        <view class="left"></view>
+        <view class="left" />
       </view>
     </template>
   </view>
 </template>
 
 <script setup lang="ts">
-import { inject, PropType, ref } from "vue";
-import type { ShingingLog } from "@/subPackages/xingyao/api";
-import dayjs from "dayjs";
+import type { PropType } from 'vue'
+import type { ShingingLog } from '@/subPackages/xingyao/api'
+import dayjs from 'dayjs'
+
 defineProps({
   item: {
     default: {} as ShingingLog,
@@ -39,7 +44,7 @@ defineProps({
     default: 2,
     type: Number,
   },
-});
+})
 </script>
 
 <style scoped lang="scss">

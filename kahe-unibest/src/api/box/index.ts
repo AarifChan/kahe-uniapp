@@ -1,5 +1,5 @@
-import { get, post } from "@/utils/request";
-import type { BoxPageParams, ListObject, PageParams } from "@/model/base";
+import type { OpenChestParams } from '@/model'
+import type { BoxPageParams, ListObject, PageParams } from '@/model/base'
 import type {
   BoxGoodsSubmitParams,
   BoxGoodsSubmitResponse,
@@ -15,102 +15,96 @@ import type {
   UserGoodsQueryParams,
   UserGoodsRecoveryModel,
   UserStatsGoodsModel,
-} from "@/model/box";
-import type { OpenChestParams } from "@/model";
+} from '@/model/box'
+import { get, post } from '@/utils/request'
 
 // 用户宝箱
-export const userGoodsChestBox = async (params: PageParams) => {
-  return await get<ListObject<UserChestModel>>("user/chest", params);
-};
+export async function userGoodsChestBox(params: PageParams) {
+  return await get<ListObject<UserChestModel>>('user/chest', params)
+}
 // 打开宝箱
-export const userOpenGoodsChestBoxRequest = async (params: OpenChestParams) => {
-  return await post<UserChestOpenModel>("user/chest/open", params);
-};
+export async function userOpenGoodsChestBoxRequest(params: OpenChestParams) {
+  return await post<UserChestOpenModel>('user/chest/open', params)
+}
 /* 获取我的箱子 */
-export const userGoodsBoxRequest = async (params: BoxPageParams) => {
-  return await get<ListObject<UserBoxModel>>("user/goods/box", params);
-};
+export async function userGoodsBoxRequest(params: BoxPageParams) {
+  return await get<ListObject<UserBoxModel>>('user/goods/box', params)
+}
 
 /* 获取我的物品 */
-export const userGoodsListRequest = async (params: UserGoodsQueryParams) => {
-  return await get<ListObject<UserGoodsModel>>("user/goods", {
+export async function userGoodsListRequest(params: UserGoodsQueryParams) {
+  return await get<ListObject<UserGoodsModel>>('user/goods', {
     ...params,
     merchant: 1,
-  });
-};
+  })
+}
 
 /* 物品上锁 */
-export const userGoodsLockRequest = async (params: number[]) => {
-  return await post("user/goods/lock", params, {
+export async function userGoodsLockRequest(params: number[]) {
+  return await post('user/goods/lock', params, {
     urlAppend: false,
-  });
-};
+  })
+}
 
 /* 物品粉碎 */
-export const userGoodsDeleteRequest = async (params: any) => {
-  return await post("user/goods/recovery", params, {
+export async function userGoodsDeleteRequest(params: any) {
+  return await post('user/goods/recovery', params, {
     urlAppend: false,
-  });
-};
+  })
+}
 
 /* 物品解锁 */
-export const userGoodsUnlockRequest = async (params: number[]) => {
-  return await post("user/goods/unlock", params, {
+export async function userGoodsUnlockRequest(params: number[]) {
+  return await post('user/goods/unlock', params, {
     urlAppend: false,
-  });
-};
+  })
+}
 
-export const userGoodsDeliverSubmitRequest = async (
-  params: UserDeliverSubmitParams
-) => {
+export async function userGoodsDeliverSubmitRequest(params: UserDeliverSubmitParams) {
   return await post<UserDeliverSubmitResponse>(
-    "user/goods/deliver/submit",
+    'user/goods/deliver/submit',
     params,
     {
       urlAppend: false,
-    }
-  );
-};
+    },
+  )
+}
 
 /* 物品发货 */
-export const userGoodsDeliverRequest = async (params: UserDeliverParams) => {
-  return await post("user/goods/deliver", params);
-};
+export async function userGoodsDeliverRequest(params: UserDeliverParams) {
+  return await post('user/goods/deliver', params)
+}
 
 /* 用户已粉碎列表 */
-export const userGoodsRecycleListRequest = async (params: PageParams) => {
+export async function userGoodsRecycleListRequest(params: PageParams) {
   return await get<ListObject<UserGoodsRecoveryModel>>(
-    "user/goods/recovery",
-    params
-  );
-};
+    'user/goods/recovery',
+    params,
+  )
+}
 
 /* 物理已发货列表 */
-export const userGoodsDeliverListRequest = async (params: PageParams) => {
+export async function userGoodsDeliverListRequest(params: PageParams) {
   return await get<ListObject<UserGoodsDeliverModel>>(
-    "user/goods/deliver",
-    params
-  );
-};
+    'user/goods/deliver',
+    params,
+  )
+}
 
 /* 物品回收确认 */
-export const userGoodsRecycleConfirmRequest = async (
-  params: BoxGoodsSubmitParams
-) => {
+export async function userGoodsRecycleConfirmRequest(params: BoxGoodsSubmitParams) {
   return await post<BoxGoodsSubmitResponse>(
-    "user/goods/recovery/submit",
+    'user/goods/recovery/submit',
     params,
     {
       urlAppend: false,
-    }
-  );
-};
+    },
+  )
+}
 
 /* 物品统计信息 */
-export const userGoodsBoxStatusRequest = async (
-  params: GoodsBoxStatsParams
-) => {
-  return await post<UserStatsGoodsModel[]>("user/goods/box/stat", params, {
+export async function userGoodsBoxStatusRequest(params: GoodsBoxStatsParams) {
+  return await post<UserStatsGoodsModel[]>('user/goods/box/stat', params, {
     urlAppend: false,
-  });
-};
+  })
+}

@@ -9,7 +9,7 @@
     >
       <Item
         v-for="(item, index) in dataList"
-        :key="'orderItem' + index"
+        :key="`orderItem${index}`"
         :item="item"
         @tap.stop="didClickItem(item)"
       />
@@ -17,21 +17,24 @@
     </scroll-view>
     <view class="order-tag">
       <image class="order-tag-bg" src="https://jms.85gui7.com/kahe-202510/order/tag-bg.png" />
-      <view class="order-tag-title theme-font">全 部</view>
+      <view class="order-tag-title theme-font">
+        全 部
+      </view>
     </view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "vue";
-import Item from "./components/item.vue";
-import Empty from "@/components/empty/index.vue";
-import { usePayedOrder } from "./index";
-const { getPayedOrderList, dataList, didClickItem, handleScrollToLower } =
-  usePayedOrder();
+import { onMounted } from 'vue'
+import Empty from '@/components/empty/index.vue'
+import Item from './components/item.vue'
+import { usePayedOrder } from './index'
+
+const { getPayedOrderList, dataList, didClickItem, handleScrollToLower }
+  = usePayedOrder()
 onMounted(() => {
-  getPayedOrderList();
-});
+  getPayedOrderList()
+})
 </script>
 
 <style lang="scss" scoped>

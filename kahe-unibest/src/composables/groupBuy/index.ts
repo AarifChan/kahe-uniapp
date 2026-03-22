@@ -1,53 +1,54 @@
-import { getGroupBuyListRequest } from "@/api";
-import { ref } from "vue";
-import type { GroupBuyItem } from "@/model";
+import type { GroupBuyItem } from '@/model'
+import { ref } from 'vue'
+import { getGroupBuyListRequest } from '@/api'
 
 export function useGroupBuy() {
-  const groupBuyList = ref([] as GroupBuyItem[]);
+  const groupBuyList = ref([] as GroupBuyItem[])
 
   const queryParams = ref({
     hot: 0,
     page: 1,
     limit: 10,
-    key: "",
+    key: '',
     sflag: 0,
-    sort: "desc",
-  });
+    sort: 'desc',
+  })
 
-  const total = ref(0);
+  const total = ref(0)
 
   const getGroupBuyListByHot = async () => {
-    queryParams.value.hot = 1;
-    await getGroupBuyList();
-  };
+    queryParams.value.hot = 1
+    await getGroupBuyList()
+  }
 
   const getGroupBuyList = async () => {
-    const resp = await getGroupBuyListRequest(queryParams.value);
+    const resp = await getGroupBuyListRequest(queryParams.value)
     if (resp.code === 200) {
-      const list =
-        queryParams.value.page === 1
+      const list
+        = queryParams.value.page === 1
           ? new Array<GroupBuyItem>()
-          : groupBuyList.value;
+          : groupBuyList.value
       resp.data.content.forEach((item) => {
-        list.push(item);
-      });
-      groupBuyList.value = list;
-      total.value = resp.data.totalElements;
-    } else {
-      groupBuyList.value = [];
+        list.push(item)
+      })
+      groupBuyList.value = list
+      total.value = resp.data.totalElements
     }
-  };
+    else {
+      groupBuyList.value = []
+    }
+  }
 
   const handleChange = async () => {
     // await getGroupBuyList()
-  };
+  }
 
   const scrollToLower = () => {
     if (total.value > queryParams.value.page * queryParams.value.limit) {
-      queryParams.value.page++;
-      getGroupBuyList();
+      queryParams.value.page++
+      getGroupBuyList()
     }
-  };
+  }
 
   return {
     queryParams,
@@ -56,5 +57,5 @@ export function useGroupBuy() {
     getGroupBuyList,
     getGroupBuyListByHot,
     scrollToLower,
-  };
+  }
 }

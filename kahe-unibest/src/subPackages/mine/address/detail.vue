@@ -3,14 +3,14 @@
     <view class="address-form">
       <TnForm>
         <item
+          v-model:value="address.realName"
           title="收件人"
           placeholder="请输入收件人信息"
-          v-model:value="address.realName"
         />
         <item
+          v-model:value="address.phone"
           title="联系电话"
           placeholder="请输入收件人电话"
-          v-model:value="address.phone"
         />
         <item
           title="所在地区"
@@ -21,24 +21,27 @@
           <template #default>
             <view class="address-selected" @tap.stop="openRegionPicker = true">
               <view
-                class="address-selected-active text-flow-ellipsis-single"
                 v-if="areaAddress"
-                >{{ areaAddress }}</view
+                class="address-selected-active text-flow-ellipsis-single"
               >
-              <view class="address-selected-normal" v-else>点击选择地址</view>
+                {{ areaAddress }}
+              </view>
+              <view v-else class="address-selected-normal">
+                点击选择地址
+              </view>
             </view>
           </template>
         </item>
 
         <item
+          v-model:value="address.detail"
           title="详细地址"
           placeholder="请输入收件人信息"
-          v-model:value="address.detail"
         />
         <item
+          v-model:value="address.isDefault"
           title="设置默认"
           type="switch"
-          v-model:value="address.isDefault"
         />
         // #ifdef MP-WEIXIN
         <view class="address-addressInput" @tap.stop="handleWxAddress">
@@ -50,8 +53,9 @@
             <text
               class="address-addressInput-content-item-title"
               style="margin-left: 8px"
-              >一键获取微信收货地址</text
             >
+              一键获取微信收货地址
+            </text>
           </view>
         </view>
         // #endif
@@ -70,100 +74,102 @@
 </template>
 
 <script lang="ts" setup>
+import type { AddressModel } from '@/model/address'
+import TnForm from '@tuniao/tnui-vue3-uniapp/components/form/src/form.vue'
+import TnRegionPicker from '@tuniao/tnui-vue3-uniapp/components/region-picker/src/region-picker.vue'
+
+import { computed, onMounted, ref } from 'vue'
+import CustomButton from '@/components/custom/button/index.vue'
 import { useAddressStore } from '@/store/address'
-import Item from "./components/item.vue";
-import TnRegionPicker from "@tuniao/tnui-vue3-uniapp/components/region-picker/src/region-picker.vue";
+import { ShowToast } from '@/utils'
+import { getPageOptions } from '@/utils/tools'
 
-import TnForm from "@tuniao/tnui-vue3-uniapp/components/form/src/form.vue";
-import CustomButton from "@/components/custom/button/index.vue";
-import type { AddressModel } from "@/model/address";
-import { ref, onMounted, computed } from "vue";
-import { getPageOptions } from "@/utils/tools";
+import Item from './components/item.vue'
 
-import { ShowToast } from "@/utils";
+const addressStore = useAddressStore()
 
-const openRegionPicker = ref(false);
+const openRegionPicker = ref(false)
 
 const address = ref({
-  city: "",
+  city: '',
   cityId: 0,
-  detail: "",
-  district: "",
+  detail: '',
+  district: '',
   isDefault: 0,
-  phone: "",
+  phone: '',
   postCode: 0,
-  province: "",
-  realName: "",
-} as AddressModel);
+  province: '',
+  realName: '',
+} as AddressModel)
 
-const regionValue = ref<string[]>(["广东省", "广州市", "番禺区"]);
+const regionValue = ref<string[]>(['广东省', '广州市', '番禺区'])
 
 const areaAddress = ref(
   computed(() => {
-    return address.value.province + address.value.city + address.value.district;
-  })
-);
+    return address.value.province + address.value.city + address.value.district
+  }),
+)
 
-const onRegionChange = (sel: any) => {
-  console.log("onRegionChange:", sel, regionValue.value);
-  address.value.province = regionValue.value[0];
-  address.value.city = regionValue.value[1];
-  address.value.district = regionValue.value[2];
-};
-const handleCreate = async () => {
+function onRegionChange(sel: any) {
+  console.log('onRegionChange:', sel, regionValue.value)
+  address.value.province = regionValue.value[0]
+  address.value.city = regionValue.value[1]
+  address.value.district = regionValue.value[2]
+}
+async function handleCreate() {
   if (
-    address.value.realName !== "" &&
-    address.value.detail !== "" &&
-    address.value.phone !== ""
+    address.value.realName !== ''
+    && address.value.detail !== ''
+    && address.value.phone !== ''
   ) {
-    address.value.isDefault = address.value.isDefault ? 1 : 0;
+    address.value.isDefault = address.value.isDefault ? 1 : 0
     if (await addressStore.addAddress(address.value)) {
-      await ShowToast("添加成功");
+      await ShowToast('添加成功')
       setTimeout(() => {
-        uni.navigateBack();
-      }, 500);
-      return;
+        uni.navigateBack()
+      }, 500)
+      return
     }
-    return;
+    return
   }
-  await ShowToast("请填写完整信息");
-};
-const handleWxAddress = () => {
+  await ShowToast('请填写完整信息')
+}
+function handleWxAddress() {
   uni.chooseAddress({
     success: (res) => {
-      console.log("handleWxAddress", res);
-      address.value.province = res.provinceName;
-      address.value.city = res.cityName;
-      address.value.district = res.countyName;
-      address.value.detail = res.detailInfo;
-      address.value.phone = res.telNumber;
-      address.value.realName = res.userName;
+      console.log('handleWxAddress', res)
+      address.value.province = res.provinceName
+      address.value.city = res.cityName
+      address.value.district = res.countyName
+      address.value.detail = res.detailInfo
+      address.value.phone = res.telNumber
+      address.value.realName = res.userName
     },
     fail: () => {
-      console.log("showWechatAddress fail");
+      console.log('showWechatAddress fail')
     },
-  });
-};
+  })
+}
 
 onMounted(async () => {
-  const op = getPageOptions();
-  const addressId = op.id;
+  const op = getPageOptions()
+  const addressId = op.id
 
   if (addressId) {
-    const resp = await addressStore.getAddressDetail(addressId);
+    const resp = await addressStore.getAddressDetail(addressId)
 
-    address.value.city = resp.city;
-    address.value.province = resp.province;
-    address.value.district = resp.district;
-    address.value.detail = resp.detail;
-    address.value.id = resp.id;
-    address.value.isDefault = resp.isDefault;
-    address.value.realName = resp.realName;
-    address.value.phone = resp.phone;
+    address.value.city = resp.city
+    address.value.province = resp.province
+    address.value.district = resp.district
+    address.value.detail = resp.detail
+    address.value.id = resp.id
+    address.value.isDefault = resp.isDefault
+    address.value.realName = resp.realName
+    address.value.phone = resp.phone
 
-    console.log("address:", resp, address.value);
+    console.log('address:', resp, address.value)
   }
-});
+})
 </script>
 
 <style lang="scss" scoped>

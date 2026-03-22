@@ -1,50 +1,68 @@
 <template>
   <view class="groupBuy">
-    <!--    <image class="groupBuy-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/home/good-tiem.png" />-->
+    <!--    <image class="groupBuy-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/home/good-tiem.png" /> -->
     <view class="groupBuy-content">
       <image class="groupBuy-content-icon" :src="item.logo" />
       <view class="groupBuy-content-info">
-        <view class="groupBuy-content-info-title SimHei-font">{{
-          item.title
-        }}</view>
+        <view class="groupBuy-content-info-title SimHei-font">
+          {{
+            item.title
+          }}
+        </view>
         <view class="groupBuy-content-info-row" style="margin-top: 37rpx">
-          <view class="groupBuy-content-info-row-price SimHei-font"
-            >¥{{ item.price }}</view
-          >
-          <view class="groupBuy-content-info-row-num SimHei-font"
-            >余{{ item.num }}/共{{ item.total }}</view
-          >
+          <view class="groupBuy-content-info-row-price SimHei-font">
+            ¥{{ item.price }}
+          </view>
+          <view class="groupBuy-content-info-row-num SimHei-font">
+            余{{ item.num }}/共{{ item.total }}
+          </view>
         </view>
         <view class="groupBuy-content-info-progress" style="margin-top: 5rpx">
           <view
             v-if="item.total > 0"
             class="groupBuy-content-info-progress-value"
             :style="progressStyles"
-          >
-          </view>
+          />
         </view>
         <view
           class="groupBuy-content-info-subTitle SimHei-font"
           style="margin-top: 15rpx"
-          >{{ isOver ? "已结束" : "剩余时间" }}</view
         >
+          {{ isOver ? "已结束" : "剩余时间" }}
+        </view>
         <view class="groupBuy-content-info-row" style="margin-top: 5rpx">
           <view
-            class="groupBuy-content-info-row-last SimHei-font"
             v-show="!isOver"
+            class="groupBuy-content-info-row-last SimHei-font"
           >
-            <view class="groupBuy-content-info-row-last-value">{{ day }}</view>
-            <view class="groupBuy-content-info-row-last-title">天</view>
-            <view class="groupBuy-content-info-row-last-value">{{ hour }}</view>
-            <view class="groupBuy-content-info-row-last-title">时</view>
-            <view class="groupBuy-content-info-row-last-value">{{
-              minute
-            }}</view>
-            <view class="groupBuy-content-info-row-last-title">分</view>
-            <view class="groupBuy-content-info-row-last-value">{{
-              second
-            }}</view>
-            <view class="groupBuy-content-info-row-last-title">秒</view>
+            <view class="groupBuy-content-info-row-last-value">
+              {{ day }}
+            </view>
+            <view class="groupBuy-content-info-row-last-title">
+              天
+            </view>
+            <view class="groupBuy-content-info-row-last-value">
+              {{ hour }}
+            </view>
+            <view class="groupBuy-content-info-row-last-title">
+              时
+            </view>
+            <view class="groupBuy-content-info-row-last-value">
+              {{
+                minute
+              }}
+            </view>
+            <view class="groupBuy-content-info-row-last-title">
+              分
+            </view>
+            <view class="groupBuy-content-info-row-last-value">
+              {{
+                second
+              }}
+            </view>
+            <view class="groupBuy-content-info-row-last-title">
+              秒
+            </view>
           </view>
           <view class="groupBuy-content-info-row-merchant">
             <image
@@ -53,8 +71,9 @@
             />
             <view
               class="groupBuy-content-info-row-merchant-name text-flow-ellipsis-single"
-              >{{ item.merchant?.name ?? "" }}</view
             >
+              {{ item.merchant?.name ?? "" }}
+            </view>
           </view>
         </view>
       </view>
@@ -67,38 +86,40 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, PropType } from "vue";
-import { type GroupBuyItem } from "@/model";
+import type { PropType } from 'vue'
+import type { GroupBuyItem } from '@/model'
+import { computed, onMounted } from 'vue'
 
-import { divideAndTruncate } from "@/utils/tools";
-import { useTimeCount } from "@/composables/countTime";
-const { startTimeRemain, hour, day, second, minute, isTimeout } =
-  useTimeCount();
+import { useTimeCount } from '@/composables/countTime'
+import { divideAndTruncate } from '@/utils/tools'
 
 const props = defineProps({
   item: {
     type: Object as PropType<GroupBuyItem>,
     default: {} as GroupBuyItem,
   },
-});
+})
+
+const { startTimeRemain, hour, day, second, minute, isTimeout }
+  = useTimeCount()
 
 const progressStyles = computed(() => {
-  const a = props.item.num;
-  const b = props.item.total;
-  const progress = divideAndTruncate(a, b);
+  const a = props.item.num
+  const b = props.item.total
+  const progress = divideAndTruncate(a, b)
   return {
     width: `${progress * 100.0}%`,
-  };
-});
+  }
+})
 
 const isOver = computed(() => {
-  const num = props.item.num;
-  return num === 0 || isTimeout.value;
-});
+  const num = props.item.num
+  return num === 0 || isTimeout.value
+})
 
 onMounted(() => {
-  startTimeRemain(props.item.openTime);
-});
+  startTimeRemain(props.item.openTime)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -108,7 +129,7 @@ onMounted(() => {
   width: 559rpx;
   height: 202rpx;
   margin-right: 12rpx;
-  background-image: url("https://jms.85gui7.com/kahe-202510/ka-he/home/good-tiem.png");
+  background-image: url('https://jms.85gui7.com/kahe-202510/ka-he/home/good-tiem.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   &-content {

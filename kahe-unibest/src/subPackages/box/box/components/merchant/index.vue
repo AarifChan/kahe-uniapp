@@ -4,7 +4,9 @@
       <view class="merchantBox-left">
         <image class="merchantBox-left-avatar" :src="item.icon" />
         <view class="merchantBox-left-info">
-          <view class="merchantBox-left-info-name">{{ item.name }}</view>
+          <view class="merchantBox-left-info-name">
+            {{ item.name }}
+          </view>
           <view
             class="merchantBox-left-info-bar"
             :style="{ backgroundColor: getTagBgColor(item.tag) }"
@@ -13,9 +15,11 @@
               class="merchantBox-left-info-bar-tag"
               :src="getTagIcon(item.tag)"
             />
-            <text class="merchantBox-left-info-bar-title">{{
-              getLevelName(item.tag)
-            }}</text>
+            <text class="merchantBox-left-info-bar-title">
+              {{
+                getLevelName(item.tag)
+              }}
+            </text>
           </view>
         </view>
       </view>
@@ -28,9 +32,9 @@
     <view v-if="isExpand">
       <goods-row
         v-for="(box, index) in item.box"
+        :id="`m${box.boxId}`"
+        :key="`index${index}`"
         :item="box"
-        :key="'index' + index"
-        :id="'m' + box.boxId"
         @did-tap-detail="emits('didClickBoxItem', box)"
         @did-tap-select="emits('didSelectBox', box)"
       />
@@ -40,17 +44,17 @@
 </template>
 
 <script lang="ts" setup>
-import type { PropType } from "vue";
-import type { MerchantBoxModel } from "@/model";
+import type { PropType } from 'vue'
+import type { MerchantBoxModel } from '@/model'
 
-import GoodsRow from "../box/index.vue";
-import Empty from "@/components/empty/index.vue";
-
+import Empty from '@/components/empty/index.vue'
 import {
   getLevelName,
   getTagBgColor,
   getTagIcon,
-} from "@/pages/merchant/index";
+} from '@/pages/merchant/index'
+
+import GoodsRow from '../box/index.vue'
 
 defineProps({
   item: {
@@ -61,13 +65,13 @@ defineProps({
     default: false,
     type: Boolean,
   },
-});
+})
 
 const emits = defineEmits([
-  "didClickBoxItem",
-  "didSelectBox",
-  "didExpandMerchant",
-]);
+  'didClickBoxItem',
+  'didSelectBox',
+  'didExpandMerchant',
+])
 
 // const {
 //     boxList,
@@ -76,8 +80,8 @@ const emits = defineEmits([
 //     loadMerchantBoxList
 // } = useBox()
 
-const handleExpand = () => {
-  emits("didExpandMerchant");
+function handleExpand() {
+  emits('didExpandMerchant')
   // isExpand.value = !isExpand.value
   // if (isExpand.value) {
   //     // loadMerchantBoxList(props.item.id)
@@ -85,7 +89,7 @@ const handleExpand = () => {
   // } else {
   //     boxList.value = []
   // }
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -22,7 +22,7 @@
             type="number"
             maxlength="11"
             placeholder="请输入手机号"
-          />
+          >
         </view>
 
         <!-- 验证码输入 -->
@@ -33,7 +33,7 @@
             type="number"
             maxlength="6"
             placeholder="请输入验证码"
-          />
+          >
           <view
             class="bind-phone-content-form-smsBtn"
             :class="{ disabled: maxTime > 0 }"
@@ -72,93 +72,97 @@
 </template>
 
 <script setup lang="ts">
+import TnCountDown from '@tuniao/tnui-vue3-uniapp/components/count-down/src/count-down.vue'
+import { ref } from 'vue'
+import { bindMobile, getSmsCodeRequest } from '@/api'
 import { useUserStore } from '@/store/user'
-const userStore = useUserStore()
-import TnCountDown from "@tuniao/tnui-vue3-uniapp/components/count-down/src/count-down.vue";
-import { ref } from "vue";
-import { getSmsCodeRequest, bindMobile } from "@/api";
-import { ShowToast } from "@/utils";
+import { ShowToast } from '@/utils'
 
-import { eventBus } from "@/utils/event";
+import { eventBus } from '@/utils/event'
+
+const userStore = useUserStore()
 
 const formData = ref({
-  phone: "",
-  code: "",
-});
+  phone: '',
+  code: '',
+})
 
-const maxTime = ref(0);
+const maxTime = ref(0)
 
 /** 发送验证码 */
-const getSmsCodeAction = async () => {
-  if (maxTime.value > 0) return;
+async function getSmsCodeAction() {
+  if (maxTime.value > 0)
+    return
 
-  const phone = formData.value.phone;
+  const phone = formData.value.phone
   if (!phone || phone.length !== 11) {
-    ShowToast("请输入正确的手机号");
-    return;
+    ShowToast('请输入正确的手机号')
+    return
   }
 
   const resp = await getSmsCodeRequest({
     phone,
-    type: "bind",
-  });
+    type: 'bind',
+  })
 
   if (resp.code === 200) {
-    ShowToast("验证码已发送");
-    maxTime.value = 120;
+    ShowToast('验证码已发送')
+    maxTime.value = 120
     setTimeout(() => {
-      maxTime.value = 0;
-    }, 60 * 2 * 1000);
-  } else {
-    ShowToast(resp.msg ?? "发送失败");
+      maxTime.value = 0
+    }, 60 * 2 * 1000)
   }
-};
+  else {
+    ShowToast(resp.msg ?? '发送失败')
+  }
+}
 
 /** 绑定手机号 */
-const handleBind = async () => {
-  const phone = formData.value.phone.trim();
-  const code = formData.value.code.trim();
+async function handleBind() {
+  const phone = formData.value.phone.trim()
+  const code = formData.value.code.trim()
 
   if (!phone || phone.length !== 11) {
-    ShowToast("请输入正确的手机号");
-    return;
+    ShowToast('请输入正确的手机号')
+    return
   }
 
   if (!code) {
-    ShowToast("请输入验证码");
-    return;
+    ShowToast('请输入验证码')
+    return
   }
 
   const params = {
-    phone: phone,
+    phone,
     captcha: code,
-  };
-
-  const resp = await bindMobile(params);
-  if (resp.code === 200) {
-    await ShowToast("绑定成功");
-    // 刷新用户信息，确保 phone 字段已更新
-    await userStore.getUserInfo();
-    eventBus.emit("didLogin", true);
-    navigateAfterBind();
-  } else {
-    ShowToast(resp.msg ?? "绑定失败");
   }
-};
+
+  const resp = await bindMobile(params)
+  if (resp.code === 200) {
+    await ShowToast('绑定成功')
+    // 刷新用户信息，确保 phone 字段已更新
+    await userStore.getUserInfo()
+    eventBus.emit('didLogin', true)
+    navigateAfterBind()
+  }
+  else {
+    ShowToast(resp.msg ?? '绑定失败')
+  }
+}
 
 /** 跳过绑定 */
-const handleSkip = () => {
-  eventBus.emit("didLogin", true);
-  navigateAfterBind();
-};
+function handleSkip() {
+  eventBus.emit('didLogin', true)
+  navigateAfterBind()
+}
 
 /** 绑定/跳过后统一导航：回到首页 */
-const navigateAfterBind = () => {
+function navigateAfterBind() {
   // 使用 reLaunch 确保回到首页，清除登录页面栈
   uni.reLaunch({
-    url: "/pages/index/index",
-  });
-};
+    url: '/pages/index/index',
+  })
+}
 </script>
 
 <style scoped lang="scss">

@@ -12,24 +12,25 @@
               class="collect-content-top-row-item-icon"
               src="https://jms.85gui7.com/kahe-202510/collect/item1.png"
             />
-            <view class="collect-content-top-row-item-title text-stroke-main"
-              >首页</view
-            >
+            <view class="collect-content-top-row-item-title text-stroke-main">
+              首页
+            </view>
           </view>
           <view class="collect-content-top-row-item" @tap.stop="clickRule">
             <image
               class="collect-content-top-row-item-icon"
               src="https://jms.85gui7.com/kahe-202510/collect/item2.png"
             />
-            <view class="collect-content-top-row-item-title text-stroke-main"
-              >规则</view
-            >
+            <view class="collect-content-top-row-item-title text-stroke-main">
+              规则
+            </view>
           </view>
           <view
             class="collect-content-top-row-title text-stroke-main"
             @tap.stop="navToRecordPage"
-            >集成记录</view
           >
+            集成记录
+          </view>
         </view>
       </view>
       <category @did-change="handleCategoryChange" />
@@ -40,7 +41,7 @@
       >
         <view
           v-for="(item, index) in collectionList"
-          :key="'it' + index"
+          :key="`it${index}`"
           class="collect-content-list-item"
         >
           <item
@@ -67,19 +68,20 @@
 </template>
 
 <script lang="ts" setup>
-import Category from "./components/category.vue";
-import Item from "./components/item.vue";
-import { onMounted } from "vue";
-import { useCollect } from "./index";
-import { useModal, ModalType } from "@/composables/modal";
-import CommonModal from "@/components/modal/index.vue";
-import Empty from "@/components/empty/index.vue";
-import Exchange from "@/components/modal/exchange/index.vue";
-import { onShow } from "@dcloudio/uni-app";
-import { useMall } from "@/composables/mall";
-const { handleClickItem, payItem, mallShow } = useMall();
+import { onShow } from '@dcloudio/uni-app'
+import { onMounted } from 'vue'
+import Empty from '@/components/empty/index.vue'
+import Exchange from '@/components/modal/exchange/index.vue'
+import CommonModal from '@/components/modal/index.vue'
+import { useMall } from '@/composables/mall'
+import { ModalType, useModal } from '@/composables/modal'
+import Category from './components/category.vue'
+import Item from './components/item.vue'
+import { useCollect } from './index'
 
-const { modalShow, modalTitle, modalContent, showModalType } = useModal();
+const { handleClickItem, payItem, mallShow } = useMall()
+
+const { modalShow, modalTitle, modalContent, showModalType } = useModal()
 const {
   collectionList,
   getCollectionList,
@@ -88,41 +90,41 @@ const {
   didTapPurchaseCollectItem,
   navToRecordPage,
   handleScrollToLower,
-} = useCollect();
+} = useCollect()
 
-const handleCollectionExchange = async (id: number) => {
-  const succeed = await didTapPurchaseCollectItem(id);
+async function handleCollectionExchange(id: number) {
+  const succeed = await didTapPurchaseCollectItem(id)
   if (succeed) {
-    mallShow.value = false;
+    mallShow.value = false
   }
-};
+}
 
 onMounted(() => {
-  collectionParams.value.page = 1;
-  getCollectionList();
-});
+  collectionParams.value.page = 1
+  getCollectionList()
+})
 onShow(() => {
-  collectionParams.value.page = 1;
-  getCollectionList();
-});
-const clickRule = () => {
-  showModalType(ModalType.CollectionRule);
-};
-const handleExchangeItem = () => {};
-const handleCategoryChange = (params: {
-  title: string;
-  value: number | null;
-}) => {
-  collectionParams.value.cate = params.value;
-  collectionParams.value.page = 1;
-  getCollectionList();
-};
+  collectionParams.value.page = 1
+  getCollectionList()
+})
+function clickRule() {
+  showModalType(ModalType.CollectionRule)
+}
+function handleExchangeItem() {}
+function handleCategoryChange(params: {
+  title: string
+  value: number | null
+}) {
+  collectionParams.value.cate = params.value
+  collectionParams.value.page = 1
+  getCollectionList()
+}
 
-const navToHome = () => {
+function navToHome() {
   uni.redirectTo({
-    url: "/pages/welcome/index",
-  });
-};
+    url: '/pages/welcome/index',
+  })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -130,7 +132,7 @@ const navToHome = () => {
   position: relative;
   width: 100%;
   height: 100vh;
-  background-image: url("https://jms.85gui7.com/kahe-202510/collect/bg.png");
+  background-image: url('https://jms.85gui7.com/kahe-202510/collect/bg.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   &-content {
@@ -181,9 +183,7 @@ const navToHome = () => {
     }
     &-list {
       width: 100%;
-      height: calc(
-        100vh - 750rpx * 379 / 750 - 138rpx - env(safe-area-inset-bottom)
-      );
+      height: calc(100vh - 750rpx * 379 / 750 - 138rpx - env(safe-area-inset-bottom));
       padding: 24rpx 32rpx;
       box-sizing: border-box;
       display: flex;

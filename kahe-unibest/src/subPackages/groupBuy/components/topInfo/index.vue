@@ -3,42 +3,62 @@
     <image class="topInfo-bg" src="https://jms.85gui7.com/kahe-202510/groupBuy/top-card.png" />
     <view class="topInfo-content">
       <view class="topInfo-content-head">
-        <view class="left">{{ detail.price }}</view>
+        <view class="left">
+          {{ detail.price }}
+        </view>
         <view class="right">
           <view class="row">
-            <view class="title">距离结束还剩</view>
+            <view class="title">
+              距离结束还剩
+            </view>
             <view class="time">
               <view class="timeItem">
                 <image
                   class="timeItem-img"
                   src="https://jms.85gui7.com/kahe-202510/groupBuy/time-item.png"
                 />
-                <view class="timeItem-day">{{ day }}</view>
-                <view class="timeItem-unit">天</view>
+                <view class="timeItem-day">
+                  {{ day }}
+                </view>
+                <view class="timeItem-unit">
+                  天
+                </view>
               </view>
               <view class="timeItem">
                 <image
                   class="timeItem-img"
                   src="https://jms.85gui7.com/kahe-202510/groupBuy/time-item.png"
                 />
-                <view class="timeItem-day">{{ hour }}</view>
-                <view class="timeItem-unit">时</view>
+                <view class="timeItem-day">
+                  {{ hour }}
+                </view>
+                <view class="timeItem-unit">
+                  时
+                </view>
               </view>
               <view class="timeItem">
                 <image
                   class="timeItem-img"
                   src="https://jms.85gui7.com/kahe-202510/groupBuy/time-item.png"
                 />
-                <view class="timeItem-day">{{ minute }}</view>
-                <view class="timeItem-unit">分</view>
+                <view class="timeItem-day">
+                  {{ minute }}
+                </view>
+                <view class="timeItem-unit">
+                  分
+                </view>
               </view>
               <view class="timeItem">
                 <image
                   class="timeItem-img"
                   src="https://jms.85gui7.com/kahe-202510/groupBuy/time-item.png"
                 />
-                <view class="timeItem-day">{{ second }}</view>
-                <view class="timeItem-unit">秒</view>
+                <view class="timeItem-day">
+                  {{ second }}
+                </view>
+                <view class="timeItem-unit">
+                  秒
+                </view>
               </view>
             </view>
           </view>
@@ -55,54 +75,58 @@
             :style="{
               width: `${((detail.total - detail.sales) / detail.total) * 100.0}%`,
             }"
-          ></view>
+          />
         </view>
         <view class="topInfo-content-row1">
-          <view class="topInfo-content-row1-subTitle"
-            >开售 {{ detail.openTime }}</view
-          >
-          <view class="topInfo-content-row1-subTitle"
-            >余{{ detail.total - detail.sales }}/共{{ detail.total }}</view
-          >
+          <view class="topInfo-content-row1-subTitle">
+            开售 {{ detail.openTime }}
+          </view>
+          <view class="topInfo-content-row1-subTitle">
+            余{{ detail.total - detail.sales }}/共{{ detail.total }}
+          </view>
         </view>
       </view>
       <view
         class="topInfo-content-title theme-font text-flow-ellipsis-single"
-        >{{ detail.title }}</view
       >
+        {{ detail.title }}
+      </view>
       <scroll-view class="topInfo-content-row2" scroll-x>
         <view
           v-for="(item, index) in detail.prices"
-          :key="'price' + index"
+          :key="`price${index}`"
           class="topInfo-content-row2-price"
-          >单笔满{{ item.num }}份｜{{ item.price }}/份</view
         >
+          单笔满{{ item.num }}份｜{{ item.price }}/份
+        </view>
       </scroll-view>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { GroupBuyDetail } from "@/model";
-import { onMounted, PropType, watch } from "vue";
-import { useTimeCount } from "@/composables/countTime";
-const { startTimeRemain, remainingTime, isTimeout, day, hour, second, minute } =
-  useTimeCount();
+import type { PropType } from 'vue'
+import type { GroupBuyDetail } from '@/model'
+import { onMounted, watch } from 'vue'
+import { useTimeCount } from '@/composables/countTime'
+
 const props = defineProps({
   detail: {
     default: {} as GroupBuyDetail,
     type: Object as PropType<GroupBuyDetail>,
   },
-});
+})
+const { startTimeRemain, remainingTime, isTimeout, day, hour, second, minute }
+  = useTimeCount()
 watch(
   () => props.detail,
   (value) => {
     if (value && value.id) {
-      startTimeRemain(value.openTime);
+      startTimeRemain(value.openTime)
     }
-  }
-);
-onMounted(() => {});
+  },
+)
+onMounted(() => {})
 </script>
 
 <style scoped lang="scss">
@@ -236,7 +260,7 @@ onMounted(() => {});
         font-size: 20rpx;
         color: #794627;
         text-align: center;
-        background-image: url("https://jms.85gui7.com/kahe-202510/groupBuy/discount-item.png");
+        background-image: url('https://jms.85gui7.com/kahe-202510/groupBuy/discount-item.png');
         background-size: 100% 100%;
         background-repeat: no-repeat;
         border-radius: 4rpx;

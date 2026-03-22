@@ -5,31 +5,37 @@
         <image class="avatar-img" :src="product.merchant?.icon" />
       </view>
       <view class="info">
-        <view class="info-name">{{ product.merchant?.name }}</view>
-        <view class="info-tips" v-if="product.type === 4"
-          >【满开福袋，售罄后揭晓结果】</view
-        ><view v-else>本次福袋支付后立即显示结果</view>
+        <view class="info-name">
+          {{ product.merchant?.name }}
+        </view>
+        <view v-if="product.type === 4" class="info-tips">
+          【满开福袋，售罄后揭晓结果】
+        </view><view v-else>
+          本次福袋支付后立即显示结果
+        </view>
       </view>
     </view>
     <view
       class="right-btn theme-font"
       @tap.stop="didClickMerchant(product.merchant)"
-      >进店看看</view
     >
+      进店看看
+    </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import type { UIProductDetailModel } from "@/model";
-import { PropType } from "vue";
-import { useMerchant } from "@/pages/merchant/index";
-const { didClickMerchant } = useMerchant();
+import type { PropType } from 'vue'
+import type { UIProductDetailModel } from '@/model'
+import { useMerchant } from '@/pages/merchant/index'
+
 defineProps({
   product: {
     default: {} as UIProductDetailModel,
     type: Object as PropType<UIProductDetailModel>,
   },
-});
+})
+const { didClickMerchant } = useMerchant()
 </script>
 
 <style scoped lang="scss">

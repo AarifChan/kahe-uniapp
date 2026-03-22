@@ -11,9 +11,9 @@
     <scroll-view :scroll-y="true" class="mall-list">
       <view class="mall-list-padding">
         <view
-          class="mall-list-padding-item"
           v-for="(item, index) in mallList"
           :key="index"
+          class="mall-list-padding-item"
           @tap.stop="handleClickItem(item)"
         >
           <goods :item="item" :is-from-mall="true" />
@@ -30,15 +30,16 @@
 </template>
 
 <script lang="ts" setup>
-import Search from "@/components/search/index.vue";
-import { onMounted } from "vue";
-import Tab from "@/pages/mall/components/tab/index.vue";
+import { onMounted } from 'vue'
+import Empty from '@/components/empty/index.vue'
+import Goods from '@/components/goods/index.vue'
 
-import Goods from "@/components/goods/index.vue";
-import category from "./components/category.vue";
-import Exchange from "@/components/modal/exchange/index.vue";
-import Empty from "@/components/empty/index.vue";
-import { useMall } from "@/composables/mall";
+import Exchange from '@/components/modal/exchange/index.vue'
+import Search from '@/components/search/index.vue'
+import { useMall } from '@/composables/mall'
+import Tab from '@/pages/mall/components/tab/index.vue'
+import category from './components/category.vue'
+
 const {
   mallList,
   getMallList,
@@ -48,19 +49,19 @@ const {
   payItem,
   mallShow,
   handleMallScrollToLower,
-} = useMall();
+} = useMall()
 onMounted(() => {
-  getMallList();
-});
-const didTapSearch = (value: string) => {
-  listParams.value.key = value;
-  getMallList();
-};
-const sortDidChange = (val: { sort: number; sType: string }) => {
-  listParams.value.sort = val.sort;
-  listParams.value.stype = val.sType;
-  getMallList();
-};
+  getMallList()
+})
+function didTapSearch(value: string) {
+  listParams.value.key = value
+  getMallList()
+}
+function sortDidChange(val: { sort: number, sType: string }) {
+  listParams.value.sort = val.sort
+  listParams.value.stype = val.sType
+  getMallList()
+}
 </script>
 
 <style lang="scss" scoped>

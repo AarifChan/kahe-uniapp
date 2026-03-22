@@ -1,49 +1,49 @@
 <template>
   <view class="agreement">
     <view class="agreement-header">
-      <view 
-        class="agreement-header-tab" 
+      <view
+        class="agreement-header-tab"
         :class="{ active: currentTab === 1 }"
         @click="currentTab = 1"
       >
         用户服务协议
       </view>
-      <view 
-        class="agreement-header-tab" 
+      <view
+        class="agreement-header-tab"
         :class="{ active: currentTab === 2 }"
         @click="currentTab = 2"
       >
         隐私政策
       </view>
     </view>
-    <scroll-view 
-      class="agreement-content" 
-      scroll-y 
+    <scroll-view
+      class="agreement-content"
+      scroll-y
       :scroll-top="scrollTop"
       @scroll="handleScroll"
     >
       <view class="agreement-content-inner">
-        <rich-text v-if="currentTab === 1" :nodes="userAgreementContent"></rich-text>
-        <rich-text v-else :nodes="privacyPolicyContent"></rich-text>
+        <rich-text v-if="currentTab === 1" :nodes="userAgreementContent" />
+        <rich-text v-else :nodes="privacyPolicyContent" />
       </view>
     </scroll-view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { ref, watch } from 'vue'
 
-const currentTab = ref(1);
-const scrollTop = ref(0);
+const currentTab = ref(1)
+const scrollTop = ref(0)
 
 // 切换tab时回到顶部
 watch(currentTab, () => {
-  scrollTop.value = 0;
-});
+  scrollTop.value = 0
+})
 
-const handleScroll = (e: any) => {
+function handleScroll(e: any) {
   // 处理滚动
-};
+}
 
 // 用户服务协议内容
 const userAgreementContent = `
@@ -108,7 +108,7 @@ const userAgreementContent = `
   <p style="margin-bottom: 8px;">2. 卡核有权根据业务调整情况对本协议进行修改，修改后的协议将在卡核平台公布。</p>
   <p style="margin-bottom: 20px;">3. 本协议最终解释权归卡核所有。</p>
 </div>
-`;
+`
 
 // 隐私政策内容
 const privacyPolicyContent = `
@@ -182,7 +182,7 @@ const privacyPolicyContent = `
   
   <p style="margin-bottom: 12px; color: #999; font-size: 12px;">本隐私政策于2024年发布，最近更新日期：2024年。</p>
 </div>
-`;
+`
 </script>
 
 <style lang="scss" scoped>
@@ -192,13 +192,13 @@ const privacyPolicyContent = `
   background-color: #f5f5f5;
   display: flex;
   flex-direction: column;
-  
+
   &-header {
     display: flex;
     flex-direction: row;
     background-color: #fff;
     border-bottom: 1rpx solid #e5e5e5;
-    
+
     &-tab {
       flex: 1;
       height: 88rpx;
@@ -207,11 +207,11 @@ const privacyPolicyContent = `
       font-size: 28rpx;
       color: #666;
       position: relative;
-      
+
       &.active {
         color: #775435;
         font-weight: bold;
-        
+
         &::after {
           content: '';
           position: absolute;
@@ -226,11 +226,11 @@ const privacyPolicyContent = `
       }
     }
   }
-  
+
   &-content {
     flex: 1;
     overflow: hidden;
-    
+
     &-inner {
       padding: 24rpx;
       background-color: #fff;

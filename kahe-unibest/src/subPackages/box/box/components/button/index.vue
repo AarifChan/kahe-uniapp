@@ -14,14 +14,14 @@
 <script lang="ts" setup>
 defineProps({
   size: {
-    default: "big",
+    default: 'big',
     type: String,
   },
   title: {
-    default: "",
+    default: '',
     type: String,
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

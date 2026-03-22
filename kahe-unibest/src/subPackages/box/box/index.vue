@@ -14,8 +14,8 @@
     <!-- 公告 -->
     <bulletinar />
     <view class="box-top">
-      <view class="line"></view>
-      <common-tab :list="tabList" v-model:current="currentIndex" />
+      <view class="line" />
+      <common-tab v-model:current="currentIndex" :list="tabList" />
       <view class="box-top-question" @tap.stop="showModalType(4)">
         <image
           class="box-top-question-img"
@@ -35,11 +35,11 @@
       :scroll-y="true"
       @scrolltolower="handleScrollToLower"
     >
-      <view class="box-scroll-content" v-if="currentTabValue === 0">
+      <view v-if="currentTabValue === 0" class="box-scroll-content">
         <Merchant
           v-for="(item, index) in mineMerchantList"
-          :key="'merchant-' + index"
-          :id="'merchant:id' + index"
+          :id="`merchant:id${index}`"
+          :key="`merchant-${index}`"
           :item="item"
           :is-expand="index === currentExpand"
           @did-expand-merchant="handleExpandMerchant(index)"
@@ -48,24 +48,24 @@
         />
       </view>
       <view
-        class="box-scroll-content"
         v-if="currentTabValue === 1 || currentTabValue === 2"
+        class="box-scroll-content"
       >
         <record
           v-for="(item, index) in recordList"
-          :key="'record' + index"
+          :key="`record${index}`"
           :item="item"
         />
         <empty :show="recordList.length === 0" />
       </view>
       <view v-if="currentTabValue === 3">
-        <Chest @select-item="selectItem" :list="chestsList" />
+        <Chest :list="chestsList" @select-item="selectItem" />
         <empty :show="chestsList.length === 0" />
       </view>
-      <view class="box-scroll-content" v-if="currentTabValue === 4">
+      <view v-if="currentTabValue === 4" class="box-scroll-content">
         <red-bag-item
           v-for="(item, index) in redBagList"
-          :key="'redBag' + index"
+          :key="`redBag${index}`"
           :item="item"
           @did-click="didClickRedBagItem(item)"
         />
@@ -74,12 +74,12 @@
 
     <handle
       v-if="currentIndex === 0"
+      :is-select-all="isSelectAll"
       @did-tap-item="handleTapItem"
-      :isSelectAll="isSelectAll"
     />
     <smash
       v-model:show="smashShow"
-      :recycleGoods="smashList"
+      :recycle-goods="smashList"
       @did-tap-smash="didTapPay"
     />
     <shipment
@@ -99,27 +99,27 @@
 </template>
 
 <script lang="ts" setup>
-import bulletinar from "@/components/bulletinar/index.vue";
 // import BoxTab from './components/tab.vue'
-import { onMounted, ref, watch } from "vue";
-import CommonTab from "./components/tab/index.vue";
-import CommonModal from "@/components/modal/index.vue";
-import Record from "./components/record.vue";
-import Merchant from "./components/merchant/index.vue";
-import Smash from "@/components/modal/smash/index.vue";
-import Shipment from "@/components/modal/shipment/index.vue";
-import Handle from "./components/handle/index.vue";
-import Chest from "./components/openChests.vue";
-import Empty from "@/components/empty/index.vue";
-import RedBagItem from "./components/redBag/index.vue";
-import { useBox } from "@/composables/box";
-import { useRedBag } from "@/composables/redBag";
-import { ModalType, useModal } from "@/composables/modal";
-import { eventBus } from "@/utils/event";
+import { onMounted, ref, watch } from 'vue'
+import bulletinar from '@/components/bulletinar/index.vue'
+import Empty from '@/components/empty/index.vue'
+import CommonModal from '@/components/modal/index.vue'
+import Shipment from '@/components/modal/shipment/index.vue'
+import Smash from '@/components/modal/smash/index.vue'
+import { useBox } from '@/composables/box'
+import { ModalType, useModal } from '@/composables/modal'
+import { useRedBag } from '@/composables/redBag'
+import { eventBus } from '@/utils/event'
+import { getPageOptions } from '@/utils/tools'
+import Handle from './components/handle/index.vue'
+import Merchant from './components/merchant/index.vue'
+import Chest from './components/openChests.vue'
+import Record from './components/record.vue'
+import RedBagItem from './components/redBag/index.vue'
 
-import { getPageOptions } from "@/utils/tools";
+import CommonTab from './components/tab/index.vue'
 
-const { modalShow, modalTitle, modalContent, showModalType } = useModal();
+const { modalShow, modalTitle, modalContent, showModalType } = useModal()
 const {
   currentTabValue,
   currentIndex,
@@ -144,17 +144,17 @@ const {
   loadChestDate,
   currentExpand,
   handleExpandMerchant,
-} = useBox();
+} = useBox()
 
-const { getMineRedBag, redBagList, didClickRedBagItem } = useRedBag();
+const { getMineRedBag, redBagList, didClickRedBagItem } = useRedBag()
 
 const tabList = ref([
   {
-    title: "待处理",
+    title: '待处理',
     value: 0,
   },
   {
-    title: "已发货",
+    title: '已发货',
     value: 1,
   },
   // {
@@ -162,36 +162,37 @@ const tabList = ref([
   //   value: 2,
   // },
   {
-    title: "宝箱",
+    title: '宝箱',
     value: 3,
   },
   // {
   //   title: "红包",
   //   value: 4,
   // },
-]);
+])
 watch(
   () => currentIndex.value,
   async (value) => {
-    params.value.page = 1;
-    currentTabValue.value = tabList.value[value].value;
+    params.value.page = 1
+    currentTabValue.value = tabList.value[value].value
     if (currentTabValue.value === 4) {
-      getMineRedBag();
-    } else {
-      await loadData(currentTabValue.value);
+      getMineRedBag()
     }
-  }
-);
+    else {
+      await loadData(currentTabValue.value)
+    }
+  },
+)
 
 onMounted(() => {
-  let tab = getPageOptions().tab ?? 0;
-  currentIndex.value = Number(tab);
-  loadData();
-});
+  const tab = getPageOptions().tab ?? 0
+  currentIndex.value = Number(tab)
+  loadData()
+})
 
-eventBus.on("didLogin", async (_: any) => {
-  await loadData();
-});
+eventBus.on('didLogin', async (_: any) => {
+  await loadData()
+})
 </script>
 
 <style lang="scss" scoped>

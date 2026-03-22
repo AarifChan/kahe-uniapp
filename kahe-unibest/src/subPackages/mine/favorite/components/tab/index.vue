@@ -2,9 +2,9 @@
   <view class="favoriteTab">
     <view class="favoriteTab-list">
       <view
-        class="favoriteTab-list-item"
         v-for="(item, index) in list"
         :key="index"
+        class="favoriteTab-list-item"
         @tap.stop="clickItem(index)"
       >
         <view class="favoriteTab-list-item-content">
@@ -12,9 +12,9 @@
             class="favoriteTab-list-item-content-select theme-font"
           /> -->
           <image
+            v-if="current === index"
             src="https://jms.85gui7.com/kahe-202510/ka-he/home/round.png"
             class="img"
-            v-if="current === index"
           />
           <text
             class="favoriteTab-list-item-content-title theme-font"
@@ -23,8 +23,9 @@
                 ? 'favoriteTab-list-item-content-title-select'
                 : ''
             "
-            >{{ item.title }}</text
           >
+            {{ item.title }}
+          </text>
         </view>
       </view>
     </view>
@@ -32,11 +33,11 @@
 </template>
 
 <script lang="ts" setup>
-import type { PropType } from "vue";
+import type { PropType } from 'vue'
 
 interface ItemType {
-  title: string;
-  value: number;
+  title: string
+  value: number
 }
 
 defineProps({
@@ -52,13 +53,13 @@ defineProps({
     default: false,
     type: Boolean,
   },
-});
-const emits = defineEmits(["update:current", "didClick"]);
+})
+const emits = defineEmits(['update:current', 'didClick'])
 
-const clickItem = (index: number) => {
-  emits("update:current", index);
-  emits("didClick", index);
-};
+function clickItem(index: number) {
+  emits('update:current', index)
+  emits('didClick', index)
+}
 </script>
 
 <style lang="scss" scoped>

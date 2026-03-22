@@ -7,9 +7,9 @@
       scroll-with-animation
     >
       <view
-        style="display: inline-block"
         v-for="(item, index) in categoryList"
-        :key="'id' + index"
+        :key="`id${index}`"
+        style="display: inline-block"
         @tap.stop="handleChange(index)"
       >
         <view class="collect-category-item">
@@ -29,41 +29,41 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-const current = ref(0);
+import { ref } from 'vue'
+
+const emits = defineEmits(['didChange'])
+const current = ref(0)
 const categoryList = ref([
   {
-    title: "全部",
+    title: '全部',
     value: null,
   },
   {
-    title: "卡牌藏品",
+    title: '卡牌藏品',
     value: 1,
   },
   {
-    title: "手办潮玩",
+    title: '手办潮玩',
     value: 2,
   },
   {
-    title: "谷子周边",
+    title: '谷子周边',
     value: 3,
   },
   {
-    title: "家电生活",
+    title: '家电生活',
     value: 4,
   },
   {
-    title: "羊毛专区",
+    title: '羊毛专区',
     value: 5,
   },
-]);
+])
 
-const handleChange = (index: number) => {
-  current.value = index;
-  emits("didChange", categoryList.value[index]);
-};
-
-const emits = defineEmits(["didChange"]);
+function handleChange(index: number) {
+  current.value = index
+  emits('didChange', categoryList.value[index])
+}
 </script>
 
 <style lang="scss" scoped>

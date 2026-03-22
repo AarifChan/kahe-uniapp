@@ -17,54 +17,55 @@
 <script setup lang="ts">
 import { useUserStore } from '@/store/user'
 import { useAppStore } from '@/store/app'
+import { onLoad } from "@dcloudio/uni-app";
+import { onShareAppMessage, onShareTimeline } from "@dcloudio/uni-app";
+import { computed, ref, watch } from "vue";
+import Info from '@/components/modal/info/index.vue';
+import Vip from '@/components/modal/vip/index.vue'
+import TabBar from '@/components/tabBar/index.vue'
+import Box from '@/pages/box/index.vue'
+import Home from '@/pages/home/index.vue'
+
+import Machine from '@/pages/machine/index.vue'
+import Merchant from '@/pages/merchant/index.vue'
+
+import Mine from '@/pages/mine/index.vue'
 const userStore = useUserStore()
 const appStore = useAppStore()
-import { onLoad } from "@dcloudio/uni-app";
-import Home from "@/pages/home/index.vue";
-import Merchant from "@/pages/merchant/index.vue";
-import Machine from "@/pages/machine/index.vue";
-import Box from "@/pages/box/index.vue";
-import Mine from "@/pages/mine/index.vue";
-import TabBar from "@/components/tabBar/index.vue";
-import { computed, ref, watch } from "vue";
 
-import Info from "@/components/modal/info/index.vue";
-import Vip from "@/components/modal/vip/index.vue";
-
-import { onShareAppMessage, onShareTimeline } from "@dcloudio/uni-app";
-const current = ref(appStore.currentTabIndex);
+const current = ref(appStore.currentTabIndex)
 watch(
   () => appStore.currentTabIndex,
   (newVal, oldVal) => {
     if (newVal !== oldVal) {
-      current.value = newVal;
+      current.value = newVal
     }
-  }
-);
+  },
+)
 const userInfo = computed(() => {
-  return userStore.userInfo;
-});
+  return userStore.userInfo
+})
 onLoad(() => {
-  console.log("currentTabIndex:", appStore.currentTabIndex);
-});
+  console.log('currentTabIndex:', appStore.currentTabIndex)
+})
 onShareAppMessage(() => {
   return {
     title: `${
-      userStore.userInfo?.nickname ?? ""
+      userStore.userInfo?.nickname ?? ''
     }邀请你来卡核抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
-    path: "/pages/welcome/index",
-  };
-});
+    imageUrl: 'https://jms.85gui7.com/kahe-202510/common/share.jpg',
+    path: '/pages/welcome/index',
+  }
+})
 onShareTimeline(() => {
   return {
     title: `${
-      userStore.userInfo?.nickname ?? ""
+      userStore.userInfo?.nickname ?? ''
     }邀请你来卡核抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
-    path: "/pages/welcome/index",
-  };
-});
+    imageUrl: 'https://jms.85gui7.com/kahe-202510/common/share.jpg',
+    path: '/pages/welcome/index',
+  }
+})
 </script>
 
 <style lang="scss" scoped>

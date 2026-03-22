@@ -14,13 +14,13 @@
         "
       />
       <merchant :product="product" />
-      <InGroup @tap.stop="emits('didClickRemark')" :content="product.remark" />
+      <InGroup :content="product.remark" @tap.stop="emits('didClickRemark')" />
       <view class="selectNum-content-goods">
         <goods-item
-          class="selectNum-content-goods-item"
-          :is-select="true"
           v-for="(item, index) in goodsList"
           :key="index"
+          class="selectNum-content-goods-item"
+          :is-select="true"
           :item="item"
           :goods-price="product.payType === 8 ? item.price : product.price"
           @tap.stop="clickItem(item)"
@@ -41,8 +41,9 @@
             <text
               class="theme-font selectNum-tab-item-title"
               :style="{ color: currentTab === 0 ? '#fb7f3c' : '#969696' }"
-              >{{ product.type === 4 ? "赏品" : "赏品一览" }}</text
             >
+              {{ product.type === 4 ? "赏品" : "赏品一览" }}
+            </text>
           </view>
         </view>
         <view
@@ -66,14 +67,15 @@
                     ? '#fb7f3c'
                     : '#969696',
               }"
-              >{{ product.type === 4 ? "购买记录" : "抽赏记录" }}</text
             >
+              {{ product.type === 4 ? "购买记录" : "抽赏记录" }}
+            </text>
           </view>
         </view>
         <view
+          v-if="product.type === 4"
           class="selectNum-tab-item"
           @tap.stop="didClickTabItem(1)"
-          v-if="product.type === 4"
         >
           <image
             class="selectNum-tab-item-bg"
@@ -87,18 +89,19 @@
             <text
               class="theme-font selectNum-tab-item-title"
               :style="{ color: currentTab === 1 ? '#fb7f3c' : '#969696' }"
-              >结果</text
             >
+              结果
+            </text>
           </view>
         </view>
       </view>
-      <view class="selectNum-content" v-if="currentTab === 0">
+      <view v-if="currentTab === 0" class="selectNum-content">
         <view class="selectNum-content-top">
           <view class="selectNum-content-top-info">
             <view class="selectNum-content-top-info-left">
-              <text class="selectNum-content-top-info-left-title theme-font"
-                >指定福袋</text
-              >
+              <text class="selectNum-content-top-info-left-title theme-font">
+                指定福袋
+              </text>
               <image
                 class="selectNum-content-top-info-left-box"
                 src="https://jms.85gui7.com/kahe-202510/ka-he/product/box-normal.png"
@@ -119,9 +122,9 @@
         </view>
         <view class="selectNum-content-box">
           <view
-            class="selectNum-content-box-item"
             v-for="(item, index) in boxList"
             :key="index"
+            class="selectNum-content-box-item"
             @tap.stop="handleSelectBox(item)"
           >
             <image
@@ -129,12 +132,12 @@
               :src="`https://jms.85gui7.com/kahe-202510/ka-he/product/box-${item.state === 1 ? 'normal' : item.state === 0 ? 'sell' : 'lock'}.png`"
             />
             <view class="selectNum-content-box-item-title">
-              {{ item.title }}</view
-            >
+              {{ item.title }}
+            </view>
           </view>
         </view>
       </view>
-      <view class="selectNum-content" v-if="currentTab === 1">
+      <view v-if="currentTab === 1" class="selectNum-content">
         <view class="selectNum-content-records">
           <record
             :record-list="recordList"
@@ -145,7 +148,7 @@
           />
         </view>
       </view>
-      <view class="selectNum-content" v-if="currentTab === 2">
+      <view v-if="currentTab === 2" class="selectNum-content">
         <view class="selectNum-content-records">
           <record
             :record-list="orderList"
@@ -165,11 +168,11 @@
       />
       <view class="box-container-bottom-content">
         <view class="box-container-bottom-left">
-          已选<text style="color: red">{{ boxSelect.length }}</text
-          >个 共<text style="color: red">{{
-            (boxSelect.length * product.price).toFixed(1)
-          }}</text
-          >元
+          已选<text style="color: red">{{ boxSelect.length }}</text>个 共<text style="color: red">
+            {{
+              (boxSelect.length * product.price).toFixed(1)
+            }}
+          </text>元
         </view>
         <view class="box-container-bottom-right">
           <view
@@ -182,8 +185,9 @@
             />
             <text
               class="box-container-bottom-right-item-text theme-font text-stroke-main"
-              >换 箱</text
             >
+              换 箱
+            </text>
           </view>
           <view
             class="box-container-bottom-right-item"
@@ -195,8 +199,9 @@
             />
             <text
               class="box-container-bottom-right-item-text theme-font text-stroke-main"
-              >购 买</text
             >
+              购 买
+            </text>
 
             <view
               v-if="product.queueLockTime"
@@ -206,9 +211,9 @@
                 class="box-container-bottom-right-item-queue-bg"
                 src="https://jms.85gui7.com/kahe-202510/product/lock-queue.png"
               />
-              <text class="box-container-bottom-right-item-queue-title"
-                >每发锁{{ product.queueLockTime }}秒</text
-              >
+              <text class="box-container-bottom-right-item-queue-title">
+                每发锁{{ product.queueLockTime }}秒
+              </text>
             </view>
           </view>
         </view>
@@ -216,22 +221,27 @@
     </view>
   </view>
 </template>
-<script setup lang="ts">
-import { computed, type PropType, ref } from "vue";
 
-import {
-  ProductDetailButtonType,
+<script setup lang="ts">
+import type { PropType } from 'vue'
+import type {
   UIProductBoxModel,
   UIProductDetailModel,
   UIProductPriceCard,
   UIProductRecordModel,
-} from "@/model";
-import InGroup from "./InGroup/index.vue";
-import Top from "@/subPackages/product/detail/components/generalTop/index.vue";
-import { ShowToast } from "@/utils";
-import Record from "@/subPackages/product/card/components/record.vue";
-import Merchant from "../components/merchant/index.vue";
-import GoodsItem from "@/subPackages/product/detail/components/generalGoods/index.vue";
+} from '@/model'
+
+import { computed, ref } from 'vue'
+import {
+  ProductDetailButtonType,
+} from '@/model'
+import Record from '@/subPackages/product/card/components/record.vue'
+import GoodsItem from '@/subPackages/product/detail/components/generalGoods/index.vue'
+import Top from '@/subPackages/product/detail/components/generalTop/index.vue'
+import { ShowToast } from '@/utils'
+import Merchant from '../components/merchant/index.vue'
+import InGroup from './InGroup/index.vue'
+
 const props = defineProps({
   goodsList: {
     default: () => [],
@@ -262,94 +272,96 @@ const props = defineProps({
     type: Array,
   },
   progress: {
-    default: "",
+    default: '',
     type: String,
   },
-});
+})
+
+const emits = defineEmits([
+  'tabDidChange',
+  'didClickChangeBox',
+  'didClickPurchase',
+  'didClickButton',
+  'scrollToLower',
+  'sortTabAction',
+  'clickItem',
+  'tapShowModel',
+  'clickSwap',
+  'didClickRemark',
+])
 
 interface UISelectBoxItem {
-  value: number;
-  state: number; // 0 不可选 1 可选 2 选择
-  title: number;
+  value: number
+  state: number // 0 不可选 1 可选 2 选择
+  title: number
 }
 
 const boxList = computed(() => {
-  const arr: UISelectBoxItem[] = [];
-  const winNum = props.product.winNum;
+  const arr: UISelectBoxItem[] = []
+  const winNum = props.product.winNum
   for (let i = 0; i < props.product.total; i++) {
-    let state = 1;
-    const index = i + 1;
-    if (boxSelect.value.filter((n) => n === index).length > 0) {
-      state = 2;
+    let state = 1
+    const index = i + 1
+    if (boxSelect.value.filter(n => n === index).length > 0) {
+      state = 2
     }
-    if (winNum.filter((n) => n === index).length > 0) {
-      state = 0;
+    if (winNum.filter(n => n === index).length > 0) {
+      state = 0
     }
     arr.push({
       value: index,
       state,
       title: index,
-    });
+    })
   }
-  return arr;
-});
+  return arr
+})
 
-const boxSelect = ref([] as number[]);
+const boxSelect = ref([] as number[])
 
-const handleSelectBox = (item: UISelectBoxItem) => {
+function handleSelectBox(item: UISelectBoxItem) {
   if (!item.state) {
-    return;
+    return
   }
-  if (boxSelect.value.filter((n) => n === item.value).length > 0) {
-    boxSelect.value = boxSelect.value.filter((n) => n !== item.value);
-  } else {
-    boxSelect.value.push(item.value);
+  if (boxSelect.value.filter(n => n === item.value).length > 0) {
+    boxSelect.value = boxSelect.value.filter(n => n !== item.value)
   }
-};
+  else {
+    boxSelect.value.push(item.value)
+  }
+}
 
-const clickItem = (item: UIProductBoxModel) => {
-  emits("clickItem", item);
-};
+function clickItem(item: UIProductBoxModel) {
+  emits('clickItem', item)
+}
 
-const tapShowModel = (value: number) => {
-  emits("tapShowModel", value);
-};
+function tapShowModel(value: number) {
+  emits('tapShowModel', value)
+}
 
-const didClickPurchase = () => {
+function didClickPurchase() {
   if (boxSelect.value.length === 0) {
-    ShowToast("请选择");
-    return;
+    ShowToast('请选择')
+    return
   }
-  emits("didClickPurchase", {
+  emits('didClickPurchase', {
     selNum: boxSelect.value,
     num: boxSelect.value.length,
-  });
-  boxSelect.value = [];
-};
-const didClickExchange = () => {
-  emits("clickSwap");
-};
+  })
+  boxSelect.value = []
+}
+function didClickExchange() {
+  emits('clickSwap')
+}
 
-const emits = defineEmits([
-  "tabDidChange",
-  "didClickChangeBox",
-  "didClickPurchase",
-  "didClickButton",
-  "scrollToLower",
-  "sortTabAction",
-  "clickItem",
-  "tapShowModel",
-  "clickSwap",
-  "didClickRemark",
-]);
+const currentTab = ref(0)
 
-const currentTab = ref(0);
-
-const didClickTabItem = (index: number) => {
-  currentTab.value = index;
-  emits("tabDidChange", index);
-};
+function didClickTabItem(index: number) {
+  currentTab.value = index
+  emits('tabDidChange', index)
+}
 </script>
+
 <style lang="scss" scoped>
 .box-container {
   position: relative;

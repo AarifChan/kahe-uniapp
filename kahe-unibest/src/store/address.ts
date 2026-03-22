@@ -1,14 +1,14 @@
 import type { AddressModel, UICityItemModel } from '@/model/'
 import type { PageParams } from '@/model/base'
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
 import {
   addressDetailRequest,
-  queryCityListRequest,
   queryAddressListRequest,
+  queryCityListRequest,
   updateAddressRequest,
 } from '@/api/'
 import { ShowToast } from '@/utils/Toast'
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
 export const useAddressStore = defineStore('address', () => {
   const addressList = ref<AddressModel[]>([])
@@ -24,7 +24,8 @@ export const useAddressStore = defineStore('address', () => {
     const resp = await queryAddressListRequest(params)
     if (resp.code === 200) {
       for (const item of resp.data as AddressModel[]) {
-        if ((item as any).isDefault) changeCurrentAddress(item)
+        if ((item as any).isDefault)
+          changeCurrentAddress(item)
       }
       addressList.value = resp.data as AddressModel[]
     }

@@ -42,16 +42,11 @@
 <script lang="ts" setup>
 // 指示器图片
 
+import type { PropType } from 'vue'
 // import Lamp from "@/components/lamp/index.vue";
-import type { UIBannerModel, UIBarrageModel } from "@/model";
-import { ref, onMounted, watch } from "vue";
-import type { PropType } from "vue";
-const emits = defineEmits(["tapLampAction", "tapBannerAction"]);
-// 当前页
-const current = ref(0);
-const tapLampAction = (item: any) => {
-  emits("tapLampAction", item);
-};
+import type { UIBannerModel, UIBarrageModel } from '@/model'
+import { ref } from 'vue'
+
 const props = defineProps({
   list: {
     type: Array as PropType<UIBannerModel[]>,
@@ -61,10 +56,16 @@ const props = defineProps({
     type: Array as PropType<UIBarrageModel[]>,
     default: () => [],
   },
-});
-const onChange = (e: any) => {
-  current.value = e.detail.current;
-};
+})
+const emits = defineEmits(['tapLampAction', 'tapBannerAction'])
+// 当前页
+const current = ref(0)
+function tapLampAction(item: any) {
+  emits('tapLampAction', item)
+}
+function onChange(e: any) {
+  current.value = e.detail.current
+}
 // const lampRef = ref();
 // watch(
 //     () => props.lampList,

@@ -1,32 +1,32 @@
-import { get, post } from "@/utils/request";
 import type {
   OrderInfo,
   OrderSubmitParams,
   OrderSubmitResponse,
-} from "@/model/order";
+} from '@/model/order'
+import { get, post } from '@/utils/request'
 
 /* 确认订单 */
-export const orderSubmitRequest = (params: OrderSubmitParams) => {
-  return post<OrderSubmitResponse>("pay/submit", params);
-};
+export function orderSubmitRequest(params: OrderSubmitParams) {
+  return post<OrderSubmitResponse>('pay/submit', params)
+}
 
 /* 支付订单 */
-export const orderInfoRequest = (orderId: string) => {
-  return get<OrderInfo>("pay/info", {
+export function orderInfoRequest(orderId: string) {
+  return get<OrderInfo>('pay/info', {
     orderId,
-  });
-};
+  })
+}
 
 /* 取消订单 */
-export const orderCancelRequest = (orderId: string | number) => {
-  return post("pay/cancel", {
+export function orderCancelRequest(orderId: string | number) {
+  return post('pay/cancel', {
     orderId,
-  });
-};
+  })
+}
 
-export const orderTestPayRequest = (orderId: string) => {
-  return get("pay/pay", {
+export function orderTestPayRequest(orderId: string) {
+  return get('pay/pay', {
     orderId,
-    secret: "xlGqRYCG1kynBE1Py6vdTUxZjCZJUsVD",
-  });
-};
+    secret: 'xlGqRYCG1kynBE1Py6vdTUxZjCZJUsVD',
+  })
+}

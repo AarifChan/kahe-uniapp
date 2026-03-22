@@ -153,30 +153,30 @@
 </template>
 <script setup lang="ts">
 import { useUserStore } from '@/store/user'
-const userStore = useUserStore()
 import { ref, onMounted } from "vue";
-import Title from "./components/title.vue";
-import Item from "./components/item.vue";
-import People from "./components/people.vue";
-import Goods from "@/pages/machine/components/goods.vue";
-import Countdown from "@/components/countdown/index.vue";
-import InputModal from "./components/modal/index.vue";
-import DetailModal from "@/components/modal/detail/index.vue";
-import Rewards from "./components/rewards.vue";
-import { getPageOptions } from "@/utils/tools";
-import { useWelfare } from "@/composables/welfare";
-import { useGoods } from "@/composables/goods";
-import { onShareAppMessage, onShareTimeline, onShow } from "@dcloudio/uni-app";
+import Title from './components/title.vue';
+import Item from './components/item.vue'
+import People from './components/people.vue'
+import Goods from '@/pages/machine/components/goods.vue'
+import Countdown from '@/components/countdown/index.vue'
+import DetailModal from '@/components/modal/detail/index.vue'
+import Rewards from './components/rewards.vue'
+import { getPageOptions } from '@/utils/tools'
+import { useWelfare } from '@/composables/welfare'
+import { useGoods } from '@/composables/goods'
+import { onShareAppMessage, onShareTimeline, onShow } from '@dcloudio/uni-app'
 
-import type { UserGoodsModel } from "@/model";
-import type { WareDetailGoods } from "@/model/welfare";
-import { shareWeixinMiniProgramCard } from "@/composables/share";
-import { ShowToast } from "@/utils";
+import type { UserGoodsModel } from '@/model'
+import type { WareDetailGoods } from '@/model/welfare'
+import { shareWeixinMiniProgramCard } from '@/composables/share'
+import { ShowToast } from '@/utils'
 
-import Merchant from "./components/merchant.vue";
+import Merchant from './components/merchant.vue'
+const userStore = useUserStore()
 
-import { eventBus } from "@/utils/event";
-const { getMachineList, machineList, tapCardListItem } = useGoods();
+import { eventBus } from '@/utils/event'
+
+const { getMachineList, machineList, tapCardListItem } = useGoods()
 const {
   total,
   timeFinish,
@@ -194,89 +194,91 @@ const {
   getWelfareUserList,
   getWelfareReward,
   tapPasswordPriceAction,
-} = useWelfare();
-const currentBox = ref({} as UserGoodsModel);
+} = useWelfare()
+const currentBox = ref({} as UserGoodsModel)
 
-const detailShow = ref(false);
+const detailShow = ref(false)
 
-const handleClickItem = (item: WareDetailGoods) => {
+function handleClickItem(item: WareDetailGoods) {
   currentBox.value = {
     goods: item.goodsDto,
-  };
-  detailShow.value = true;
-};
+  }
+  detailShow.value = true
+}
 
 onMounted(async () => {
-  await loadData();
-});
-eventBus.on("didLogin", (_) => {
-  loadData();
-});
+  await loadData()
+})
+eventBus.on('didLogin', (_) => {
+  loadData()
+})
 
-const loadData = async () => {
-  const ops = getPageOptions();
-  const aId = ops.aid as number;
-  const obj = ops.obj as number;
-  aid.value = aId;
+async function loadData() {
+  const ops = getPageOptions()
+  const aId = ops.aid as number
+  const obj = ops.obj as number
+  aid.value = aId
   await Promise.all([
     getWelfareDetailList(),
     getWelfareUserList(),
     getMachineList(),
     getWelfareReward(aId),
-  ]);
+  ])
   if (obj) {
     /// 好友分享助力
-    await handleHelpWare(obj, aId);
+    await handleHelpWare(obj, aId)
   }
-};
+}
 onShow(() => {
-  userStore.getUserInfo();
-});
+  userStore.getUserInfo()
+})
 
-eventBus.on("didLogin", async (_: any) => {
-  await loadData();
-});
-const clickActivity = () => {
-  const routes = getCurrentPages();
+eventBus.on('didLogin', async (_: any) => {
+  await loadData()
+})
+function clickActivity() {
+  const routes = getCurrentPages()
   if (routes.length > 1) {
-    uni.navigateBack();
-  } else {
-    uni.reLaunch({
-      url: "/subPackages/activity/index",
-    });
+    uni.navigateBack()
   }
-};
-const clickRewardCode = () => {
+  else {
+    uni.reLaunch({
+      url: '/subPackages/activity/index',
+    })
+  }
+}
+function clickRewardCode() {
   uni.navigateTo({
     url: `/subPackages/product/reward-code/index?aid=${aid.value}`,
-  });
-};
-const handleClickShare = () => {
+  })
+}
+function handleClickShare() {
   if (!aid.value) {
-    ShowToast("活动信息异常，暂无法分享");
-    return;
+    ShowToast('活动信息异常，暂无法分享')
+    return
   }
   shareWeixinMiniProgramCard({
     title: `${userStore.userInfo.nickname}邀请您来助力免费得奖品！`,
-    imageUrl: welfareDetails.value.logo || "https://jms.85gui7.com/kahe-202510/common/share.jpg",
+    imageUrl: welfareDetails.value.logo || 'https://jms.85gui7.com/kahe-202510/common/share.jpg',
     path: `/subPackages/product/welfare-detail/index?aid=${aid.value}&obj=${userStore.userInfo.uid}`,
-  });
-};
+  })
+}
 onShareAppMessage(() => {
   return {
     title: `${userStore.userInfo.nickname}邀请您来助力免费得奖品！`,
     imageUrl: welfareDetails.value.logo,
     path: `/subPackages/product/welfare-detail/index?aid=${aid.value}&obj=${userStore.userInfo.uid}`,
-  };
-});
+  }
+})
 onShareTimeline(() => {
   return {
     title: `${userStore.userInfo.nickname}邀请您来助力免费得奖品！`,
     imageUrl: welfareDetails.value.logo,
     path: `/subPackages/product/welfare-detail/index?aid=${aid.value}&obj=${userStore.userInfo.uid}`,
-  };
-});
+  }
+})
 </script>
+
 <style lang="scss" scoped>
 .detail {
   width: 100%;

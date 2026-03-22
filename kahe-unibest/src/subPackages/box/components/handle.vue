@@ -2,19 +2,22 @@
   <view class="box-detail-handle">
     <custom-button
       v-for="(item, index) in handleList"
-      size="small"
       :key="index"
-      @tap.stop="emits('didClickItem', item.value)"
+      size="small"
       :title="item.title"
+      @tap.stop="emits('didClickItem', item.value)"
     />
   </view>
 </template>
 
 <script lang="ts" setup>
+import { computed, ref } from 'vue'
 import { useAppStore } from '@/store/app'
-import { ref, computed } from "vue";
 
-import CustomButton from "@/subPackages/box/box/components/button/index.vue";
+import CustomButton from '@/subPackages/box/box/components/button/index.vue'
+
+const emits = defineEmits(['didClickItem'])
+const appStore = useAppStore()
 // const handleList = ref(["全选", "协商退货", "发货", "上锁"]);
 // const handleList = ref([
 //   {
@@ -32,45 +35,43 @@ import CustomButton from "@/subPackages/box/box/components/button/index.vue";
 // ]);
 
 const featureSmashRefundEnabled = computed(() => {
-  return appStore.featureSmashRefundEnabled;
-});
+  return appStore.featureSmashRefundEnabled
+})
 const handleList = ref(
   featureSmashRefundEnabled.value
     ? [
         {
-          title: "全选",
+          title: '全选',
           value: 0,
         },
         {
-          title: "协商退货",
+          title: '协商退货',
           value: 1,
         },
         {
-          title: "发货",
+          title: '发货',
           value: 2,
         },
         {
-          title: "上锁",
+          title: '上锁',
           value: 3,
         },
       ]
     : [
         {
-          title: "全选",
+          title: '全选',
           value: 0,
         },
         {
-          title: "发货",
+          title: '发货',
           value: 2,
         },
         {
-          title: "上锁",
+          title: '上锁',
           value: 3,
         },
-      ]
-);
-
-const emits = defineEmits(["didClickItem"]);
+      ],
+)
 </script>
 
 <style lang="scss" scoped>

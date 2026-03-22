@@ -2,22 +2,28 @@
   <view class="boxDetail">
     <view class="boxDetail-top">
       <view>
-        <view class="boxDetail-top-title theme-font">{{ title }}</view>
-        <view class="boxDetail-top-subTitle theme-font">{{
-          selectNum ? `已选${selectNum}个` : `共${total}个`
-        }}</view>
+        <view class="boxDetail-top-title theme-font">
+          {{ title }}
+        </view>
+        <view class="boxDetail-top-subTitle theme-font">
+          {{
+            selectNum ? `已选${selectNum}个` : `共${total}个`
+          }}
+        </view>
       </view>
       <view class="boxDetail-top-btn">
         <view
           class="boxDetail-top-btn-item style1 theme-font"
           @tap.stop="tapShowModel(0)"
-          >发货须知</view
         >
+          发货须知
+        </view>
         <view
           class="boxDetail-top-btn-item style3 theme-font"
           @tap.stop="tapShowModel(2)"
-          >品相定义</view
         >
+          品相定义
+        </view>
       </view>
     </view>
 
@@ -30,9 +36,9 @@
     >
       <view class="boxDetail-content-list">
         <view
-          class="boxDetail-content-list-item"
           v-for="(item, index) in goodsList"
           :key="index"
+          class="boxDetail-content-list-item"
         >
           <item
             :item="item"
@@ -48,7 +54,7 @@
     <detail-modal v-model:show="detailShow" :item="currentBox" />
     <smash
       v-model:show="smashShow"
-      :recycleGoods="smashList"
+      :recycle-goods="smashList"
       @did-tap-smash="didTapPay"
     />
     <shipment
@@ -68,18 +74,19 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, computed } from "vue";
-import { getPageOptions } from "@/utils/tools";
-import Handle from "./components/handle.vue";
-import Item from "./components/item.vue";
-import CommonModal from "@/components/modal/index.vue";
-import DetailModal from "@/components/modal/detail/index.vue";
-import SelectModal from "./components/select.vue";
-import Shipment from "@/components/modal/shipment/index.vue";
-import { useBox } from "@/composables/box";
-import Smash from "@/components/modal/smash/index.vue";
-import { ModalType, useModal } from "@/composables/modal";
-const { modalShow, modalTitle, modalContent, showModalType } = useModal();
+import { computed, onMounted, ref } from 'vue'
+import DetailModal from '@/components/modal/detail/index.vue'
+import CommonModal from '@/components/modal/index.vue'
+import Shipment from '@/components/modal/shipment/index.vue'
+import Smash from '@/components/modal/smash/index.vue'
+import { useBox } from '@/composables/box'
+import { ModalType, useModal } from '@/composables/modal'
+import { getPageOptions } from '@/utils/tools'
+import Handle from './components/handle.vue'
+import Item from './components/item.vue'
+import SelectModal from './components/select.vue'
+
+const { modalShow, modalTitle, modalContent, showModalType } = useModal()
 const {
   address,
   chooseAddress,
@@ -101,33 +108,34 @@ const {
   selectNum,
   payShow,
   handleScrollToLower,
-} = useBox();
+} = useBox()
 
-const title = ref("");
+const title = ref('')
 const total = computed(() => {
-  let total = 0;
+  let total = 0
   goodsList.value.forEach((item) => {
-    total += item.num;
-  });
-  return total;
-});
+    total += item.num
+  })
+  return total
+})
 onMounted(() => {
-  const boxId = getPageOptions().boxId;
-  title.value = getPageOptions().title ?? 0;
-  getBoxGoodsList(Number(boxId));
+  const boxId = getPageOptions().boxId
+  title.value = getPageOptions().title ?? 0
+  getBoxGoodsList(Number(boxId))
   uni.setNavigationBarTitle({
     title: title.value,
-  });
-});
-const tapShowModel = (val: number) => {
+  })
+})
+function tapShowModel(val: number) {
   if (val === 2) {
     uni.navigateTo({
-      url: "/subPackages/product/state/index",
-    });
-  } else if (val === 0) {
-    showModalType(4);
+      url: '/subPackages/product/state/index',
+    })
   }
-};
+  else if (val === 0) {
+    showModalType(4)
+  }
+}
 </script>
 
 <style lang="scss" scoped>

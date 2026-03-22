@@ -1,28 +1,28 @@
-import { get, post } from "@/utils/request";
+import type { ActivityDto, RankUser } from '@/model/activity'
 
-import type { ActivityDto, RankUser } from "@/model/activity";
+import { get } from '@/utils/request'
 
 interface RankListRequestParams {
-  actid: number;
-  limit?: number;
-  max?: number;
-  page?: number;
+  actid: number
+  limit?: number
+  max?: number
+  page?: number
 }
 
 /* 获取活动主页信息 */
-export const getRankIndexData = async () => {
-  return await get<{ list: ActivityDto[] }>("activity/active", {});
-};
+export async function getRankIndexData() {
+  return await get<{ list: ActivityDto[] }>('activity/active', {})
+}
 
 /* 获取用户列表 */
-export const getRankUserListData = async (params: RankListRequestParams) => {
+export async function getRankUserListData(params: RankListRequestParams) {
   return await get<{
-    user: RankUser;
-    list: { content: RankUser[]; totalElements: number };
-  }>("activity/active/list", params);
-};
+    user: RankUser
+    list: { content: RankUser[], totalElements: number }
+  }>('activity/active/list', params)
+}
 
 /* 获取历史活动信息 */
-export const getHistoryListData = async () => {
-  return get("activity/active/pre", {});
-};
+export async function getHistoryListData() {
+  return get('activity/active/pre', {})
+}
