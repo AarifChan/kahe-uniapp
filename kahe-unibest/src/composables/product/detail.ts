@@ -56,6 +56,8 @@ import { UserModule, checkOrderInfo } from "@/store/modules/user";
 import { useEnum } from "../enum/index";
 import { computed, onMounted, onUnmounted, ref, type Ref, watch } from "vue";
 import { eventBus } from "@/utils/event";
+import { useUserStore } from '@/store/user'
+const userStore = useUserStore()
 
 const {
   getLevelImage,
@@ -463,7 +465,7 @@ export function useProductDetail() {
         await handleOpenResult(orderId);
       } else {
         showLoading("正在支付");
-        const wxRes = await UserModule.handleWxPay(
+        const wxRes = await userStore.handleWxPay(
           orderId,
           productDetail.value.pid
         );

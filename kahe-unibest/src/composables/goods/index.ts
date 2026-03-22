@@ -18,7 +18,7 @@ import {
   getSubTagImagePath,
 } from "@/utils/tools/image";
 import { formatPrice, isValidURL } from "@/utils/tools";
-import { AppModule } from "@/store/modules/app";
+
 import item from "@/subPackages/product/welfare-detail/components/item.vue";
 
 const homeTabList = [

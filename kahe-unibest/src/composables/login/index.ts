@@ -1,8 +1,12 @@
 import { ref, watch } from "vue";
-import { UserModule } from "@/store/modules/user";
+
 import { ShowToast } from "@/utils";
-import { AppModule } from "@/store/modules/app";
+
 import { eventBus } from "@/utils/event";
+import { useUserStore } from '@/store/user'
+import { useAppStore } from '@/store/app'
+const userStore = useUserStore()
+const appStore = useAppStore()
 
 export function useLogin() {
   const loginShow = ref(false);
@@ -10,7 +14,7 @@ export function useLogin() {
   const infoShow = ref(false);
   const handleLogin = async (params: any) => {
     // #ifdef MP-WEIXIN
-    const resp = await UserModule.handlePhoneLogin(params);
+    const resp = await userStore.handlePhoneLogin(params);
 
     if (resp) {
       await ShowToast(resp + "", 2000);
@@ -37,22 +41,22 @@ export function useLogin() {
   };
 
   eventBus.on("needLogin", async (_: any) => {
-    console.log("needLogin->:", UserModule.loginStatus);
+    console.log("needLogin->:", userStore.loginStatus);
 
-    if (!UserModule.loginStatus && !loginShow.value) {
+    if (!userStore.loginStatus && !loginShow.value) {
       loginShow.value = true;
     }
   });
 
   watch(
-    () => UserModule.receivedVipShow,
+    () => userStore.receivedVipShow,
     (value) => {
       showVip.value = value;
     }
   );
 
   watch(
-    () => AppModule.userModalShow,
+    () => appStore.userModalShow,
     (val) => {
       if (val) {
         infoShow.value = true;
@@ -61,14 +65,14 @@ export function useLogin() {
   );
 
   watch(
-    () => UserModule.loginStatus,
+    () => userStore.loginStatus,
     (val) => {
       if (val) {
         // loginShow.value = false
         if (
-          !UserModule.userInfo.nickname ||
-          UserModule.userInfo.nickname === "微信用户" ||
-          !UserModule.userInfo.avatar
+          !userStore.userInfo.nickname ||
+          userStore.userInfo.nickname === "微信用户" ||
+          !userStore.userInfo.avatar
         ) {
           infoShow.value = true;
         }
@@ -81,7 +85,7 @@ export function useLogin() {
     (value) => {
       console.log("loginShow:", value);
       if (value) {
-        UserModule.getCode();
+        userStore.getCode();
       }
     }
   );

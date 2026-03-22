@@ -37,12 +37,16 @@ import type {
 } from "@/model";
 import { parseTime } from "@/utils/tools/util";
 import { hideLoading, showLoading, ShowToast } from "@/utils";
-import { UserModule } from "@/store/modules/user";
+
 import { useEnum } from "../enum/index";
 
 import { eventBus } from "@/utils/event";
 import { getLevelFullImagePath } from "@/utils/tools/image";
-import { AppModule } from "@/store/modules/app";
+import { useUserStore } from '@/store/user'
+import { useAppStore } from '@/store/app'
+const userStore = useUserStore()
+const appStore = useAppStore()
+
 
 const { getLevelImage, levelTypeBg, getLevelImageByLevel } = useEnum();
 export function useBox() {
@@ -446,7 +450,7 @@ export function useBox() {
       if (resp.code === 200) {
         if (!resp.data.status) {
           showLoading("正在支付");
-          const resp = await UserModule.handleWxPay(orderId);
+          const resp = await userStore.handleWxPay(orderId);
           hideLoading();
           if (resp) {
             ShowToast(resp + "");
@@ -469,7 +473,7 @@ export function useBox() {
       url: `/subPackages/box/index?boxId=${item.boxId}&title=${item.title}&num=${item.num}`,
     });
   };
-  const currentIndex = ref(AppModule.boxTabIndex);
+  const currentIndex = ref(appStore.boxTabIndex);
   const handleScrollToLower = async () => {
     if (currentIndex.value === 0) {
       console.log(

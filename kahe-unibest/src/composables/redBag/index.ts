@@ -10,9 +10,11 @@ import type {
   RedBagListItem,
   RedBagUserModel,
 } from "@/composables/redBag/model";
-import { UserModule } from "@/store/modules/user";
+
 import { ShowToast } from "@/utils";
 import type { User } from "@/model";
+import { useUserStore } from '@/store/user'
+const userStore = useUserStore()
 
 export enum RedBagState {
   expired = 0,
@@ -38,7 +40,7 @@ export function useRedBag() {
   });
   const currentCommentIndex = ref(0);
 
-  const userInfo = computed(() => UserModule.userInfo);
+  const userInfo = computed(() => userStore.userInfo);
 
   const userList = computed((): RedBagUserModel[] => {
     return (

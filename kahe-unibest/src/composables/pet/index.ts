@@ -15,6 +15,8 @@ import {
 import PetModule from "@/store/modules/pet";
 import { ShowToast } from "@/utils";
 import { eventBus } from "@/utils/event";
+import { usePetStore } from '@/store/pet'
+const petStore = usePetStore()
 export function usePet() {
   const minePetList = ref([] as PetModel[]);
 
@@ -55,7 +57,7 @@ export function usePet() {
     if (resp.code === 200) {
       onlinePetList.value = resp.data.content.map((item) => {
         const key = item.pid + ":" + item.level;
-        const tmpPet = PetModule.petCfgDict.get(key);
+        const tmpPet = petStore.petCfgDict.get(key);
         return {
           id: item.id,
           icon: tmpPet?.icon,
@@ -76,7 +78,7 @@ export function usePet() {
     if (resp.code === 200) {
       const list = resp.data.content.map((item) => {
         const key = item.pid + ":" + item.level;
-        const tmpPet = PetModule.petCfgDict.get(key);
+        const tmpPet = petStore.petCfgDict.get(key);
         return {
           id: item.id,
           icon: tmpPet?.icon,
@@ -118,7 +120,7 @@ export function usePet() {
       const list = resp.data.content
         .map((item) => {
           const key = item.pid + ":" + item.level;
-          const tmpPet = PetModule.petCfgDict.get(key);
+          const tmpPet = petStore.petCfgDict.get(key);
           return {
             id: item.id,
             icon: tmpPet?.icon,
@@ -146,7 +148,7 @@ export function usePet() {
     if (resp.code === 200) {
       const list: EggsModel[] = [];
       resp.data.content.forEach((item) => {
-        const egg = PetModule.eggsCfgDict.get(item.eid);
+        const egg = petStore.eggsCfgDict.get(item.eid);
         if (egg) {
           const eggModel = {
             name: egg.name,
@@ -230,7 +232,7 @@ export function usePet() {
     if (resp.code === 200) {
       const list = resp.data.pets.map((item) => {
         const key = item.pid + ":" + item.level;
-        const tmpPet = PetModule.petCfgDict.get(key);
+        const tmpPet = petStore.petCfgDict.get(key);
         return {
           id: item.id,
           icon: tmpPet?.icon,
@@ -305,7 +307,7 @@ export function usePet() {
     if (resp.code === 200) {
       const item = resp.data;
       const key = item.pid + ":" + item.level;
-      const tmpPet = PetModule.petCfgDict.get(key);
+      const tmpPet = petStore.petCfgDict.get(key);
       resultPet.value = {
         id: item.id,
         icon: tmpPet?.icon,

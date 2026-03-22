@@ -8,7 +8,9 @@ import {
 import type { FavoriteModel } from "@/api/favorite";
 import { ref } from "vue";
 import { ShowToast } from "@/utils";
-import { UserModule } from "@/store/modules/user";
+import { useUserStore } from '@/store/user'
+const userStore = useUserStore()
+
 
 export function useFavorite() {
   const isFavorite = ref(false);
@@ -50,7 +52,7 @@ export function useFavorite() {
     subType: 1,
   });
   const checkIsFavorite = async (pId: number) => {
-    if (!UserModule.loginStatus) {
+    if (!userStore.loginStatus) {
       return;
     }
     const resp = await checkIsFavoriteRequest({
