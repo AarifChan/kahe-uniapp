@@ -13,6 +13,9 @@ export enum ProductDetailButtonType {
 }
 
 export interface ProductGoodsDTOModel {
+  cid: number;
+  cname: string;
+  eggId: number;
   createTime: string;
   id: number;
   image: string;
@@ -26,6 +29,7 @@ export interface ProductGoodsDTOModel {
   type: number; // 物品类型 0: 普通 1: 仅发货
   prob?: number;
   goodDesc: string;
+  merchantId: number;
 }
 export interface ProductIndexModelCfg {
   client_audit_version: string; // 客户端审核版本

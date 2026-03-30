@@ -1,75 +1,130 @@
 <template>
-    <view
-        class="recommendItem"
-    >
-        <image class="recommendItem-img" :src="item.image" />
-        <view class="recommendItem-content">
-            <text class="recommendItem-content-title">{{
-                item.title
-            }}</text>
-            <view class="recommendItem-content-texts">
-                <text>¥{{ item.price }}</text>
-                <text>{{ item.productNum }}/{{ item.lastSeqNo }}箱</text>
-            </view>
+  <view
+    class="relative w-509 h-220 overflow-visible"
+    style="
+      background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/recomand-bg.png&quot;);
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+    "
+  >
+    <view class="pt-60 px-16 flex flex-row">
+      <!-- 左侧图片区域 -->
+      <view class="relative w-126 h-126 flex-shrink-0">
+        <image
+          class="absolute left-0 top-0 w-59 h-34 z-10"
+          src="https://jms.85gui7.com/kahe-202510/challenge/pingtuan-tag.png"
+          mode="aspectFit"
+        />
+        <image
+          class="w-126 h-126 rounded-16"
+          :src="item.logo"
+          mode="aspectFill"
+        />
+      </view>
+
+      <!-- 信息区域 -->
+      <view class="flex-1 ml-16 flex flex-col justify-center min-w-0">
+        <!-- 标题 -->
+        <view
+          class="text-24 text-text-primary font-bold text-ellipsis leading-34"
+        >
+          {{ item.title }}
         </view>
+
+        <!-- 价格和库存 -->
+        <view class="flex items-center justify-between mt-8">
+          <view class="text-32 text-[#000000] font-price font-bold">
+            ¥{{ item.price }}
+          </view>
+          <view class="text-20 text-text-tertiary">
+            余{{ item.num }}/共{{ item.total }}
+          </view>
+        </view>
+
+        <!-- 进度条 -->
+        <view class="w-full h-10 mt-6 bg-[#e5e5e5] rounded-5 overflow-hidden">
+          <view
+            v-if="item.total > 0"
+            class="h-full bg-primary rounded-5"
+            :style="progressStyles"
+          />
+        </view>
+
+        <!-- 倒计时区域 -->
+        <view class="flex items-center justify-between mt-8">
+          <view class="flex items-center">
+            <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
+              <text class="text-18 text-[#845334] font-bold">{{ day }}</text>
+            </view>
+            <text class="text-18 text-text-secondary mx-4">天</text>
+            <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
+              <text class="text-18 text-[#845334]-white font-bold">{{
+                hour
+              }}</text>
+            </view>
+            <text class="text-18 text-text-secondary mx-4">时</text>
+            <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
+              <text class="text-18 text-[#845334]-white font-bold">{{
+                minute
+              }}</text>
+            </view>
+            <text class="text-18 text-text-secondary mx-4">分</text>
+            <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
+              <text class="text-18 text-[#845334]white font-bold">{{
+                second
+              }}</text>
+            </view>
+            <text class="text-18 text-[#845334] mx-4">秒</text>
+          </view>
+
+          <!-- 商家信息 -->
+          <view class="flex items-center">
+            <image
+              class="w-32 h-32 rounded-full"
+              :src="item.merchant?.icon ?? ''"
+              mode="aspectFill"
+            />
+          </view>
+        </view>
+      </view>
     </view>
+  </view>
 </template>
 
 <script lang="ts" setup>
-import type { UIRecommendModel } from '@/model'
-import type { PropType } from 'vue'
+import { computed, onMounted, PropType } from "vue";
+import { type GroupBuyItem } from "@/model";
 
-defineProps({
-    item: {
-        type: Object as PropType<UIRecommendModel>,
-        default: {
-        } as UIRecommendModel
-    }
-})
+import { divideAndTruncate } from "@/utils/tools";
+import { useTimeCount } from "@/composables/countTime";
+const { startTimeRemain, hour, day, second, minute, isTimeout } =
+  useTimeCount();
+
+const props = defineProps({
+  item: {
+    type: Object as PropType<GroupBuyItem>,
+    default: {} as GroupBuyItem,
+  },
+});
+
+const progressStyles = computed(() => {
+  const a = props.item.num;
+  const b = props.item.total;
+  const progress = divideAndTruncate(a, b);
+  return {
+    width: `${progress * 100.0}%`,
+  };
+});
+
+const isOver = computed(() => {
+  const num = props.item.num;
+  return num === 0 || isTimeout.value;
+});
+
+onMounted(() => {
+  startTimeRemain(props.item.openTime);
+});
 </script>
 
-<style lang="scss" scoped>
-.recommendItem {
-    position: relative;
-
-    width: 472rpx;
-    height: 202rpx;
-    display: inline-block;
-    border-radius: 30rpx;
-    overflow: hidden;
-    margin-right: 12rpx;
-    &-img {
-        width: 100%;
-        height: 100%;
-    }
-    &-content {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 61rpx;
-        background-color: #090514;
-        opacity: 0.7;
-        &-title {
-            position: absolute;
-            left: 10rpx;
-            top: 0;
-            z-index: 1;
-            font-size: 18rpx;
-            color: #ffffff;
-            line-height: 36rpx;
-        }
-        &-texts {
-            position: absolute;
-            left: 10rpx;
-            bottom: 4rpx;
-            z-index: 1;
-            width: calc(100% - 20rpx);
-            display: flex;
-            justify-content: space-between;
-            font-size: 18rpx;
-            color: #ffffff;
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

@@ -1,6 +1,8 @@
 import { createSSRApp } from "vue";
 import App from "./App.vue";
 import $log, { LogLevel } from "./JSModules/kh-log-plugin";
+// 引入 UnoCSS 虚拟模块
+import "virtual:uno.css";
 
 export function createApp() {
   const app = createSSRApp(App);
