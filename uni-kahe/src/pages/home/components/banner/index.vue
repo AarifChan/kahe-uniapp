@@ -69,7 +69,7 @@ const onChange = (e: any) => {
 // watch(
 //     () => props.lampList,
 //     () => {
-//         lampRef.value?.play(props.lampList, 3);
+//         lampRef.value?.settle(props.lampList, 3);
 //     }
 // );
 </script>

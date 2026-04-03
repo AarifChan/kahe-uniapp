@@ -301,6 +301,8 @@ export function getSubTagImagePath(tag: number): string {
       return "";
     case 8:
       return "";
+    case 13:
+      return "https://jms.85gui7.com/tags/chuangguan.png";
     default:
       return "https://jms.85gui7.com/kahe/tags/single.png";
   }

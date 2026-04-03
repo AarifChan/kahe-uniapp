@@ -1,6 +1,6 @@
 <template>
   <view>
-    <view class="flex flex-row justify-around w-full py-16">
+    <view class="flex flex-row justify-around w-full pt-16">
       <view class="w-509 h-220 relative">
         <item
           v-if="groupList.length > 0"

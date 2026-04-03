@@ -47,18 +47,18 @@
     <view
       class="absolute flex flex-row items-center"
       style="top: 16rpx; right: 40rpx"
-      @tap.stop="didClickMerchant(product.merchant)"
+      @tap.stop="didClickMerchant(detail.box?.merchant)"
     >
       <image
         class="w-52 h-52 rounded-full border-2 border-white z-1"
-        :src="product.merchant?.icon"
+        :src="detail?.box?.merchant?.icon"
       />
       <view
         class="-ml-24rpx h-36 px-16 rounded-18 flex items-center"
         style="background: rgba(255, 255, 255, 0.56)"
       >
         <text class="pl-16rpx font-theme text-22 text-black">{{
-          product.merchant?.name
+          detail?.box?.merchant?.name
         }}</text>
       </view>
     </view>
@@ -70,7 +70,7 @@
       class="absolute left-20 top-120 w-full"
       :style="{
         width: 'calc(100% - 40rpx)',
-        height: 'calc(100vh - 678rpx - env(safe-area-inset-bottom) - 122rpx)',
+        height: '578rpx',
       }"
       @scrolltolower="emits('scrollToLower')"
     >
@@ -84,7 +84,7 @@
       class="absolute left-20 top-120 flex flex-col"
       :style="{
         width: 'calc(100% - 40rpx)',
-        height: 'calc(100vh - 678rpx - env(safe-area-inset-bottom) - 122rpx)',
+        height: '578rpx',
       }"
       @scrolltolower="emits('scrollToLower')"
     >
@@ -96,7 +96,8 @@
 <script setup lang="ts">
 import { type UIProductDetailModel } from "@/model";
 import { PropType } from "vue";
-import { useMerchant } from "@/pages/merchant/index";
+import { useMerchant } from "@/pages/merchant";
+import { ChallengeDetail } from "@/subPackages/challenge/api";
 
 const { didClickMerchant } = useMerchant();
 
@@ -105,9 +106,9 @@ const props = defineProps({
     default: 0,
     type: Number,
   },
-  product: {
-    default: () => ({}) as UIProductDetailModel,
-    type: Object as PropType<UIProductDetailModel>,
+  detail: {
+    default: {} as ChallengeDetail,
+    type: Object as PropType<ChallengeDetail>,
   },
 });
 

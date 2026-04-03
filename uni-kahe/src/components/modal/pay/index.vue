@@ -256,15 +256,15 @@
         </div>
       </view>
       <!--      <view>-->
-      <!--        <view class="pay-top">-->
-      <!--          <view class="pay-top-info">-->
-      <!--            <text class="pay-top-info-subTitle"-->
+      <!--        <view class="settle-top">-->
+      <!--          <view class="settle-top-info">-->
+      <!--            <text class="settle-top-info-subTitle"-->
       <!--              >购买明信片附赠礼品 未成年禁止下单</text-->
       <!--            >-->
       <!--          </view>-->
       <!--        </view>-->
-      <!--        <view class="pay-options">-->
-      <!--          <pay-option-->
+      <!--        <view class="settle-options">-->
+      <!--          <settle-option-->
       <!--            title="优惠券"-->
       <!--            :value="-->
       <!--              goods.coupon-->
@@ -294,7 +294,7 @@
       <!--          sub-title=""-->
       <!--        />-->
       <!--        <view-->
-      <!--          class="pay-userMoney"-->
+      <!--          class="settle-userMoney"-->
       <!--          style="margin: 0 auto; font-size: 20rpx; color: #000"-->
       <!--          >当前拥有<text style="color: #4b71ff">{{ userInfo.integral }}</text-->
       <!--          >积分，<text style="color: #4b71ff">{{ userInfo.money }}</text-->
@@ -302,7 +302,7 @@
       <!--          >绑定点券</view-->
       <!--        >-->
 
-      <!--        <pay-button-->
+      <!--        <settle-button-->
       <!--          :price="goods.payPrice"-->
       <!--          :discount-price="goods.usedPrice"-->
       <!--          @tap.stop="didTapConfirm"-->

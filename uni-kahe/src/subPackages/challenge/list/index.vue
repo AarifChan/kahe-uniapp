@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import Goods from "../components/goods/index.vue";
-import { useChallenge } from "./index";
+import { useChallenge } from "../index";
 import { onMounted } from "vue";
+import { ChallengeBox, ChallengeGoodsItem } from "../api";
 const { dataList, getDataList } = useChallenge();
 onMounted(() => {
   getDataList();
 });
+const handleClickItem = (item: ChallengeBox) => {
+  uni.navigateTo({
+    url: "/subPackages/challenge/detail/index?id=" + item.id,
+  });
+};
 </script>
 
 <template>
@@ -31,16 +37,16 @@ onMounted(() => {
         >
       </view>
     </view>
-    <scroll-view
-      scroll-y
-      class="h-[calc(100vh-334rpx)] flex flex-wrap justify-between p-20"
-    >
-      <view
-        class="w-[48%] mb-20"
-        v-for="(item, index) in dataList"
-        :key="index"
-      >
-        <goods :item="item" />
+    <scroll-view scroll-y class="h-[calc(100vh-334rpx)] p-20">
+      <view class="flex flex-wrap gap-[20rpx]">
+        <view
+          class="w-[calc(50%-10rpx)]"
+          v-for="(item, index) in dataList"
+          :key="index"
+          @tap.stop="handleClickItem(item)"
+        >
+          <goods :item="item" />
+        </view>
       </view>
     </scroll-view>
   </view>

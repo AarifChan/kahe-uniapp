@@ -234,6 +234,7 @@ export interface UIProductPayModel {
   id: string | number;
   coupon?: UICouponModel;
   isIntegral?: boolean;
+  orderId?: string;
 }
 
 export interface UITabItemType {

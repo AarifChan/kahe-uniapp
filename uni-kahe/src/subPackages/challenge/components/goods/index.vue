@@ -1,6 +1,6 @@
 <template>
   <view
-    class="relative w-full aspect-[506/692] overflow-hidden mb-20 bg-white rounded-10"
+    class="relative w-full aspect-[506/692] overflow-hidden bg-white rounded-10"
     style="
       background-image: url(&quot;https://jms.85gui7.com/kahe-202510/ka-he/home/item-bg.png&quot;);
       background-size: 100% 100%;
@@ -46,7 +46,7 @@
             </view>
           </view>
         </view>
-        <view class="absolute right-19 bottom-17 flex items-center">
+        <view class="absolute right-19 bottom-4 flex items-center">
           <image class="w-36 h-36 rounded-full" :src="item.merchant?.icon" />
           <view
             class="max-w-[120rpx] ml-5 font-normal text-18 text-[#504F4F] text-flow-ellipsis-single"
@@ -58,8 +58,8 @@
 
     <image
       class="absolute left-[-4rpx] top-[-2rpx] w-180 h-54"
-      v-if="showTag"
-      :src="item.mainTagImage"
+      v-if="item.mainTag"
+      :src="getMainTagImagePath(item.mainTag)"
     />
   </view>
 </template>
@@ -67,6 +67,7 @@
 <script lang="ts" setup>
 import type { PropType } from "vue";
 import type { UIProductModel } from "@/model";
+import { getMainTagImagePath } from "@/utils/tools/image";
 defineProps({
   item: {
     default: {} as UIProductModel,
