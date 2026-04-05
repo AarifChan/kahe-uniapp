@@ -27,7 +27,7 @@
       <view class="flex-1 ml-16 flex flex-col justify-center min-w-0">
         <!-- 标题 -->
         <view
-          class="text-24 text-text-primary font-bold text-ellipsis leading-34"
+          class="text-24 text-[#333] font-bold text-ellipsis leading-34"
         >
           {{ item.title }}
         </view>
@@ -37,7 +37,7 @@
           <view class="text-32 text-[#000000] font-price font-bold">
             ¥{{ item.price }}
           </view>
-          <view class="text-20 text-text-tertiary">
+          <view class="text-20 text-[#999]">
             余{{ item.num }}/共{{ item.total }}
           </view>
         </view>
@@ -57,19 +57,19 @@
             <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
               <text class="text-18 text-[#845334] font-bold">{{ day }}</text>
             </view>
-            <text class="text-18 text-text-secondary mx-4">天</text>
+            <text class="text-18 text-[#666] mx-4">天</text>
             <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
               <text class="text-18 text-[#845334] font-bold">{{
                 hour
               }}</text>
             </view>
-            <text class="text-18 text-text-secondary mx-4">时</text>
+            <text class="text-18 text-[#666] mx-4">时</text>
             <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
               <text class="text-18 text-[#845334] font-bold">{{
                 minute
               }}</text>
             </view>
-            <text class="text-18 text-text-secondary mx-4">分</text>
+            <text class="text-18 text-[#666] mx-4">分</text>
             <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
               <text class="text-18 text-[#845334] font-bold">{{
                 second

@@ -27,11 +27,11 @@ const handleClickItem = (item: ChallengeBox) => {
     >
       <view class="absolute top-188 left-370 flex-1">
         <view
-          class="text-20 text-text-primary font-bold font-price text-ellipsis"
+          class="text-20 text-[#333] font-bold font-price text-ellipsis"
           >每个<text class="text-[#FF0000]">闯关难度</text>不一样，要注意喔！
         </view>
         <view
-          class="text-20 text-text-primary font-bold font-price text-ellipsis"
+          class="text-20 text-[#333] font-bold font-price text-ellipsis"
           >一起踏上<text class="text-[#FF0000]">寻找皮卡丘</text
           >的冒险之旅吧~</view
         >
