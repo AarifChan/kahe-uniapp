@@ -314,6 +314,8 @@ const handleSubmit = async () => {
   } else {
     // 手机号/密码登录本身就有手机号，直接完成
     eventBus.emit("didLogin", true);
+    // 设置刷新标记，让来源页面知道登录成功并刷新
+    uni.setStorageSync("loginSuccessRefresh", true);
     uni.navigateBack({
       complete() {
         ShowToast("登陆成功", 2000);
@@ -334,6 +336,8 @@ const handleLoginSuccess = () => {
   } else {
     // 已有手机号，正常回到上一页
     eventBus.emit("didLogin", true);
+    // 设置刷新标记，让来源页面知道登录成功并刷新
+    uni.setStorageSync("loginSuccessRefresh", true);
     uni.navigateBack({
       complete() {
         ShowToast("登陆成功", 2000);
@@ -423,7 +427,8 @@ const handleLogin = async (params: LoginParams) => {
     await ShowToast(resp + "", 2000);
   } else {
     eventBus.emit("didLogin", true);
-    setTimeout(() => {}, 1000);
+    // 设置刷新标记，让来源页面知道登录成功并刷新
+    uni.setStorageSync("loginSuccessRefresh", true);
     uni.navigateBack({
       complete(result) {
         ShowToast("登陆成功", 2000);

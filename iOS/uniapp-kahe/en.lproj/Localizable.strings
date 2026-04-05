@@ -9,4 +9,4 @@
 "B"="Details";
 "C"="Ignore";
 "D"="%@ module is not added when packaging, please refer to %@";
-"E"="This application is compiled with HBuilderX%@, and the mobile SDK version is %@. A mismatched version may cause an application exception.";
+"E"="";

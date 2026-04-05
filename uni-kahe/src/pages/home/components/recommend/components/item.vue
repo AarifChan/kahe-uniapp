@@ -59,19 +59,19 @@
             </view>
             <text class="text-18 text-text-secondary mx-4">天</text>
             <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
-              <text class="text-18 text-[#845334]-white font-bold">{{
+              <text class="text-18 text-[#845334] font-bold">{{
                 hour
               }}</text>
             </view>
             <text class="text-18 text-text-secondary mx-4">时</text>
             <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
-              <text class="text-18 text-[#845334]-white font-bold">{{
+              <text class="text-18 text-[#845334] font-bold">{{
                 minute
               }}</text>
             </view>
             <text class="text-18 text-text-secondary mx-4">分</text>
             <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
-              <text class="text-18 text-[#845334]white font-bold">{{
+              <text class="text-18 text-[#845334] font-bold">{{
                 second
               }}</text>
             </view>

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
 import { PropType } from "vue";
-import { ChallengeDetail } from "@/subPackages/challenge/api";
+import {
+  ChallengeDetail,
+  ChallengeOrderGate,
+} from "@/subPackages/challenge/api";
 import { getTitleByQuality } from "@/utils";
-import { useChallenge } from "../../../index";
-const gifKey = ref(0);
-const { getLevelImage } = useChallenge();
+import { getLevelImage } from "../../../index";
+
 const props = defineProps({
   show: {
     default: false,
@@ -15,38 +17,66 @@ const props = defineProps({
     default: {} as ChallengeDetail,
     type: Object as PropType<ChallengeDetail>,
   },
+  currentSign: {
+    default: null,
+    type: Object as PropType<ChallengeOrderGate | null>,
+  },
+  isOver: {
+    default: false,
+    type: Boolean,
+  },
 });
 
 const vShow = ref(props.show);
 watch(
   () => props.show,
   (value) => {
-    vShow.value = value;
-    if (value) {
-      gifKey.value++; // 重新挂载 image，GIF 从头播放
+    console.log("vShow:", value);
+    if (value != vShow.value) {
+      vShow.value = value;
     }
   }
 );
 
-const success = ref(false);
+const emits = defineEmits(["update:show", "didTapFinish", "didTapItem"]);
 
-const emits = defineEmits(["update:show"]);
+const tapFinish = () => {
+  emits("didTapFinish");
+};
 
-const gateList = computed(() => {
-  const gate = props.detail?.current?.gate ?? props.detail?.box?.gate ?? 9;
-  return new Array(gate).fill(0);
+// 计算已获得的奖励数量（map 中值为 1 的数量）
+const rewardCount = computed(() => {
+  const map = props.currentSign?.map ?? [];
+  return map.filter((val) => val === 1).length;
 });
 
+const currentState = computed(() => {
+  return props.currentSign?.status ?? 0;
+});
+
+// 是否已开始游戏（是否有任何已打开的球）
+const hasStarted = computed(() => {
+  const map = props.currentSign?.map ?? [];
+  return map.some((val) => val !== 0);
+});
+
+const totalGate = computed(() => {
+  return props.detail?.box.gate + props.detail?.box.trap;
+});
+
+// 状态由 level/play 接口返回的 map 字段控制
+// map 数组下标为关卡索引(0开始)，值为：1=奖励，-1=陷阱，0=未打开
 const getBoxImage = (index: number) => {
-  const map = props.detail?.current?.map;
-  const state = map?.[index] ?? 0;
-  // 0: 关闭, 1: 皮卡丘, 2: 顽皮弹
-  const stateMap: Record<number, string> = {
-    0: "https://jms.85gui7.com/kahe-202510/challenge/box-state1.png",
-    1: "https://jms.85gui7.com/kahe-202510/challenge/box-state2.png",
-    2: "https://jms.85gui7.com/kahe-202510/challenge/box-state3.png",
-  };
-  return stateMap[state] ?? stateMap[0];
+  const map = props.currentSign?.map;
+  const status = map?.[index] ?? 0;
+  // 1=已打开且有奖励，-1=陷阱，0=未打开
+  if (status === 1) {
+    return "https://jms.85gui7.com/kahe-202510/challenge/box-state3.png";
+  }
+  if (status === -1 || props.isOver) {
+    return "https://jms.85gui7.com/kahe-202510/challenge/box-state2.png";
+  }
+  return "https://jms.85gui7.com/kahe-202510/challenge/box-state1.png";
 };
 </script>
 
@@ -58,7 +88,7 @@ const getBoxImage = (index: number) => {
     @close="emits('update:show', false)"
   >
     <view
-      class="bg-transparent flex flex-col items-center justify-between h-[100vh] py-84"
+      class="bg-transparent flex flex-col items-center justify-between h-[100vh] pt-32 pb-120"
     >
       <view class="flex flex-col items-center w-full">
         <view
@@ -82,7 +112,7 @@ const getBoxImage = (index: number) => {
           <view class="relative mt-12">
             <scroll-view scroll-x enable-flex class="whitespace-nowrap px-20">
               <view
-                v-for="(item, index) in detail?.box.rewards"
+                v-for="(item, index) in detail?.box?.rewards"
                 :key="index"
                 class="inline-block mr-16"
                 style="transform: scale(0.85)"
@@ -91,9 +121,7 @@ const getBoxImage = (index: number) => {
                   class="w-180 h-250 rounded-16 overflow-hidden border-10rpx border-[#FCD570]"
                   :style="{
                     borderColor:
-                      (detail?.current?.id ?? 0 === index)
-                        ? `#FF7A51`
-                        : `#FCD570`,
+                      (currentSign.gate ?? 0) === index ? `#FF7A51` : `#FCD570`,
                   }"
                 >
                   <image
@@ -122,7 +150,7 @@ const getBoxImage = (index: number) => {
                     class="h-60 flex-center bg-[#FCD570]"
                     :style="{
                       backgroundColor:
-                        (detail?.current?.id ?? 0 === index)
+                        (currentSign?.gate ?? 0) === index
                           ? `#FF7A51`
                           : `#FCD570`,
                     }"
@@ -131,7 +159,7 @@ const getBoxImage = (index: number) => {
                       class="text-26 font-other text-[#8B4513]"
                       :style="{
                         color:
-                          (detail?.current?.id ?? 0 === index)
+                          (currentSign.gate ?? 0) === index
                             ? `#FFFFFF`
                             : `#8B4513`,
                       }"
@@ -143,51 +171,57 @@ const getBoxImage = (index: number) => {
               </view>
             </scroll-view>
           </view>
-          <view class="flex flex-row" v-if="success">
+          <view
+            class="flex flex-row items-center mt-[-28rpx]"
+            v-if="currentState === 3"
+          >
             <image
               class="w-185 h-100"
               mode="aspectFit"
-              :key="gifKey"
               src="https://jms.85gui7.com/kahe-202510/challenge/910102c7bd8d979da34af93bf927179d.gif"
-              style="transform: scale(0.85)"
+              style="transform: scale(0.8)"
             />
             <view class="flex flex-col text-24 text-[#FF1300]">
               <text>糟糕!你不小心触碰到顽皮雷弹! 其余</text>
               <text>也现身了，您只能带走参与赏品!</text>
             </view>
           </view>
-          <view class="flex flex-row" v-else>
+          <view class="flex flex-row items-center mt-[-28rpx] px-16" v-else>
             <image
+              v-if="hasStarted"
               class="w-185 h-150"
               mode="aspectFit"
-              :key="gifKey"
               src="https://jms.85gui7.com/kahe-202510/challenge/ce10ec36134c784cff4d2578137286b4.gif"
-              style="transform: scale(0.8)"
+              style="transform: scale(0.75)"
             />
-            <view class="flex flex-col text-24 text-[#5E4947] items-center">
-              <text
-                >领赏退出可带走<text class="text-[#FF1300]">1关赏</text
-                >，点击任意精灵球可继续。
+            <view class="flex flex-col text-20 text-[#5E4947] items-center">
+              <text v-if="currentSign?.gate !== 0"
+                >领赏退出可带走<text class="text-[#FF1300]"
+                  >{{ rewardCount }}关赏，</text
+                ><text>点击任意精灵球可继续。</text>
               </text>
               <text
-                >本场有<text class="text-[#FF1300]">3个顽皮雷弹</text
+                >本场有<text class="text-[#FF1300]"
+                  >{{ detail?.box?.trap }}个顽皮雷弹</text
                 >，一旦触碰则只能带走参与赏！</text
               >
             </view>
           </view>
         </view>
         <view
-          class="w-full mt-72 gap-x-16 gap-y-32"
+          class="w-full mt-84"
           :class="
-            gateList.length <= 3
-              ? 'flex flex-wrap justify-center'
-              : 'grid grid-cols-3'
+            totalGate <= 3
+              ? 'flex flex-wrap justify-center gap-x-80 gap-y-64'
+              : 'grid grid-cols-3 gap-x-16 gap-y-32'
           "
         >
           <view
-            v-for="(_, index) in gateList"
+            v-for="(_, index) in totalGate"
             :key="index"
+            :id="index"
             class="flex items-center justify-center"
+            @tap.stop="emits('didTapItem', index)"
           >
             <image
               class="w-140 h-178"
@@ -199,10 +233,11 @@ const getBoxImage = (index: number) => {
       </view>
 
       <image
+        v-if="hasStarted"
         class="w-348 h-107"
         mode="aspectFill"
         src="https://jms.85gui7.com/kahe-202510/challenge/exit-btn.png"
-        @tap.stop="emits('update:show', false)"
+        @tap.stop="tapFinish"
       />
     </view>
   </tn-popup>

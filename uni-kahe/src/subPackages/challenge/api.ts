@@ -1,6 +1,5 @@
 import { get, post } from "@/utils/request";
 import { ListObject, type ProductGoodsDTOModel } from "@/model";
-import number from "@tuniao/tnui-vue3-uniapp/libs/async-validator/validator/number";
 
 export interface ChallengeGoodsItem {
   goodsDto: ProductGoodsDTOModel;
@@ -31,6 +30,10 @@ export interface ChallengeOrderGate {
   trap: number;
   goods: ChallengeGoodsItem;
   id: number;
+  /**
+   * 地图状态数组，下标为关卡索引(0开始)
+   * 值：1=奖励，-1=陷阱，0=未打开
+   */
   map: number[];
   orderId: string;
   sales: number;
@@ -54,18 +57,6 @@ export interface LogListObject {
   title: string;
   uid: number;
   vip: number;
-}
-
-export interface ChallengeSignOrder {
-  createTime: number;
-  gate: number;
-  id: number;
-  goods: ChallengeGoodsItem;
-  map: number[];
-  orderId: string;
-  sales: number;
-  status: number;
-  uid: number;
 }
 
 export interface ChallengeSubmit {
@@ -99,11 +90,11 @@ export const submitChallenge = (id: number) => {
 };
 
 export const signChallenge = (data: any) => {
-  return post<ChallengeSignOrder>("level/sign", data);
+  return post<ChallengeOrderGate>("level/sign", data);
 };
 
 export const playChallenge = (params: any) => {
-  return post<ChallengeSignOrder>("level/play", params);
+  return post<ChallengeOrderGate>("level/play", params);
 };
 
 export const settleChallenge = (id: number) => {

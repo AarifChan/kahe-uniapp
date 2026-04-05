@@ -23,7 +23,7 @@ defineProps({
       <view class="flex-1">
         <text class="text-20 font-bold text-[#000] block">
           本场共<text class="color-[#FF0000]"
-            >{{ detail?.box.gate }}枚精灵球</text
+            >{{ detail?.box.gate + detail?.box.trap }}枚精灵球</text
           >，有<text class="color-[#FF0000]"
             >{{ detail?.box.trap }}枚是顽皮雷弹</text
           >冒充！！

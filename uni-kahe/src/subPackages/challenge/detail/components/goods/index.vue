@@ -49,8 +49,8 @@
 <script lang="ts" setup>
 import type { ChallengeGoodsItem } from "../../../api";
 import type { PropType } from "vue";
-import { useChallenge } from "../../../index";
-const { getLevelImage } = useChallenge();
+import { getLevelImage } from "../../../index";
+
 import { getTitleByQuality } from "@/utils";
 
 defineProps({

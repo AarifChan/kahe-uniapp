@@ -23,6 +23,7 @@
     "build:app": "uni build -p app",
     "build:app-android": "uni build -p app-android",
     "build:app-ios": "uni build -p app-ios",
+    "build:app-ios-dev": "uni build -p app-ios --mode development",
     "build:custom": "uni build -p",
     "build:h5": "uni build",
     "build:h5-test": "uni build --mode development",

@@ -113,8 +113,8 @@ build_uniapp() {
     
     # 根据模式选择编译命令
     if [ "$BUILD_MODE" = "development" ]; then
-        log_info "执行: yarn build:app-ios --mode development"
-        yarn build:app-ios --mode development
+        log_info "执行: yarn build:app-ios-dev"
+        yarn build:app-ios-dev
     else
         log_info "执行: yarn build:app-ios"
         yarn build:app-ios

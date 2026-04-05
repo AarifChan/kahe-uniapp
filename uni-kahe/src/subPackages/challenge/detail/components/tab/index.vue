@@ -101,7 +101,7 @@ import { ChallengeDetail } from "@/subPackages/challenge/api";
 
 const { didClickMerchant } = useMerchant();
 
-const props = defineProps({
+defineProps({
   currentIndex: {
     default: 0,
     type: Number,

@@ -9,6 +9,9 @@ import {
   ChallengeDetail,
   ChallengeGoodsItem,
   signChallenge,
+  settleChallenge,
+  ChallengeOrderGate,
+  LogListObject,
 } from "./api";
 import type { UIProductPayModel } from "@/model";
 import { hideLoading, showLoading, ShowToast } from "@/utils";
@@ -20,16 +23,30 @@ export function useChallenge() {
   const detail = ref<ChallengeDetail | null>(null);
 
   const rewardList = ref<ChallengeGoodsItem[]>([]);
+
   const payItem = ref({} as UIProductPayModel);
+
+  const logsList = ref<LogListObject[]>([]);
+
+  const currentSign = ref<ChallengeOrderGate | null>(null);
 
   const showPay = ref(false);
 
-  const showSettle = ref(true);
+  const showSettle = ref(false);
+
+  const showResult = ref(false);
+
+  const isOver = ref(false);
+
+  const trapList = ref<number[]>([]);
 
   const logParams = ref({
     page: 1,
     pageSize: 10,
+    gate: -1,
   });
+
+  const hasMore = ref(true);
 
   const getDataList = () => {
     getList({}).then((data) => {
@@ -46,32 +63,109 @@ export function useChallenge() {
     const data = await getDetail(id);
     if (data.code === 200) {
       detail.value = data.data;
-      rewardList.value = detail.value.box.rewards.reverse();
+
+      rewardList.value = [...detail.value.box.rewards].reverse();
+      currentSign.value = data.data?.current ?? null;
     } else {
       detail.value = null;
       rewardList.value = [];
     }
   };
 
-  const getLogRecord = async () => {
+  const getLogRecord = async (isAppend = false) => {
     const boxId = detail.value?.box.id;
     if (!boxId) {
       return;
+    }
+    if (!isAppend) {
+      logParams.value.page = 1;
+      hasMore.value = true;
     }
     const data = await getLog({
       bid: boxId,
       page: logParams.value.page,
       limit: logParams.value.pageSize,
+      gate: logParams.value.gate === -1 ? undefined : logParams.value.gate,
     });
+    if (data.code === 200) {
+      const list = data.data.content ?? [];
+      if (isAppend) {
+        logsList.value.push(...list);
+      } else {
+        logsList.value = list;
+      }
+      hasMore.value = list.length >= logParams.value.pageSize;
+      if (hasMore.value) {
+        logParams.value.page++;
+      }
+    } else {
+      if (!isAppend) {
+        logsList.value = [];
+      }
+      hasMore.value = false;
+    }
     console.log("log:", data);
+  };
+  const handlePlayItem = async (index: number) => {
+    const boxId = currentSign.value?.id;
+
+    if (!boxId) {
+      return;
+    }
+    const res = await playChallenge({
+      id: boxId,
+      pos: index,
+    });
+    if (res.code === 200) {
+      currentSign.value = res.data;
+      if (res.data.status === 3 || res.data.status === 2) {
+        isOver.value = true;
+      }
+      if (res.data.status === 3) {
+        currentSign.value = {
+          ...currentSign.value,
+          gate: 0,
+        };
+      }
+    } else {
+      isOver.value = true;
+      ShowToast(res.msg);
+    }
+  };
+
+  const handleSettleChallenge = async () => {
+    if (isOver.value) {
+      showSettle.value = false;
+      showResult.value = true;
+      return;
+    }
+    const boxId = currentSign.value?.id;
+    if (!boxId) {
+      showSettle.value = false;
+      return;
+    }
+    const res = await settleChallenge(boxId);
+    if (res.code === 200) {
+      showSettle.value = false;
+      isOver.value = true;
+      showResult.value = true;
+    } else {
+      ShowToast(res.msg);
+    }
   };
 
   const handleSubmitChallenge = async () => {
+    if (detail.value?.current) {
+      currentSign.value = detail.value.current;
+      showSettle.value = true;
+      return;
+    }
     const boxId = detail.value?.box.id;
     if (!boxId) {
       return;
     }
     const res = await submitChallenge(boxId);
+
     if (res.code === 200) {
       const data = res.data;
       payItem.value = {
@@ -94,6 +188,8 @@ export function useChallenge() {
         orderId: data.orderId,
       };
       showPay.value = true;
+    } else {
+      ShowToast(res.msg);
     }
   };
 
@@ -105,6 +201,8 @@ export function useChallenge() {
     const res = await signChallenge({
       orderId: orderId,
     });
+    currentSign.value = res.data;
+    isOver.value = false;
     if (res.code === 200) {
       if (res.data.status === 0) {
         showLoading("正在支付");
@@ -117,7 +215,7 @@ export function useChallenge() {
           await ShowToast(wxRes ?? "支付失败", 1500);
         }
       } else {
-        showPay.value = true;
+        showPay.value = false;
         showSettle.value = true;
       }
     } else {
@@ -125,18 +223,22 @@ export function useChallenge() {
     }
   };
 
-  const getLevelImage = (index: number) => {
-    return `https://jms.85gui7.com/tags/level${index}.png`;
-  };
-
   return {
+    isOver,
+    trapList,
+    showResult,
     showPay,
-    getLevelImage,
     dataList,
     rewardList,
     detail,
     payItem,
+    logsList,
+    currentSign,
+    logParams,
+    hasMore,
     showSettle,
+    handleSettleChallenge,
+    handlePlayItem,
     handlePayChallenge,
     getDataList,
     getLogRecord,
@@ -144,3 +246,6 @@ export function useChallenge() {
     getChallengeDetail,
   };
 }
+export const getLevelImage = (index: number) => {
+  return `https://jms.85gui7.com/tags/level${index}.png`;
+};
