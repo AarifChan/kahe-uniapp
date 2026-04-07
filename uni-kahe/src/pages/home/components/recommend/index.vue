@@ -21,7 +21,7 @@
       </view>
       <view class="flex flex-col justify-between">
         <view
-          @tap.stop="handleMatchPage"
+          @tap.stop="handleChallengePage"
           class="w-204 h-105"
           style="
             background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/challenge-item1.png&quot;);
@@ -32,7 +32,7 @@
         ></view>
         <view
           class="w-204 h-105"
-          @tap.stop="handleChallengePage"
+          @tap.stop="handleMatchPage"
           style="
             background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/challenge-item2.png&quot;);
             background-size: 100% 100%;

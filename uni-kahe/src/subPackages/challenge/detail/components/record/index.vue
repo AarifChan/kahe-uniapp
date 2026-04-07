@@ -29,7 +29,7 @@
             :scale="0.6"
             style="margin-left: -16px"
           />
-          <view class="text-28rpx text-[#333]">{{ item.nickName }}</view>
+          <view class="text-28rpx text-[#333]">{{ item.nick }}</view>
         </view>
         <view class="text-20rpx text-[#545454]">{{ item.createTime }}</view>
       </view>
@@ -48,6 +48,11 @@
           </view>
         </view>
       </view>
+      <image
+        class="absolute bottom-16 right-16 w-71 h-50 z-10"
+        :src="getLevelImage(item.gate)"
+        mode="aspectFit"
+      />
     </view>
   </view>
   <empty :show="recordList.length === 0" />
@@ -57,6 +62,7 @@ import DecorateAvatar from "@/components/custom/DecorateAvatar/index.vue";
 import { ref, computed } from "vue";
 import Empty from "@/components/empty/index.vue";
 import { LogListObject } from "@/subPackages/challenge/api";
+import { getLevelImage } from "@/subPackages/challenge";
 
 interface TabItem {
   label: string;

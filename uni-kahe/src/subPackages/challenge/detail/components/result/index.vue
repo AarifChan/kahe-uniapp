@@ -26,7 +26,7 @@
           <view class="relative w-170 h-236"
             ><image
               class="w-170 h-236"
-              :src="currentSign?.goods.goodsDto.image"
+              :src="currentSign?.goods?.goodsDto?.image"
               mode="aspectFit"
             />
             <image
@@ -36,11 +36,9 @@
             />
           </view>
 
-          <text class="text-26 text-[#4D4643]"
-            >{{ currentSign?.goods.goodsDto.name }}X{{
-              currentSign?.goods.num
-            }}</text
-          >
+          <text class="text-26 text-[#4D4643]">{{
+            currentSign?.goods?.goodsDto?.name
+          }}</text>
         </view>
         <view class="w-full p-64 flex flex-row justify-center justify-between">
           <view

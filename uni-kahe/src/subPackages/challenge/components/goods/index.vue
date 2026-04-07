@@ -11,6 +11,10 @@
     <view class="w-full aspect-[1/1] overflow-hidden flex-center p-8">
       <view class="relative w-full h-full flex-center">
         <image class="h-full" :src="item.logo" mode="heightFix" />
+        <text
+          class="absolute bottom-8 right-8 bg-[#FFAB3F] px-24 py-4 border-rounded-[8rpx] text-white text-30"
+          >{{ item.tplName }}</text
+        >
       </view>
 
       <view class="absolute left-10 bottom-12 z-2 flex flex-col">

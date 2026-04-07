@@ -131,6 +131,30 @@ export default defineConfig({
     // z-index
     [/^z-(\d+)$/, ([_, num]) => ({ "z-index": Number(num) })],
 
+    // flex 布局
+    ["flex-wrap", { "flex-wrap": "wrap" }],
+    ["flex-nowrap", { "flex-wrap": "nowrap" }],
+    ["flex-1", { flex: "1 1 0%" }],
+    ["flex-auto", { flex: "1 1 auto" }],
+    ["flex-none", { flex: "none" }],
+    [
+      /^flex-(row|col|column)$/,
+      ([_, dir]) => ({ "flex-direction": dir === "col" ? "column" : dir }),
+    ],
+
+    // grid 布局
+    [
+      /^grid-cols-(\d+)$/,
+      ([_, num]) => ({
+        "grid-template-columns": `repeat(${num}, minmax(0, 1fr))`,
+      }),
+    ],
+    [/^col-span-(\d+)$/, ([_, num]) => ({ "grid-column": `span ${num} / span ${num}` })],
+    [
+      /^row-span-(\d+)$/,
+      ([_, num]) => ({ "grid-row": `span ${num} / span ${num}` }),
+    ],
+
     // 透明度
     [/^opacity-(\d+)$/, ([_, num]) => ({ opacity: Number(num) / 100 })],
 

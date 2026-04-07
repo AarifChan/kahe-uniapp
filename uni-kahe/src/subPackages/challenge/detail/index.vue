@@ -19,6 +19,7 @@
               :item="item"
               :index="rewardList.length - index - 1"
               :id="item.goodsDto.id"
+              @click="onGoodsClick(item, index)"
             />
           </view>
         </template>
@@ -38,7 +39,7 @@
       v-model:show="showPay"
       :goods="payItem"
       @did-tap-pay="handlePayChallenge"
-      :merchant="detail?.box.merchant"
+      :merchant="detail?.box?.merchant"
     />
     <settle
       v-model:show="showSettle"
@@ -58,6 +59,11 @@
       v-model:show="showSmash"
       :recycle-goods="recycleGoods"
       @did-tap-smash="handleSmashConfirm"
+    />
+    <goods-detail
+      v-model:show="showGoodsDetail"
+      :goods="selectedGoods"
+      :level="selectedGoodsLevel"
     />
 
     <common-modal
@@ -85,7 +91,9 @@ import { onShow } from "@dcloudio/uni-app";
 import { UserModule } from "@/store/modules/user";
 import { eventBus } from "@/utils/event";
 import Smash from "../components/smash/index.vue";
+import GoodsDetail from "../components/detail/index.vue";
 import type { SubmitGoodsModel } from "@/model";
+import type { ChallengeGoodsItem } from "@/subPackages/challenge/api";
 import {
   userGoodsDeleteRequest,
   userGoodsRecycleConfirmRequest,
@@ -98,6 +106,18 @@ const { modalShow, modalTitle, modalContent, showModalType } = useModal();
 const showSmash = ref(false);
 const recycleGoods = ref<SubmitGoodsModel[]>([]);
 const smashOrderId = ref<string>("");
+
+// 商品详情弹窗状态
+const showGoodsDetail = ref(false);
+const selectedGoods = ref<ChallengeGoodsItem | null>(null);
+const selectedGoodsLevel = ref(0);
+
+// 点击商品显示详情
+const onGoodsClick = (item: ChallengeGoodsItem, index: number) => {
+  selectedGoods.value = item;
+  selectedGoodsLevel.value = rewardList.value.length - index - 1;
+  showGoodsDetail.value = true;
+};
 
 // 打开 Smash 弹窗
 const openSmash = async () => {

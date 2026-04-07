@@ -97,6 +97,7 @@ import { UserModule } from "@/store/modules/user";
 import { ShowToast } from "@/utils";
 import { showInGroupImage } from "@/utils/tools";
 import { shareWeixinMiniProgramCard } from "@/composables/share";
+import { ChallengeDetail } from "@/subPackages/challenge/api";
 
 const { checkIsFavorite, handleFavoriteAction } = useFavorite();
 
@@ -136,8 +137,8 @@ export interface ActionItem {
 
 const props = defineProps({
   product: {
-    default: {} as UIProductDetailModel,
-    type: Object as PropType<UIProductDetailModel>,
+    default: {} as ChallengeDetail,
+    type: Object as PropType<ChallengeDetail>,
   },
   unReadCount: {
     default: 0,
@@ -147,7 +148,7 @@ const props = defineProps({
 
 const handleAction = async (item: ActionItem) => {
   if (item.action === 2) {
-    let pid = props.product.pid;
+    let pid = props.product.box.id;
     if (pid) {
       await handleFavoriteAction(pid);
     }
@@ -184,16 +185,16 @@ const handleClickContact = () => {
 };
 
 const handleShare = () => {
-  const pid = props.product?.pid;
-  if (!pid) {
+  const id = props.product?.box.id;
+  if (!id) {
     ShowToast("商品信息异常，暂无法分享");
     return;
   }
-  const sharePath = `/subPackages/product/detail/index?pid=${pid}`;
+  const sharePath = `/subPackages/challenge/detail/index?id=${id}`;
   shareWeixinMiniProgramCard({
-    title: `【${props.product?.title}】这个箱子快出货了，速来！`,
+    title: `【${props.product?.box.name}】这个箱子快出货了，速来！`,
     imageUrl:
-      props.product?.image ||
+      props.product?.box?.logo ||
       "https://jms.85gui7.com/kahe-202510/common/share.jpg",
     path: sharePath,
   });
@@ -204,7 +205,7 @@ const emits = defineEmits(["didTapReload"]);
 watch(
   () => props.product,
   (newVal) => {
-    let pId = newVal.pid;
+    let pId = newVal.box?.id;
     if (pId) {
       checkIsFavorite(pId);
     }

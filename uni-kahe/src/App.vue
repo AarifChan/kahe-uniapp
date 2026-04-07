@@ -102,4 +102,22 @@ scroll-view {
   font-family: "SimHei";
   src: url("https://jms.85gui7.com/font/SimHei.ttf");
 }
+
+/* 全局动画定义 - 挑战游戏摇晃动画 */
+@keyframes shake-box {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+.box-shake {
+  animation: shake-box 0.5s ease-in-out;
+}
 </style>

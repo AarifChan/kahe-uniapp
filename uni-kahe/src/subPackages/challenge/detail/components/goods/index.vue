@@ -1,5 +1,5 @@
 <template>
-  <view class="inline-block relative">
+  <view class="inline-block relative" @tap.stop="$emit('click')">
     <view
       class="relative w-200rpx h-200rpx bg-[rgba(253,239,204,0.72)] rounded-10rpx border-5rpx border-solid border-[#fcd570] goodsBox-top"
     >
@@ -8,7 +8,7 @@
       >
         <image
           class="w-[calc(100%-24rpx)] h-[calc(100%-24rpx)]"
-          :src="item?.goodsDto.image"
+          :src="item?.goodsDto?.image"
           mode="heightFix"
         />
       </view>
@@ -24,22 +24,22 @@
         >{{ getTitleByQuality(item.quality) }}</view
       >
       <image
-        class="absolute top-0 lef-4 w-71 h-50 z-10"
+        class="absolute top-0 left-4 w-71 h-50 z-10"
         :src="getLevelImage(index)"
         mode="aspectFit"
       />
     </view>
     <view class="mt-8rpx flex flex-col">
       <view class="w-200rpx text-black text-10px text-flow-ellipsis-single">{{
-        item?.goodsDto.name
+        item?.goodsDto?.name
       }}</view>
       <view>
         <view class="text-[#909090] text-9px"
-          >参考价: {{ item?.goodsDto.salePrice }}</view
+          >参考价: {{ item?.goodsDto?.salePrice }}</view
         >
 
         <view class="text-[#55d8b0] text-9px">
-          {{ !item.prob ? `参与商品` : `获得概率${item.prob}%` }}
+          {{ !item.prob ? `参与商品` : `获得概率${(Number(item.prob) * 100).toFixed(0)}%` }}
         </view>
       </view>
     </view>
@@ -63,6 +63,8 @@ defineProps({
     type: Number,
   },
 });
+
+defineEmits(["click"]);
 </script>
 
 <style scoped>

@@ -21,6 +21,7 @@ export interface ChallengeBox {
   name: string;
   payType: number;
   price: number;
+  tplName: string;
   rewards: ChallengeGoodsItem[];
 }
 

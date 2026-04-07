@@ -6,7 +6,10 @@
     @close="emits('update:show', false)"
   >
     <view class="smash">
-      <image class="smash-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/common/smash-bg.png" />
+      <image
+        class="smash-bg"
+        src="https://jms.85gui7.com/kahe-202510/ka-he/common/smash-bg.png"
+      />
       <view class="smash-content">
         <view class="smash-content-top">
           <text class="smash-content-top-title">退货</text>
@@ -15,7 +18,7 @@
           <text class="smash-content-top-value">{{
             totalPrice.toFixed(2)
           }}</text>
-          <text class="smash-content-top-title">点券</text>
+          <text class="smash-content-top-title">无门槛券</text>
         </view>
         <scroll-view
           class="smash-content-list"

@@ -29,7 +29,9 @@
           <text class="text-[32rpx] font-400 text-[#4b71ff] ml-[8rpx]">{{
             totalPrice.toFixed(2)
           }}</text>
-          <text class="text-[32rpx] font-400 text-black ml-[8rpx]">点券</text>
+          <text class="text-[32rpx] font-400 text-black ml-[8rpx]"
+            >无门槛券</text
+          >
         </view>
 
         <!-- 商品列表 -->

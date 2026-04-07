@@ -94,7 +94,6 @@
 </template>
 
 <script setup lang="ts">
-import { type UIProductDetailModel } from "@/model";
 import { PropType } from "vue";
 import { useMerchant } from "@/pages/merchant";
 import { ChallengeDetail } from "@/subPackages/challenge/api";
