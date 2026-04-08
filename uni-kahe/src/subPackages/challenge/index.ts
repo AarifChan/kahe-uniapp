@@ -12,6 +12,8 @@ import {
   settleChallenge,
   ChallengeOrderGate,
   LogListObject,
+  homeChallenge,
+  BarrageItem,
 } from "./api";
 import type { UIProductPayModel } from "@/model";
 import { hideLoading, showLoading, ShowToast } from "@/utils";
@@ -19,6 +21,8 @@ import { UserModule } from "@/store/modules/user";
 
 export function useChallenge() {
   const dataList = ref<ChallengeBox[]>([]);
+
+  const barrageList = ref<BarrageItem[]>([]);
 
   const detail = ref<ChallengeDetail | null>(null);
 
@@ -57,6 +61,14 @@ export function useChallenge() {
         dataList.value = [];
       }
     });
+  };
+
+  const getHomeData = async () => {
+    const res = await homeChallenge();
+    if (res.code === 200) {
+      barrageList.value = res.data.barrageList || [];
+      dataList.value = res.data.boxList?.content || [];
+    }
   };
 
   const getChallengeDetail = async (id: number) => {
@@ -229,6 +241,7 @@ export function useChallenge() {
     showResult,
     showPay,
     dataList,
+    barrageList,
     rewardList,
     detail,
     payItem,
@@ -241,6 +254,7 @@ export function useChallenge() {
     handlePlayItem,
     handlePayChallenge,
     getDataList,
+    getHomeData,
     getLogRecord,
     handleSubmitChallenge,
     getChallengeDetail,

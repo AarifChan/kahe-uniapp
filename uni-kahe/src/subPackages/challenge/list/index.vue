@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import Goods from "../components/goods/index.vue";
+import Lamb from "../components/lamb/index.vue";
 import { useChallenge } from "../index";
 import { onMounted } from "vue";
 import { ChallengeBox, ChallengeGoodsItem } from "../api";
-const { dataList, getDataList } = useChallenge();
+const { dataList, barrageList, getHomeData } = useChallenge();
 onMounted(() => {
-  getDataList();
+  getHomeData();
 });
 const handleClickItem = (item: ChallengeBox) => {
   uni.navigateTo({
@@ -25,6 +26,7 @@ const handleClickItem = (item: ChallengeBox) => {
         background-repeat: no-repeat;
       "
     >
+      <Lamb :barrage-list="barrageList" />
       <view class="absolute top-188 left-370 flex-1">
         <view
           class="text-20 text-[#333] font-bold font-price text-ellipsis"

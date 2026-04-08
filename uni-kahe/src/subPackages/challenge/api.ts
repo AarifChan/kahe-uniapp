@@ -60,6 +60,24 @@ export interface LogListObject {
   vip: number;
 }
 
+export interface BarrageItem {
+  avatar: string;
+  context: string;
+  createTime: string;
+  id: number;
+  nickname: string;
+  source: string;
+  sourceEx: string;
+  type: number;
+  uid: number;
+  updateTime: string;
+}
+
+export interface HomeChallengeResult {
+  barrageList: BarrageItem[];
+  boxList: ListObject<ChallengeBox>;
+}
+
 export interface ChallengeSubmit {
   channel: string;
   couponId: number;
@@ -100,4 +118,8 @@ export const playChallenge = (params: any) => {
 
 export const settleChallenge = (id: number) => {
   return post("level/settle", { id });
+};
+
+export const homeChallenge = (params?: any) => {
+  return get<HomeChallengeResult>("level/home", params);
 };
