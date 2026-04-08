@@ -76,6 +76,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, onUnmounted } from "vue";
+import { onShareAppMessage } from "@dcloudio/uni-app";
 import CommonTab from "./components/tab/index.vue";
 import Bottom from "./components/bottom/index.vue";
 import Center from "./components/center/index.vue";
@@ -297,6 +298,20 @@ const tapShowModel = (value: number) => {
     });
   }
 };
+
+// 小程序分享
+// #ifdef MP-WEIXIN
+onShareAppMessage(() => {
+  const id = detailId.value;
+  const boxName = detail.value?.box?.name || "闯关挑战";
+  const logo = detail.value?.box?.logo || "https://jms.85gui7.com/kahe-202510/common/share.jpg";
+  return {
+    title: `【${boxName}】这个箱子快出货了，速来！`,
+    path: `/subPackages/challenge/detail/index?id=${id}`,
+    imageUrl: logo,
+  };
+});
+// #endif
 </script>
 
 <style scoped lang="scss">

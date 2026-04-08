@@ -103,6 +103,6 @@ export function shareWeixinMiniProgramCard(
   // #endif
 
   // #ifndef APP-PLUS
-  ShowToast("请在APP内使用微信分享");
+  console.log("[Share][Weixin] 非APP环境，请使用平台原生分享");
   // #endif
 }
