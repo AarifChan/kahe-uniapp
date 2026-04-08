@@ -52,15 +52,46 @@ export function useChallenge() {
 
   const hasMore = ref(true);
 
-  const getDataList = () => {
-    getList({}).then((data) => {
-      console.log("data:", data.data.content);
-      if (data.code === 200) {
-        dataList.value = data.data.content;
+  const listParams = ref({
+    page: 1,
+    limit: 10,
+  });
+
+  const getDataList = async (isAppend = false) => {
+    if (!isAppend) {
+      listParams.value.page = 1;
+      hasMore.value = true;
+    }
+    const data = await getList({
+      page: listParams.value.page,
+      limit: listParams.value.limit,
+    });
+    if (data.code === 200) {
+      const list = data.data.content ?? [];
+      if (isAppend) {
+        dataList.value.push(...list);
       } else {
+        dataList.value = list;
+      }
+      hasMore.value = list.length >= listParams.value.limit;
+      if (hasMore.value) {
+        listParams.value.page++;
+      }
+    } else {
+      if (!isAppend) {
         dataList.value = [];
       }
-    });
+      hasMore.value = false;
+    }
+  };
+
+  const refreshList = () => {
+    return getDataList(false);
+  };
+
+  const loadMoreList = () => {
+    if (!hasMore.value) return Promise.resolve();
+    return getDataList(true);
   };
 
   const getHomeData = async () => {
@@ -161,6 +192,9 @@ export function useChallenge() {
       showSettle.value = false;
       isOver.value = true;
       showResult.value = true;
+
+      getChallengeDetail(detail.value?.box.id);
+      getLogRecord();
     } else {
       ShowToast(res.msg);
     }
@@ -249,11 +283,14 @@ export function useChallenge() {
     currentSign,
     logParams,
     hasMore,
+    listParams,
     showSettle,
     handleSettleChallenge,
     handlePlayItem,
     handlePayChallenge,
     getDataList,
+    refreshList,
+    loadMoreList,
     getHomeData,
     getLogRecord,
     handleSubmitChallenge,
