@@ -21,7 +21,7 @@
           background-position: center;
           background-repeat: no-repeat;
         "
-        >{{ getTitleByQuality(item.quality) }}</view
+        >{{ getTitleByQuality(item.goodsDto.quality) }}</view
       >
       <image
         class="absolute top-0 left-4 w-71 h-50 z-10"
@@ -39,7 +39,11 @@
         >
 
         <view class="text-[#55d8b0] text-9px">
-          {{ !item.prob ? `参与商品` : `获得概率${(Number(item.prob) * 100).toFixed(0)}%` }}
+          {{
+            !item.prob
+              ? `参与商品`
+              : `获得概率${(Number(item.prob) * 100).toFixed(0)}%`
+          }}
         </view>
       </view>
     </view>

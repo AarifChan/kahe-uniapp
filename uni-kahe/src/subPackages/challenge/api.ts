@@ -117,7 +117,7 @@ export const playChallenge = (params: any) => {
 };
 
 export const settleChallenge = (id: number) => {
-  return post("level/settle", { id });
+  return post<ChallengeOrderGate>("level/settle", { id });
 };
 
 export const homeChallenge = (params?: any) => {

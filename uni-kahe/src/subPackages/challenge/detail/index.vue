@@ -19,7 +19,7 @@
               :item="item"
               :index="rewardList.length - index - 1"
               :id="item.goodsDto.id"
-              @click="onGoodsClick(item, index)"
+              @click="onGoodsClick(item)"
             />
           </view>
         </template>
@@ -48,6 +48,7 @@
       @did-tap-item="handlePlayItem"
       @did-tap-finish="handleSettleChallenge"
       :current-sign="currentSign"
+      @tapItemDetail="onGoodsClick"
     />
     <result
       v-model:show="showResult"
@@ -114,9 +115,9 @@ const selectedGoods = ref<ChallengeGoodsItem | null>(null);
 const selectedGoodsLevel = ref(0);
 
 // 点击商品显示详情
-const onGoodsClick = (item: ChallengeGoodsItem, index: number) => {
+const onGoodsClick = (item: ChallengeGoodsItem) => {
   selectedGoods.value = item;
-  selectedGoodsLevel.value = rewardList.value.length - index - 1;
+  // selectedGoodsLevel.value = rewardList.value.length - index - 1;
   showGoodsDetail.value = true;
 };
 
@@ -189,6 +190,7 @@ const {
   payItem,
   showResult,
   showSettle,
+  resultSign,
   currentSign,
   rewardList,
   logsList,
@@ -304,7 +306,9 @@ const tapShowModel = (value: number) => {
 onShareAppMessage(() => {
   const id = detailId.value;
   const boxName = detail.value?.box?.name || "闯关挑战";
-  const logo = detail.value?.box?.logo || "https://jms.85gui7.com/kahe-202510/common/share.jpg";
+  const logo =
+    detail.value?.box?.logo ||
+    "https://jms.85gui7.com/kahe-202510/common/share.jpg";
   return {
     title: `【${boxName}】这个箱子快出货了，速来！`,
     path: `/subPackages/challenge/detail/index?id=${id}`,

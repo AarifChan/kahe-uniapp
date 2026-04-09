@@ -38,10 +38,27 @@ watch(
   }
 );
 
-const emits = defineEmits(["update:show", "didTapFinish", "didTapItem"]);
+const emits = defineEmits([
+  "update:show",
+  "didTapFinish",
+  "didTapItem",
+  "tapItemDetail",
+]);
 
 const tapFinish = () => {
   emits("didTapFinish");
+};
+
+// 处理 box 点击事件
+const handleBoxTap = (index: number) => {
+  const map = props.currentSign?.map;
+  const status = map?.[index] ?? 0;
+  // 1=已打开且有奖励，-1=陷阱，0=未打开
+  // 已经开过的 box 不做任何操作
+  if (status === 1 || status === -1) {
+    return;
+  }
+  emits("didTapItem", index);
 };
 
 // 计算已获得的奖励数量（map 中值为 1 的数量）
@@ -116,12 +133,15 @@ const getBoxImage = (index: number) => {
                 :key="index"
                 class="inline-block mr-16"
                 style="transform: scale(0.85)"
+                @tap.stop="emits('tapItemDetail', item)"
               >
                 <view
                   class="w-180 h-250 rounded-16 overflow-hidden border-10rpx border-[#FCD570]"
                   :style="{
                     borderColor:
-                      (currentSign.gate ?? 0) === index ? `#FF7A51` : `#FCD570`,
+                      (currentSign?.gate ?? 0) === index
+                        ? `#FF7A51`
+                        : `#FCD570`,
                   }"
                 >
                   <image
@@ -136,14 +156,14 @@ const getBoxImage = (index: number) => {
                       mode="aspectFit"
                     />
                     <view
-                      class="absolute right-4 bottom-4 px-12 py-8 text-[#222] text-20rpx"
+                      class="absolute right-4 bottom-4 px-12 py-8 text-[#222] text-20rpx z-10"
                       style="
                         background-image: url(&quot;https://jms.85gui7.com/kahe-202510/ka-he/common/num_bg.png&quot;);
                         background-size: 100% 100%;
                         background-position: center;
                         background-repeat: no-repeat;
                       "
-                      >{{ getTitleByQuality(item.quality) }}</view
+                      >{{ getTitleByQuality(item.goodsDto.quality) }}</view
                     >
                   </view>
                   <view
@@ -159,7 +179,7 @@ const getBoxImage = (index: number) => {
                       class="text-26 font-other text-[#8B4513]"
                       :style="{
                         color:
-                          (currentSign.gate ?? 0) === index
+                          (currentSign?.gate ?? 0) === index
                             ? `#FFFFFF`
                             : `#8B4513`,
                       }"
@@ -221,7 +241,7 @@ const getBoxImage = (index: number) => {
             :key="index"
             :id="index"
             class="flex items-center justify-center"
-            @tap.stop="emits('didTapItem', index)"
+            @tap.stop="handleBoxTap(index)"
           >
             <image
               class="w-140 h-178"

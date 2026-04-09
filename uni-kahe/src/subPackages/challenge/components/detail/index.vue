@@ -52,14 +52,13 @@
 
         <!-- 品质标签 -->
         <view
-          v-if="goods?.quality"
           class="mt-[20rpx] px-[24rpx] py-[8rpx] text-[24rpx] text-[#222]"
           style="
             background-image: url(&quot;https://jms.85gui7.com/kahe-202510/ka-he/common/num_bg.png&quot;);
             background-size: 100% 100%;
           "
         >
-          {{ getTitleByQuality(goods.quality) }}
+          {{ getTitleByQuality(goods.goodsDto.quality) }}
         </view>
 
         <!-- 商品名称 -->
@@ -69,12 +68,12 @@
         >
 
         <!-- 参考价 -->
-        <view class="flex flex-row w-400 justify-between">
-          <text class="mt-[12rpx] text-[26rpx] text-[#000000] font-theme"
-            >入库编码： ¥{{ goods?.goodsDto?.salePrice }}</text
+        <view class="flex flex-row justify-around w-full mt-32">
+          <text class="text-[26rpx] text-[#000000] font-theme">
+            参考价 ：¥{{ goods?.goodsDto?.salePrice }}</text
           >
-          <text class="mt-[12rpx] text-[26rpx] text-[#000000] font-theme"
-            >KH： ¥{{ goods?.goodsDto?.price }}</text
+          <text class="text-[26rpx] text-[#000000] font-theme"
+            >入库编码： KH¥{{ goods?.goodsDto?.price }}</text
           >
         </view>
       </view>

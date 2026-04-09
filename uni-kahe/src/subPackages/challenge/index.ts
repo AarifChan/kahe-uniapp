@@ -34,6 +34,8 @@ export function useChallenge() {
 
   const currentSign = ref<ChallengeOrderGate | null>(null);
 
+  const resultSign = ref<ChallengeOrderGate | null>(null);
+
   const showPay = ref(false);
 
   const showSettle = ref(false);
@@ -108,7 +110,6 @@ export function useChallenge() {
       detail.value = data.data;
 
       rewardList.value = [...detail.value.box.rewards].reverse();
-      currentSign.value = data.data?.current ?? null;
     } else {
       detail.value = null;
       rewardList.value = [];
@@ -159,8 +160,10 @@ export function useChallenge() {
       id: boxId,
       pos: index,
     });
+
     if (res.code === 200) {
       currentSign.value = res.data;
+
       if (res.data.status === 3 || res.data.status === 2) {
         isOver.value = true;
       }
@@ -174,6 +177,8 @@ export function useChallenge() {
       isOver.value = true;
       ShowToast(res.msg);
     }
+    resultSign.value = res.data;
+    console.log("result:", resultSign.value);
   };
 
   const handleSettleChallenge = async () => {
@@ -188,13 +193,15 @@ export function useChallenge() {
       return;
     }
     const res = await settleChallenge(boxId);
+    console.info("result:", res);
     if (res.code === 200) {
+      resultSign.value = res.data;
+
       showSettle.value = false;
       isOver.value = true;
       showResult.value = true;
 
-      getChallengeDetail(detail.value?.box.id);
-      getLogRecord();
+      // getLogRecord();
     } else {
       ShowToast(res.msg);
     }
@@ -281,6 +288,7 @@ export function useChallenge() {
     payItem,
     logsList,
     currentSign,
+    resultSign,
     logParams,
     hasMore,
     listParams,
