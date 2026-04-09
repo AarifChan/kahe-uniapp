@@ -12,7 +12,7 @@
       "@/*": ["./src/*"]
     },
     "lib": ["esnext", "dom"],
-    "types": ["@dcloudio/types","@tuniao/tnui-vue3-uniapp/global.d.ts"],
+    "types": ["@dcloudio/types"],
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -22,8 +22,7 @@
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": true,
-    "resolveJsonModule": true,
-
+    "resolveJsonModule": true
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": ["node_modules", "unpackage", "src/**/*.nvue"]
