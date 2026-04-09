@@ -18,5 +18,14 @@ export default defineConfig(async () => {
         "@": resolve(__dirname, "src"),
       },
     },
+    server: {
+      hmr: {
+        overlay: true,
+      },
+      watch: {
+        usePolling: true,
+        interval: 1000,
+      },
+    },
   };
 });
