@@ -25,3 +25,6 @@ dist
 *.js.map
 src/**/*.js
 src/*.js
+
+# Backup files
+*.backup.v3
