@@ -2,13 +2,23 @@
   <view>
     <view class="flex flex-row justify-around w-full pt-16">
       <view class="w-509 h-220 relative">
-        <item
+        <swiper
           v-if="groupList.length > 0"
-          :item="groupList[0]"
-          @tap.stop="handleClickItem(groupList[0])"
-        />
+          class="w-509 h-220"
+          circular
+          :indicator-dots="false"
+          :autoplay="true"
+        >
+          <swiper-item
+            v-for="(item, index) in groupList"
+            :key="index"
+            @tap.stop="handleClickItem(item)"
+          >
+            <item :item="item" />
+          </swiper-item>
+        </swiper>
         <view
-          class="w-94 h-33 line-height-none text-center absolute top-0 right-4 font-theme"
+          class="w-94 h-33 line-height-none text-center absolute top-0 right-4 font-theme z-10"
           @tap.stop="handleGroupBuyPage"
           style="
             background: linear-gradient(0deg, #ffeec5);

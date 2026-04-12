@@ -95,7 +95,7 @@ import { eventBus } from "@/utils/event";
 import Smash from "../components/smash/index.vue";
 import GoodsDetail from "../components/detail/index.vue";
 import type { SubmitGoodsModel } from "@/model";
-import type { ChallengeGoodsItem } from "@/subPackages/challenge/api";
+import { ChallengeGoodsItem, getDetail } from "@/subPackages/challenge/api";
 import {
   userGoodsDeleteRequest,
   userGoodsRecycleConfirmRequest,
@@ -215,9 +215,10 @@ const loadPageData = async () => {
   });
 };
 
-const handleAgain = () => {
+const handleAgain = async () => {
   showResult.value = false;
-  handleSubmitChallenge();
+  await getChallengeDetail(detailId.value);
+  await handleSubmitChallenge();
 };
 
 // 检查登录状态

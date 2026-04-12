@@ -78,7 +78,7 @@ const hasStarted = computed(() => {
 });
 
 const totalGate = computed(() => {
-  return props.detail?.box.gate + props.detail?.box.trap;
+  return (props.detail?.box?.gate ?? 0) + (props.detail?.box?.trap ?? 0);
 });
 
 // 状态由 level/play 接口返回的 map 字段控制
@@ -94,6 +94,15 @@ const getBoxImage = (index: number) => {
     return "https://jms.85gui7.com/kahe-202510/challenge/box-state2.png";
   }
   return "https://jms.85gui7.com/kahe-202510/challenge/box-state1.png";
+};
+
+const getRewardImageStyle = (image?: string) => {
+  return {
+    backgroundImage: image ? `url(${image})` : "none",
+    backgroundSize: "contain",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+  };
 };
 </script>
 
@@ -131,12 +140,12 @@ const getBoxImage = (index: number) => {
               <view
                 v-for="(item, index) in detail?.box?.rewards"
                 :key="index"
+                :id="index"
                 class="inline-block mr-16"
-                style="transform: scale(0.85)"
                 @tap.stop="emits('tapItemDetail', item)"
               >
                 <view
-                  class="w-180 h-250 rounded-16 overflow-hidden border-10rpx border-[#FCD570]"
+                  class="w-180 h-250 rounded-16 overflow-hidden border-10 border-[#FCD570] relative"
                   :style="{
                     borderColor:
                       (currentSign?.gate ?? 0) === index
@@ -144,30 +153,15 @@ const getBoxImage = (index: number) => {
                         : `#FCD570`,
                   }"
                 >
-                  <image
-                    class="absolute top-0 lef-4 w-71 h-50 z-10"
-                    :src="getLevelImage(index)"
-                    mode="aspectFit"
-                  />
-                  <view class="relative p-12">
-                    <image
-                      :src="item.goodsDto?.image"
-                      class="w-146 h-146 rounded-12"
-                      mode="aspectFit"
-                    />
+                  <view class="relative w-170 h-170">
                     <view
-                      class="absolute right-4 bottom-4 px-12 py-8 text-[#222] text-20rpx z-10"
-                      style="
-                        background-image: url(&quot;https://jms.85gui7.com/kahe-202510/ka-he/common/num_bg.png&quot;);
-                        background-size: 100% 100%;
-                        background-position: center;
-                        background-repeat: no-repeat;
-                      "
-                      >{{ getTitleByQuality(item.goodsDto.quality) }}</view
-                    >
+                      class="absolute left-12 top-12 w-146 h-146 rounded-12"
+                      :style="getRewardImageStyle(item.goodsDto?.image)"
+                    />
                   </view>
+
                   <view
-                    class="h-60 flex-center bg-[#FCD570]"
+                    class="h-70 flex-center bg-[#FCD570] w-full"
                     :style="{
                       backgroundColor:
                         (currentSign?.gate ?? 0) === index
@@ -176,7 +170,7 @@ const getBoxImage = (index: number) => {
                     }"
                   >
                     <text
-                      class="text-26 font-other text-[#8B4513]"
+                      class="text-26 font-other text-[#8B4513] line-height-60"
                       :style="{
                         color:
                           (currentSign?.gate ?? 0) === index
@@ -187,12 +181,24 @@ const getBoxImage = (index: number) => {
                       {{ index === 0 ? "参与赏品" : `第${index}关商品` }}
                     </text>
                   </view>
+
+                  <image
+                    class="absolute top-0 left-4 w-71 h-50 z-20"
+                    :src="getLevelImage(index)"
+                    mode="aspectFit"
+                  />
+
+                  <view class="reward-card-quality">
+                    <text class="reward-card-quality-text">
+                      {{ getTitleByQuality(item.goodsDto.quality) }}
+                    </text>
+                  </view>
                 </view>
               </view>
             </scroll-view>
           </view>
           <view
-            class="flex flex-row items-center mt-[-28rpx]"
+            class="flex flex-row items-center mt-16"
             v-if="currentState === 3"
           >
             <image
@@ -206,7 +212,7 @@ const getBoxImage = (index: number) => {
               <text>也现身了，您只能带走参与赏品!</text>
             </view>
           </view>
-          <view class="flex flex-row items-center mt-[-28rpx] px-16" v-else>
+          <view class="flex flex-row items-center mt-16 px-16" v-else>
             <image
               v-if="hasStarted"
               class="w-185 h-150"
@@ -263,4 +269,26 @@ const getBoxImage = (index: number) => {
   </tn-popup>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.reward-card-quality {
+  position: absolute;
+  right: 4rpx;
+  bottom: 64rpx;
+  width: 96rpx;
+  height: 42rpx;
+  background-image: url("https://jms.85gui7.com/kahe-202510/ka-he/common/num_bg.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.reward-card-quality-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20rpx;
+  color: #222222;
+}
+</style>

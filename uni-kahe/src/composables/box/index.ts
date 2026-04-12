@@ -241,10 +241,11 @@ export function useBox() {
         });
       }
       total.value = res.data.totalElements;
-        // 注意：这里是商户展开后的箱子列表，不应覆盖页面主列表的 total，
-      // 否则会导致 handleScrollToLower 的分页判断失效。
+      // boxList.value = tmp
+      total.value = res.data.totalElements;
       return tmp;
     } else {
+      total.value = 0;
       return [];
     }
   };
@@ -472,33 +473,18 @@ export function useBox() {
   const currentIndex = ref(AppModule.boxTabIndex);
   const handleScrollToLower = async () => {
     if (currentIndex.value === 0) {
-      console.log(
-        "handleScrollToLower",
-        total.value,
-        params.value.page,
-        params.value.limit,
-        currentExpand.value
-      );
-      const hasNextPage = total.value > params.value.page * params.value.limit;
-      if (!hasNextPage) {
-        return;
+      console.log("handleScrollToLower", total.value, params.value.page, params.value.limit, currentExpand.value);
+      if (total.value > params.value.page * params.value.limit) {
+        params.value.page++;
+        if (currentExpand.value !== -1) {
+          /// 
+          let list = mineMerchantList.value[currentExpand.value].box;
+          mineMerchantList.value[currentExpand.value].box = [...list, ...await loadMerchantBoxList(mineMerchantList.value[currentExpand.value].id)];
+        }else{
+          await loadData(0);
+        }
+     
       }
-
-      params.value.page++;
-
-      if (currentExpand.value === -1) {
-        await loadData(0);
-        return;
-      }
-
-      const currentMerchant = mineMerchantList.value[currentExpand.value];
-      if (!currentMerchant) {
-        return;
-      }
-
-      const currentBoxList = currentMerchant.box ?? [];
-      const nextBoxList = await loadMerchantBoxList(currentMerchant.id);
-      currentMerchant.box = [...currentBoxList, ...nextBoxList];
     } else if (currentIndex.value === 1) {
       if (total.value > params.value.page * params.value.limit) {
         params.value.page++;

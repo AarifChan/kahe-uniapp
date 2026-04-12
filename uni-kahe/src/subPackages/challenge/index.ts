@@ -201,7 +201,7 @@ export function useChallenge() {
       isOver.value = true;
       showResult.value = true;
 
-      // getLogRecord();
+      getLogRecord();
     } else {
       ShowToast(res.msg);
     }

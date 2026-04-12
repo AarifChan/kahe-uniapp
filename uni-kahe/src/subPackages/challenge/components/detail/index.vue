@@ -26,11 +26,6 @@
         class="relative w-full h-full flex flex-col items-center pt-[60rpx] px-[40rpx]"
       >
         <!-- 等级标签 -->
-        <image
-          class="absolute top-[20rpx] left-[20rpx] w-[80rpx] h-[56rpx]"
-          :src="getLevelImage(level)"
-          mode="aspectFit"
-        />
 
         <!-- 关闭按钮 -->
         <image
@@ -41,11 +36,16 @@
 
         <!-- 商品图片 -->
         <view
-          class="w-[300rpx] h-[300rpx] mt-[40rpx] rounded-[16rpx] flex items-center justify-center"
+          class="w-[300rpx] h-[300rpx] mt-[40rpx] relative rounded-[16rpx] flex items-center justify-center"
         >
           <image
             class="w-[260rpx] h-[260rpx]"
             :src="goods?.goodsDto?.image"
+            mode="aspectFit"
+          />
+          <image
+            class="absolute top-0 left-0 w-80 h-56"
+            :src="getLevelImage(level)"
             mode="aspectFit"
           />
         </view>
@@ -70,10 +70,10 @@
         <!-- 参考价 -->
         <view class="flex flex-row justify-around w-full mt-32">
           <text class="text-[26rpx] text-[#000000] font-theme">
-            参考价 ：¥{{ goods?.goodsDto?.salePrice }}</text
+            参考价 ：{{ goods?.goodsDto?.salePrice }}</text
           >
           <text class="text-[26rpx] text-[#000000] font-theme"
-            >入库编码： KH¥{{ goods?.goodsDto?.price }}</text
+            >入库编码： KH{{ goods?.goodsDto?.price }}</text
           >
         </view>
       </view>
