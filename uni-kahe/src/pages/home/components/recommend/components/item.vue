@@ -1,13 +1,5 @@
 <template>
-  <view
-    class="relative w-509 h-220 overflow-visible"
-    style="
-      background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/recomand-bg.png&quot;);
-      background-size: 100% 100%;
-      background-position: center;
-      background-repeat: no-repeat;
-    "
-  >
+  <view class="relative w-509 h-220 overflow-visible" :style="cardBgStyle">
     <view class="pt-60 px-16 flex flex-row">
       <!-- 左侧图片区域 -->
       <view class="relative w-126 h-126 flex-shrink-0">
@@ -48,7 +40,7 @@
             v-if="item.total > 0"
             class="h-full bg-primary rounded-5"
             :style="progressStyles"
-          />
+          ></view>
         </view>
 
         <!-- 倒计时区域 -->
@@ -107,6 +99,15 @@ const props = defineProps({
     default: {} as GroupBuyItem,
   },
 });
+
+/** 用对象样式避免内联 url(&quot;...) 编译到 WXML 时引号/斜杠被误解析（miniprogram-ci 报 unexpected `/`） */
+const cardBgStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/challenge/recomand-bg.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 
 const progressStyles = computed(() => {
   const a = props.item.num;

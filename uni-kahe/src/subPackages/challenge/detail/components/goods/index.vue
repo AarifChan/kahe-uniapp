@@ -15,12 +15,7 @@
 
       <view
         class="absolute right-4 bottom-4 px-12 py-8 text-[#222] text-20rpx"
-        style="
-          background-image: url(&quot;https://jms.85gui7.com/kahe-202510/ka-he/common/num_bg.png&quot;);
-          background-size: 100% 100%;
-          background-position: center;
-          background-repeat: no-repeat;
-        "
+        :style="qualityTagStyle"
         >{{ getTitleByQuality(item.goodsDto.quality) }}</view
       >
       <image
@@ -56,6 +51,14 @@ import type { PropType } from "vue";
 import { getLevelImage } from "../../../index";
 
 import { getTitleByQuality } from "@/utils";
+
+const qualityTagStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/ka-he/common/num_bg.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 
 defineProps({
   item: {

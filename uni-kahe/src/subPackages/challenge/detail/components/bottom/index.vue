@@ -8,6 +8,14 @@ defineProps({
   },
 });
 const emits = defineEmits(["didTap"]);
+
+const challengeBottomBtnBgStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/challenge/bottom-bg.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 </script>
 
 <template>
@@ -15,12 +23,7 @@ const emits = defineEmits(["didTap"]);
     <view class="flex items-center justify-center" @tap.stop="emits('didTap')">
       <view
         class="flex items-center w-294rpx h-66rpx"
-        style="
-          background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/bottom-bg.png&quot;);
-          background-size: 100% 100%;
-          background-position: center;
-          background-repeat: no-repeat;
-        "
+        :style="challengeBottomBtnBgStyle"
       >
         <view class="px-42 py-20">
           <text class="text-26rpx font-bold text-[#8B4513] other-font">{{

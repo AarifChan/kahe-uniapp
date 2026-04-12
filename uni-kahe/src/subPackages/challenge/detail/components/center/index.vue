@@ -7,18 +7,18 @@ defineProps({
     type: Object as PropType<ChallengeDetail>,
   },
 });
+
+const usageBgStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/challenge/usage-bg.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 </script>
 
 <template>
-  <view
-    class="mx-auto mt-24 relative w-702rpx h-123rpx"
-    style="
-      background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/usage-bg.png&quot;);
-      background-size: 100% 100%;
-      background-position: center;
-      background-repeat: no-repeat;
-    "
-  >
+  <view class="mx-auto mt-24 relative w-702rpx h-123rpx" :style="usageBgStyle">
     <view class="relative flex items-center p-24 ml-120rpx">
       <view class="flex-1">
         <text class="text-20 font-bold text-[#000] block">

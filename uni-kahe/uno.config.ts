@@ -1,5 +1,6 @@
 import { defineConfig } from "unocss";
-import { presetUno } from "@unocss/preset-uno";
+import presetWeapp from "unocss-preset-weapp";
+import { transformerClass } from "unocss-preset-weapp/transformer";
 import { resolve } from "path";
 
 // uni-app rpx 转换函数
@@ -8,10 +9,15 @@ function rpx(value: number) {
 }
 
 export default defineConfig({
+  // 将含 []、() 等字符的原子类转为小程序合法类名，避免 app.wxss 出现转义反斜杠（WXSS 解析报错）
+  transformers: [transformerClass()],
+
   presets: [
-    presetUno({
-      // 禁用 preflight，避免与 TuNiao UI 冲突
+    // 小程序 WXSS 不支持 Uno 默认的转义类选择器（含 \\），需配合下方 transformerClass
+    presetWeapp({
       preflight: false,
+      platform: "uniapp",
+      whRpx: true,
     }),
   ],
 

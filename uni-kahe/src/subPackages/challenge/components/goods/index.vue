@@ -1,12 +1,7 @@
 <template>
   <view
     class="relative w-full aspect-[506/692] overflow-hidden bg-white rounded-10"
-    style="
-      background-image: url(&quot;https://jms.85gui7.com/kahe-202510/ka-he/home/item-bg.png&quot;);
-      background-size: 100% 100%;
-      background-position: center;
-      background-repeat: no-repeat;
-    "
+    :style="challengeCardBgStyle"
   >
     <view class="w-full aspect-[1/1] overflow-hidden flex-center p-8">
       <view class="relative w-full h-full flex-center">
@@ -72,6 +67,15 @@
 import type { PropType } from "vue";
 import type { UIProductModel } from "@/model";
 import { getMainTagImagePath } from "@/utils/tools/image";
+
+const challengeCardBgStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/ka-he/home/item-bg.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
+
 defineProps({
   item: {
     default: {} as UIProductModel,

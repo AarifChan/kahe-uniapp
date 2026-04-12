@@ -11,15 +11,7 @@
       :style="['animation-duration:' + animationTime + 's']"
       @tap.stop="emits('tapLampAction', item)"
     >
-      <view
-        class="relative w-698rpx h-46rpx"
-        style="
-          background-image: url(&quot;https://jms.85gui7.com/kahe-202510/ka-he/integral/infinite-bg.png&quot;);
-          background-size: 100% 100%;
-          background-position: center;
-          background-repeat: no-repeat;
-        "
-      >
+      <view class="relative w-698rpx h-46rpx" :style="lampBarBgStyle">
         <view
           class="absolute left-48rpx top-0 line-height-46rpx font-400 text-24rpx text-white font-theme text-outline-2 text-outline-[#87320c]"
           >欧皇来袭</view
@@ -54,6 +46,14 @@
 <script setup lang="ts">
 import { onUnmounted, type PropType, watch, ref } from "vue";
 import type { BarrageItem } from "../../api";
+
+const lampBarBgStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/ka-he/integral/infinite-bg.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 
 const emits = defineEmits(["tapLampAction"]);
 

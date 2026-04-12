@@ -41,19 +41,19 @@ const onLoadMore = async () => {
   await loadMoreList();
   loading.value = false;
 };
+
+const listTopBgStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/challenge/list-top-bg.webp)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 </script>
 
 <template>
   <view class="w-full h-vh bg-gradient-to-b from-#FFE1A7 to-#FFF3DB">
-    <view
-      class="w-full h-334 relative"
-      style="
-        background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/list-top-bg.webp&quot;);
-        background-size: 100% 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-      "
-    >
+    <view class="w-full h-334 relative" :style="listTopBgStyle">
       <view class="absolute top-188 left-370 flex-1">
         <view class="text-20 text-[#333] font-bold font-price text-ellipsis"
           >每个<text class="text-[#FF0000]">闯关难度</text>不一样，要注意喔！

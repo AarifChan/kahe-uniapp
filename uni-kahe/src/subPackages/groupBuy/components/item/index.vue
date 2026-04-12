@@ -1,13 +1,5 @@
 <template>
-  <view
-    class="groupBuyItem"
-    style="
-      background-image: url(&quot;https://jms.85gui7.com/kahe-202510/ka-he/home/item-bg.png&quot;);
-      background-size: 100% 100%;
-      background-position: center;
-      background-repeat: no-repeat;
-    "
-  >
+  <view class="groupBuyItem" :style="groupBuyItemBgStyle">
     <!--        <image class="groupBuyItem-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/home/item-bg.png"  />-->
     <image class="groupBuyItem-logo" :src="item.logo" />
     <view class="groupBuyItem-num">{{ item.num }}/{{ item.total }}</view>
@@ -79,6 +71,15 @@
 import { computed, onMounted, PropType } from "vue";
 import type { GroupBuyItem } from "@/model";
 import { useTimeCount } from "@/composables/countTime";
+
+const groupBuyItemBgStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/ka-he/home/item-bg.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
+
 const { startTimeRemain, hour, day, second, minute, isTimeout } =
   useTimeCount();
 

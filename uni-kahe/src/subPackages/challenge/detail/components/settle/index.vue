@@ -104,6 +104,15 @@ const getRewardImageStyle = (image?: string) => {
     backgroundRepeat: "no-repeat",
   };
 };
+
+/** 模板内勿写 url(&quot;https://...)，miniprogram-ci 编译 WXML 会报 unexpected `/` */
+const playTopBgStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/challenge/play-top-bg.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 </script>
 
 <template>
@@ -117,15 +126,7 @@ const getRewardImageStyle = (image?: string) => {
       class="bg-transparent flex flex-col items-center justify-between h-[100vh] pt-32 pb-120"
     >
       <view class="flex flex-col items-center w-full">
-        <view
-          class="relative w-728 h-441 p-16"
-          style="
-            background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/play-top-bg.png&quot;);
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-          "
-        >
+        <view class="relative w-728 h-441 p-16" :style="playTopBgStyle">
           <view class="relative flex items-center justify-between pl-54rpx">
             <view class="flex items-center">
               <text class="text-32rpx text-[#675656] ml-12 font-other"

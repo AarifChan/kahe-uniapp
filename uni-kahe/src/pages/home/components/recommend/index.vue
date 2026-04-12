@@ -19,13 +19,8 @@
         </swiper>
         <view
           class="w-94 h-33 line-height-none text-center absolute top-0 right-4 font-theme z-10"
+          :style="moreBtnStyle"
           @tap.stop="handleGroupBuyPage"
-          style="
-            background: linear-gradient(0deg, #ffeec5);
-            box-shadow: 0rpx 2rpx 0rpx 0rpx #774718;
-            border-radius: 17rpx;
-            border: 2rpx solid #cda374;
-          "
           >more</view
         >
       </view>
@@ -33,22 +28,12 @@
         <view
           @tap.stop="handleChallengePage"
           class="w-204 h-105"
-          style="
-            background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/challenge-item1.png&quot;);
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-          "
+          :style="challengeItem1Style"
         ></view>
         <view
           class="w-204 h-105"
+          :style="challengeItem2Style"
           @tap.stop="handleMatchPage"
-          style="
-            background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/challenge-item2.png&quot;);
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-          "
         ></view>
       </view>
     </view>
@@ -90,6 +75,30 @@ import { PropType } from "vue";
 import GroupBuy from "./components/groupBuy.vue";
 import Item from "./components/item.vue";
 import { ShowToast } from "@/utils";
+
+/** 避免模板内 url(&quot;https://...) 编译到 WXML 时引号/斜杠导致 miniprogram-ci 报 unexpected `/` */
+const moreBtnStyle = {
+  background: "linear-gradient(0deg, #ffeec5)",
+  boxShadow: "0rpx 2rpx 0rpx 0rpx #774718",
+  borderRadius: "17rpx",
+  border: "2rpx solid #cda374",
+};
+
+const challengeItem1Style = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/challenge/challenge-item1.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
+
+const challengeItem2Style = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/challenge/challenge-item2.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 
 defineProps({
   // list: {

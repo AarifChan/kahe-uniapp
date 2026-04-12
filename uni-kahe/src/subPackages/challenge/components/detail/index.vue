@@ -7,12 +7,7 @@
   >
     <view
       class="relative w-600 h-700 flex flex-col items-center"
-      style="
-        background-image: url(&quot;https://jms.85gui7.com/kahe-202510/common/detail-bg.png&quot;);
-        background-size: 100% 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-      "
+      :style="detailPopupBgStyle"
     >
       <!-- 背景 -->
       <!--      <image-->
@@ -53,10 +48,7 @@
         <!-- 品质标签 -->
         <view
           class="mt-[20rpx] px-[24rpx] py-[8rpx] text-[24rpx] text-[#222]"
-          style="
-            background-image: url(&quot;https://jms.85gui7.com/kahe-202510/ka-he/common/num_bg.png&quot;);
-            background-size: 100% 100%;
-          "
+          :style="qualityTagBgStyle"
         >
           {{ getTitleByQuality(goods.goodsDto.quality) }}
         </view>
@@ -87,6 +79,20 @@ import type { PropType } from "vue";
 import { ref, watch } from "vue";
 import { getLevelImage } from "@/subPackages/challenge";
 import { getTitleByQuality } from "@/utils";
+
+const detailPopupBgStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/common/detail-bg.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
+
+const qualityTagBgStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/ka-he/common/num_bg.png)",
+  backgroundSize: "100% 100%",
+};
 
 const props = defineProps({
   show: {

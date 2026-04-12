@@ -5,15 +5,7 @@
     bg-color="transparent"
     @close="emits('update:show', false)"
   >
-    <view
-      class="relative w-598rpx h-910rpx"
-      style="
-        background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/result.png&quot;);
-        background-size: 100% 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-      "
-    >
+    <view class="relative w-598rpx h-910rpx" :style="resultPopupBgStyle">
       <view class="pt-200rpx px-36 flex flex-col relative">
         <text class="text-outline text-24rpx tn-text-center">{{
           currentSign?.status === 3
@@ -43,26 +35,14 @@
         <view class="w-full p-64 flex flex-row justify-center justify-between">
           <view
             class="w-160 h-60 font-other font-bold text-center color-[#445D3C] font-24"
+            :style="resultBtnAgainStyle"
             @tap.stop="emits('again')"
-            style="
-              background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/btn-style2.png&quot;);
-              background-size: 100% 100%;
-              background-position: center;
-              background-repeat: no-repeat;
-              line-height: 60rpx;
-            "
             >再次挑战</view
           >
           <view
             class="w-160 h-60 font-other font-bold text-center color-[#5C3729] font-24"
+            :style="resultBtnShipmentStyle"
             @tap.stop="emits('shipment')"
-            style="
-              background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/btn-style1.png&quot;);
-              background-size: 100% 100%;
-              background-position: center;
-              background-repeat: no-repeat;
-              line-height: 60rpx;
-            "
             >退货</view
           >
         </view>
@@ -75,6 +55,31 @@
 import { PropType, ref, watch } from "vue";
 import { ChallengeOrderGate } from "@/subPackages/challenge/api";
 import { getLevelImage } from "@/subPackages/challenge";
+
+const resultPopupBgStyle = {
+  backgroundImage: "url(https://jms.85gui7.com/kahe-202510/challenge/result.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
+
+const resultBtnAgainStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/challenge/btn-style2.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  lineHeight: "60rpx",
+};
+
+const resultBtnShipmentStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/challenge/btn-style1.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  lineHeight: "60rpx",
+};
 
 const props = defineProps({
   show: {

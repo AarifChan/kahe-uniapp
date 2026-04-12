@@ -9,19 +9,19 @@ defineProps({
 });
 
 const emits = defineEmits(["didClick"]);
+
+const challengeTopBgStyle = {
+  backgroundImage:
+    "url(https://jms.85gui7.com/kahe-202510/challenge/top-bg.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 </script>
 
 <template>
   <view class="p-16rpx">
-    <view
-      class="relative h-420 z-0 p-16rpx"
-      style="
-        background-image: url(&quot;https://jms.85gui7.com/kahe-202510/challenge/top-bg.png&quot;);
-        background-size: 100% 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-      "
-    >
+    <view class="relative h-420 z-0 p-16rpx" :style="challengeTopBgStyle">
       <!-- 顶部标题栏 -->
       <view class="relative flex items-center justify-between pl-54rpx">
         <view class="flex items-center">
