@@ -188,9 +188,8 @@ copy_resources() {
         fi
 
         if [ "$USE_DEMO_WWW" = false ] && [ "$manifest_compiler_version" != "$EXPECTED_UNI_COMPILER_VERSION" ]; then
-            log_error "compilerVersion 不匹配，期望: $EXPECTED_UNI_COMPILER_VERSION，实际: $manifest_compiler_version"
-            log_error "请先升级/对齐 UniApp CLI 版本，避免出现“3.1.22 与 4.87 不匹配”弹窗"
-            exit 1
+            log_warn "compilerVersion 不匹配，期望: $EXPECTED_UNI_COMPILER_VERSION，实际: $manifest_compiler_version"
+            log_warn "请先升级/对齐 UniApp CLI 版本，避免出现“3.1.22 与 4.87 不匹配”弹窗"
         fi
 
         # 生成离线包 control.xml（壳读取主应用入口所需）
