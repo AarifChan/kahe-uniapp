@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Goods from "../components/goods/index.vue";
-import Lamb from "../components/lamb/index.vue";
+import Lamb, { type BarrageUIType } from "../components/lamb/index.vue";
 import { useChallenge } from "../index";
 import { onMounted, ref } from "vue";
 import { ChallengeBox, ChallengeGoodsItem } from "../api";
@@ -18,7 +18,7 @@ const refreshing = ref(false);
 const loading = ref(false);
 
 onMounted(() => {
-  getHomeData();
+  Promise.all([getHomeData(), refreshList()]);
 });
 
 const handleClickItem = (item: ChallengeBox) => {
@@ -74,6 +74,7 @@ const listTopBgStyle = {
       class="h-[calc(100vh-334rpx)] p-20"
       refresher-enabled
       :refresher-triggered="refreshing"
+      refresher-background="#FFE1A7"
       @refresherrefresh="onRefresh"
       @scrolltolower="onLoadMore"
     >

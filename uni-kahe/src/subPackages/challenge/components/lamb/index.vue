@@ -72,7 +72,7 @@ const parseSourceEx = (sourceEx: string) => {
 };
 
 // 扩展 BarrageItem 以支持动画状态
-interface BarrageUIType {
+export interface BarrageUIType {
   avatar: string;
   userName: string;
   content: string;
