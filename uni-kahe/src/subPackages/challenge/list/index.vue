@@ -26,7 +26,11 @@ const handleClickItem = (item: ChallengeBox) => {
     url: "/subPackages/challenge/detail/index?id=" + item.id,
   });
 };
-
+const handleClickLamb = (item: BarrageUIType) => {
+  uni.navigateTo({
+    url: "/subPackages/challenge/detail/index?id=" + item.boxId,
+  });
+};
 // 下拉刷新
 const onRefresh = async () => {
   refreshing.value = true;
@@ -64,7 +68,7 @@ const listTopBgStyle = {
         >
       </view>
     </view>
-    <Lamb :barrage-list="barrageList" />
+    <Lamb :barrage-list="barrageList" @tap-lamp-action="handleClickLamb" />
     <scroll-view
       scroll-y
       class="h-[calc(100vh-334rpx)] p-20"

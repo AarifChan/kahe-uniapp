@@ -80,6 +80,7 @@ interface BarrageUIType {
   goodsName: string;
   class: string;
   action: boolean;
+  boxId: number;
 }
 
 const props = defineProps({
@@ -103,6 +104,7 @@ const convertList = () => {
       goodsName: sourceExData?.goodsName || "神秘奖励",
       class: "",
       action: false,
+      boxId: sourceExData?.boxId,
     };
   });
 };
