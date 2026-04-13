@@ -52,7 +52,7 @@ export function useChallenge() {
     gate: -1,
   });
 
-  const hasMore = ref(true);
+  const hasMore = ref(false);
 
   const listParams = ref({
     page: 1,
@@ -100,7 +100,11 @@ export function useChallenge() {
     const res = await homeChallenge();
     if (res.code === 200) {
       barrageList.value = res.data.barrageList || [];
-      dataList.value = res.data.boxList?.content || [];
+      const list = res.data.boxList?.content || [];
+      dataList.value = list;
+      // 同步分页状态，避免 loadMore 重复加载第一页
+      listParams.value.page = 2;
+      hasMore.value = list.length >= listParams.value.limit;
     }
   };
 
