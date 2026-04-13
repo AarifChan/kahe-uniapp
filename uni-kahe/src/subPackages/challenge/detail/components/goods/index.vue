@@ -29,9 +29,7 @@
         item?.goodsDto?.name
       }}</view>
       <view>
-        <view class="text-[#909090] text-9px"
-          >参考价: {{ item?.goodsDto?.salePrice }}</view
-        >
+        <view class="text-[#909090] text-9px">参考价: {{ price }}</view>
 
         <view class="text-[#55d8b0] text-9px">
           {{
@@ -66,6 +64,10 @@ defineProps({
     type: Object as PropType<ChallengeGoodsItem>,
   },
   index: {
+    default: 0,
+    type: Number,
+  },
+  price: {
     default: 0,
     type: Number,
   },

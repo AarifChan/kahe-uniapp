@@ -17,6 +17,7 @@
               v-for="(item, index) in rewardList"
               :key="item.goodsDto.id"
               :item="item"
+              :price="detail?.box.price"
               :index="rewardList.length - index - 1"
               :id="item.goodsDto.id"
               @click="onGoodsClick(item)"
@@ -34,7 +35,7 @@
     </view>
 
     <bottom :detail="detail" @didTap="handleSubmitChallenge" />
-    <handle />
+    <handle :product="detail" @didTapReload="loadPageData" />
     <pay
       v-model:show="showPay"
       :goods="payItem"
@@ -65,6 +66,7 @@
       v-model:show="showGoodsDetail"
       :goods="selectedGoods"
       :level="selectedGoodsLevel"
+      :price="detail?.box.price"
     />
 
     <common-modal
@@ -77,7 +79,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, onUnmounted } from "vue";
-import { onShareAppMessage } from "@dcloudio/uni-app";
+import { onShareAppMessage, onShareTimeline } from "@dcloudio/uni-app";
 import CommonTab from "./components/tab/index.vue";
 import Bottom from "./components/bottom/index.vue";
 import Center from "./components/center/index.vue";
@@ -305,6 +307,19 @@ const tapShowModel = (value: number) => {
 // 小程序分享
 // #ifdef MP-WEIXIN
 onShareAppMessage(() => {
+  const id = detailId.value;
+  const boxName = detail.value?.box?.name || "闯关挑战";
+  const logo =
+    detail.value?.box?.logo ||
+    "https://jms.85gui7.com/kahe-202510/common/share.jpg";
+  return {
+    title: `【${boxName}】这个箱子快出货了，速来！`,
+    path: `/subPackages/challenge/detail/index?id=${id}`,
+    imageUrl: logo,
+  };
+});
+
+onShareTimeline(() => {
   const id = detailId.value;
   const boxName = detail.value?.box?.name || "闯关挑战";
   const logo =

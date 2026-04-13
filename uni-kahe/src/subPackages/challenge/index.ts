@@ -129,7 +129,7 @@ export function useChallenge() {
       bid: boxId,
       page: logParams.value.page,
       limit: logParams.value.pageSize,
-      gate: logParams.value.gate === -1 ? undefined : logParams.value.gate,
+      ...(logParams.value.gate !== -1 && { gate: logParams.value.gate }),
     });
     if (data.code === 200) {
       const list = data.data.content ?? [];

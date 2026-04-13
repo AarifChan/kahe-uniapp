@@ -77,8 +77,14 @@ const hasStarted = computed(() => {
   return map.some((val) => val !== 0);
 });
 
+// 必须数值相加：若接口把 gate/trap 当字符串返回，`+` 会变成拼接字符串，
+// Vue 会对字符串做 v-for 逐字符渲染，表现为数量/索引错乱或图片异常。
 const totalGate = computed(() => {
-  return (props.detail?.box?.gate ?? 0) + (props.detail?.box?.trap ?? 0);
+  const gate = Number(props.detail?.box?.gate ?? 0);
+  const trap = Number(props.detail?.box?.trap ?? 0);
+  return (
+    (Number.isFinite(gate) ? gate : 0) + (Number.isFinite(trap) ? trap : 0)
+  );
 });
 
 // 状态由 level/play 接口返回的 map 字段控制
@@ -157,7 +163,7 @@ const playTopBgStyle = {
                   <view class="relative w-170 h-170">
                     <view
                       class="absolute left-12 top-12 w-146 h-146 rounded-12"
-                      :style="getRewardImageStyle(item.goodsDto?.image)"
+                      :style="getRewardImageStyle(item?.goodsDto?.image)"
                     />
                   </view>
 
@@ -191,7 +197,7 @@ const playTopBgStyle = {
 
                   <view class="reward-card-quality">
                     <text class="reward-card-quality-text">
-                      {{ getTitleByQuality(item.goodsDto.quality) }}
+                      {{ getTitleByQuality(item?.goodsDto?.quality) }}
                     </text>
                   </view>
                 </view>
@@ -245,13 +251,14 @@ const playTopBgStyle = {
         >
           <view
             v-for="(_, index) in totalGate"
-            :key="index"
-            :id="index"
+            :key="`${index}-${props.currentSign?.map?.[index] ?? 0}`"
+            :id="String(index)"
             class="flex items-center justify-center"
             @tap.stop="handleBoxTap(index)"
           >
             <image
               class="w-140 h-178"
+              style="width: 140rpx; height: 178rpx"
               :src="getBoxImage(index)"
               mode="aspectFit"
             />
@@ -263,6 +270,7 @@ const playTopBgStyle = {
         v-if="hasStarted"
         class="w-348 h-107"
         mode="aspectFill"
+        style="width: 348rpx; height: 107rpx"
         src="https://jms.85gui7.com/kahe-202510/challenge/exit-btn.png"
         @tap.stop="tapFinish"
       />

@@ -1,9 +1,9 @@
 <template>
-  <view class="relative h-full pv-16 px-16 box-border">
+  <view class="relative h-full py-16 px-16 box-border">
     <view class="w-full relative flex box-border overflow-x-auto">
       <view
         class="shrink-0 mr-12rpx px-36 h-40rpx rounded-18rpx text-center leading-40"
-        :class="sortIndex === item.value ? 'bg-[#AC5A3E]' : 'bg-[#e8ad82]'"
+        :class="sortIndex === item.value ? 'tab-active' : 'tab-inactive'"
         v-for="(item, index) in tabs"
         :key="item.value"
         :id="item.value"
@@ -44,18 +44,22 @@
             mode="widthFix"
           />
           <view class="text-28rpx text-[#333]"
-            >{{ item.goods.goodsDto.name }}x{{ item.goods.num }}
+            >{{ item.goods?.goodsDto?.name }}
           </view>
         </view>
       </view>
       <image
         class="absolute bottom-16 right-16 w-71 h-50 z-10"
+        :style="{
+          width: '71rpx',
+          height: '50rpx',
+        }"
         :src="getLevelImage(item.gate)"
         mode="aspectFit"
       />
     </view>
+    <empty :show="recordList.length === 0" />
   </view>
-  <empty :show="recordList.length === 0" />
 </template>
 <script setup lang="ts">
 import DecorateAvatar from "@/components/custom/DecorateAvatar/index.vue";
@@ -96,3 +100,12 @@ const sortTabAction = (item: { label: string; value: number }) => {
   emits("sortTabAction", item.value);
 };
 </script>
+
+<style scoped lang="scss">
+.tab-active {
+  background-color: #ac5a3e;
+}
+.tab-inactive {
+  background-color: #e8ad82;
+}
+</style>

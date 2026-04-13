@@ -75,7 +75,7 @@ const listTopBgStyle = {
     >
       <view class="flex flex-wrap gap-[20rpx]">
         <view
-          class="w-[calc(50%-10rpx)]"
+          class="w-[calc(50%-14rpx)]"
           v-for="(item, index) in dataList"
           :key="index"
           @tap.stop="handleClickItem(item)"
@@ -86,14 +86,9 @@ const listTopBgStyle = {
       <!-- 加载状态 -->
       <view class="text-center py-20 text-24rpx text-gray-500">
         <text v-if="loading"
-          >加载中...
-          <text class="inline-block animate-spin"
-            >⏳</text
-          ></text
+          >加载中... <text class="inline-block animate-spin">⏳</text></text
         >
-        <text v-else-if="!hasMore && dataList.length > 0"
-          >没有更多了</text
-        >
+        <text v-else-if="!hasMore && dataList.length > 0">没有更多了</text>
         <text v-else-if="dataList.length === 0">暂无数据</text>
       </view>
     </scroll-view>

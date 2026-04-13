@@ -74,7 +74,7 @@ import type { UIRecommendModel, GroupBuyItem } from "@/model";
 import { PropType } from "vue";
 import GroupBuy from "./components/groupBuy.vue";
 import Item from "./components/item.vue";
-import { ShowToast } from "@/utils";
+import { ShowToast, currentEnv } from "@/utils";
 
 /** 避免模板内 url(&quot;https://...) 编译到 WXML 时引号/斜杠导致 miniprogram-ci 报 unexpected `/` */
 const moreBtnStyle = {
@@ -118,6 +118,10 @@ const handleGroupBuyPage = () => {
 };
 
 const handleChallengePage = () => {
+  // if (currentEnv() === "mp-weixin") {
+  //   ShowToast("请下载卡牌核心app体验新功能");
+  //   return;
+  // }
   uni.navigateTo({
     url: "/subPackages/challenge/list/index",
   });

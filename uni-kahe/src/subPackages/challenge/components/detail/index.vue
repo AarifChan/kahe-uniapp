@@ -50,7 +50,7 @@
           class="mt-[20rpx] px-[24rpx] py-[8rpx] text-[24rpx] text-[#222]"
           :style="qualityTagBgStyle"
         >
-          {{ getTitleByQuality(goods.goodsDto.quality) }}
+          {{ getTitleByQuality(goods?.goodsDto?.quality) }}
         </view>
 
         <!-- 商品名称 -->
@@ -62,7 +62,7 @@
         <!-- 参考价 -->
         <view class="flex flex-row justify-around w-full mt-32">
           <text class="text-[26rpx] text-[#000000] font-theme">
-            参考价 ：{{ goods?.goodsDto?.salePrice }}</text
+            参考价 ：{{ price }}</text
           >
           <text class="text-[26rpx] text-[#000000] font-theme"
             >入库编码： KH{{ goods?.goodsDto?.price }}</text
@@ -102,6 +102,10 @@ const props = defineProps({
   goods: {
     default: null as ChallengeGoodsItem | null,
     type: Object as PropType<ChallengeGoodsItem | null>,
+  },
+  price: {
+    default: 0,
+    type: Number,
   },
   level: {
     default: 0,

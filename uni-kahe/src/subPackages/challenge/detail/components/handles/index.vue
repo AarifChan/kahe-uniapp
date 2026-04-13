@@ -137,8 +137,8 @@ export interface ActionItem {
 
 const props = defineProps({
   product: {
-    default: {} as ChallengeDetail,
-    type: Object as PropType<ChallengeDetail>,
+    default: null,
+    type: Object as PropType<ChallengeDetail | null>,
   },
   unReadCount: {
     default: 0,
@@ -148,7 +148,7 @@ const props = defineProps({
 
 const handleAction = async (item: ActionItem) => {
   if (item.action === 2) {
-    let pid = props.product.box.id;
+    let pid = props.product?.box?.id;
     if (pid) {
       await handleFavoriteAction(pid);
     }
@@ -185,7 +185,7 @@ const handleClickContact = () => {
 };
 
 const handleShare = () => {
-  const id = props.product?.box.id;
+  const id = props.product?.box?.id;
   if (!id) {
     ShowToast("商品信息异常，暂无法分享");
     return;
@@ -205,7 +205,7 @@ const emits = defineEmits(["didTapReload"]);
 watch(
   () => props.product,
   (newVal) => {
-    let pId = newVal.box?.id;
+    let pId = newVal?.box?.id;
     if (pId) {
       checkIsFavorite(pId);
     }
