@@ -68,7 +68,7 @@
     "@dcloudio/uni-mp-weixin": "3.0.0-alpha-5000720260327001",
     "@dcloudio/uni-mp-xhs": "3.0.0-alpha-5000720260327001",
     "@dcloudio/uni-pay": "^1.0.2",
-    "@dcloudio/uni-quickapp-webview": "3.0.0-5000520260324001",
+    "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-5000720260327001",
     "@tuniao/tn-icon": "^1.9.0",
     "@tuniao/tn-style": "^1.0.19",
     "@tuniao/tnui-vue3-uniapp": "^1.0.21",
