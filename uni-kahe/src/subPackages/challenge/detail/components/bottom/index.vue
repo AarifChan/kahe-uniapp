@@ -22,20 +22,23 @@ const challengeBottomBtnBgStyle = {
   <view class="fixed bottom-0 left-0 right-0 p-24 safe-bottom shadow-lg">
     <view class="flex items-center justify-center" @tap.stop="emits('didTap')">
       <view
-        class="flex items-center w-294rpx h-66rpx"
+        class="flex items-center w-294 h-66 line-height-66"
         :style="challengeBottomBtnBgStyle"
       >
-        <view class="px-42 py-20">
-          <text class="text-26rpx font-bold text-[#8B4513] other-font">{{
-            detail?.box.price
-          }}</text>
-        </view>
-        <view class="px-24 py-20">
-          <text
-            class="text-26rpx font-bold text-[#912E26] other-font text-center"
-            >购票参与</text
-          >
-        </view>
+        <!--        <view class="w-120 py-20">-->
+        <!--        -->
+        <!--        </view>-->
+        <text
+          class="w-110 text-26rpx font-bold text-[#8B4513] font-other text-center"
+          >{{ detail?.box.price }}</text
+        >
+        <text
+          class="text-26rpx w-184 font-bold text-[#912E26] font-other text-center"
+          >购票参与</text
+        >
+        <!--        <view class="w-120 py-20">-->
+        <!--        -->
+        <!--        </view>-->
       </view>
     </view>
   </view>

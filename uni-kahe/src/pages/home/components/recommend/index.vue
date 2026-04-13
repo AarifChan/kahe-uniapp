@@ -118,10 +118,10 @@ const handleGroupBuyPage = () => {
 };
 
 const handleChallengePage = () => {
-  // if (currentEnv() === "mp-weixin") {
-  //   ShowToast("请下载卡牌核心app体验新功能");
-  //   return;
-  // }
+  if (currentEnv() === "mp-weixin") {
+    ShowToast("请下载卡牌核心app体验新功能");
+    return;
+  }
   uni.navigateTo({
     url: "/subPackages/challenge/list/index",
   });

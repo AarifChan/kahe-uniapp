@@ -54,7 +54,7 @@
           width: '71rpx',
           height: '50rpx',
         }"
-        :src="getLevelImage(item.gate)"
+        :src="getLevelImage(item.status === 3 ? 0 : item.gate)"
         mode="aspectFit"
       />
     </view>
