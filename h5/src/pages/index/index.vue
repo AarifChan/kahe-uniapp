@@ -16,7 +16,7 @@ definePage({
 })
 
 // 安卓 APK 下载地址（由 uni-kahe/scripts/upload_to_qiniu.js 自动更新）
-const ANDROID_APK_URL = 'https://jms.85gui7.com/apk/kahe-android-20260308-221951.apk'
+const ANDROID_APK_URL = 'https://jms.85gui7.com/apk/kahe-android-20260413-225558.apk'
 const APP_STORE_URL = 'https://apps.apple.com/cn/app/%E5%8D%A1%E7%89%8C%E6%A0%B8%E5%BF%83/id6758882691'
 
 const showGuide = ref(false)

@@ -74,7 +74,7 @@ const listTopBgStyle = {
       class="h-[calc(100vh-334rpx)] p-20"
       refresher-enabled
       :refresher-triggered="refreshing"
-      refresher-background="#FFE1A7"
+      refresher-background="transparent"
       @refresherrefresh="onRefresh"
       @scrolltolower="onLoadMore"
     >

@@ -52,23 +52,30 @@
         @"kahe_launch_debug_mode": @NO,
         @"KHAppLaunchCount": @0
     }];
-    
+
     // 增加启动计数
     NSInteger launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"KHAppLaunchCount"];
     [[NSUserDefaults standardUserDefaults] setInteger:launchCount + 1 forKey:@"KHAppLaunchCount"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-    // 1. 初始化原生功能模块
-    [self setupNativeFeatures];
+    // 1. 配置 URL 缓存以加速页面加载（必须在引擎初始化前）
+    [self setupURLCache];
 
-    // 2. 初始化 UniApp 引擎（仅初始化，不绑定视图）
+    // 2. 配置 WebView 全局优化（必须在引擎初始化前）
+    [self setupWebViewOptimizations];
+
+    // 3. 初始化原生功能模块（关键模块在主线程，非关键模块延迟到后台）
+    [self setupNativeFeatures];
+    [self delaySetupNonCriticalFeatures];
+
+    // 4. 初始化 UniApp 引擎（仅初始化，不绑定视图）
     BOOL ret = [PDRCore initEngineWihtOptions:launchOptions
                                   withRunMode:PDRCoreRunModeNormal withDelegate:self];
 
     UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window = window;
 
-    // 3. 显示原生过渡页面，同时后台预加载 UniApp
+    // 5. 显示原生过渡页面，同时后台预加载 UniApp
     [self showTransitionRoot];
 
     [self.window makeKeyAndVisible];
@@ -102,6 +109,41 @@
     }
 }
 
+#pragma mark - Launch Optimizations
+
+/// 配置 URL 缓存以加速页面资源加载
+- (void)setupURLCache {
+    // 配置 50MB 内存缓存 + 100MB 磁盘缓存，减少重复网络请求
+    NSUInteger memoryCapacity = 50 * 1024 * 1024;
+    NSUInteger diskCapacity = 100 * 1024 * 1024;
+    NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:memoryCapacity
+                                                      diskCapacity:diskCapacity
+                                                          diskPath:@"uniapp_url_cache"];
+    [NSURLCache setSharedURLCache:cache];
+    NSLog(@"[AppDelegate] URLCache 已配置: 内存 %luMB, 磁盘 %luMB", (unsigned long)(memoryCapacity / 1024 / 1024), (unsigned long)(diskCapacity / 1024 / 1024));
+}
+
+/// 配置 WKWebView 全局优化参数
+- (void)setupWebViewOptimizations {
+    if (@available(iOS 9.0, *)) {
+        // 提前初始化默认数据存储，避免首次创建 WebView 时的额外开销
+        [WKWebsiteDataStore defaultDataStore];
+        NSLog(@"[AppDelegate] WKWebView 默认优化已配置");
+    }
+}
+
+/// 延迟执行非关键初始化，减少主线程启动阻塞
+- (void)delaySetupNonCriticalFeatures {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        // 预加载设备详细信息（已在 setupNativeFeatures 中做过核心加载，这里是补充）
+        KHDeviceHelper *deviceHelper = [KHDeviceHelper sharedHelper];
+        NSDictionary *detailInfo = [deviceHelper detailedDeviceInfo];
+        NSLog(@"[AppDelegate] 后台延迟加载设备信息完成: %lu 项", (unsigned long)detailInfo.count);
+
+        // 可在此添加其他非关键后台任务
+    });
+}
+
 #pragma mark - Native Features
 
 - (void)setupNativeFeatures {
@@ -114,15 +156,10 @@
     // 初始化功能管理器
     [KHFeatureManager shared];
     
-    // 预加载设备信息
+    // 预加载核心设备信息（轻量级）
     NSDictionary *deviceInfo = [[KHFeatureManager shared] getDeviceInfo];
     NSLog(@"[AppDelegate] 设备信息: %@", deviceInfo);
-    
-    // 使用 Objective-C 设备辅助类获取更详细信息
-    KHDeviceHelper *deviceHelper = [KHDeviceHelper sharedHelper];
-    NSDictionary *detailInfo = [deviceHelper detailedDeviceInfo];
-    NSLog(@"[AppDelegate] 详细设备信息: %@", detailInfo);
-    
+
     // 初始化日志插件
     [KHLogPlugin sharedPlugin];
     NSLog(@"[AppDelegate] 日志插件已初始化");
