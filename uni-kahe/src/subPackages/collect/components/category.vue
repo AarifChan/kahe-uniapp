@@ -17,8 +17,8 @@
             class="collect-category-item-icon"
             :src="
               current === index
-                ? `https://jms.85gui7.com/kahe-202510/collect/cate${index}_selected.png`
-                : `https://jms.85gui7.com/kahe-202510/collect/cate${index}_normal.png`
+                ? `https://jms.85gui7.com/kahe-202510/jikaquan/cate${index}_selected.png`
+                : `https://jms.85gui7.com/kahe-202510/jikaquan/cate${index}_normal.png`
             "
           />
           <text class="collect-category-item-title">{{ item.title }}</text>

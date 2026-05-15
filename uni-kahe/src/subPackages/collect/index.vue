@@ -4,7 +4,7 @@
       <view class="collect-content-top">
         <image
           class="collect-content-top-bg"
-          src="https://jms.85gui7.com/kahe-202510/collect/bg-top.png"
+          src="https://jms.85gui7.com/tycw-mp/jikaquan/collect-top-bg.png"
         />
         <view class="collect-content-top-row">
           <view class="collect-content-top-row-item" @tap.stop="navToHome">

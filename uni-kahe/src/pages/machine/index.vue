@@ -4,9 +4,15 @@
     class="machine-container"
     @scrolltolower="machineScroll"
   >
-    <image class="machine-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/bg-top.png" />
+    <image
+      class="machine-bg"
+      src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/bg-top.png"
+    />
     <view class="machine-content">
-      <image class="machine-logo" src="https://jms.85gui7.com/kahe-202510/ka-he/common/logo.png" />
+      <image
+        class="machine-logo"
+        src="https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-logo.png"
+      />
       <Top :types="false" :goods="barrageList" />
       <tab
         v-model:current="current"
@@ -79,8 +85,8 @@ onShareTimeline(() => {
   }
   &-logo {
     margin-left: 32rpx;
-    width: 180rpx;
-    height: 71rpx;
+    width: calc(149rpx * 1.3);
+    height: calc(53rpx * 1.3);
   }
   &-content {
     position: absolute;

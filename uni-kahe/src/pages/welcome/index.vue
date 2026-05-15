@@ -2,7 +2,7 @@
   <view class="welcome">
     <image
       class="welcome-logo"
-      src="https://jms.85gui7.com/kahe-202510/ka-he/home/logo.png"
+      src="https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-logo.png"
     />
   </view>
 </template>
@@ -35,7 +35,7 @@ onLoad(() => {
   &-logo {
     position: absolute;
     width: 180rpx;
-    height: 71rpx;
+    height: calc(180rpx / 750 * 267);
     left: calc((100% - 180rpx) / 2);
     top: calc(env(safe-area-inset-top) + 340rpx);
   }

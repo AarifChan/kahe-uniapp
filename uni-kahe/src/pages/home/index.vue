@@ -13,7 +13,7 @@
     <view class="home-search">
       <image
         class="logo"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/logo.png"
+        src="https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-logo.png"
         @longpress="handleLogoLongPress"
       />
       <Search
@@ -215,7 +215,7 @@ onShareTimeline(() => {
     .logo {
       margin-right: 22rpx;
       width: 149rpx;
-      height: 65rpx;
+      height: 53rpx;
       object-fit: cover;
     }
   }

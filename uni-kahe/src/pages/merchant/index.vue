@@ -6,12 +6,15 @@
     @scroll="handleScroll"
     @scrolltolower="handleMallScrollToLower"
   >
-    <image class="merchant-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/bg-top.png" />
+    <image
+      class="merchant-bg"
+      src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/bg-top.png"
+    />
     <view class="merchant-content">
       <view class="merchant-content-top">
         <image
           class="merchant-content-logo"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/logo.png"
+          src="https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-logo.png"
         />
         <view class="merchant-content-search">
           <Search @did-tap-search="didTapSearch" placeholder="请输入商家名称" />
@@ -124,8 +127,8 @@ onShareTimeline(() => {
       box-sizing: border-box;
     }
     &-logo {
-      width: 180rpx;
-      height: 71rpx;
+      width: calc(149rpx * 1.3);
+      height: calc(53rpx * 1.3);
     }
     &-search {
       position: relative;

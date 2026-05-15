@@ -98,12 +98,8 @@ const handleClick = (item: ItemModel) => {
       });
       break;
     case ItemType.rollIn:
-      uni.previewImage({
-        current:
-          "https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png",
-        urls: [
-          "https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png",
-        ],
+      uni.navigateTo({
+        url: "/subPackages/enroll/index",
       });
       break;
     case ItemType.coupon:
