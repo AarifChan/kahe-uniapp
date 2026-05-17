@@ -78,7 +78,7 @@ const goodsList = ref([
     type: HomeItemType.collect,
     tag: "https://jms.85gui7.com/kahe-202510/ka-he/home/m1.png",
     text: "卡集",
-    context: "以物换物",
+    context: "换卡集市",
   },
 ]);
 const handleItem = (index: HomeItemType) => {

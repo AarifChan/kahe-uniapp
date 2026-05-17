@@ -14,7 +14,7 @@ export function useCollect() {
   const collectionParams = ref<CollectParams>({
     page: 1,
     limit: 10,
-    cate: null,
+    cate: 1,
   });
   const total = ref(0);
 

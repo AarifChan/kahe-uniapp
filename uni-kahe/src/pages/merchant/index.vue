@@ -81,19 +81,15 @@ const handleScroll = (e) => {
 };
 onShareAppMessage(() => {
   return {
-    title: `${
-      UserModule.userInfo?.nickname ?? ""
-    }邀请你来卡核抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
+    title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
+    imageUrl: "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: "/pages/welcome/index",
   };
 });
 onShareTimeline(() => {
   return {
-    title: `${
-      UserModule.userInfo?.nickname ?? ""
-    }邀请你来卡核抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/common/share.jpg",
+    title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
+    imageUrl: "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: "/pages/welcome/index",
   };
 });

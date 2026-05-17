@@ -1,5 +1,5 @@
 <template>
-  <view class="collect">
+  <view class="collect" style="height: 140rpx">
     <scroll-view
       class="collect-category"
       :enable-flex="true"
@@ -17,8 +17,8 @@
             class="collect-category-item-icon"
             :src="
               current === index
-                ? `https://jms.85gui7.com/kahe-202510/jikaquan/cate${index}_selected.png`
-                : `https://jms.85gui7.com/kahe-202510/jikaquan/cate${index}_normal.png`
+                ? `https://jms.85gui7.com/kahe-202510/jikaquan/cate${item.value}_selected.png`
+                : `https://jms.85gui7.com/kahe-202510/jikaquan/cate${item.value}_normal.png`
             "
           />
           <text class="collect-category-item-title">{{ item.title }}</text>
@@ -32,10 +32,10 @@
 import { ref } from "vue";
 const current = ref(0);
 const categoryList = ref([
-  {
-    title: "全部",
-    value: null,
-  },
+  // {
+  //   title: "全部",
+  //   value: null,
+  // },
   {
     title: "评级卡",
     value: 1,

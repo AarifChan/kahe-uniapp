@@ -101,7 +101,9 @@
                 class="detail-bottom-share-img"
                 src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
               />
-              <view class="detail-bottom-share-title theme-font text-stroke-main">
+              <view
+                class="detail-bottom-share-title theme-font text-stroke-main"
+              >
                 分享
               </view>
             </button>
@@ -112,7 +114,9 @@
                 class="detail-bottom-share-img"
                 src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
               />
-              <view class="detail-bottom-share-title theme-font text-stroke-main">
+              <view
+                class="detail-bottom-share-title theme-font text-stroke-main"
+              >
                 分享
               </view>
             </view>
@@ -126,7 +130,9 @@
                 class="detail-bottom-right-img"
                 src="https://jms.85gui7.com/kahe-202510/ka-he/common/btn-big-bg.png"
               />
-              <view class="detail-bottom-right-title theme-font text-stroke-main">
+              <view
+                class="detail-bottom-right-title theme-font text-stroke-main"
+              >
                 更多抽奖码
               </view>
             </button>
@@ -135,7 +141,9 @@
                 class="detail-bottom-right-img"
                 src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
               />
-              <view class="detail-bottom-right-title theme-font text-stroke-main">
+              <view
+                class="detail-bottom-right-title theme-font text-stroke-main"
+              >
                 参与抽奖
               </view>
             </view>
@@ -256,7 +264,9 @@ const handleClickShare = () => {
   }
   shareWeixinMiniProgramCard({
     title: `${UserModule.userInfo.nickname}邀请您来助力免费得奖品！`,
-    imageUrl: welfareDetails.value.logo || "https://jms.85gui7.com/kahe-202510/common/share.jpg",
+    imageUrl:
+      welfareDetails.value.logo ||
+      "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: `/subPackages/product/welfare-detail/index?aid=${aid.value}&obj=${UserModule.userInfo.uid}`,
   });
 };

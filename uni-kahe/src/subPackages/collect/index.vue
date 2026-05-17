@@ -4,6 +4,7 @@
       <view class="collect-content-top">
         <image
           class="collect-content-top-bg"
+          mode="aspectFit"
           src="https://jms.85gui7.com/tycw-mp/jikaquan/collect-top-bg.png"
         />
         <view class="collect-content-top-row">
@@ -128,23 +129,24 @@ const navToHome = () => {
 <style lang="scss" scoped>
 .collect {
   position: relative;
-  width: 100%;
+  width: 750rpx;
   height: 100vh;
   background-image: url("https://jms.85gui7.com/kahe-202510/collect/bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   &-content {
-    width: 100vw;
+    width: 750rpx;
     height: 100vh;
     position: relative;
     display: flex;
     flex-direction: column;
     &-top {
       position: relative;
-      width: 100%;
+      width: 750rpx;
       &-bg {
-        width: 100%;
-        aspect-ratio: 750 / 379;
+        width: 750rpx;
+        height: 379rpx;
+        //aspect-ratio: 750 / 379;
       }
       &-row {
         position: absolute;
@@ -188,6 +190,7 @@ const navToHome = () => {
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
+
       &-item {
         width: 100%;
         margin-bottom: 22rpx;

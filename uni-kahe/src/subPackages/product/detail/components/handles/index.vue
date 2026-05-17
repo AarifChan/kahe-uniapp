@@ -156,7 +156,7 @@ const handleShare = () => {
     title: `【${props.product?.title}】这个箱子快出货了，速来！`,
     imageUrl:
       props.product?.image ||
-      "https://jms.85gui7.com/kahe-202510/common/share.jpg",
+      "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: sharePath,
   });
 };
