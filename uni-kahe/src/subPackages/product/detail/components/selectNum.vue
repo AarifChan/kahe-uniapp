@@ -101,7 +101,7 @@
               >
               <image
                 class="selectNum-content-top-info-left-box"
-                src="https://jms.85gui7.com/kahe-202510/ka-he/product/box-normal.png"
+                src="https://jms.85gui7.com/kahe-202510/jikaquan/box-normal.png"
               />
               <text class="selectNum-content-top-info-left-tips">可选</text>
               <image

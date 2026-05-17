@@ -85,7 +85,7 @@
     </view>
     <image
       class="general-top-logo"
-      src="https://jms.85gui7.com/kahe-202510/ka-he/common/logo.png"
+      src="https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-logo.png"
     />
   </view>
 </template>
@@ -123,8 +123,8 @@ const tapShowModel = (value: number) => {
     position: absolute;
     left: 0;
     top: 0;
-    width: 180rpx;
-    height: 71rpx;
+    width: calc(149rpx * 1.3);
+    height: calc(53rpx * 1.3);
   }
 
   &-btn {
