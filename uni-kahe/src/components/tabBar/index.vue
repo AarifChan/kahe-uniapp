@@ -119,8 +119,8 @@ const tabList: TabBarItem[] = [
       "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item3-active.png",
   },
   {
-    text: "盒柜",
-    title: "盒柜",
+    text: "寄存柜",
+    title: "寄存柜",
     selectPath: "/pages/box/index",
     iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item4.png",
     iconSelected:

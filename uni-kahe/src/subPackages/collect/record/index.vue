@@ -1,6 +1,9 @@
 <template>
   <view class="collectRecord">
-    <image class="collectRecord-bg" src="https://jms.85gui7.com/kahe-202510/collect/c-bg.png" />
+    <image
+      class="collectRecord-bg"
+      src="https://jms.85gui7.com/kahe-202510/collect/c-bg.png"
+    />
     <view class="collectRecord-content">
       <view class="collectRecord-content-tab">
         <view class="collectRecord-content-tab-item" @tap.stop="didClickTab(0)">
@@ -15,18 +18,18 @@
             >我参与的</view
           >
         </view>
-        <view class="collectRecord-content-tab-item" @tap.stop="didClickTab(1)">
-          <image
-            v-if="current === 1"
-            class="collectRecord-content-tab-item-bg"
-            src="https://jms.85gui7.com/kahe-202510/collect/btn3.png"
-          />
-          <view
-            class="collectRecord-content-tab-item-title theme-font"
-            :style="{ color: current === 1 ? '#693301' : '#60B1EC' }"
-            >好友帮我</view
-          >
-        </view>
+        <!--        <view class="collectRecord-content-tab-item" @tap.stop="didClickTab(1)">-->
+        <!--          <image-->
+        <!--            v-if="current === 1"-->
+        <!--            class="collectRecord-content-tab-item-bg"-->
+        <!--            src="https://jms.85gui7.com/kahe-202510/collect/btn3.png"-->
+        <!--          />-->
+        <!--          <view-->
+        <!--            class="collectRecord-content-tab-item-title theme-font"-->
+        <!--            :style="{ color: current === 1 ? '#693301' : '#60B1EC' }"-->
+        <!--            >好友帮我</view-->
+        <!--          >-->
+        <!--        </view>-->
       </view>
       <scroll-view
         class="collectRecord-content-list"

@@ -77,7 +77,7 @@ const goodsList = ref([
     src: "https://jms.85gui7.com/kahe-202510/ka-he/home/g5.png",
     type: HomeItemType.collect,
     tag: "https://jms.85gui7.com/kahe-202510/ka-he/home/m1.png",
-    text: "集赏",
+    text: "卡集",
     context: "以物换物",
   },
 ]);
@@ -100,8 +100,11 @@ const handleItem = (index: HomeItemType) => {
       break;
     case HomeItemType.invite:
       uni.previewImage({
-        current: "https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.pn",
-        urls: ["https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png"],
+        current:
+          "https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.pn",
+        urls: [
+          "https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png",
+        ],
       });
       return;
     case HomeItemType.mall:

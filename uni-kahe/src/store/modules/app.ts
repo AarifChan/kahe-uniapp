@@ -46,7 +46,7 @@ class App extends VuexModule {
    * - 默认开启，支持本地持久化（便于灰度/临时下线）
    */
   featureSmashRefundEnabled: boolean =
-    GetStorageSync("featureSmashRefundEnabled") ?? true;
+    GetStorageSync("featureSmashRefundEnabled") ?? false;
 
   @Action
   getSystemInfo() {

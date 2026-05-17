@@ -1,6 +1,9 @@
 <template>
   <view class="collectDetail">
-    <image class="collectDetail-bg" src="https://jms.85gui7.com/kahe-202510/collect/detail-bg.png" />
+    <image
+      class="collectDetail-bg"
+      src="https://jms.85gui7.com/kahe-202510/collect/detail-bg.png"
+    />
     <scroll-view
       class="collectDetail-content"
       scroll-y
@@ -89,12 +92,12 @@
           :src="`https://jms.85gui7.com/kahe-202510/collect/finish-${collectProgress === 1 ? 'enable' : 'disable'}.png`"
         />
       </view>
-      <button openType="share" class="collectDetail-bottom-item">
-        <image
-          class="collectDetail-bottom-item-img"
-          src="https://jms.85gui7.com/kahe-202510/collect/invite-btn.png"
-        />
-      </button>
+      <!--      <button openType="share" class="collectDetail-bottom-item">-->
+      <!--        <image-->
+      <!--          class="collectDetail-bottom-item-img"-->
+      <!--          src="https://jms.85gui7.com/kahe-202510/collect/invite-btn.png"-->
+      <!--        />-->
+      <!--      </button>-->
     </view>
     <!--        <login v-model:show="loginShow" @did-tap-login="handleLogin" />-->
     <alert v-model:show="alertShow" @confirm="handlePayCollect" />
@@ -377,7 +380,7 @@ onShareTimeline(() => {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     z-index: 10;
     &-item {
       background-color: transparent;

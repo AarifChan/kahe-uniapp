@@ -37,23 +37,23 @@ const categoryList = ref([
     value: null,
   },
   {
-    title: "卡牌藏品",
+    title: "评级卡",
     value: 1,
   },
   {
-    title: "手办潮玩",
+    title: "珍藏卡包",
     value: 2,
   },
   {
-    title: "谷子周边",
+    title: "精美卡牌",
     value: 3,
   },
   {
-    title: "家电生活",
+    title: "卡牌周边",
     value: 4,
   },
   {
-    title: "羊毛专区",
+    title: "优惠券",
     value: 5,
   },
 ]);

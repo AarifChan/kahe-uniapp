@@ -31,18 +31,18 @@ const emits = defineEmits(["didClickItem"]);
       <view class="value" style="color: #3b1900">{{ momey }}</view>
       <view class="unit" style="color: #3b1900">无门槛券</view>
     </view>
-    <view class="coinListItem">
-      <image
-        class="bg"
-        src="https://jms.85gui7.com/kahe-202510/mine/coin-bg2.png"
-      />
-      <image
-        class="decorate"
-        src="https://jms.85gui7.com/kahe-202510/mine/coin2.png"
-      />
-      <view class="value" style="color: #785020">{{ coin }}</view>
-      <view class="unit" style="color: #785020">今日怒气值</view>
-    </view>
+    <!--    <view class="coinListItem">-->
+    <!--      <image-->
+    <!--        class="bg"-->
+    <!--        src="https://jms.85gui7.com/kahe-202510/mine/coin-bg2.png"-->
+    <!--      />-->
+    <!--      <image-->
+    <!--        class="decorate"-->
+    <!--        src="https://jms.85gui7.com/kahe-202510/mine/coin2.png"-->
+    <!--      />-->
+    <!--      <view class="value" style="color: #785020">{{ coin }}</view>-->
+    <!--      <view class="unit" style="color: #785020">今日怒气值</view>-->
+    <!--    </view>-->
     <view class="coinListItem" @tap.stop="emits('didClickItem', 'integral')">
       <image
         class="bg"

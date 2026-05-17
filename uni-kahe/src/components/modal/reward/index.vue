@@ -130,21 +130,42 @@
             />
             <text
               class="reward-content-bottom-item-title text-stroke-main theme-font"
-              >继续开赏</text
+              >再次购买</text
             >
           </view>
-          <view
-            v-if="featureSmashRefundEnabled"
-            class="reward-content-bottom-item"
-            @tap.stop="emits('didClickSmash')"
-          >
+          <!--          <view-->
+          <!--            v-if="featureSmashRefundEnabled"-->
+          <!--            class="reward-content-bottom-item"-->
+          <!--            @tap.stop="emits('didClickSmash')"-->
+          <!--          >-->
+          <!--            <image-->
+          <!--              class="reward-content-bottom-item-img"-->
+          <!--              src="https://jms.85gui7.com/kahe-202510/images/reward-btn2.png"-->
+          <!--            />-->
+          <!--            <text-->
+          <!--              class="reward-content-bottom-item-title text-stroke-main theme-font"-->
+          <!--              >一键退货</text-->
+          <!--            >-->
+          <!--          </view>-->
+          <!--          <view class="reward-content-bottom-item">-->
+          <!--            <image-->
+          <!--              class="reward-content-bottom-item-img"-->
+          <!--              src="https://jms.85gui7.com/kahe-202510/images/reward-btn2.png"-->
+          <!--            />-->
+          <!--            <text-->
+          <!--              class="reward-content-bottom-item-title text-stroke-main theme-font"-->
+          <!--              >申请发货</text-->
+          <!--            >-->
+          <!--          </view>-->
+
+          <view class="reward-content-bottom-item" @tap.stop="navToCollectPage">
             <image
               class="reward-content-bottom-item-img"
               src="https://jms.85gui7.com/kahe-202510/images/reward-btn2.png"
             />
             <text
               class="reward-content-bottom-item-title text-stroke-main theme-font"
-              >一键退货</text
+              >换卡集市</text
             >
           </view>
         </view>
@@ -213,6 +234,11 @@ watch(
     vShow.value = value;
   }
 );
+const navToCollectPage = () => {
+  uni.navigateTo({
+    url: "/subPackages/collect/index",
+  });
+};
 
 const goodsList = computed((): UIProductBoxModel[] => {
   return props.rewardList.map((item) => {
