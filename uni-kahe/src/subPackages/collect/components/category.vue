@@ -1,9 +1,26 @@
 <template>
   <view class="relative h-140 w-full flex items-center">
     <view class="w-full flex flex-row justify-between px-32">
-      <view class="flex flex-col items-center w-100" v-for="(item, index) in categoryList" :key="'id' + index" @tap.stop="handleChange(index)">
-        <image class="w-118 h-118" :src="current === index ? `https://jms.85gui7.com/kahe-202510/jikaquan/cate${item.value}_selected.png` : `https://jms.85gui7.com/kahe-202510/jikaquan/cate${item.value}_normal.png`" mode="aspectFit" />
-        <text class="text-22 font-normal text-#247fbc" style="margin-top: -8rpx;">{{ item.title }}</text>
+      <view
+        class="flex flex-col items-center w-100"
+        v-for="(item, index) in categoryList"
+        :key="'id' + index"
+        @tap.stop="handleChange(index)"
+      >
+        <image
+          class="w-118 h-118"
+          :src="
+            current === index
+              ? `https://jms.85gui7.com/kahe-202510/jikaquan/cate_${item.value}_selected.png`
+              : `https://jms.85gui7.com/kahe-202510/jikaquan/cate_${item.value}_normal.png`
+          "
+          mode="aspectFit"
+        />
+        <text
+          class="text-22 font-normal text-#247fbc"
+          style="margin-top: -8rpx"
+          >{{ item.title }}</text
+        >
       </view>
     </view>
   </view>

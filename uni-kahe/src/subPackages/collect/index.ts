@@ -7,6 +7,7 @@ import {
 } from "@/api/collect";
 import { ref } from "vue";
 import { hideLoading, showLoading, ShowToast } from "@/utils";
+import { UserModule } from "@/store/modules/user";
 
 export function useCollect() {
   const collectionList = ref<CollectListObject[]>([]);
@@ -38,6 +39,9 @@ export function useCollect() {
     hideLoading();
   };
   const handleClickCollectItem = (item: CollectListObject) => {
+    if (!UserModule.checkLogin()) {
+      return;
+    }
     uni.navigateTo({
       url: `/subPackages/collect/detail/index?id=${item.id}`,
     });

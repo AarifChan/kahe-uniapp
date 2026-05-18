@@ -56,6 +56,9 @@ export interface CollectListObject {
 
   isThanked: boolean;
 
+  //奖励类型(0 物品 1 无门槛券)
+  type: number;
+
   updateTime: string;
 }
 

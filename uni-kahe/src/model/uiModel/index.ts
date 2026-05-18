@@ -231,10 +231,13 @@ export interface UIProductPayModel {
   usedIntegral?: string; // 海皇积分
   usedCoin?: string; // 海皇币
   num: number;
+  type?: number;
   id: string | number;
   coupon?: UICouponModel;
   isIntegral?: boolean;
   orderId?: string;
+  purchaseGoodsItem?: ProductGoodsDTOModel;
+  purchaseGoodsPrice?: number;
 }
 
 export interface UITabItemType {
@@ -477,6 +480,8 @@ export interface UIProductDetailModel {
   settleStatus: number;
   settleTime: string;
   isIntegral: boolean;
+  purchaseGoodsItem?: ProductGoodsDTOModel;
+  purchaseGoodsPrice?: number;
 }
 export interface UIProductSwapItemModel {
   id: number;

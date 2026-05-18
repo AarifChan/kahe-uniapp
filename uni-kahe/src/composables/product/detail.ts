@@ -346,6 +346,8 @@ export function useProductDetail() {
         usedCoin: data.usedCoin,
         fromMall: false,
         coupon: coupon,
+        purchaseGoodsItem: productDetail.value.purchaseGoodsItem,
+        purchaseGoodsPrice: productDetail.value.purchaseGoodsPrice,
       };
       payShow.value = true;
     } else {
@@ -757,6 +759,8 @@ export function useProductDetail() {
         nextLevelValue: data.product.luckyLevel,
         catId: data.box.cateId,
         winNum: data.product.winNum,
+        purchaseGoodsItem: data.product.purchaseGoodsItem,
+        purchaseGoodsPrice: data.product.purchaseGoodsPrice,
       };
       // 接口返回的所有数据
       productDetail.value = detail;

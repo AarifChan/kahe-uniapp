@@ -69,6 +69,7 @@ export function useMall() {
       usedMoney: "",
       usedCoin: "",
       fromMall: true,
+      type: item.type,
     };
     payItem.value = goods;
     mallShow.value = true;

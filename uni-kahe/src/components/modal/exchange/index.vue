@@ -22,7 +22,9 @@
             <text class="mallPay-top-info-sub-value theme-font">{{
               goods.price
             }}</text>
-            <text class="mallPay-top-info-sub-title">无门槛抵扣券</text>
+            <text class="mallPay-top-info-sub-title"
+              >{{ isTicket ? "无门槛抵扣券" : "点券" }}
+            </text>
           </view>
         </view>
       </view>
@@ -32,7 +34,9 @@
           <text class="mallPay-forbidden-side-title">商品兑换声明</text>
           <text
             class="mallPay-forbidden-side-subTitle text-flow-ellipsis-multiple"
-            >注：商品兑换，需消耗相应无门槛抵扣券，一经兑换无法撤回</text
+            >注：商品兑换，需消耗相应{{
+              isTicket ? "无门槛抵扣券" : "点券"
+            }}，一经兑换无法撤回</text
           >
           <text class="mallPay-forbidden-side-danger"
             >未成年人请在监护人陪同下操作</text
@@ -88,6 +92,10 @@ const props = defineProps({
     type: Object as PropType<UIProductPayModel>,
   },
   isCollect: {
+    default: false,
+    type: Boolean,
+  },
+  isTicket: {
     default: false,
     type: Boolean,
   },

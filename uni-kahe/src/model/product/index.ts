@@ -408,4 +408,6 @@ export interface ProductIndexModel {
 export interface ProductDetailModel {
   box: ProductBoxModel;
   product: ProductModel;
+  purchaseGoodsItem?: ProductGoodsDTOModel;
+  purchaseGoodsPrice?: number;
 }

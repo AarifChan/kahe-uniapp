@@ -22,19 +22,65 @@
         :style="{ height: `calc(990rpx - 80rpx - ${payTypeHeight}rpx)` }"
       >
         <view class="pay-scroll-info">
-          <view class="pay-scroll-info-top">
-            <image class="pay-scroll-info-top-logo" :src="goods.image" />
+          <!-- 第一行：接入的 purchaseGoodsItem -->
+          <view class="pay-scroll-info-top" v-if="goods.purchaseGoodsItem">
+            <image
+              class="pay-scroll-info-top-logo"
+              :src="goods.purchaseGoodsItem.image"
+            />
+            <view class="pay-scroll-info-top-center">
+              <text class="pay-scroll-info-top-center-title">{{
+                goods.purchaseGoodsItem.name
+              }}</text>
+              <view class="pay-scroll-info-top-center-price">
+                <text class="theme-font" style="font-size: 28rpx; color: #000"
+                  >单价¥{{ goods.purchaseGoodsItem.salePrice }}</text
+                >
+                <text
+                  style="
+                    font-size: 24rpx;
+                    color: #999;
+                    text-decoration: line-through;
+                    margin-left: 8rpx;
+                  "
+                  >{{ goods.purchaseGoodsPrice }}</text
+                >
+              </view>
+            </view>
             <view class="pay-scroll-info-top-right">
-              <text class="pay-scroll-info-top-right-title">{{
+              <view class="merchant-tag">
+                <image
+                  class="merchant-tag-icon"
+                  src="https://jms.85gui7.com/kahe-202510/jikaquan/safe.png"
+                  mode="aspectFit"
+                />
+                <text>产品由商家寄售</text>
+              </view>
+              <text class="pay-scroll-info-top-right-count">数量×1</text>
+            </view>
+          </view>
+          <!-- 赠送抽赏次数标签 -->
+          <view class="gift-label" v-if="goods.purchaseGoodsItem">
+            <text class="gift-label-text">赠送抽赏次数</text>
+          </view>
+          <!-- 第二行：原来的盲盒信息 -->
+          <view
+            class="pay-scroll-info-top"
+            :style="
+              goods.purchaseGoodsItem
+                ? 'border-top: 1rpx solid #e8e8e8; padding-top: 20rpx;'
+                : ''
+            "
+          >
+            <image class="pay-scroll-info-top-logo" :src="goods.image" />
+            <view class="pay-scroll-info-top-center">
+              <text class="pay-scroll-info-top-center-title">{{
                 goods.title
               }}</text>
-              <text
-                class="pay-scroll-info-top-right-price theme-font"
-                v-if="!goods.isIntegral"
-                >¥{{ goods.totalPrice }}</text
-              >
-              <text class="pay-scroll-info-top-right-price theme-font" v-else
-                >{{ goods.totalPrice }}积分</text
+            </view>
+            <view class="pay-scroll-info-top-right">
+              <text class="pay-scroll-info-top-right-count"
+                >次数×{{ goods.num }}</text
               >
             </view>
           </view>
@@ -507,10 +553,32 @@ onMounted(() => {
           box-shadow: 0rpx 0rpx 5rpx 0rpx #d4dee9;
           border-radius: 4rpx;
         }
+        &-center {
+          margin-left: 42rpx;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          justify-content: space-between;
+          height: 115rpx;
+          &-title {
+            font-size: 28rpx;
+            font-weight: 400;
+            color: #000000;
+            line-height: 40rpx;
+          }
+          &-price {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+          }
+        }
         &-right {
           margin-left: 42rpx;
           display: flex;
           flex-direction: column;
+          align-items: flex-end;
+          justify-content: space-between;
+          height: 115rpx;
           &-title {
             font-size: 32rpx;
             font-weight: 400;
@@ -519,6 +587,10 @@ onMounted(() => {
           &-price {
             font-size: 32rpx;
             font-weight: 400;
+            color: #000000;
+          }
+          &-count {
+            font-size: 24rpx;
             color: #000000;
           }
         }
@@ -700,6 +772,32 @@ onMounted(() => {
   background: #f6f6f6;
   border-radius: 10rpx;
   margin-bottom: 32rpx;
+}
+
+.merchant-tag {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4rpx 12rpx;
+  border: 1rpx solid #247fbc;
+  border-radius: 8rpx;
+  font-size: 20rpx;
+  color: #247fbc;
+  margin-bottom: 8rpx;
+  &-icon {
+    width: 24rpx;
+    height: 24rpx;
+    margin-right: 6rpx;
+  }
+}
+
+.gift-label {
+  padding: 12rpx 0;
+  &-text {
+    font-size: 24rpx;
+    color: #000;
+    font-weight: 400;
+  }
 }
 
 /* 支付方式选择样式 */
