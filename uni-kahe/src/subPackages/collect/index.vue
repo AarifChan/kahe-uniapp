@@ -2,7 +2,7 @@
   <view
     class="relative w-750 h-screen"
     style="
-      background-image: url(&quot;https://jms.85gui7.com/kahe-202510/collect/bg.png&quot;);
+      background-image: url('https://jms.85gui7.com/kahe-202510/collect/bg.png');
       background-size: 100% 100%;
       background-repeat: no-repeat;
     "
@@ -12,7 +12,7 @@
         <view
           class="w-750 h-379 bg-no-repeat"
           style="
-            background-image: url(&quot;https://jms.85gui7.com/kahe-202510/jikaquan/collect-top-bg.png&quot;);
+            background-image: url('https://jms.85gui7.com/kahe-202510/jikaquan/collect-top-bg.png');
             background-size: 100% 100%;
           "
         ></view>
