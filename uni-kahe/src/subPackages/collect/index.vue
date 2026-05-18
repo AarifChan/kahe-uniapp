@@ -1,69 +1,30 @@
 <template>
-  <view class="collect">
-    <view class="collect-content">
-      <view class="collect-content-top">
-        <image
-          class="collect-content-top-bg"
-          mode="aspectFit"
-          src="https://jms.85gui7.com/tycw-mp/jikaquan/collect-top-bg.png"
-        />
-        <view class="collect-content-top-row">
-          <view class="collect-content-top-row-item" @tap.stop="navToHome">
-            <image
-              class="collect-content-top-row-item-icon"
-              src="https://jms.85gui7.com/kahe-202510/collect/item1.png"
-            />
-            <view class="collect-content-top-row-item-title text-stroke-main"
-              >首页</view
-            >
+  <view class="relative w-750 h-screen" style="background-image: url('https://jms.85gui7.com/kahe-202510/collect/bg.png'); background-size: 100% 100%; background-repeat: no-repeat;">
+    <view class="relative w-750 h-screen flex flex-col">
+      <view class="relative w-750">
+        <view class="w-750 h-379 bg-no-repeat" style="background-image: url('https://jms.85gui7.com/kahe-202510/jikaquan/collect-top-bg.png'); background-size: 100% 100%;"></view>
+        <view class="absolute top-16 left-16 flex flex-row">
+          <view class="flex flex-row items-center mr-28" @tap.stop="navToHome">
+            <image class="w-32 h-30" src="https://jms.85gui7.com/kahe-202510/collect/item1.png" mode="aspectFit" />
+            <view class="ml-4 font-normal text-20 text-white leading-16">首页</view>
           </view>
-          <view class="collect-content-top-row-item" @tap.stop="clickRule">
-            <image
-              class="collect-content-top-row-item-icon"
-              src="https://jms.85gui7.com/kahe-202510/collect/item2.png"
-            />
-            <view class="collect-content-top-row-item-title text-stroke-main"
-              >规则</view
-            >
+          <view class="flex flex-row items-center mr-28" @tap.stop="clickRule">
+            <image class="w-32 h-30" src="https://jms.85gui7.com/kahe-202510/collect/item2.png" mode="aspectFit" />
+            <view class="ml-4 font-normal text-20 text-white leading-16">规则</view>
           </view>
-          <view
-            class="collect-content-top-row-title text-stroke-main"
-            @tap.stop="navToRecordPage"
-            >集成记录</view
-          >
+          <view class="font-normal text-20 text-white py-6" style="border-bottom: 1rpx solid rgba(34, 55, 133, 0.88);" @tap.stop="navToRecordPage">集成记录</view>
         </view>
       </view>
       <category @did-change="handleCategoryChange" />
-      <scroll-view
-        class="collect-content-list"
-        scroll-y
-        @scrolltolower="handleScrollToLower"
-      >
-        <view
-          v-for="(item, index) in collectionList"
-          :key="'it' + index"
-          class="collect-content-list-item"
-        >
-          <item
-            :item="item"
-            @did-click-item="handleClickCollectItem"
-            @did-exchange-item="handleClickItem"
-          />
+      <scroll-view class="w-full px-32 py-24 flex flex-col" style="height: calc(100vh - 379rpx - 140rpx - env(safe-area-inset-bottom));" scroll-y @scrolltolower="handleScrollToLower">
+        <view v-for="(item, index) in collectionList" :key="'it' + index" class="w-full mb-22">
+          <item :item="item" @did-click-item="handleClickCollectItem" @did-exchange-item="handleClickItem" />
         </view>
         <empty :show="collectionList.length === 0" />
       </scroll-view>
     </view>
-    <Exchange
-      v-model:show="mallShow"
-      :goods="payItem"
-      :is-collect="true"
-      @did-tap-smash="handleCollectionExchange"
-    />
-    <common-modal
-      v-model:show="modalShow"
-      :title="modalTitle"
-      :content="modalContent"
-    />
+    <Exchange v-model:show="mallShow" :goods="payItem" :is-collect="true" @did-tap-smash="handleCollectionExchange" />
+    <common-modal v-model:show="modalShow" :title="modalTitle" :content="modalContent" />
   </view>
 </template>
 
@@ -125,80 +86,3 @@ const navToHome = () => {
   });
 };
 </script>
-
-<style lang="scss" scoped>
-.collect {
-  position: relative;
-  width: 750rpx;
-  height: 100vh;
-  background-image: url("https://jms.85gui7.com/kahe-202510/collect/bg.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  &-content {
-    width: 750rpx;
-    height: 100vh;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    &-top {
-      position: relative;
-      width: 750rpx;
-      &-bg {
-        width: 750rpx;
-        height: 379rpx;
-        //aspect-ratio: 750 / 379;
-      }
-      &-row {
-        position: absolute;
-        top: 16rpx;
-        left: 16rpx;
-        display: flex;
-        flex-direction: row;
-        &-item {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          margin-right: 28rpx;
-          &-icon {
-            width: 32rpx;
-            height: 30rpx;
-          }
-          &-title {
-            margin-left: 4rpx;
-            font-weight: 400;
-            font-size: 20rpx;
-            color: #ffffff;
-            line-height: 16rpx;
-          }
-        }
-
-        &-title {
-          font-weight: 400;
-          font-size: 20rpx;
-          color: #ffffff;
-          padding: 6rpx 0;
-          border-bottom: 1px solid rgba(34, 55, 133, 0.88);
-        }
-      }
-    }
-    &-list {
-      width: 100%;
-      height: calc(
-        100vh - 750rpx * 379 / 750 - 138rpx - env(safe-area-inset-bottom)
-      );
-      padding: 24rpx 32rpx;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-
-      &-item {
-        width: 100%;
-        margin-bottom: 22rpx;
-      }
-      &-item:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-}
-</style>

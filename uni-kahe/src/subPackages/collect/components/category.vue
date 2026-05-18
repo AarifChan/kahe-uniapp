@@ -1,30 +1,11 @@
 <template>
-  <view class="collect" style="height: 140rpx">
-    <scroll-view
-      class="collect-category"
-      :enable-flex="true"
-      :scroll-x="true"
-      scroll-with-animation
-    >
-      <view
-        style="display: inline-block"
-        v-for="(item, index) in categoryList"
-        :key="'id' + index"
-        @tap.stop="handleChange(index)"
-      >
-        <view class="collect-category-item">
-          <image
-            class="collect-category-item-icon"
-            :src="
-              current === index
-                ? `https://jms.85gui7.com/kahe-202510/jikaquan/cate${item.value}_selected.png`
-                : `https://jms.85gui7.com/kahe-202510/jikaquan/cate${item.value}_normal.png`
-            "
-          />
-          <text class="collect-category-item-title">{{ item.title }}</text>
-        </view>
+  <view class="relative h-140 w-full flex items-center">
+    <view class="w-full flex flex-row justify-between px-32">
+      <view class="flex flex-col items-center w-100" v-for="(item, index) in categoryList" :key="'id' + index" @tap.stop="handleChange(index)">
+        <image class="w-118 h-118" :src="current === index ? `https://jms.85gui7.com/kahe-202510/jikaquan/cate${item.value}_selected.png` : `https://jms.85gui7.com/kahe-202510/jikaquan/cate${item.value}_normal.png`" mode="aspectFit" />
+        <text class="text-22 font-normal text-#247fbc" style="margin-top: -8rpx;">{{ item.title }}</text>
       </view>
-    </scroll-view>
+    </view>
   </view>
 </template>
 
@@ -32,10 +13,6 @@
 import { ref } from "vue";
 const current = ref(0);
 const categoryList = ref([
-  // {
-  //   title: "全部",
-  //   value: null,
-  // },
   {
     title: "评级卡",
     value: 1,
@@ -65,39 +42,3 @@ const handleChange = (index: number) => {
 
 const emits = defineEmits(["didChange"]);
 </script>
-
-<style lang="scss" scoped>
-.collect {
-  position: relative;
-  height: 140rpx;
-  width: 100%;
-  &-category {
-    //display: flex;
-    //flex-direction: row;
-    white-space: nowrap;
-    position: relative;
-    height: 140rpx;
-    &-item {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-right: 32rpx;
-      width: 100rpx;
-      &-icon {
-        width: 118rpx;
-        height: 118rpx;
-      }
-      &-title {
-        margin-top: -8rpx;
-        font-size: 22rpx;
-        font-weight: 400;
-        color: #247fbc;
-      }
-    }
-    &-item:first-child {
-      margin-left: 32rpx;
-    }
-  }
-}
-</style>
