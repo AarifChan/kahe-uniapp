@@ -5,7 +5,7 @@
       <view class="relative w-126 h-126 flex-shrink-0">
         <image
           class="absolute left-0 top-0 w-59 h-34 z-10"
-          src="https://jms.85gui7.com/kahe-202510/challenge/pingtuan-tag.png"
+          src="/static/kahe-202510/challenge/pingtuan-tag.png"
           mode="aspectFit"
         />
         <image
@@ -103,7 +103,7 @@ const props = defineProps({
 /** 用对象样式避免内联 url(&quot;...) 编译到 WXML 时引号/斜杠被误解析（miniprogram-ci 报 unexpected `/`） */
 const cardBgStyle = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/challenge/recomand-bg.png)",
+    "url(/static/kahe-202510/challenge/recomand-bg.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",

@@ -1,6 +1,6 @@
 <template>
-    <!-- <image class="sort-up" :src="isUp ? 'https://jms.85gui7.com/kahe-202510/groupBuy/up-active.png' : 'https://jms.85gui7.com/kahe-202510/groupBuy/up.png'" />
-        <image class="sort-down" :src="!isUp ? 'https://jms.85gui7.com/kahe-202510/groupBuy/down-active.png' : 'https://jms.85gui7.com/kahe-202510/groupBuy/down.png'" /> -->
+    <!-- <image class="sort-up" :src="isUp ? '/static/kahe-202510/groupBuy/up-active.png' : '/static/kahe-202510/groupBuy/up.png'" />
+        <image class="sort-down" :src="!isUp ? '/static/kahe-202510/groupBuy/down-active.png' : '/static/kahe-202510/groupBuy/down.png'" /> -->
     <view class="sort">
         <view class="sort-up" :class="{ active: isUp }"></view>
         <view class="sort-down" :class="{ active: !isUp }"></view>

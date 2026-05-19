@@ -2,7 +2,7 @@
   <view class="collectDetail">
     <image
       class="collectDetail-bg"
-      src="https://jms.85gui7.com/kahe-202510/collect/detail-bg.png"
+      src="/static/kahe-202510/collect/detail-bg.png"
     />
     <scroll-view
       class="collectDetail-content"
@@ -13,7 +13,7 @@
         <view class="collectDetail-content-top-item" @tap.stop="navToHome">
           <image
             class="collectDetail-content-top-item-icon"
-            src="https://jms.85gui7.com/kahe-202510/collect/item1.png"
+            src="/static/kahe-202510/collect/item1.png"
           />
           <view class="collectDetail-content-top-item-title text-stroke-main"
             >首页</view
@@ -37,7 +37,7 @@
           <view class="collectDetail-content-top-info-progress">
             <image
               class="collectDetail-content-top-info-progress-title"
-              src="https://jms.85gui7.com/kahe-202510/collect/title.png"
+              src="/static/kahe-202510/collect/title.png"
             />
             <view class="collectDetail-content-top-info-progress-bar">
               <view
@@ -55,12 +55,12 @@
         <view class="collectDetail-content-bottom-top">
           <image
             class="collectDetail-content-bottom-top-bg"
-            src="https://jms.85gui7.com/kahe-202510/collect/decorate.png"
+            src="/static/kahe-202510/collect/decorate.png"
           />
           <view class="collectDetail-content-bottom-top-info">
             <image
               class="collectDetail-content-bottom-top-info-label"
-              src="https://jms.85gui7.com/kahe-202510/collect/label1.png"
+              src="/static/kahe-202510/collect/label1.png"
             />
             <image
               class="collectDetail-content-bottom-top-info-avatar text-flow-ellipsis-single"
@@ -89,13 +89,13 @@
       <view class="collectDetail-bottom-item" @tap.stop="handleCollect">
         <image
           class="collectDetail-bottom-item-img"
-          :src="`https://jms.85gui7.com/kahe-202510/collect/finish-${collectProgress === 1 ? 'enable' : 'disable'}.png`"
+          :src="`/static/kahe-202510/collect/finish-${collectProgress === 1 ? 'enable' : 'disable'}.png`"
         />
       </view>
       <!--      <button openType="share" class="collectDetail-bottom-item">-->
       <!--        <image-->
       <!--          class="collectDetail-bottom-item-img"-->
-      <!--          src="https://jms.85gui7.com/kahe-202510/collect/invite-btn.png"-->
+      <!--          src="/static/kahe-202510/collect/invite-btn.png"-->
       <!--        />-->
       <!--      </button>-->
     </view>

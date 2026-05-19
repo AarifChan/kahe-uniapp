@@ -1,10 +1,10 @@
 <template>
     <view class="customSelector">
-        <image class="customSelector-bg" src="https://jms.85gui7.com/kahe-202510/pet/btn-bg.png" />
+        <image class="customSelector-bg" src="/static/kahe-202510/pet/btn-bg.png" />
         <text class="customSelector-title theme-font" @tap.stop="dropDown=!dropDown">{{currentTitle}}</text>
         <!--        <view class="customSelector-sort" @tap.stop="sorted=!sorted">-->
-        <!--            <image class="customSelector-sort-up" :src="sorted ? 'https://jms.85gui7.com/kahe-202510/pet/up-active.png': 'https://jms.85gui7.com/kahe-202510/pet/up.png' "  />-->
-        <!--            <image class="customSelector-sort-down" :src="sorted ? 'https://jms.85gui7.com/kahe-202510/pet/down.png': 'https://jms.85gui7.com/kahe-202510/pet/down-active.png' "  />-->
+        <!--            <image class="customSelector-sort-up" :src="sorted ? '/static/kahe-202510/pet/up-active.png': '/static/kahe-202510/pet/up.png' "  />-->
+        <!--            <image class="customSelector-sort-down" :src="sorted ? '/static/kahe-202510/pet/down.png': '/static/kahe-202510/pet/down-active.png' "  />-->
         <!--        </view>-->
         <view class="customSelector-dropdown" v-if="dropDown">
             <view v-for="option in options" :key="option.value" class="customSelector-dropdown-item theme-font" @click="clickOption(option)">

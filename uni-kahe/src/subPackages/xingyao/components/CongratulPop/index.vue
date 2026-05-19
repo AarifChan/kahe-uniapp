@@ -83,13 +83,13 @@ const formData = reactive({
       <view class="pop">
         <view class="pop-topIcon">
           <image
-            src="https://jms.85gui7.com/kahe-202510/shine/top-icon.png"
+            src="/static/kahe-202510/shine/top-icon.png"
             class="icon_bg"
           />
           <text class="icon_title theme-font">恭喜获得</text>
         </view>
         <image
-          src="https://jms.85gui7.com/kahe-202510/shine/pop-bg.png"
+          src="/static/kahe-202510/shine/pop-bg.png"
           mode="scaleToFill"
           class="pop-bg"
         />
@@ -100,7 +100,7 @@ const formData = reactive({
           <view class="top">
             <text>选择收货信息</text>
             <image
-              src="https://jms.85gui7.com/kahe-202510/shine/right-icon.png"
+              src="/static/kahe-202510/shine/right-icon.png"
               mode="scaleToFill"
               class="top-img"
               @tap.stop="navToSelectAddress"
@@ -125,12 +125,12 @@ const formData = reactive({
         <view class="pop-bottom">
           <view class="rectangle" @tap.stop="tapChoose">
             <image
-              src="https://jms.85gui7.com/kahe-202510/shine/normal.png"
+              src="/static/kahe-202510/shine/normal.png"
               mode="scaleToFill"
               class="select-icon"
             />
             <image
-              src="https://jms.85gui7.com/kahe-202510/shine/selected.png"
+              src="/static/kahe-202510/shine/selected.png"
               mode="scaleToFill"
               class="icon"
               v-if="choose"
@@ -246,7 +246,7 @@ const formData = reactive({
       justify-content: center;
       width: 187rpx;
       height: 63rpx;
-      background-image: url("https://jms.85gui7.com/kahe-202510/shine/yellow.png");
+      background-image: url("/static/kahe-202510/shine/yellow.png");
       background-size: 100% 100%;
       background-repeat: no-repeat;
     }

@@ -6,7 +6,7 @@
     @close="emits('update:show', false)"
   >
     <view class="boxSelect">
-      <image class="boxSelect-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/common/select-bg.png" />
+      <image class="boxSelect-bg" src="/static/kahe-202510/ka-he/common/select-bg.png" />
       <view class="boxSelect-wrapper">
         <view class="boxSelect-wrapper-content">
           <view class="boxSelect-wrapper-content-title other-font"

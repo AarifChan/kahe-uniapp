@@ -3,7 +3,7 @@
         <view class="limitless-top">
             <image
                 class="limitless-top-bg"
-                src="https://jms.85gui7.com/kahe/product/limitless-top.png"
+                src="/static/kahe/product/limitless-top.png"
             />
             <view class="limitless-top-content">
                 <view class="limitless-top-content-info">
@@ -33,7 +33,7 @@
         <view class="limitless-center">
             <image
                 class="limitless-center-bg"
-                src="https://jms.85gui7.com/kahe/product/limitless-center.png"
+                src="/static/kahe/product/limitless-center.png"
             />
             <swiper
                 class="limitless-center-main"
@@ -55,7 +55,7 @@
                         >
                             <image
                                 class="limitless-center-content-item-content-label1-bg"
-                                src="https://jms.85gui7.com/kahe/product/title-bg1.png"
+                                src="/static/kahe/product/title-bg1.png"
                             />
                             <text
                                 class="limitless-center-content-item-content-label1-title theme-font"
@@ -66,7 +66,7 @@
                         >
                             <image
                                 class="limitless-center-content-item-content-label2-bg"
-                                src="https://jms.85gui7.com/kahe/product/title-bg2.png"
+                                src="/static/kahe/product/title-bg2.png"
                             />
                             <text
                                 class="limitless-center-content-item-content-label2-title theme-font"
@@ -77,19 +77,19 @@
             </swiper>
             <image
                 class="limitless-center-left"
-                src="https://jms.85gui7.com/kahe/common/left-arrow.png"
+                src="/static/kahe/common/left-arrow.png"
                 @tap.stop="changeIndex(true)"
             />
             <image
                 class="limitless-center-right"
-                src="https://jms.85gui7.com/kahe/common/right-arrow.png"
+                src="/static/kahe/common/right-arrow.png"
                 @tap.stop="changeIndex(false)"
             />
         </view>
         <view class="limitless-bottom">
             <image
                 class="limitless-bottom-bg"
-                src="https://jms.85gui7.com/kahe/product/limitless-bottom.png"
+                src="/static/kahe/product/limitless-bottom.png"
             />
             <view class="limitless-bottom-tab">
                 <view
@@ -102,8 +102,8 @@
                         class="limitless-bottom-tab-item-img"
                         :src="
                             currentTab == index
-                                ? 'https://jms.85gui7.com/kahe/product/tab-active.png'
-                                : 'https://jms.85gui7.com/kahe/product/tab-normal.png'
+                                ? '/static/kahe/product/tab-active.png'
+                                : '/static/kahe/product/tab-normal.png'
                         "
                     />
                     <text class="limitless-bottom-tab-item-title theme-font">{{
@@ -188,7 +188,7 @@
             >
                 <image
                     class="limitless-card-item-bg"
-                    src="https://jms.85gui7.com/kahe/product/card-style1.png"
+                    src="/static/kahe/product/card-style1.png"
                 />
                 <view class="limitless-card-item-content">
                     <text class="limitless-card-item-content-value theme-font">来{{ item.formatNum }}发</text>

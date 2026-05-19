@@ -24,7 +24,7 @@
             <view class="address-content-item-content-right-border" />
             <image
               style="width: 17px; height: 24px"
-              src="https://jms.85gui7.com/kahe/mine/address-edit.png"
+              src="/static/kahe/mine/address-edit.png"
             />
           </view>
         </view>

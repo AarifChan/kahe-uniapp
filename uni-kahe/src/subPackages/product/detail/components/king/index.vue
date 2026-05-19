@@ -1,13 +1,13 @@
 <template>
     <view class="demonKing">
         <view class="king">
-            <image src="https://jms.85gui7.com/kahe-202510/ka-he/product/kings-bg.png" class="king-bg" />
+            <image src="/static/kahe-202510/ka-he/product/kings-bg.png" class="king-bg" />
             <view class="king-left">
                 <view class="king-left-content">
-                    <image class="king-left-content-decorate" src="https://jms.85gui7.com/kahe-202510/ka-he/product/border-bg.png" />
+                    <image class="king-left-content-decorate" src="/static/kahe-202510/ka-he/product/border-bg.png" />
                     <image class="king-left-content-avatar" :src="product.demonKing.avatar"
                         v-if="product.demonKing.exist" />
-                    <!-- <image class="king-left-content-empty" src="https://jms.85gui7.com/kahe-202510/product/king-empty.png" /> -->
+                    <!-- <image class="king-left-content-empty" src="/static/kahe-202510/product/king-empty.png" /> -->
                 </view>
             </view>
             <view class="king-info" v-if="product.demonKing.exist">

@@ -7,7 +7,7 @@
     <view class="mallPay">
       <image
         class="mallPay-close"
-        src="https://jms.85gui7.com/kahe-202510/images/close.png"
+        src="/static/kahe-202510/images/close.png"
         @tap.stop="emits('update:show', false)"
       />
       <view class="mallPay-top">
@@ -44,7 +44,7 @@
         </view>
         <image
           class="mallPay-forbidden-img"
-          src="https://jms.85gui7.com/kahe/product/18age.png"
+          src="/static/kahe/product/18age.png"
         />
       </view>
       <agreement
@@ -59,7 +59,7 @@
       >
         <image
           class="mallPay-button-img"
-          src="https://jms.85gui7.com/kahe-202510/images/reward-btn1.png"
+          src="/static/kahe-202510/images/reward-btn1.png"
         />
         <text class="mallPay-button-title theme-font text-stroke-main"
           >确定兑换</text

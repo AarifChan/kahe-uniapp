@@ -26,13 +26,13 @@
       <!--      <view class="groupBuyDetail-content-base">-->
       <!--        <image-->
       <!--          class="groupBuyDetail-content-base-img"-->
-      <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/card1.png"-->
+      <!--          src="/static/kahe-202510/groupBuy/card1.png"-->
       <!--        />-->
       <!--        <view class="groupBuyDetail-content-base-line1">-->
       <!--          <view class="groupBuyDetail-content-base-line1-title">{{-->
       <!--            groupBuyDetail.title-->
       <!--          }}</view>-->
-      <!--          &lt;!&ndash;                    <image class="groupBuyDetail-content-base-line1-icon" src="https://jms.85gui7.com/kahe-202510/groupBuy/arrow.png" />&ndash;&gt;-->
+      <!--          &lt;!&ndash;                    <image class="groupBuyDetail-content-base-line1-icon" src="/static/kahe-202510/groupBuy/arrow.png" />&ndash;&gt;-->
       <!--        </view>-->
       <!--        <view class="groupBuyDetail-content-base-time">-->
       <!--          <view class="groupBuyDetail-content-base-time-title">{{-->
@@ -96,7 +96,7 @@
       <!--          <view class="groupBuyDetail-content-group-card1-top">-->
       <!--            <image-->
       <!--              class="groupBuyDetail-content-group-card1-top-left"-->
-      <!--              src="https://jms.85gui7.com/kahe-202510/groupBuy/item3.png"-->
+      <!--              src="/static/kahe-202510/groupBuy/item3.png"-->
       <!--            />-->
       <!--            <view-->
       <!--              class="groupBuyDetail-content-group-card1-top-right SimHei-font"-->
@@ -114,7 +114,7 @@
       <!--            >-->
       <!--            <image-->
       <!--              class="groupBuyDetail-content-group-card1-bottom-right"-->
-      <!--              src="https://jms.85gui7.com/kahe-202510/groupBuy/arrow-1.png"-->
+      <!--              src="/static/kahe-202510/groupBuy/arrow-1.png"-->
       <!--            />-->
       <!--          </view>-->
       <!--        </view>-->
@@ -122,7 +122,7 @@
         <view class="groupBuyDetail-content-group-card2-top">
           <image
             class="groupBuyDetail-content-group-card2-top-img"
-            src="https://jms.85gui7.com/kahe-202510/groupBuy/kami-title.png"
+            src="/static/kahe-202510/groupBuy/kami-title.png"
           />
         </view>
 
@@ -172,7 +172,7 @@
     <view class="groupBuyDetail-bottom">
       <image
         class="groupBuyDetail-bottom-bg"
-        src="https://jms.85gui7.com/kahe-202510/groupBuy/group-bottom-bg.png"
+        src="/static/kahe-202510/groupBuy/group-bottom-bg.png"
       />
       <view class="groupBuyDetail-bottom-line">
         <view class="groupBuyDetail-bottom-line-left">
@@ -182,7 +182,7 @@
           >
             <image
               class="groupBuyDetail-bottom-line-left-item-icon"
-              src="https://jms.85gui7.com/kahe-202510/groupBuy/kami-item1.png"
+              src="/static/kahe-202510/groupBuy/kami-item1.png"
             />
             <view class="groupBuyDetail-bottom-line-left-item-title"
               >卡密列表</view
@@ -194,7 +194,7 @@
           >
             <image
               class="groupBuyDetail-bottom-line-left-item-icon"
-              src="https://jms.85gui7.com/kahe-202510/groupBuy/kami-item2.png"
+              src="/static/kahe-202510/groupBuy/kami-item2.png"
             />
             <view class="groupBuyDetail-bottom-line-left-item-title"
               >我的卡密</view
@@ -209,7 +209,7 @@
             >
             <image
               class="groupBuyDetail-bottom-line-left-item-icon"
-              src="https://jms.85gui7.com/kahe-202510/groupBuy/kami-item3.png"
+              src="/static/kahe-202510/groupBuy/kami-item3.png"
             />
             <view class="groupBuyDetail-bottom-line-left-item-title"
               >加入群聊</view
@@ -662,7 +662,7 @@ onShareTimeline(() => {
             left: -20rpx;
             width: 132rpx;
             height: 49rpx;
-            background-image: url("https://jms.85gui7.com/kahe-202510/groupBuy/bunddle.png");
+            background-image: url("/static/kahe-202510/groupBuy/bunddle.png");
             background-size: 100% 100%;
             background-repeat: no-repeat;
             text-align: center;

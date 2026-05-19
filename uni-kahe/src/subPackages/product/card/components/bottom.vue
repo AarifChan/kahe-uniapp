@@ -1,7 +1,7 @@
 <template>
     <view class="card">
         <view class="bottoms">
-            <image src="https://jms.85gui7.com/kahe-202510/ka-he/machine/btn-bg.png" class="bottoms-bg" />
+            <image src="/static/kahe-202510/ka-he/machine/btn-bg.png" class="bottoms-bg" />
             <view class="content">
                 <view class="content-Progressbar">
                     <view class="content-Progressbar-bg">
@@ -14,7 +14,7 @@
             <view class="btnList">
                 <view class="btnList-bolist" v-for="(item, index) in list" :key="index"
                     @tap.stop="$emit('tapCards', item)">
-                    <image src="https://jms.85gui7.com/kahe-202510/ka-he/machine/card-btn.png" class="img" />
+                    <image src="/static/kahe-202510/ka-he/machine/card-btn.png" class="img" />
                     <view class="num theme-font">{{ item.num / 5 }}包</view>
                 </view>
             </view>

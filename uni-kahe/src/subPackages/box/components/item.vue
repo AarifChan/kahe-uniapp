@@ -20,7 +20,7 @@
         item?.goods?.name
       }}</text>
       <view class="boxItem-info-ticket">
-        <!--                <image class="boxItem-info-ticket-img" src="https://jms.85gui7.com/kahe/mine/icon2.png" />-->
+        <!--                <image class="boxItem-info-ticket-img" src="/static/kahe/mine/icon2.png" />-->
         <text class="boxItem-info-ticket-title price-font">
           {{ item?.goods?.price ?? 0 }}</text
         >
@@ -35,8 +35,8 @@
         class="boxItem-lock-img"
         :src="
           item.status === 0
-            ? 'https://jms.85gui7.com/kahe/box/box-goods-unlock.png'
-            : 'https://jms.85gui7.com/kahe/box/box-goods-lock.png'
+            ? '/static/kahe/box/box-goods-unlock.png'
+            : '/static/kahe/box/box-goods-lock.png'
         "
       />
     </view>

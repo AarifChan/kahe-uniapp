@@ -1,6 +1,6 @@
 <template>
     <view class="eggs">
-        <image class="eggs-bg" src="https://jms.85gui7.com/kahe-202510/pet/pet-bg.png" />
+        <image class="eggs-bg" src="/static/kahe-202510/pet/pet-bg.png" />
         <view class="eggs-top">
             <top :handle="false" :eggs="currentEgg !== null" @did-click-egg="handleClickEgg" />
         </view>

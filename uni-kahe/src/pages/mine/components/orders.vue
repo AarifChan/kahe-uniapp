@@ -3,7 +3,7 @@
     <view class="orders-min_orders">
       <image
         class="orders-min_orders-bg"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/mine/flowerBg.png"
+        src="/static/kahe-202510/ka-he/mine/flowerBg.png"
       />
       <text class="orders-min_orders-title other-font">我的订单</text>
     </view>
@@ -25,19 +25,19 @@ import { ref } from "vue";
 const emits = defineEmits(["clickOrdersTap"]);
 const ordersList = ref([
   {
-    image: "https://jms.85gui7.com/kahe-202510/mine/row-item1.png",
+    image: "/static/kahe-202510/mine/row-item1.png",
     name: "待处理",
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/mine/row-item2.png",
+    image: "/static/kahe-202510/mine/row-item2.png",
     name: "已发货",
   },
   // {
-  //   image: "https://jms.85gui7.com/kahe-202510/mine/row-item3.png",
+  //   image: "/static/kahe-202510/mine/row-item3.png",
   //   name: "宝箱",
   // },
   {
-    image: "https://jms.85gui7.com/kahe-202510/mine/row-item3.png",
+    image: "/static/kahe-202510/mine/row-item3.png",
     name: "购买明细",
   },
 ]);

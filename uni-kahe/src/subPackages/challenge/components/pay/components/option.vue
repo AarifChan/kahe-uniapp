@@ -12,7 +12,7 @@
     />
     <view class="flex flex-row items-center">
       <text class="text-24rpx font-400 text-black mr-22rpx">{{ value }}</text>
-      <image class="w-32rpx h-49rpx" src="https://jms.85gui7.com/kahe/common/right-arrow.png" />
+      <image class="w-32rpx h-49rpx" src="/static/kahe/common/right-arrow.png" />
     </view>
   </view>
 </template>

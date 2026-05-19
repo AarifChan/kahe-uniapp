@@ -10,7 +10,7 @@
       >
         <image
           class="actions-item-bg"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/product/item-bg.png"
+          src="/static/kahe-202510/ka-he/product/item-bg.png"
         />
         <image class="actions-item-icon" :src="item.icon" />
         <text class="actions-item-title theme-font">{{ item.title }}</text>
@@ -25,7 +25,7 @@
       >
         <image
           class="actions-item-bg"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/product/item-bg.png"
+          src="/static/kahe-202510/ka-he/product/item-bg.png"
         />
         <image class="actions-item-icon" :src="item.icon" />
         <text class="actions-item-title theme-font">{{ item.title }}</text>
@@ -45,7 +45,7 @@
       >
         <image
           class="actions-item-bg"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/product/item-bg.png"
+          src="/static/kahe-202510/ka-he/product/item-bg.png"
         />
         <image class="actions-item-icon" :src="item.icon" />
         <text class="actions-item-title theme-font">{{ item.title }}</text>
@@ -66,27 +66,27 @@ import { shareWeixinMiniProgramCard } from "@/composables/share";
 const { checkIsFavorite, handleFavoriteAction } = useFavorite();
 const actionList = ref([
   {
-    icon: "https://jms.85gui7.com/kahe-202510/ka-he/product/kefu.png",
+    icon: "/static/kahe-202510/ka-he/product/kefu.png",
     title: "客服",
     action: 4,
   },
   {
-    icon: "https://jms.85gui7.com/kahe-202510/ka-he/product/save.png",
+    icon: "/static/kahe-202510/ka-he/product/save.png",
     title: "寄存",
     action: 1,
   },
   {
-    icon: "https://jms.85gui7.com/kahe-202510/ka-he/product/favorite.png",
+    icon: "/static/kahe-202510/ka-he/product/favorite.png",
     title: "收藏",
     action: 2,
   },
   {
-    icon: "https://jms.85gui7.com/kahe-202510/ka-he/product/reload.png",
+    icon: "/static/kahe-202510/ka-he/product/reload.png",
     title: "刷新",
     action: 3,
   },
   {
-    icon: "https://jms.85gui7.com/share.png",
+    icon: "/static/share.png",
     title: "分享",
     action: 5,
   },
@@ -156,7 +156,7 @@ const handleShare = () => {
     title: `【${props.product?.title}】这个箱子快出货了，速来！`,
     imageUrl:
       props.product?.image ||
-      "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
+      "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: sharePath,
   });
 };

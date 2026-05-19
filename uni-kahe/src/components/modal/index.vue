@@ -6,7 +6,7 @@
   >
     <view class="common">
       <image
-        src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-title.png"
+        src="/static/kahe-202510/ka-he/common/common-title.png"
         class="common-commonBg"
       />
       <view class="common-content">

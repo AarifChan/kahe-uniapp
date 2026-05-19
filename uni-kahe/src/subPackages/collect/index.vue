@@ -2,7 +2,7 @@
   <view
     class="relative w-750 h-screen"
     style="
-      background-image: url('https://jms.85gui7.com/kahe-202510/collect/bg.png');
+      background-image: url('/static/kahe-202510/collect/bg.png');
       background-size: 100% 100%;
       background-repeat: no-repeat;
     "
@@ -12,7 +12,7 @@
         <view
           class="w-750 h-379 bg-no-repeat"
           style="
-            background-image: url('https://jms.85gui7.com/kahe-202510/jikaquan/collect-top-bg.png');
+            background-image: url('/static/kahe-202510/jikaquan/collect-top-bg.png');
             background-size: 100% 100%;
           "
         ></view>
@@ -20,7 +20,7 @@
           <view class="flex flex-row items-center mr-28" @tap.stop="navToHome">
             <image
               class="w-32 h-30"
-              src="https://jms.85gui7.com/kahe-202510/collect/item1.png"
+              src="/static/kahe-202510/collect/item1.png"
               mode="aspectFit"
             />
             <view class="ml-4 font-normal text-20 text-white leading-16"
@@ -30,7 +30,7 @@
           <view class="flex flex-row items-center mr-28" @tap.stop="clickRule">
             <image
               class="w-32 h-30"
-              src="https://jms.85gui7.com/kahe-202510/collect/item2.png"
+              src="/static/kahe-202510/collect/item2.png"
               mode="aspectFit"
             />
             <view class="ml-4 font-normal text-20 text-white leading-16"

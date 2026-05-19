@@ -311,7 +311,7 @@ onShareAppMessage(() => {
   const boxName = detail.value?.box?.name || "闯关挑战";
   const logo =
     detail.value?.box?.logo ||
-    "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg";
+    "/static/kahe-202510/jikaquan/jikaquan-share.jpg";
   return {
     title: `【${boxName}】这个箱子快出货了，速来！`,
     path: `/subPackages/challenge/detail/index?id=${id}`,
@@ -324,7 +324,7 @@ onShareTimeline(() => {
   const boxName = detail.value?.box?.name || "闯关挑战";
   const logo =
     detail.value?.box?.logo ||
-    "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg";
+    "/static/kahe-202510/jikaquan/jikaquan-share.jpg";
   return {
     title: `【${boxName}】这个箱子快出货了，速来！`,
     path: `/subPackages/challenge/detail/index?id=${id}`,

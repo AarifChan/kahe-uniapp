@@ -1,16 +1,16 @@
 <template>
     <view calss="cards">
-        <image class="cards-cardBg" src="https://jms.85gui7.com/kahe-202510/ka-he/machine/newCard-bg.png" />
+        <image class="cards-cardBg" src="/static/kahe-202510/ka-he/machine/newCard-bg.png" />
         <Lamp ref="barrageRef" @tapLampAction="tapLampAction" :list="barrageList" />
         <view class="cards-mains">
             <view class="cards-mains-awardBg">
-                <!-- <image src="https://jms.85gui7.com/kahe-202510/images/award-bg.png" class="cards-mains-awardBg-imgs" /> -->
+                <!-- <image src="/static/kahe-202510/images/award-bg.png" class="cards-mains-awardBg-imgs" /> -->
                 <image class="cards-mains-awardBg-prize" :src="productDetail.image" />
             </view>
             <Rightmo :list="itemList" @tapItem="tapItem" />
         </view>
         <!-- <view class="cards-box"> -->
-        <!-- <image class="cards-box-bg" src="https://jms.85gui7.com/kahe-202510/product/king-bg.png" /> -->
+        <!-- <image class="cards-box-bg" src="/static/kahe-202510/product/king-bg.png" /> -->
         <!-- <view class="cards-box-content">
                 <text class="cards-box-content-title theme-font">单人{{ (productDetail.another / 5).toFixed(0)
                     }}包,必出高罕卡</text>
@@ -21,7 +21,7 @@
                                    <view class="cards-box-Progressbar-num">{{luckLabel}}</view>
                 </view>
             </view> -->
-        <!-- <image class="cards-box-img" src="https://jms.85gui7.com/kahe-202510/product/card-decorate.png" /> -->
+        <!-- <image class="cards-box-img" src="/static/kahe-202510/product/card-decorate.png" /> -->
         <!-- </view> -->
         <view class="cards-box">
             <text>{{ productDetail.title }}</text>

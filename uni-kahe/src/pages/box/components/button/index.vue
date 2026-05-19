@@ -2,7 +2,7 @@
   <view class="custom-btn">
     <image
       class="custom-btn-img"
-      src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
+      src="/static/kahe-202510/ka-he/common/common-btn-bg.png"
     />
     <view class="custom-btn-content">
       <slot />

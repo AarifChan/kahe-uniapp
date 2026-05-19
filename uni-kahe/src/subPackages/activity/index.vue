@@ -3,7 +3,7 @@
     <image
       class="activity-bg"
       mode="widthFix"
-      src="https://jms.85gui7.com/kahe-202510/ka-he/welfare/bg.png"
+      src="/static/kahe-202510/ka-he/welfare/bg.png"
     />
 
     <view class="activity-content">

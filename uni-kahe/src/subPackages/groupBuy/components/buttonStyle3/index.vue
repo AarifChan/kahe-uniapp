@@ -1,6 +1,6 @@
 <template>
     <view class="groupBuyBtnStyle3">
-        <image class="groupBuyBtnStyle3-img" src="https://jms.85gui7.com/kahe-202510/groupBuy/btn4.png" />
+        <image class="groupBuyBtnStyle3-img" src="/static/kahe-202510/groupBuy/btn4.png" />
         <view class="groupBuyBtnStyle3-title">{{title}}</view>
     </view>
 </template>

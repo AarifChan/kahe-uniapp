@@ -1,6 +1,6 @@
 <template>
     <view class="dailyItem">
-        <image class="dailyItem-bg" src="https://jms.85gui7.com/kahe-202510/home-upgrade/daily-item.png" />
+        <image class="dailyItem-bg" src="/static/kahe-202510/home-upgrade/daily-item.png" />
         <view class="dailyItem-content">
             <view class="dailyItem-content-top">
                 <view class="dailyItem-content-top-title theme-font"
@@ -30,8 +30,8 @@
                         class="dailyItem-content-bottom-btn-img"
                         :src="
                             item.receiveStatus === 0
-                                ? 'https://jms.85gui7.com/kahe-202510/home-upgrade/btn-style1-normal.png'
-                                : 'https://jms.85gui7.com/kahe-202510/home-upgrade/btn-style1-disable.png'
+                                ? '/static/kahe-202510/home-upgrade/btn-style1-normal.png'
+                                : '/static/kahe-202510/home-upgrade/btn-style1-disable.png'
                         "
                     />
                     <view

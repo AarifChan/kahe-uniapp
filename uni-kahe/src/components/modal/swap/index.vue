@@ -6,7 +6,7 @@
     bg-color="transparent"
   >
     <view class="swap">
-      <image class="swap-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/product/swap-bg.png" />
+      <image class="swap-bg" src="/static/kahe-202510/ka-he/product/swap-bg.png" />
       <view class="swap-content">
         <view class="swap-sort">
           <view
@@ -24,8 +24,8 @@
               class="swap-sort-item-img"
               :src="
                 index === sortIndex
-                  ? 'https://jms.85gui7.com/kahe-202510/ka-he/product/sort.png'
-                  : 'https://jms.85gui7.com/kahe-202510/ka-he/product/un-sort.png'
+                  ? '/static/kahe-202510/ka-he/product/sort.png'
+                  : '/static/kahe-202510/ka-he/product/un-sort.png'
               "
             />
           </view>
@@ -67,7 +67,7 @@
           >
             <image
               class="swap-box-item-bg"
-              src="https://jms.85gui7.com/kahe-202510/ka-he/product/swap-item.png"
+              src="/static/kahe-202510/ka-he/product/swap-item.png"
             />
             <view class="swap-box-item-content">
               <view class="swap-box-item-content-top">
@@ -103,7 +103,7 @@
 
       <image
         class="swap-close"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/product/close.png"
+        src="/static/kahe-202510/ka-he/product/close.png"
         @tap.stop="emits('update:show', false)"
       />
     </view>

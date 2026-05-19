@@ -94,12 +94,12 @@ const getBoxImage = (index: number) => {
   const status = map?.[index] ?? 0;
   // 1=已打开且有奖励，-1=陷阱，0=未打开
   if (status === 1) {
-    return "https://jms.85gui7.com/kahe-202510/challenge/box-state3.png";
+    return "/static/kahe-202510/challenge/box-state3.png";
   }
   if (status === -1 || props.isOver) {
-    return "https://jms.85gui7.com/kahe-202510/challenge/box-state2.png";
+    return "/static/kahe-202510/challenge/box-state2.png";
   }
-  return "https://jms.85gui7.com/kahe-202510/challenge/box-state1.png";
+  return "/static/kahe-202510/challenge/box-state1.png";
 };
 
 const getRewardImageStyle = (image?: string) => {
@@ -114,7 +114,7 @@ const getRewardImageStyle = (image?: string) => {
 /** 模板内勿写 url(&quot;https://...)，miniprogram-ci 编译 WXML 会报 unexpected `/` */
 const playTopBgStyle = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/challenge/play-top-bg.png)",
+    "url(/static/kahe-202510/challenge/play-top-bg.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -211,7 +211,7 @@ const playTopBgStyle = {
             <image
               class="w-185 h-100"
               mode="aspectFit"
-              src="https://jms.85gui7.com/kahe-202510/challenge/910102c7bd8d979da34af93bf927179d.gif"
+              src="/static/kahe-202510/challenge/910102c7bd8d979da34af93bf927179d.gif"
               style="transform: scale(0.8)"
             />
             <view class="flex flex-col text-24 text-[#FF1300]">
@@ -224,7 +224,7 @@ const playTopBgStyle = {
               v-if="hasStarted"
               class="w-185 h-150"
               mode="aspectFit"
-              src="https://jms.85gui7.com/kahe-202510/challenge/ce10ec36134c784cff4d2578137286b4.gif"
+              src="/static/kahe-202510/challenge/ce10ec36134c784cff4d2578137286b4.gif"
               style="transform: scale(0.75)"
             />
             <view class="flex flex-col text-20 text-[#5E4947] items-center">
@@ -271,7 +271,7 @@ const playTopBgStyle = {
         class="w-348 h-107"
         mode="aspectFill"
         style="width: 348rpx; height: 107rpx"
-        src="https://jms.85gui7.com/kahe-202510/challenge/exit-btn.png"
+        src="/static/kahe-202510/challenge/exit-btn.png"
         @tap.stop="tapFinish"
       />
     </view>
@@ -285,7 +285,7 @@ const playTopBgStyle = {
   bottom: 64rpx;
   width: 96rpx;
   height: 42rpx;
-  background-image: url("https://jms.85gui7.com/kahe-202510/ka-he/common/num_bg.png");
+  background-image: url("/static/kahe-202510/ka-he/common/num_bg.png");
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;

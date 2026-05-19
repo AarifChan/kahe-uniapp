@@ -1,12 +1,12 @@
 <template>
   <view v-if="show" class="loginModal">
     <view class="login">
-      <image class="login-bg" src="https://jms.85gui7.com/kahe-202510/login/login-bg.png" />
+      <image class="login-bg" src="/static/kahe-202510/login/login-bg.png" />
       <view class="login-content">
         <view class="login-content-title" />
         <image
           class="login-content-title"
-          src="https://jms.85gui7.com/kahe-202510/login/login-title1.png"
+          src="/static/kahe-202510/login/login-title1.png"
         />
         <login-item
           v-for="(item, index) in items"
@@ -45,14 +45,14 @@
         >
           <image
             class="login-content-title-img"
-            src="https://jms.85gui7.com/kahe-202510/login/login-btn-title.png"
+            src="/static/kahe-202510/login/login-btn-title.png"
           />
         </custom-button>
         // #endif
       </view>
       <image
         class="login-close"
-        src="https://jms.85gui7.com/kahe-202510/login/close.png"
+        src="/static/kahe-202510/login/close.png"
         @tap.stop="emits('update:show', false)"
       />
     </view>
@@ -107,22 +107,22 @@ const items = ref([
   {
     title: "进群见面礼",
     subTitle: "¥20.00元优惠券",
-    icon: "https://jms.85gui7.com/kahe-202510/login/login-item1.png",
+    icon: "/static/kahe-202510/login/login-item1.png",
   },
   {
     title: "卡票免费领",
     subTitle: "可换心仪卡牌",
-    icon: "https://jms.85gui7.com/kahe-202510/login/login-item2.png",
+    icon: "/static/kahe-202510/login/login-item2.png",
   },
   {
     title: "各品类福袋",
     subTitle: "总有喜欢的",
-    icon: "https://jms.85gui7.com/kahe-202510/login/login-item3.png",
+    icon: "/static/kahe-202510/login/login-item3.png",
   },
   {
     title: "卡牌可集换",
     subTitle: "收藏党福音",
-    icon: "https://jms.85gui7.com/kahe-202510/login/login-item4.png",
+    icon: "/static/kahe-202510/login/login-item4.png",
   },
 ]);
 </script>

@@ -3,7 +3,7 @@
     <view class="merchantInfoGoods-empty" v-if="item.productNum === 0">
       <image
         style="width: 137rpx; height: 63rpx"
-        src="https://jms.85gui7.com/jos/1214/sell-out.png"
+        src="/static/jos/1214/sell-out.png"
       />
     </view>
     <view class="merchantInfoGoods-cover">
@@ -65,7 +65,7 @@ defineProps({
 });
 
 const formatLabelImage = (index: number) => {
-  return "https://jms.85gui7.com/kahe-202510/tags/mode" + index + ".png";
+  return "/static/kahe-202510/tags/mode" + index + ".png";
 };
 </script>
 

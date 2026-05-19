@@ -2,13 +2,13 @@
   <view class="box">
     <image
       class="box-bg"
-      src="https://jms.85gui7.com/kahe-202510/ka-he/mine/mine-bg.png"
+      src="/static/kahe-202510/ka-he/mine/mine-bg.png"
     />
     <!-- logo -->
     <view class="box-logo">
       <image
         class="box_img"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/common/logo.png"
+        src="/static/kahe-202510/ka-he/common/logo.png"
       />
     </view>
     <!-- 公告 -->
@@ -19,7 +19,7 @@
       <view class="box-top-question" @tap.stop="showModalType(4)">
         <image
           class="box-top-question-img"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/common/question.png"
+          src="/static/kahe-202510/ka-he/common/question.png"
         />
         <text class="box-top-question-title theme-font">规则</text>
       </view>

@@ -1,15 +1,15 @@
 <template>
   <scroll-view class="discount" :scroll-y="true">
-    <image class="discount-bg" src="https://jms.85gui7.com/kahe-202510/common/bg.png"></image>
+    <image class="discount-bg" src="/static/kahe-202510/common/bg.png"></image>
     <view class="discount-content">
       <view class="discount-content-top">
         <image
           class="discount-content-top-logo"
-          src="https://jms.85gui7.com/kahe-202510/discount/discount-logo.png"
+          src="/static/kahe-202510/discount/discount-logo.png"
         />
         <image
           class="discount-content-top-title"
-          src="https://jms.85gui7.com/kahe-202510/discount/discount-title.png"
+          src="/static/kahe-202510/discount/discount-title.png"
         />
       </view>
       <view class="discount-content-list">

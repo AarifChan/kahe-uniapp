@@ -10,7 +10,7 @@
                 <image
                     class="normalTab-content-item-bg"
                     :src="
-                        currentTab === index ? 'https://jms.85gui7.com/kahe-202510/product/product-tab-item.png' : ''
+                        currentTab === index ? '/static/kahe-202510/product/product-tab-item.png' : ''
                     "
                 />
                 <text

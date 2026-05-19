@@ -2,7 +2,7 @@
     <tn-popup v-model="vShow" open-direction="center" bg-color="transparent" @close="emits('update:show', false)">
 
         <view class="petModal">
-            <image class="petModal-bg" src="https://jms.85gui7.com/kahe-202510/pet/pet-modal.png" />
+            <image class="petModal-bg" src="/static/kahe-202510/pet/pet-modal.png" />
             <text class="petModal-title theme-font">是否放生
                 <text class="text-stroke" style="color: #73B2FF">{{item?.name}}</text>
             </text>

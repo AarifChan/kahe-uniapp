@@ -11,8 +11,8 @@
           class="w-118 h-118"
           :src="
             current === index
-              ? `https://jms.85gui7.com/kahe-202510/jikaquan/cate_${item.value}_selected.png`
-              : `https://jms.85gui7.com/kahe-202510/jikaquan/cate_${item.value}_normal.png`
+              ? `/static/kahe-202510/jikaquan/cate_${item.value}_selected.png`
+              : `/static/kahe-202510/jikaquan/cate_${item.value}_normal.png`
           "
           mode="aspectFit"
         />

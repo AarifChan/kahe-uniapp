@@ -3,7 +3,7 @@
         <view class="common-tab-list">
             <view class="common-tab-list-item" v-for="(item, index) in list" :key="index" @tap.stop="clickItem(index)">
                 <view :class="index === current ? 'common-tab-list-item-select' : 'common-tab-list-item-content'">
-                    <image class="common-tab-list-item-content-select" v-if="current===index" src="https://jms.85gui7.com/kahe-202510/home/home-tab.png" />
+                    <image class="common-tab-list-item-content-select" v-if="current===index" src="/static/kahe-202510/home/home-tab.png" />
                     <text class="common-tab-list-item-content-title theme-font" :class="current===index ? 'common-tab-list-item-content-title-select': ''">{{
                         item.title
                     }}</text>

@@ -53,7 +53,7 @@ export interface UserChestModel {
 // cid: 1000002
 // createTime: "2023-01-31 08:55:35"
 // goods: [,…]
-// 0: {id: 10119, name: "皇冠粉嫩熊", image: "https://jms.85gui7.com/upload/1601982963812139008.jpg", enum: 113,…}
+// 0: {id: 10119, name: "皇冠粉嫩熊", image: "/static/upload/1601982963812139008.jpg", enum: 113,…}
 // id: 351
 // num: 2
 // orderId: "1620224236779995136"

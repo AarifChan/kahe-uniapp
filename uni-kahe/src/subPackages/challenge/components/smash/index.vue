@@ -9,7 +9,7 @@
       <!-- 背景图 -->
       <image
         class="w-full h-full"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/common/smash-bg.png"
+        src="/static/kahe-202510/ka-he/common/smash-bg.png"
         mode="aspectFill"
       />
 
@@ -71,7 +71,7 @@
           </view>
           <image
             class="w-[120rpx] h-[130rpx]"
-            src="https://jms.85gui7.com/kahe/product/18age.png"
+            src="/static/kahe/product/18age.png"
             mode="aspectFit"
           />
         </view>
@@ -94,7 +94,7 @@
       <!-- 关闭按钮 -->
       <image
         class="absolute right-0 top-0 w-[74rpx] h-[74rpx]"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/common/close.png"
+        src="/static/kahe-202510/ka-he/common/close.png"
         @tap.stop="emits('update:show', false)"
       />
     </view>

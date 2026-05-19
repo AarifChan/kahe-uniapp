@@ -1,11 +1,11 @@
 <template>
     <view class="gift">
-        <image class="gift-bg" src="https://jms.85gui7.com/kahe-202510/product/product-bg.png" />
+        <image class="gift-bg" src="/static/kahe-202510/product/product-bg.png" />
         <scroll-view class="gift-scroll" @scrolltolower="scrollToLower">
             <view class="gift-scroll-content">
                 <view class="gift-scroll-content-top">
-                    <image class="gift-scroll-content-top-icon" src="https://jms.85gui7.com/kahe-202510/discount/item.png" />
-                    <image class="gift-scroll-content-top-title" src="https://jms.85gui7.com/kahe-202510/discount/title.png" />
+                    <image class="gift-scroll-content-top-icon" src="/static/kahe-202510/discount/item.png" />
+                    <image class="gift-scroll-content-top-title" src="/static/kahe-202510/discount/title.png" />
                 </view>
                 <view class="gift-scroll-content-list">
                     <view class="gift-scroll-content-list-item" v-for="(item, index) in list" :key="'i'+index" :id="'id'+index">
@@ -19,14 +19,14 @@
                         </view>
                         <view class="gift-scroll-content-list-item-bottom">
                             <view class="gift-scroll-content-list-item-bottom-item" v-for="(zItem, zIndex) in item.rewards" :key="index + ':' + zIndex" :id="index + ':' + zIndex">
-                                <image class="gift-scroll-content-list-item-bottom-item-img" src="https://jms.85gui7.com/kahe-202510/discount/item2.png" />
+                                <image class="gift-scroll-content-list-item-bottom-item-img" src="/static/kahe-202510/discount/item2.png" />
                                 <view class="gift-scroll-content-list-item-bottom-item-info">
                                     <view class="gift-scroll-content-list-item-bottom-item-info-title">购买必得</view>
                                     <view class="gift-scroll-content-list-item-bottom-item-info-subTitle">{{zItem.num}}{{zItem.name}}</view>
                                 </view>
                             </view>
                             <view class="gift-scroll-content-list-item-bottom-item" v-for="(zItem, zIndex) in item.rewardsDay" :key="index + ':' + zIndex" :id="index + ':' + zIndex">
-                                <image class="gift-scroll-content-list-item-bottom-item-img"  src="https://jms.85gui7.com/kahe-202510/discount/item1.png" />
+                                <image class="gift-scroll-content-list-item-bottom-item-img"  src="/static/kahe-202510/discount/item1.png" />
                                 <view class="gift-scroll-content-list-item-bottom-item-info">
                                     <view class="gift-scroll-content-list-item-bottom-item-info-title">每日登录</view>
                                     <view class="gift-scroll-content-list-item-bottom-item-info-subTitle">{{zItem.num}}{{zItem.name}}</view>

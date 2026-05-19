@@ -5,7 +5,7 @@
     :key="index"
     @tap.stop="emits('tapCardListItem', item)"
   >
-    <image class="goods-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/machine/item-bg.png" />
+    <image class="goods-bg" src="/static/kahe-202510/ka-he/machine/item-bg.png" />
     <view class="goods-left">
       <image class="goods-left-img" :src="item.logo" mode="widthFix" />
     </view>

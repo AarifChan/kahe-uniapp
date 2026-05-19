@@ -1,11 +1,11 @@
 <template>
     <view class="daily">
-        <image class="daily-bg" src="https://jms.85gui7.com/kahe-202510/home-upgrade/daily-bg.png" />
+        <image class="daily-bg" src="/static/kahe-202510/home-upgrade/daily-bg.png" />
         <view class="daily-content">
             <view class="daily-content-top">
                 <image
                     class="daily-content-top-img"
-                    src="https://jms.85gui7.com/kahe-202510/home-upgrade/top.png"
+                    src="/static/kahe-202510/home-upgrade/top.png"
                 />
             </view>
             <!--            <tab v-model:is-all="isAll" @did-update-tab="tabDidChange" />-->

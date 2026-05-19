@@ -1,6 +1,6 @@
 <template>
     <view class="exploration">
-        <image class="exploration-bg" src="https://jms.85gui7.com/kahe-202510/pet/pet-bg.png" />
+        <image class="exploration-bg" src="/static/kahe-202510/pet/pet-bg.png" />
         <view class="exploration-top">
             <top />
         </view>

@@ -6,7 +6,7 @@
     @close="emits('update:show', false)"
   >
     <view class="boxSelect">
-      <image class="boxSelect-img" src="https://jms.85gui7.com/kahe-202510/images/selectBg.png" />
+      <image class="boxSelect-img" src="/static/kahe-202510/images/selectBg.png" />
       <view class="boxSelect-wrapper">
         <view class="boxSelect-wrapper-content">
           <text class="boxSelect-wrapper-content-title">{{ title }}</text>

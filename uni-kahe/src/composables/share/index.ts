@@ -11,7 +11,7 @@ const DEFAULT_MINI_PROGRAM_ID = "gh_4a7522ad6b7a";
 const DEFAULT_WEB_URL = "https://app.91tcg.com";
 // Use a tiny fixed image as emergency thumbnail fallback for WeChat.
 const DEFAULT_FALLBACK_IMAGE =
-  "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg";
+  "/static/kahe-202510/jikaquan/jikaquan-share.jpg";
 const DEFAULT_SCENE: "WXSceneSession" | "WXSceneTimeline" = "WXSceneSession";
 const DEFAULT_MINI_PROGRAM_TYPE: 0 | 1 | 2 = 0;
 

@@ -1,6 +1,6 @@
 <template>
     <div class="home-bulletin">
-        <image src="https://jms.85gui7.com/kahe-202510/ka-he/home/bulletin.png" class="img" />
+        <image src="/static/kahe-202510/ka-he/home/bulletin.png" class="img" />
         <div class="bulletin-content">
            <TnNoticeBar :data="noticeData" :auto-play="true" :loop="true"/>
         </div>

@@ -3,14 +3,14 @@
     <scroll-view class="groupBuySubmit-content" scroll-y>
       <!--            <view class="groupBuySubmit-content-address" @tap.stop="navToSelectAddress">-->
       <!--                <view class="groupBuySubmit-content-address-left">-->
-      <!--                    <image class="groupBuySubmit-content-address-left-img" src="https://jms.85gui7.com/kahe-202510/groupBuy/address.png" />-->
+      <!--                    <image class="groupBuySubmit-content-address-left-img" src="/static/kahe-202510/groupBuy/address.png" />-->
       <!--                    <view>-->
       <!--                        <view class="groupBuySubmit-content-address-left-value">{{ selectAddress ? selectAddress.province + selectAddress.city + selectAddress.district + selectAddress.detail  : '请选择地址' }} </view>-->
       <!--                        <view class="groupBuySubmit-content-address-left-value">{{ selectAddress ? selectAddress.realName + '  ' + selectAddress.phone  : '' }} </view>-->
       <!--                    </view>-->
 
       <!--                </view>-->
-      <!--                <image class="groupBuySubmit-content-address-right" src="https://jms.85gui7.com/kahe-202510/groupBuy/arrow-1.png" />-->
+      <!--                <image class="groupBuySubmit-content-address-right" src="/static/kahe-202510/groupBuy/arrow-1.png" />-->
       <!--            </view>-->
       <view class="groupBuySubmit-content-group">
         <!--                <view class="groupBuySubmit-content-merchant">-->
@@ -63,7 +63,7 @@
             <view class="groupBuySubmit-content-info-right-num">数量×1</view>
             <image
               class="groupBuySubmit-content-info-right-arrow"
-              src="https://jms.85gui7.com/kahe-202510/groupBuy/right-arrow.png"
+              src="/static/kahe-202510/groupBuy/right-arrow.png"
             />
           </view>
         </view>
@@ -138,7 +138,7 @@
       <!--                    <view class="groupBuySubmit-content-line-value">商家优惠券</view>-->
       <!--                    <view style="display: flex;flex-direction: row">-->
       <!--                        <view class="groupBuySubmit-content-line-value">暂无可用商家优惠券</view>-->
-      <!--                        <image class="groupBuySubmit-content-line-arrow" src="https://jms.85gui7.com/kahe-202510/groupBuy/arrow.png" />-->
+      <!--                        <image class="groupBuySubmit-content-line-arrow" src="/static/kahe-202510/groupBuy/arrow.png" />-->
       <!--                    </view>-->
       <!--                </view>-->
       <!--            </view>-->
@@ -151,12 +151,12 @@
         >
           <image
             class="groupBuySubmit-bottom-tips-select-bg"
-            src="https://jms.85gui7.com/kahe-202510/groupBuy/select-normal.png"
+            src="/static/kahe-202510/groupBuy/select-normal.png"
           />
           <image
             v-if="checked"
             class="groupBuySubmit-bottom-tips-select-value"
-            src="https://jms.85gui7.com/kahe-202510/groupBuy/select.png"
+            src="/static/kahe-202510/groupBuy/select.png"
           />
         </view>
         <view class="groupBuySubmit-bottom-tips-content">
@@ -202,7 +202,7 @@
         >
           <image
             class="groupBuySubmit-bottom-line-right-img"
-            src="https://jms.85gui7.com/kahe-202510/groupBuy/btn.png"
+            src="/static/kahe-202510/groupBuy/btn.png"
           />
           <view class="groupBuySubmit-bottom-line-right-title theme-font"
             >提交订单</view
@@ -514,7 +514,7 @@ const fetchPageData = async () => {
         width: 140rpx;
         height: 73rpx;
         border-radius: 10rpx;
-        background-image: url("https://jms.85gui7.com/kahe-202510/groupBuy/buy-item.png");
+        background-image: url("/static/kahe-202510/groupBuy/buy-item.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         display: flex;
@@ -569,7 +569,7 @@ const fetchPageData = async () => {
     padding: 16rpx 16rpx env(safe-area-inset-bottom);
     box-sizing: border-box;
 
-    background-image: url("https://jms.85gui7.com/kahe-202510/groupBuy/pay-bg.png");
+    background-image: url("/static/kahe-202510/groupBuy/pay-bg.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     &-tips {

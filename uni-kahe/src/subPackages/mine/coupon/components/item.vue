@@ -2,7 +2,7 @@
   <view class="coupon-list-item">
     <image
       class="coupon-list-item-bg"
-      :src="item.status === 0 ? 'https://jms.85gui7.com/kahe-202510/coupon/coupon1.png' : 'https://jms.85gui7.com/kahe-202510/coupon/coupon2.png'"
+      :src="item.status === 0 ? '/static/kahe-202510/coupon/coupon1.png' : '/static/kahe-202510/coupon/coupon2.png'"
     />
     <view class="coupon-list-item-left">
       <view class="coupon-list-item-left-title">{{ item.title }}</view>
@@ -20,7 +20,7 @@
       <view class="coupon-list-item-right-btn">
         <image
           class="coupon-list-item-right-btn-img"
-          :src="item.status === 0 ? 'https://jms.85gui7.com/kahe-202510/coupon/btn1.png' : 'https://jms.85gui7.com/kahe-202510/coupon/btn2.png'"
+          :src="item.status === 0 ? '/static/kahe-202510/coupon/btn1.png' : '/static/kahe-202510/coupon/btn2.png'"
         />
         <view class="coupon-list-item-right-btn-title theme-font">{{
           item.status === 0 ? '去使用' : '已失效'

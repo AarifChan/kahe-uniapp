@@ -1,7 +1,7 @@
 <template>
   <view class="payItem">
     <view class="payItem-top">
-      <image class="payItem-top-icon" src="https://jms.85gui7.com/kahe-202510/order/item.png" />
+      <image class="payItem-top-icon" src="/static/kahe-202510/order/item.png" />
       <view class="payItem-top-title">{{ item.title }}</view>
     </view>
     <view

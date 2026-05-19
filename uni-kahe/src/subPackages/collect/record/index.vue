@@ -2,7 +2,7 @@
   <view class="collectRecord">
     <image
       class="collectRecord-bg"
-      src="https://jms.85gui7.com/kahe-202510/collect/c-bg.png"
+      src="/static/kahe-202510/collect/c-bg.png"
     />
     <view class="collectRecord-content">
       <view class="collectRecord-content-tab">
@@ -10,7 +10,7 @@
           <image
             v-if="current === 0"
             class="collectRecord-content-tab-item-bg"
-            src="https://jms.85gui7.com/kahe-202510/collect/btn3.png"
+            src="/static/kahe-202510/collect/btn3.png"
           />
           <view
             class="collectRecord-content-tab-item-title theme-font"
@@ -22,7 +22,7 @@
         <!--          <image-->
         <!--            v-if="current === 1"-->
         <!--            class="collectRecord-content-tab-item-bg"-->
-        <!--            src="https://jms.85gui7.com/kahe-202510/collect/btn3.png"-->
+        <!--            src="/static/kahe-202510/collect/btn3.png"-->
         <!--          />-->
         <!--          <view-->
         <!--            class="collectRecord-content-tab-item-title theme-font"-->
@@ -43,7 +43,7 @@
         >
           <image
             class="collectRecord-content-list-item-bg"
-            src="https://jms.85gui7.com/kahe-202510/collect/item-bg.png"
+            src="/static/kahe-202510/collect/item-bg.png"
           />
           <view class="collectRecord-content-list-item-content">
             <view class="collectRecord-content-list-item-content-top">
@@ -109,8 +109,8 @@
                     class="collectRecord-content-list-item-content-bottom-thank-bg"
                     :src="
                       item.isThanked
-                        ? 'https://jms.85gui7.com/kahe-202510/collect/btn5.png'
-                        : 'https://jms.85gui7.com/kahe-202510/collect/btn4.png'
+                        ? '/static/kahe-202510/collect/btn5.png'
+                        : '/static/kahe-202510/collect/btn4.png'
                     "
                   />
                   <view
@@ -125,8 +125,8 @@
             class="collectRecord-content-list-item-decorate"
             :src="
               current === 0
-                ? 'https://jms.85gui7.com/kahe-202510/collect/label1.png'
-                : 'https://jms.85gui7.com/kahe-202510/collect/label2.png'
+                ? '/static/kahe-202510/collect/label1.png'
+                : '/static/kahe-202510/collect/label2.png'
             "
           />
         </view>

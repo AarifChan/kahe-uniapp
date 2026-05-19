@@ -1,6 +1,6 @@
 <template>
   <view class="groupBuyList">
-    <!--    <image class="groupBuyList-bg" src="https://jms.85gui7.com/kahe-202510/groupBuy/groupBuyBg.png" />-->
+    <!--    <image class="groupBuyList-bg" src="/static/kahe-202510/groupBuy/groupBuyBg.png" />-->
     <view class="groupBuyList-content">
       <view class="groupBuyList-content-top">
         <search placeholder="" @did-tap-search="handleSearch" :black="true" />
@@ -54,7 +54,7 @@
       <view class="groupBuyList-bottom-side" @tap.stop="changePage(true)">
         <!--        <image-->
         <!--          class="groupBuyList-bottom-side-bg"-->
-        <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/btn5.png"-->
+        <!--          src="/static/kahe-202510/groupBuy/btn5.png"-->
         <!--        />-->
         <view class="groupBuyList-bottom-side-title theme-font">上一页</view>
       </view>
@@ -64,7 +64,7 @@
       <view class="groupBuyList-bottom-side" @tap.stop="changePage(false)">
         <!--        <image-->
         <!--          class="groupBuyList-bottom-side-bg"-->
-        <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/btn5.png"-->
+        <!--          src="/static/kahe-202510/groupBuy/btn5.png"-->
         <!--        />-->
         <view class="groupBuyList-bottom-side-title theme-font">下一页</view>
       </view>

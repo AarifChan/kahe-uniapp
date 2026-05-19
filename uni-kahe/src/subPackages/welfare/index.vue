@@ -1,14 +1,14 @@
 <template>
   <view class="welfare">
-    <image class="welfare-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/welfare/bg.png" />
+    <image class="welfare-bg" src="/static/kahe-202510/ka-he/welfare/bg.png" />
     <view class="welfare-content">
-      <image class="welfare-content-top" src="https://jms.85gui7.com/kahe-202510/welfare/top-bg.png" />
+      <image class="welfare-content-top" src="/static/kahe-202510/welfare/top-bg.png" /> <!-- 缺失图片: top-bg.png -->
       <view class="welfare-content-padding">
         <image
           class="welfare-content-padding-item"
           v-for="(item, index) in itemList"
           :key="'card' + index"
-          :src="'https://jms.85gui7.com/kahe-202510/welfare/card' + (index + 1) + '.png'"
+          :src="'/static/kahe-202510/welfare/card' + (index + 1) + '.png'"
           @tap.stop="clickItem(item)"
         />
       </view>
@@ -79,27 +79,27 @@ const clickItem = (item: WelfareItem) => {
 
 const itemList = ref([
   {
-    image: "https://jms.85gui7.com/kahe-202510/welfare/card1.png",
+    image: "/static/kahe-202510/welfare/card1.png", // 缺失图片: card1.png
     itemType: WelfareItemType.vip,
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/welfare/card2.png",
+    image: "/static/kahe-202510/welfare/card2.png", // 缺失图片: card2.png
     itemType: WelfareItemType.activity,
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/welfare/card3.png",
+    image: "/static/kahe-202510/welfare/card3.png", // 缺失图片: card3.png
     itemType: WelfareItemType.integral,
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/welfare/card4.png",
+    image: "/static/kahe-202510/welfare/card4.png", // 缺失图片: card4.png
     itemType: WelfareItemType.redBag,
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/welfare/card5.png",
+    image: "/static/kahe-202510/welfare/card5.png", // 缺失图片: card5.png
     itemType: WelfareItemType.chest,
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/welfare/card6.png",
+    image: "/static/kahe-202510/welfare/card6.png", // 缺失图片: card6.png
     itemType: WelfareItemType.discount,
   },
 ]);

@@ -18,7 +18,7 @@
       >
         <image
           class="absolute left-28rpx top-17rpx w-20rpx h-32rpx"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/common/right-arrow.png"
+          src="/static/kahe-202510/ka-he/common/right-arrow.png"
           @tap.stop="emits('update:show', false)"
         />
         <view class="font-400 text-28rpx text-black">确认购买</view>
@@ -126,21 +126,21 @@
                 <view class="font-400 text-22rpx text-black">极速发货 </view>
                 <image
                   class="w-18rpx h-18rpx ml-4rpx"
-                  src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png"
+                  src="/static/kahe-202510/ka-he/common/ok.png"
                 />
               </view>
               <view class="flex flex-row items-center mr-8rpx">
                 <view class="font-400 text-22rpx text-black">品质保证 </view>
                 <image
                   class="w-18rpx h-18rpx ml-4rpx"
-                  src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png"
+                  src="/static/kahe-202510/ka-he/common/ok.png"
                 />
               </view>
               <view class="flex flex-row items-center">
                 <view class="font-400 text-22rpx text-black">售后无忧 </view>
                 <image
                   class="w-18rpx h-18rpx ml-4rpx"
-                  src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png"
+                  src="/static/kahe-202510/ka-he/common/ok.png"
                 />
               </view>
             </view>
@@ -238,7 +238,7 @@
                 >
                   <image
                     class="w-40rpx h-40rpx"
-                    src="https://jms.85gui7.com/kahe-202510/wechat-pay.svg"
+                    src="/static/kahe-202510/wechat-pay.svg"
                     mode="aspectFit"
                   />
                 </view>
@@ -279,7 +279,7 @@
                 >
                   <image
                     class="w-40rpx h-40rpx"
-                    src="https://jms.85gui7.com/kahe-202510/alipay.svg"
+                    src="/static/kahe-202510/alipay.svg"
                     mode="aspectFit"
                   />
                 </view>

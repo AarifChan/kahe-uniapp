@@ -1,6 +1,6 @@
 <template>
   <view class="order">
-    <image class="order-top" src="https://jms.85gui7.com/kahe-202510/order/top.png" />
+    <image class="order-top" src="/static/kahe-202510/order/top.png" />
 
     <scroll-view
       class="order-content"
@@ -16,7 +16,7 @@
       <Empty :show="dataList.length === 0" />
     </scroll-view>
     <view class="order-tag">
-      <image class="order-tag-bg" src="https://jms.85gui7.com/kahe-202510/order/tag-bg.png" />
+      <image class="order-tag-bg" src="/static/kahe-202510/order/tag-bg.png" />
       <view class="order-tag-title theme-font">全 部</view>
     </view>
   </view>

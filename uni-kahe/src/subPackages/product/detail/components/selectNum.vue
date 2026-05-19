@@ -33,8 +33,8 @@
             class="selectNum-tab-item-bg"
             :src="
               currentTab === 0
-                ? 'https://jms.85gui7.com/kahe-202510/ka-he/product/tab-normal.png'
-                : 'https://jms.85gui7.com/kahe-202510/ka-he/product/tab-disable.png'
+                ? '/static/kahe-202510/ka-he/product/tab-normal.png'
+                : '/static/kahe-202510/ka-he/product/tab-disable.png'
             "
           />
           <view class="selectNum-tab-item-content">
@@ -53,8 +53,8 @@
             class="selectNum-tab-item-bg"
             :src="
               currentTab === (product.type === 4 ? 2 : 1)
-                ? 'https://jms.85gui7.com/kahe-202510/ka-he/product/tab-normal.png'
-                : 'https://jms.85gui7.com/kahe-202510/ka-he/product/tab-disable.png'
+                ? '/static/kahe-202510/ka-he/product/tab-normal.png'
+                : '/static/kahe-202510/ka-he/product/tab-disable.png'
             "
           />
           <view class="selectNum-tab-item-content">
@@ -79,8 +79,8 @@
             class="selectNum-tab-item-bg"
             :src="
               currentTab === 1
-                ? 'https://jms.85gui7.com/kahe-202510/ka-he/product/tab-normal.png'
-                : 'https://jms.85gui7.com/kahe-202510/ka-he/product/tab-disable.png'
+                ? '/static/kahe-202510/ka-he/product/tab-normal.png'
+                : '/static/kahe-202510/ka-he/product/tab-disable.png'
             "
           />
           <view class="selectNum-tab-item-content">
@@ -101,17 +101,17 @@
               >
               <image
                 class="selectNum-content-top-info-left-box"
-                src="https://jms.85gui7.com/kahe-202510/jikaquan/box-normal.png"
+                src="/static/kahe-202510/jikaquan/box-normal.png"
               />
               <text class="selectNum-content-top-info-left-tips">可选</text>
               <image
                 class="selectNum-content-top-info-left-box"
-                src="https://jms.85gui7.com/kahe-202510/ka-he/product/box-sell.png"
+                src="/static/kahe-202510/ka-he/product/box-sell.png"
               />
               <text class="selectNum-content-top-info-left-tips">已售</text>
               <image
                 class="selectNum-content-top-info-left-box"
-                src="https://jms.85gui7.com/kahe-202510/ka-he/product/box-lock.png"
+                src="/static/kahe-202510/ka-he/product/box-lock.png"
               />
               <text class="selectNum-content-top-info-left-tips">上锁</text>
             </view>
@@ -126,7 +126,7 @@
           >
             <image
               class="selectNum-content-box-item-img"
-              :src="`https://jms.85gui7.com/kahe-202510/ka-he/product/box-${item.state === 1 ? 'normal' : item.state === 0 ? 'sell' : 'lock'}.png`"
+              :src="`/static/kahe-202510/ka-he/product/box-${item.state === 1 ? 'normal' : item.state === 0 ? 'sell' : 'lock'}.png`"
             />
             <view class="selectNum-content-box-item-title">
               {{ item.title }}</view
@@ -161,7 +161,7 @@
     <view class="box-container-bottom">
       <image
         class="box-container-bottom-bg"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/welfare/bottom-bg.png"
+        src="/static/kahe-202510/ka-he/welfare/bottom-bg.png"
       />
       <view class="box-container-bottom-content">
         <view class="box-container-bottom-left">
@@ -178,7 +178,7 @@
           >
             <image
               class="box-container-bottom-right-item-bg"
-              src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
+              src="/static/kahe-202510/ka-he/common/common-btn-bg.png"
             />
             <text
               class="box-container-bottom-right-item-text theme-font text-stroke-main"
@@ -191,7 +191,7 @@
           >
             <image
               class="box-container-bottom-right-item-bg"
-              src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
+              src="/static/kahe-202510/ka-he/common/common-btn-bg.png"
             />
             <text
               class="box-container-bottom-right-item-text theme-font text-stroke-main"
@@ -204,7 +204,7 @@
             >
               <image
                 class="box-container-bottom-right-item-queue-bg"
-                src="https://jms.85gui7.com/kahe-202510/product/lock-queue.png"
+                src="/static/kahe-202510/product/lock-queue.png"
               />
               <text class="box-container-bottom-right-item-queue-title"
                 >每发锁{{ product.queueLockTime }}秒</text

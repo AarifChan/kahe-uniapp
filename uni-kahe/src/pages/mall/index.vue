@@ -2,8 +2,8 @@
     <scroll-view class="mall"  :scroll-y="true"
                  @scrolltolower="handleMallScrollToLower"
     >
-        <image class="mall-bg" src="https://jms.85gui7.com/kahe-202510/box/box-bg.png" />
-        <image class="mall-logo" src="https://jms.85gui7.com/kahe-202510/common/app-logo.png" />
+        <image class="mall-bg" src="/static/kahe-202510/box/box-bg.png" />
+        <image class="mall-logo" src="/static/kahe-202510/common/app-logo.png" />
 
         <search @did-tap-search="didTapSearch" />
         <category />

@@ -2,7 +2,7 @@
     <view class="goodsBox">
         <view class="goodsBox-decorate">
             <image
-                src="https://jms.85gui7.com/jos/common/demon-king.png"
+                src="/static/jos/common/demon-king.png"
                 class="goodsBox-decorate-lucky"
                 v-if="item.isLucky"
             />
@@ -10,12 +10,12 @@
                 <image
                     v-if="item.level === 118"
                     class="goodsBox-decorate-content-gif"
-                    src="https://jms.85gui7.com/cyd/lottery/card-lottery1.png"
+                    src="/static/cyd/lottery/card-lottery1.png"
                     mode="widthFix"
                 />
                 <image
                     class="goodsBox-decorate-content-hide"
-                    src="https://jms.85gui7.com/jos/common/hide-show.png"
+                    src="/static/jos/common/hide-show.png"
                     v-if="item.isHide"
                 />
                 <image
@@ -28,7 +28,7 @@
                     v-if="!info"
                 />
                 <!--                <image-->
-                <!--                    src="https://jms.85gui7.com/kahe-202510/images/levelBg.png"-->
+                <!--                    src="/static/kahe-202510/images/levelBg.png"-->
                 <!--                    class="goodsBox-decorate-content-levelBg"-->
                 <!--                />-->
                 <image
@@ -40,7 +40,7 @@
                 <image
                     v-if="item.hasRedBag"
                     class="goodsBox-decorate-content-redBag"
-                    src="https://jms.85gui7.com/kahe-202510/redEnvelope/reward.png"
+                    src="/static/kahe-202510/redEnvelope/reward.png"
                 />
                 <!--                <view v-else class="goodsBox-decorate-content-level1" :style="levelColor(item.level)">{{formatCardLevel(item.level)}}</view>-->
                 <text class="goodsBox-decorate-content-text" v-if="nums"
@@ -52,7 +52,7 @@
                 <image
                     v-if="item.isDemon"
                     class="goodsBox-decorate-content-king"
-                    src="https://jms.85gui7.com/kahe-202510/common/king.png"
+                    src="/static/kahe-202510/common/king.png"
                 />
             </view>
         </view>

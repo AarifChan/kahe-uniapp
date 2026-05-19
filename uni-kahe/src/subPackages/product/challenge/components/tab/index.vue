@@ -1,8 +1,8 @@
 <template>
     <view class="commonTab">
         <image class="commonTab-bg" :src="currentIndex === 0
-            ? 'https://jms.85gui7.com/kahe-202510/ka-he/product/tab1-bg.png'
-            : 'https://jms.85gui7.com/kahe-202510/ka-he/product/tab2-bg.png'
+            ? '/static/kahe-202510/ka-he/product/tab1-bg.png'
+            : '/static/kahe-202510/ka-he/product/tab2-bg.png'
             " />
         <view class="commonTab-tab" style="left: 46rpx" @tap.stop="tabDidChange(0)">
             <view v-if="currentIndex === 0" class="commonTab-tab-active" />

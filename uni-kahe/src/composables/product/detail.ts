@@ -407,7 +407,7 @@ export function useProductDetail() {
           id: item.chestDto.id,
           name: item.chestDto.title,
           level: 0,
-          levelImage: "https://jms.85gui7.com/jos/common/mibao.png",
+          levelImage: "/static/jos/common/mibao.png",
           image: item.chestDto.logo,
           isLucky: false,
           num: 1,
@@ -447,7 +447,7 @@ export function useProductDetail() {
   };
   const playAudio = () => {
     const audio = uni.createInnerAudioContext();
-    audio.src = "https://jms.85gui7.com/tycw-mp/resources/play.mp3";
+    audio.src = "/static/tycw-mp/resources/play.mp3";
     audio.play();
   };
 
@@ -634,7 +634,7 @@ export function useProductDetail() {
           prob: "每抽概率附赠",
           level: 999,
           levelImage: "",
-          image: "https://jms.85gui7.com/kahe-202510/tags/hide-show-img.jpg",
+          image: "/static/kahe-202510/tags/hide-show-img.jpg",
           last: item.num ?? 0,
           total: item.total ?? 0,
           isSpec: false,

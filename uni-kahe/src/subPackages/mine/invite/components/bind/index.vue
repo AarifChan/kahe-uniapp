@@ -3,15 +3,15 @@
 
         <view class="bind">
             <view class="bind-info">
-                <image class="bind-info-bg" src="https://jms.85gui7.com/kahe-202510/invite/invite-1-bg.png" />
-                <image class="bind-info-item" src="https://jms.85gui7.com/kahe-202510/invite/invite-item1.png" />
+                <image class="bind-info-bg" src="/static/kahe-202510/invite/invite-1-bg.png" />
+                <image class="bind-info-item" src="/static/kahe-202510/invite/invite-item1.png" />
                 <view class="bind-info-title theme-font">我的盟主</view>
                 <view class="bind-info-subTitle">和盟主一起畅玩，不再孤单！</view>
                 <view class="bind-info-content theme-font">
                     <view class="bind-info-content-title">是否确定成为{{ nickname }}的盟友，一起共享收益？ 确定后，{{ nickname }}将成为您的盟主</view>
                     <view class="bind-info-content-bottom">
                         <view class="bind-info-content-bottom-btn" @tap.stop="emits('didTapConfirm')">
-                            <image class="bind-info-content-bottom-btn-bg"  src="https://jms.85gui7.com/kahe-202510/invite/invite-tag.png"  />
+                            <image class="bind-info-content-bottom-btn-bg"  src="/static/kahe-202510/invite/invite-tag.png"  />
                             <view class="bind-info-content-bottom-btn-text theme-font">确 认</view>
                         </view>
                     </view>

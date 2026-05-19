@@ -1,13 +1,13 @@
 <template>
     <view class="pager">
-        <image class="pager-side" src="https://jms.85gui7.com/kahe-202510/invite/invite-page-left.png" />
+        <image class="pager-side" src="/static/kahe-202510/invite/invite-page-left.png" />
         <view class="pager-list">
             <view class="pager-list-item">
-                <image class="pager-list-item-bg" src="https://jms.85gui7.com/kahe-202510/invite/invite-page-current.png" />
+                <image class="pager-list-item-bg" src="/static/kahe-202510/invite/invite-page-current.png" />
                 <view class="pager-list-item-text">1</view>
             </view>
         </view>
-        <image class="pager-side" src="https://jms.85gui7.com/kahe-202510/invite/invite-page-right.png" />
+        <image class="pager-side" src="/static/kahe-202510/invite/invite-page-right.png" />
     </view>
 </template>
 

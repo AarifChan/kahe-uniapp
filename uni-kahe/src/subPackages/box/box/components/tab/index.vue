@@ -5,7 +5,7 @@
                 <view class="home-tab-list-item-select" v-if="current === index">
                     <!-- <image
             class="home-tab-list-item-select-img"
-            src="https://jms.85gui7.com/kahe-202510/ka-he/home/tab-bg.png"
+            src="/static/kahe-202510/ka-he/home/tab-bg.png"
           /> -->
                     <view class="home-tab-list-item-select-title theme-font">{{ item.title }}</view>
                 </view>

@@ -1,6 +1,9 @@
 <template>
   <view class="collect-item-root">
-    <image class="collect-bg" src="https://jms.85gui7.com/kahe-202510/collect/item-bg.png" />
+    <image
+      class="collect-bg"
+      src="/static/kahe-202510/collect/item-bg.png"
+    />
     <view class="collect-item">
       <view class="collect-item-top">
         <view class="collect-item-top-line" />
@@ -18,12 +21,12 @@
             class="collect-item-content-info-title text-flow-ellipsis-multiple"
             >{{ item.name }}</view
           >
-          <view class="collect-item-content-info-price"
-            >￥{{ item.price.toFixed(2) }}</view
-          >
+          <!--          <view class="collect-item-content-info-price"-->
+          <!--            >￥{{ item.price.toFixed(2) }}</view-->
+          <!--          >-->
           <view class="collect-item-content-info-subTitle">
-            <view style="color: #0070bf">{{ item.sales }}</view>
-            <view style="color: #000000">人已集成/余</view>
+            <!--            <view style="color: #0070bf">{{ item.sales }}</view>-->
+            <view style="color: #000000">余</view>
             <view style="color: #0070bf">{{ item.total - item.sales }}</view>
           </view>
           <view class="collect-item-content-info-progress">
@@ -35,20 +38,20 @@
               />
             </view>
           </view>
-          <view
-            v-if="!isTimeout"
-            class="collect-item-content-info-btn"
-            style="bottom: 48rpx"
-            @tap.stop="emits('didExchangeItem', item)"
-          >
-            <image
-              class="collect-item-content-info-btn-bg"
-              src="https://jms.85gui7.com/kahe-202510/collect/btn1.png"
-            />
-            <view class="collect-item-content-info-btn-title theme-font"
-              >去兑换</view
-            >
-          </view>
+          <!--          <view-->
+          <!--            v-if="!isTimeout"-->
+          <!--            class="collect-item-content-info-btn"-->
+          <!--            style="bottom: 48rpx"-->
+          <!--            @tap.stop="emits('didExchangeItem', item)"-->
+          <!--          >-->
+          <!--            <image-->
+          <!--              class="collect-item-content-info-btn-bg"-->
+          <!--              src="/static/kahe-202510/collect/btn1.png"-->
+          <!--            />-->
+          <!--            <view class="collect-item-content-info-btn-title theme-font"-->
+          <!--              >去兑换</view-->
+          <!--            >-->
+          <!--          </view>-->
           <view
             v-if="!isTimeout"
             class="collect-item-content-info-btn"
@@ -56,7 +59,7 @@
           >
             <image
               class="collect-item-content-info-btn-bg"
-              src="https://jms.85gui7.com/kahe-202510/collect/btn4.png"
+              src="/static/kahe-202510/collect/btn4.png"
             />
             <view class="collect-item-content-info-btn-title theme-font"
               >去集赏</view

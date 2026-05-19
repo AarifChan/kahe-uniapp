@@ -10,13 +10,13 @@
       <view class="reward-top">
         <image
           class="reward-top-img"
-          src="https://jms.85gui7.com/kahe-202510/reward/reward-title.png"
+          src="/static/kahe-202510/reward/reward-title.png"
         />
       </view>
       <view class="reward-content">
         <image
           class="reward-content-bg"
-          src="https://jms.85gui7.com/kahe-202510/reward/reward-bg.png"
+          src="/static/kahe-202510/reward/reward-bg.png"
         />
         <text class="reward-content-title"
           >恭喜您,获得以下物品,可在赏袋查看。</text
@@ -117,7 +117,7 @@
         </scroll-view>
         <image
           class="reward-content-integral"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/product/show-integral.png"
+          src="/static/kahe-202510/ka-he/product/show-integral.png"
         />
         <view class="reward-content-bottom">
           <view
@@ -126,7 +126,7 @@
           >
             <image
               class="reward-content-bottom-item-img"
-              src="https://jms.85gui7.com/kahe-202510/images/reward-btn1.png"
+              src="/static/kahe-202510/images/reward-btn1.png"
             />
             <text
               class="reward-content-bottom-item-title text-stroke-main theme-font"
@@ -140,7 +140,7 @@
           <!--          >-->
           <!--            <image-->
           <!--              class="reward-content-bottom-item-img"-->
-          <!--              src="https://jms.85gui7.com/kahe-202510/images/reward-btn2.png"-->
+          <!--              src="/static/kahe-202510/images/reward-btn2.png"-->
           <!--            />-->
           <!--            <text-->
           <!--              class="reward-content-bottom-item-title text-stroke-main theme-font"-->
@@ -150,7 +150,7 @@
           <!--          <view class="reward-content-bottom-item">-->
           <!--            <image-->
           <!--              class="reward-content-bottom-item-img"-->
-          <!--              src="https://jms.85gui7.com/kahe-202510/images/reward-btn2.png"-->
+          <!--              src="/static/kahe-202510/images/reward-btn2.png"-->
           <!--            />-->
           <!--            <text-->
           <!--              class="reward-content-bottom-item-title text-stroke-main theme-font"-->
@@ -161,7 +161,7 @@
           <view class="reward-content-bottom-item" @tap.stop="navToCollectPage">
             <image
               class="reward-content-bottom-item-img"
-              src="https://jms.85gui7.com/kahe-202510/images/reward-btn2.png"
+              src="/static/kahe-202510/images/reward-btn2.png"
             />
             <text
               class="reward-content-bottom-item-title text-stroke-main theme-font"
@@ -176,7 +176,7 @@
         >
           <image
             class="reward-content-redBag-bg"
-            src="https://jms.85gui7.com/kahe-202510/redEnvelope/btn-style3.png"
+            src="/static/kahe-202510/redEnvelope/btn-style3.png"
           />
           <text class="reward-content-redBag-title theme-font text-stroke"
             >去发红包</text

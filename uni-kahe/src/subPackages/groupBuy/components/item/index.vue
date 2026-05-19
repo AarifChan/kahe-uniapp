@@ -1,6 +1,6 @@
 <template>
   <view class="groupBuyItem" :style="groupBuyItemBgStyle">
-    <!--        <image class="groupBuyItem-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/home/item-bg.png"  />-->
+    <!--        <image class="groupBuyItem-bg" src="/static/kahe-202510/ka-he/home/item-bg.png"  />-->
     <image class="groupBuyItem-logo" :src="item.logo" />
     <view class="groupBuyItem-num">{{ item.num }}/{{ item.total }}</view>
     <view class="groupBuyItem-info">
@@ -61,7 +61,7 @@
     <!-- <view class="groupBuyItem-empty" v-if="isOver">
       <image
         style="width: 132rpx; height: 113rpx"
-        src="https://jms.85gui7.com/kahe-202510/product/sell-out.png"
+        src="/static/kahe-202510/product/sell-out.png"
       />
     </view> -->
   </view>
@@ -74,7 +74,7 @@ import { useTimeCount } from "@/composables/countTime";
 
 const groupBuyItemBgStyle = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/ka-he/home/item-bg.png)",
+    "url(/static/kahe-202510/ka-he/home/item-bg.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -162,7 +162,7 @@ onMounted(() => {
         padding-right: 6rpx;
         width: 97rpx;
         height: 46rpx;
-        background-image: url("https://jms.85gui7.com/kahe-202510/ka-he/home/price-bg.png");
+        background-image: url("/static/kahe-202510/ka-he/home/price-bg.png");
         background-repeat: no-repeat;
         background-size: 100% 100%;
       }

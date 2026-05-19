@@ -13,7 +13,7 @@
     <view class="home-search">
       <image
         class="logo"
-        src="https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-logo.png"
+        src="/static/kahe-202510/jikaquan/jikaquan-logo.png"
         @longpress="handleLogoLongPress"
       />
       <Search
@@ -30,10 +30,10 @@
         @tap-lamp-action="tapLampAction"
         @tap-banner-action="tapBannerAction"
       />
-      <!-- <image class="home-banner-logo" src="https://jms.85gui7.com/kahe-202510/ka-he/common/logo.png" /> -->
+      <!-- <image class="home-banner-logo" src="/static/kahe-202510/ka-he/common/logo.png" /> -->
     </view>
     <view class="home-bottom">
-      <!-- <image class="home-bottom-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/home/module-bg.png" /> -->
+      <!-- <image class="home-bottom-bg" src="/static/kahe-202510/ka-he/home/module-bg.png" /> -->
       <view class="home-bottom-content">
         <items />
         <recommend v-if="groupBuyList.length > 0" :group-list="groupBuyList" />
@@ -178,14 +178,14 @@ const handleLogoLongPress = async () => {
 onShareAppMessage(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
+    imageUrl: "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: "/pages/welcome/index",
   };
 });
 onShareTimeline(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
+    imageUrl: "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: "/pages/welcome/index",
   };
 });

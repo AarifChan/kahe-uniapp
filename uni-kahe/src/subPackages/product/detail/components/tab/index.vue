@@ -3,11 +3,11 @@
         <text class="normalCenterTab-price theme-font text-stroke-white">¥{{product.price}}元</text>
         <view class="normalCenterTab-content">
             <view class="normalCenterTab-content-item" @tap.stop="didClickTab(0)">
-                <image class="normalCenterTab-content-item-bg" :src=" currentTab === 0 ? 'https://jms.85gui7.com/kahe/product/tab1.png' : 'https://jms.85gui7.com/kahe/product/tab2.png'" />
+                <image class="normalCenterTab-content-item-bg" :src=" currentTab === 0 ? '/static/kahe/product/tab1.png' : '/static/kahe/product/tab2.png'" />
                 <text class="normalCenterTab-content-item-title theme-font text-stroke">赏池一览</text>
             </view>
             <view class="normalCenterTab-content-item" @tap.stop="didClickTab(1)">
-                <image class="normalCenterTab-content-item-bg" :src=" currentTab === 1 ? 'https://jms.85gui7.com/kahe/product/tab1.png' : 'https://jms.85gui7.com/kahe/product/tab2.png'" />
+                <image class="normalCenterTab-content-item-bg" :src=" currentTab === 1 ? '/static/kahe/product/tab1.png' : '/static/kahe/product/tab2.png'" />
                 <text class="normalCenterTab-content-item-title theme-font text-stroke">抽赏记录</text>
             </view>
         </view>

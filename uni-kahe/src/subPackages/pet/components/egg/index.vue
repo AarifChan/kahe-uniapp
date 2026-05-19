@@ -3,10 +3,10 @@
         <view class="egg-bg" />
         <image class="egg-icon" :src="item.icon" />
         <view class="egg-num">{{item.number}}</view>
-        <image class="egg-decorate" src="https://jms.85gui7.com/kahe-202510/pet/card-bottom.png" />
+        <image class="egg-decorate" src="/static/kahe-202510/pet/card-bottom.png" />
         <text class="egg-name theme-font text-stroke">{{item.name}}</text>
-        <image class="egg-level" :src="'https://jms.85gui7.com/kahe-202510/pet/level2.png' " />
-        <image v-if="selected" class="egg-select" src="https://jms.85gui7.com/kahe-202510/pet/select.png" />
+        <image class="egg-level" :src="'/static/kahe-202510/pet/level2.png' " />
+        <image v-if="selected" class="egg-select" src="/static/kahe-202510/pet/select.png" />
     </view>
 </template>
 

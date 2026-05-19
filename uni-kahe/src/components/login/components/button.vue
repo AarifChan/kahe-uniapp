@@ -6,14 +6,14 @@
       @getphonenumber="getPhoneNumber"
       v-if="buttonType === 1"
     >
-      <image class="custom-btn-bg" src="https://jms.85gui7.com/kahe-202510/login/btn1.png" />
+      <image class="custom-btn-bg" src="/static/kahe-202510/login/btn1.png" /> <!-- 缺失图片: btn1.png -->
       <!--      <view class="custom-btn-title theme-font">{{ title }}</view>-->
       <!--      <view class="custom-btn-other">-->
       <!--        <slot />-->
       <!--      </view>-->
     </button>
     <view class="custom-btn" v-else>
-      <image class="custom-btn-bg" src="https://jms.85gui7.com/kahe-202510/login/btn2.png" />
+      <image class="custom-btn-bg" src="/static/kahe-202510/login/btn2.png" /> <!-- 缺失图片: btn2.png -->
       <!--            <view class="custom-btn-title theme-font">{{ title }}</view>-->
       <!--      <view class="custom-btn-other">-->
       <!--        <slot />-->

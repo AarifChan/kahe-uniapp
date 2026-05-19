@@ -4,8 +4,8 @@
     :style="{
       backgroundImage: `url(${
         currentIndex === 0
-          ? 'https://jms.85gui7.com/kahe-202510/ka-he/product/tab1-bg.png'
-          : 'https://jms.85gui7.com/kahe-202510/ka-he/product/tab2-bg.png'
+          ? '/static/kahe-202510/ka-he/product/tab1-bg.png'
+          : '/static/kahe-202510/ka-he/product/tab2-bg.png'
       })`,
       backgroundSize: '100% 100%',
       backgroundPosition: 'center',

@@ -1,7 +1,7 @@
 <template>
     <tn-popup v-model="vShow" open-direction="center" bg-color="transparent">
         <view class="resultModal">
-            <image class="resultModal-bg" :src="type === 1 ? 'https://jms.85gui7.com/kahe-202510/pet/result-bg1.png' : 'https://jms.85gui7.com/kahe-202510/pet/result-bg2.png'" />
+            <image class="resultModal-bg" :src="type === 1 ? '/static/kahe-202510/pet/result-bg1.png' : '/static/kahe-202510/pet/result-bg2.png'" />
             <text class="resultModal-title theme-font">获得{{ type === 1 ? '' : '进化的' }}
                 <text class="text-stroke" style="color: #73B2FF">{{item?.name}}</text>
             </text>

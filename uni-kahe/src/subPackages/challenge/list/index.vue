@@ -48,7 +48,7 @@ const onLoadMore = async () => {
 
 const listTopBgStyle = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/challenge/list-top-bg.webp)",
+    "url(/static/kahe-202510/challenge/list-top-bg.webp)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",

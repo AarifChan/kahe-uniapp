@@ -18,7 +18,7 @@
         <view class="boxTab-tips" @tap.stop="emits('didTapTips')">
             <image
                 class="boxTab-tips-img"
-                src="https://jms.85gui7.com/kahe/box/question.png"
+                src="/static/kahe/box/question.png"
             />
             <text class="boxTab-tips-title">规则</text>
         </view>

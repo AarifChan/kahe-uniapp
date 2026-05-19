@@ -29,45 +29,45 @@ interface ItemModel {
 }
 const itemList = ref([
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service1.png",
+    icon: "/static/kahe-202510/mine/service1.png",
     title: "用户协议",
     type: ItemType.protocol,
   },
 
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service2.png",
+    icon: "/static/kahe-202510/mine/service2.png",
     title: "投诉渠道",
     type: ItemType.contact,
   },
   // {
-  //   icon: "https://jms.85gui7.com/kahe-202510/ka-he/mine/item1.png",
+  //   icon: "/static/kahe-202510/ka-he/mine/item1.png",
   //   title: "福利群",
   //   type: ItemType.inGroup,
   // },
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service3.png",
+    icon: "/static/kahe-202510/mine/service3.png",
     title: "地址管理",
     type: ItemType.address,
   },
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service4.png",
+    icon: "/static/kahe-202510/mine/service4.png",
     title: "特惠礼包",
     type: ItemType.giftPack,
   },
 
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service5.png",
+    icon: "/static/kahe-202510/mine/service5.png",
     title: "排行奖励",
     type: ItemType.rank,
   },
 
   // {
-  //   icon: "https://jms.85gui7.com/kahe-202510/mine/service6.png",
+  //   icon: "/static/kahe-202510/mine/service6.png",
   //   title: "联盟收益",
   //   type: ItemType.income,
   // },
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service7.png",
+    icon: "/static/kahe-202510/mine/service7.png",
     // title: "商城",
     // type: ItemType.store,
     title: "未成年投诉",
@@ -75,12 +75,12 @@ const itemList = ref([
   },
 
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service8.png",
+    icon: "/static/kahe-202510/mine/service8.png",
     title: "宝箱",
     type: ItemType.chest,
   },
   {
-    icon: "https://jms.85gui7.com/kahe-202510/mine/service9.png",
+    icon: "/static/kahe-202510/mine/service9.png",
     title: "入驻了解",
     type: ItemType.rollIn,
   },
@@ -141,8 +141,8 @@ const handleClick = (item: ItemModel) => {
         url: "/subPackages/mine/invite/index",
       });
       // uni.previewImage({
-      //     current: "https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png",
-      //     urls: ["https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png"],
+      //     current: "/static/kahe-202510/ka-he/home/13395850645540676.png",
+      //     urls: ["/static/kahe-202510/ka-he/home/13395850645540676.png"],
       // });
       break;
     case ItemType.store:
@@ -166,7 +166,7 @@ const handleClick = (item: ItemModel) => {
     <view class="optionList-top">
       <image
         class="optionList-top-bg"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/mine/flowerBg.png"
+        src="/static/kahe-202510/ka-he/mine/flowerBg.png"
       />
       <text class="optionList-top-title other-font">更多服务</text>
     </view>

@@ -10,7 +10,7 @@
         <view class="redBagItem-right">
             <view class="redBagItem-right-top">
                 <text class="redBagItem-right-top-title" v-if="item?.amountNew">（新人额外+{{item.amountNew}}）</text>
-                <image class="redBagItem-right-top-img" src="https://jms.85gui7.com/kahe-202510/redEnvelope/ticket.png" />
+                <image class="redBagItem-right-top-img" src="/static/kahe-202510/redEnvelope/ticket.png" />
                 <text class="redBagItem-right-top-value">+{{item?.amount}}</text>
             </view>
             <text class="redBagItem-right-title">分享者+{{item?.amount}}点券</text>

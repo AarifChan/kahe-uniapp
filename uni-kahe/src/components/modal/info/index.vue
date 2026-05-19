@@ -6,7 +6,7 @@
     @close="emits('update:show', false)"
   >
     <view class="modal-edit">
-      <image class="modal-edit-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/mine/info-bg.png" />
+      <image class="modal-edit-bg" src="/static/kahe-202510/ka-he/mine/info-bg.png" />
       <view class="modal-edit-content">
         <view class="modal-edit-content-info">
           <form @submit="formSubmit">

@@ -2,14 +2,14 @@
   <view class="bind-phone">
     <image
       class="bind-phone-bg"
-      src="https://jms.85gui7.com/kahe-202510/new-login/bg.png"
+      src="/static/kahe-202510/new-login/bg.png"
     />
     <view class="bind-phone-content">
       <view class="bind-phone-content-top">
         <text class="bind-phone-content-top-title theme-font">绑定手机号</text>
         <image
           class="bind-phone-content-top-subTitle"
-          src="https://jms.85gui7.com/kahe-202510/new-login/item.png"
+          src="/static/kahe-202510/new-login/item.png"
         />
       </view>
 
@@ -58,7 +58,7 @@
       <view class="bind-phone-content-login" @tap.stop="handleBind">
         <image
           class="bind-phone-content-login-img"
-          src="https://jms.85gui7.com/kahe-202510/login/login-btn-bg.png"
+          src="/static/kahe-202510/login/login-btn-bg.png"
         />
         <text class="bind-phone-content-login-text theme-font">确认绑定</text>
       </view>

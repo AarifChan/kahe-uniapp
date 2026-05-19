@@ -81,26 +81,26 @@ scroll-view {
 
 @font-face {
   font-family: "YouSheBiaoTiHei";
-  src: url("https://jms.85gui7.com/sources/YouSheBiaoTiHei.ttf");
+  src: url("/static/sources/YouSheBiaoTiHei.ttf");
 }
 
 @font-face {
   font-family: "AccidentalPresidency";
-  src: url("https://jms.85gui7.com/font/AccidentalPresidency.ttf");
+  src: url("/static/font/AccidentalPresidency.ttf");
 }
 
 @font-face {
   font-family: "ZiHunYuWanTi";
-  src: url("https://jms.85gui7.com/font/ZiHunYuWanTi.ttf");
+  src: url("/static/font/ZiHunYuWanTi.ttf");
 }
 @font-face {
   font-family: "STHupo";
-  src: url("https://jms.85gui7.com/font/STHupo.ttf");
+  src: url("/static/font/STHupo.ttf");
 }
 
 @font-face {
   font-family: "SimHei";
-  src: url("https://jms.85gui7.com/font/SimHei.ttf");
+  src: url("/static/font/SimHei.ttf");
 }
 
 /* 全局动画定义 - 挑战游戏摇晃动画 */

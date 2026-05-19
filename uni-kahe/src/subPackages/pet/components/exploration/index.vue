@@ -1,13 +1,13 @@
 <template>
     <view class="explore">
         <view class="explore-top" @tap.stop="emits('didClickAction',1)">
-            <image class="explore-top-bg" :src="item !== null ? 'https://jms.85gui7.com/kahe-202510/pet/explore-bg2.png' : 'https://jms.85gui7.com/kahe-202510/pet/explore-bg1.png'" />
+            <image class="explore-top-bg" :src="item !== null ? '/static/kahe-202510/pet/explore-bg2.png' : '/static/kahe-202510/pet/explore-bg1.png'" />
             <image class="explore-top-content" :src="item?.icon" />
         </view>
         <view class="explore-bottom" v-if="item!==null">
             <text class="explore-bottom-time">{{item?.name}}正在探险</text>
             <text class="explore-bottom-time">{{dispatchTimeTitle}}</text>
-            <image class="explore-bottom-cancel" src="https://jms.85gui7.com/kahe-202510/pet/explore-btn2.png" @tap.stop="emits('didClickAction',2)" />
+            <image class="explore-bottom-cancel" src="/static/kahe-202510/pet/explore-btn2.png" @tap.stop="emits('didClickAction',2)" />
         </view>
         <view class="explore-bottom" v-else>
             <text class="explore-time">请选择需要派遣的宠物</text>

@@ -7,15 +7,15 @@ export function useEnum() {
       case 120:
       case 119:
       case 118:
-        return "https://jms.85gui7.com/kahe-202510/level/normal1.png";
+        return "/static/kahe-202510/level/normal1.png";
       case 117:
-        return "https://jms.85gui7.com/kahe-202510/level/normal2.png";
+        return "/static/kahe-202510/level/normal2.png";
       case 116:
-        return "https://jms.85gui7.com/kahe-202510/level/normal3.png";
+        return "/static/kahe-202510/level/normal3.png";
       case 115:
-        return "https://jms.85gui7.com/kahe-202510/level/normal4.png";
+        return "/static/kahe-202510/level/normal4.png";
       default:
-        return "https://jms.85gui7.com/kahe-202510/level/normal5.png";
+        return "/static/kahe-202510/level/normal5.png";
     }
   };
 
@@ -27,15 +27,15 @@ export function useEnum() {
       case 120:
       case 119:
       case 118:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite1.png";
+        return "/static/kahe-202510/level/infinite1.png";
       case 117:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite2.png";
+        return "/static/kahe-202510/level/infinite2.png";
       case 116:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite3.png";
+        return "/static/kahe-202510/level/infinite3.png";
       case 115:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite4.png";
+        return "/static/kahe-202510/level/infinite4.png";
       default:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite5.png";
+        return "/static/kahe-202510/level/infinite5.png";
     }
   };
 
@@ -68,20 +68,20 @@ export function useEnum() {
       case 120:
       case 119:
       case 118:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite-bg1.png";
+        return "/static/kahe-202510/level/infinite-bg1.png";
       case 117:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite-bg2.png";
+        return "/static/kahe-202510/level/infinite-bg2.png";
       case 116:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite-bg3.png";
+        return "/static/kahe-202510/level/infinite-bg3.png";
       case 115:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite-bg4.png";
+        return "/static/kahe-202510/level/infinite-bg4.png";
       default:
-        return "https://jms.85gui7.com/kahe-202510/level/infinite-bg5.png";
+        return "/static/kahe-202510/level/infinite-bg5.png";
     }
   };
 
   const getLevelImage = (level: number): string => {
-    return "https://jms.85gui7.com/kahe-202510/level/" + getLevelName(level) + ".png";
+    return "/static/kahe-202510/level/" + getLevelName(level) + ".png";
   };
 
   const getHighLevelName = (level: number) => {
@@ -178,17 +178,17 @@ export function useEnum() {
   const levelTypeBg = (level: number) => {
     switch (level) {
       case 118:
-        return "https://jms.85gui7.com/kahe-202510/images/goods-item-decorate.png";
+        return "/static/kahe-202510/images/goods-item-decorate.png";
       case 117:
-        return "https://jms.85gui7.com/kahe-202510/images/goods-item-decorate1.png";
+        return "/static/kahe-202510/images/goods-item-decorate1.png";
       case 116:
-        return "https://jms.85gui7.com/kahe-202510/images/goods-item-decorate2.png";
+        return "/static/kahe-202510/images/goods-item-decorate2.png";
       case 115:
-        return "https://jms.85gui7.com/kahe-202510/images/goods-item-decorate3.png";
+        return "/static/kahe-202510/images/goods-item-decorate3.png";
       case 114:
-        return "https://jms.85gui7.com/kahe-202510/images/goods-item-decorate4.png";
+        return "/static/kahe-202510/images/goods-item-decorate4.png";
       default:
-        return "https://jms.85gui7.com/kahe-202510/images/goods-item-decorate5.png";
+        return "/static/kahe-202510/images/goods-item-decorate5.png";
     }
   };
   return {

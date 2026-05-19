@@ -1,7 +1,7 @@
 <template>
   <view class="integral">
     <view class="integral-top">
-      <image class="integral-top-img" src="https://jms.85gui7.com/kahe-202510/ka-he/integral/top-bg.png" />
+      <image class="integral-top-img" src="/static/kahe-202510/ka-he/integral/top-bg.png" />
       <view class="integral-top-tips">
         <view>线上or到店消费</view>
         <view

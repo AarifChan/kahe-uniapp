@@ -10,8 +10,8 @@ export function getRandomInt(min: number, max: number): number {
 
 export const showInGroupImage = () => {
   uni.previewImage({
-    current: "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-contact.png",
-    urls: ["https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-contact.png"],
+    current: "/static/kahe-202510/jikaquan/jikaquan-contact.png",
+    urls: ["/static/kahe-202510/jikaquan/jikaquan-contact.png"],
   });
 };
 

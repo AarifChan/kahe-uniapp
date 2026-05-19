@@ -232,7 +232,7 @@ export function useBox() {
           continue;
         }
         tmp.push({
-          logo: item.logo ?? "https://jms.85gui7.com/show/default-box.jpg",
+          logo: item.logo ?? "/static/show/default-box.jpg",
           boxId: item.id,
           num: item.num,
           title: item.title ?? "储物袋",

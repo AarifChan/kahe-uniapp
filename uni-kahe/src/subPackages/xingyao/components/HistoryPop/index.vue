@@ -24,14 +24,14 @@ const emits = defineEmits(["scrolltolower"]);
     <view class="pop">
       <view class="pop-topIcon">
         <image
-          src="https://jms.85gui7.com/kahe-202510/shine/left-top.png"
+          src="/static/kahe-202510/shine/left-top.png"
           mode="scaleToFill"
           class="icon"
         />
         <text>{{ "往期欧皇" }}</text>
       </view>
       <image
-        src="https://jms.85gui7.com/kahe-202510/shine/pop-bg.png"
+        src="/static/kahe-202510/shine/pop-bg.png"
         mode="scaleToFill"
         class="pop-bg"
       />

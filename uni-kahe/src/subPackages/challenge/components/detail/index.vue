@@ -12,7 +12,7 @@
       <!-- 背景 -->
       <!--      <image-->
       <!--        class="absolute w-[600rpx] h-[700rpx]"-->
-      <!--        src="https://jms.85gui7.com/kahe-202510/challenge/goods-detail-bg.png"-->
+      <!--        src="/static/kahe-202510/challenge/goods-detail-bg.png"--> <!-- 缺失图片: goods-detail-bg.png -->
       <!--        mode="aspectFill"-->
       <!--      />-->
 
@@ -25,7 +25,7 @@
         <!-- 关闭按钮 -->
         <image
           class="absolute top-[20rpx] right-[20rpx] w-[60rpx] h-[60rpx]"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/common/close.png"
+          src="/static/kahe-202510/ka-he/common/close.png"
           @tap.stop="emits('update:show', false)"
         />
 
@@ -82,7 +82,7 @@ import { getTitleByQuality } from "@/utils";
 
 const detailPopupBgStyle = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/common/detail-bg.png)",
+    "url(/static/kahe-202510/common/detail-bg.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -90,7 +90,7 @@ const detailPopupBgStyle = {
 
 const qualityTagBgStyle = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/ka-he/common/num_bg.png)",
+    "url(/static/kahe-202510/ka-he/common/num_bg.png)",
   backgroundSize: "100% 100%",
 };
 

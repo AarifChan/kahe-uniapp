@@ -5,7 +5,7 @@
             <view class="welfare-header-right">
                 <image
                     class="welfare-header-right-img"
-                    src="https://jms.85gui7.com/kahe-202510/images/welfare-topBg.png"
+                    src="/static/kahe-202510/images/welfare-topBg.png"
                 />
                 <view class="welfare-header-right-text theme-font">免费抽选</view>
             </view>
@@ -18,7 +18,7 @@
                 >
                     <image
                         class="welfare-header-item-goods-bg"
-                        src="https://jms.85gui7.com/kahe-202510/images/welfare-goodsTopBg.png"
+                        src="/static/kahe-202510/images/welfare-goodsTopBg.png"
                         mode="widthFix"
                     />
                     <image
@@ -49,7 +49,7 @@
                 >
                     <image
                         class="welfare-center-item-list-bg"
-                        src="https://jms.85gui7.com/kahe-202510/images/welfare-listBg.png"
+                        src="/static/kahe-202510/images/welfare-listBg.png"
                     />
                     <image
                         :src="item.image"

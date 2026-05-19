@@ -1,8 +1,8 @@
 <template>
   <!-- <view class="newItem"> -->
   <!-- <view class="newItem-row1">
-      <image class="newItem-item1" src="https://jms.85gui7.com/kahe-202510/ka-he/home/goods1.png" @tap.stop="handleItem(HomeItemType.activity)" />
-      <image class="newItem-item2" src="https://jms.85gui7.com/kahe-202510/ka-he/home/goods2.png" @tap.stop="handleItem(HomeItemType.xingyao)" />
+      <image class="newItem-item1" src="/static/kahe-202510/ka-he/home/goods1.png" @tap.stop="handleItem(HomeItemType.activity)" />
+      <image class="newItem-item2" src="/static/kahe-202510/ka-he/home/goods2.png" @tap.stop="handleItem(HomeItemType.xingyao)" />
     </view> -->
   <view class="newItem-row2">
     <view
@@ -50,33 +50,33 @@ const showModal = ref(false);
 // ✅ 把所有按钮配置放在数组中
 const goodsList = ref([
   {
-    src: "https://jms.85gui7.com/kahe-202510/ka-he/home/g1.png",
+    src: "/static/kahe-202510/ka-he/home/g1.png",
     type: HomeItemType.activity,
-    tag: "https://jms.85gui7.com/kahe-202510/ka-he/home/m3.png",
+    tag: "/static/kahe-202510/ka-he/home/m3.png",
     text: "抽选",
     context: "海量福利",
   },
   {
-    src: "https://jms.85gui7.com/kahe-202510/ka-he/home/g2.png",
+    src: "/static/kahe-202510/ka-he/home/g2.png",
     type: HomeItemType.xingyao,
     text: "欧皇",
   },
   {
-    src: "https://jms.85gui7.com/kahe-202510/ka-he/home/g3.png",
+    src: "/static/kahe-202510/ka-he/home/g3.png",
     type: HomeItemType.integral,
-    tag: "https://jms.85gui7.com/kahe-202510/ka-he/home/m2.png",
+    tag: "/static/kahe-202510/ka-he/home/m2.png",
     text: "宝藏岛",
     context: "免费夺宝",
   },
   {
-    src: "https://jms.85gui7.com/kahe-202510/ka-he/home/g4.png",
+    src: "/static/kahe-202510/ka-he/home/g4.png",
     type: HomeItemType.dailyWelfare,
     text: "领券",
   },
   {
-    src: "https://jms.85gui7.com/kahe-202510/ka-he/home/g5.png",
+    src: "/static/kahe-202510/ka-he/home/g5.png",
     type: HomeItemType.collect,
-    tag: "https://jms.85gui7.com/kahe-202510/ka-he/home/m1.png",
+    tag: "/static/kahe-202510/ka-he/home/m1.png",
     text: "卡集",
     context: "换卡集市",
   },
@@ -101,9 +101,9 @@ const handleItem = (index: HomeItemType) => {
     case HomeItemType.invite:
       uni.previewImage({
         current:
-          "https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.pn",
+          "/static/kahe-202510/ka-he/home/13395850645540676.pn",
         urls: [
-          "https://jms.85gui7.com/kahe-202510/ka-he/home/13395850645540676.png",
+          "/static/kahe-202510/ka-he/home/13395850645540676.png",
         ],
       });
       return;

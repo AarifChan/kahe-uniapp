@@ -9,7 +9,7 @@
         <view class="cardShow">
             <image
                 class="cardShow-close"
-                src="https://jms.85gui7.com/kahe-202510/images/close.png"
+                src="/static/kahe-202510/images/close.png"
                 @tap.stop="emits('update:show', false)"
             />
             <view class="cardShow-title theme-font">{{ title }}</view>

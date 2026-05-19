@@ -1,6 +1,6 @@
 <template>
     <view class="agreement">
-        <image class="agreement-img" :src="checked ? 'https://jms.85gui7.com/kahe/common/checked.png' : 'https://jms.85gui7.com/kahe/common/unchecked.png' " />
+        <image class="agreement-img" :src="checked ? '/static/kahe/common/checked.png' : '/static/kahe/common/unchecked.png' " />
         <text class="agreement-title">已阅读并同意</text>
         <text class="agreement-title agreement-subTitle">《心跳潮玩服务协议》</text>
     </view>

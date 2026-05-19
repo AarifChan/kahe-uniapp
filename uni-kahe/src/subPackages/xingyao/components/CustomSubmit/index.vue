@@ -6,7 +6,7 @@
       class="input-placeholder"
     />
     <view class="submit-btn" @tap.stop="tapSubmit">
-      <image src="https://jms.85gui7.com/kahe-202510/shine/yellow.png" mode="scaleToFill" class="btn_bg" />
+      <image src="/static/kahe-202510/shine/yellow.png" mode="scaleToFill" class="btn_bg" />
       <text>提交</text>
     </view>
   </view>

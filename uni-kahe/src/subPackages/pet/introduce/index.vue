@@ -1,9 +1,9 @@
 <template>
     <view class="petSkill">
-        <image class="petSkill-bg" src="https://jms.85gui7.com/kahe-202510/pet/skill-bg.png" />
+        <image class="petSkill-bg" src="/static/kahe-202510/pet/skill-bg.png" />
         <view class="petSkill-content">
             <view class="petSkill-content-top">
-                <image class="petSkill-content-top-bg" src="https://jms.85gui7.com/kahe-202510/pet/intro-top.png" />
+                <image class="petSkill-content-top-bg" src="/static/kahe-202510/pet/intro-top.png" />
                 <text class="petSkill-content-top-title theme-font">已收集</text>
                 <text class="petSkill-content-top-subTitle">0/{{petList.length}}</text>
             </view>
@@ -14,10 +14,10 @@
                 </view>
             </scroll-view>
             <view class="petSkill-content-bottom" @tap.stop="handleClickBack">
-                <image class="petSkill-content-bottom-bg" src="https://jms.85gui7.com/kahe-202510/pet/bottom-bg.png" />
+                <image class="petSkill-content-bottom-bg" src="/static/kahe-202510/pet/bottom-bg.png" />
                 <view class="petSkill-content-bottom-btn">
                     <view class="petSkill-content-bottom-btn-info">
-                        <image class="petSkill-content-bottom-btn-info-bg" src="https://jms.85gui7.com/kahe-202510/pet/bottom-btn-bg.png" />
+                        <image class="petSkill-content-bottom-btn-info-bg" src="/static/kahe-202510/pet/bottom-btn-bg.png" />
                         <text class="petSkill-content-bottom-btn-info-title theme-font">返回宠物小屋</text>
                     </view>
 

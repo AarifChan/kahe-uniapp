@@ -13,7 +13,7 @@
             </view>
 
             <view class="common-row" style="margin-top: 32rpx">
-                <image v-if="userInfo.uid" class="userVip" :src="`https://jms.85gui7.com/kahe-202510/ka-he/vip/${userInfo.vip}.png`" />
+                <image v-if="userInfo.uid" class="userVip" :src="`/static/kahe-202510/ka-he/vip/${userInfo.vip}.png`" />
                 <view class="common-col" style="margin-top: 16rpx">
                     <view class="vipUp">成长值:{{ userInfo.expDay }}</view>
                     <view class="progressBarBg">
@@ -23,9 +23,9 @@
             </view>
         </view>
 
-        <image class="userEdit" src="https://jms.85gui7.com/kahe-202510/ka-he/mine/edit.png" @tap.stop="emits('didClickEdit')" />
+        <image class="userEdit" src="/static/kahe-202510/ka-he/mine/edit.png" @tap.stop="emits('didClickEdit')" />
         <view class="vipNav" @tap.stop="emits('didClickVip')">
-            <!-- <image class="vipNav-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/mine/vip-bg.png" /> -->
+            <!-- <image class="vipNav-bg" src="/static/kahe-202510/ka-he/mine/vip-bg.png" /> -->
             <view class="vipNav-title theme-font">权益中心</view>
         </view>
     </view>
@@ -250,7 +250,7 @@ const emits = defineEmits(["didClickEdit", "didClickAvatar", "didClickVip"]);
                 justify-content: center;
                 width: 125rpx;
                 height: 50rpx;
-                background-image: url("https://jms.85gui7.com/kahe-202510/images/rights.png");
+                background-image: url("/static/kahe-202510/images/rights.png");
                 background-size: 100% 100%;
                 background-repeat: no-repeat;
                 font-family: Adobe Heiti Std;

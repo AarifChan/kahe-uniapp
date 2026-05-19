@@ -1,20 +1,20 @@
 <template>
     <view class="vip">
-        <!-- <image src="https://jms.85gui7.com/kahe-202510/images/mine-bg.png" style="width: 100%;height: 100%;position: absolute;left: 0;top: 0;" /> -->
+        <!-- <image src="/static/kahe-202510/images/mine-bg.png" style="width: 100%;height: 100%;position: absolute;left: 0;top: 0;" /> -->
         <view class="vip-top">
             <view class="vip-top-content">
-                <image src="https://jms.85gui7.com/kahe-202510/ka-he/mine/svip-bg.png" class="vip-top-bg" />
+                <image src="/static/kahe-202510/ka-he/mine/svip-bg.png" class="vip-top-bg" />
                 <view class="vip-top-content-avatar">
                     <decorate-avatar :avatar="userInfo.avatar" :level="userInfo.vip" />
                 </view>
                 <view class="vip-top-content-title">
-                    <!-- <image class="vip-top-content-title-img" src="https://jms.85gui7.com/kahe-202510/images/mine-nickname.png" /> -->
+                    <!-- <image class="vip-top-content-title-img" src="/static/kahe-202510/images/mine-nickname.png" /> -->
                     <view class="vip-top-content-title-text">{{
                         userInfo.nickname ?? "用户昵称"
                         }}</view>
                 </view>
                 <view class="vip-top-content-rightTitle" @tap.stop="handleShowRule">
-                    <!-- <image class="vip-top-content-rightTitle-img" src="https://jms.85gui7.com/kahe-202510/images/vip-right-bg.png"
+                    <!-- <image class="vip-top-content-rightTitle-img" src="/static/kahe-202510/images/vip-right-bg.png"
                         style="width: 109rpx;height: 42rpx;position: absolute;left: 0;top: 0;" /> -->
                     <text class="vip-top-content-rightTitle-title" style="font-size: 16rpx;
                     color: #000000; position: relative;">规则说明</text>
@@ -41,7 +41,7 @@
         </view>
         <view class="vip-table">
             <view class="vip-table-head">
-                <image class="vip-table-head-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/mine/top1.png" />
+                <image class="vip-table-head-bg" src="/static/kahe-202510/ka-he/mine/top1.png" />
                 <view class="vip-table-head-title theme-font" style="color: #fff;">等级</view>
                 <view class="vip-table-head-title theme-font">升级奖励</view>
                 <view class="vip-table-head-title theme-font">每日奖励</view>
@@ -50,14 +50,14 @@
                 <view v-for="(item, index) in vipModels" :id="'vip-table:id' + index" :key="'vip-table:key' + index"
                     class="vip-table-content-row">
                     <image class="vip-table-content-row-bg"
-                        :src="item.id === userInfo.vip ? 'https://jms.85gui7.com/kahe-202510/ka-he/mine/top2.png' : 'https://jms.85gui7.com/kahe-202510/ka-he/mine/top3.png'" />
+                        :src="item.id === userInfo.vip ? '/static/kahe-202510/ka-he/mine/top2.png' : '/static/kahe-202510/ka-he/mine/top3.png'" />
                     <view class="vip-table-content-row-item">
                         <text class="vip-table-content-row-item-title theme-font">{{ item.id }}</text>
                     </view>
                     <view class="vip-table-content-row-item vip-table-content-row-column">
                         <view v-for="(v, vIndex) in item.rewards" :id="index + 'reward:id' + vIndex"
                             :key="index + 'reward:key' + vIndex" class="vip-table-content-row-item-c">
-                            <image src="https://jms.85gui7.com/kahe-202510/images/vip-icon1.png" style="height: 27rpx;" mode="heightFix"
+                            <image src="/static/kahe-202510/images/vip-icon1.png" style="height: 27rpx;" mode="heightFix"
                                 v-if="v.name === '点券'" />
                             <image :src="v.logo" style="height: 27rpx;" mode="heightFix" v-if="v.logo" />
                             <text class="vip-table-content-row-item-c-title">{{ v.name }} x{{ v.num }}</text>
@@ -66,7 +66,7 @@
                     <view class="vip-table-content-row-item vip-table-content-row-column">
                         <view v-for="(v, vIndex) in item.rewardsDay" :id="index + 'rewardsDay:id' + vIndex"
                             :key="index + 'rewardsDay:key' + vIndex" class="vip-table-content-row-item-d">
-                            <image src="https://jms.85gui7.com/kahe-202510/images/vip-icon1.png" style="height: 27rpx;" mode="heightFix"
+                            <image src="/static/kahe-202510/images/vip-icon1.png" style="height: 27rpx;" mode="heightFix"
                                 v-if="v.name === '点券'" />
                             <text class="vip-table-content-row-item-d-title"> {{ v.num ? v.num + v.name : v.name
                                 }}</text>
@@ -80,13 +80,13 @@
         </view>
         <!-- <bottom-bar /> -->
         <view class="page-control">
-            <image class="page-control-arrow" src="https://jms.85gui7.com/kahe/vip/left.png" mode="aspectFit"
+            <image class="page-control-arrow" src="/static/kahe/vip/left.png" mode="aspectFit"
                 @tap.stop="changePage(false)" />
             <view v-for="(item, index) in pageItem" :id="'vip-pageControl:id' + index" :key="'vip-pageControl:' + index"
                 class="page-control-item" :class="item === pageParams.page ? 'active' : ''"
                 @tap.stop="changeCurrentPage(item)">{{ item }}
             </view>
-            <image class="page-control-arrow" src="https://jms.85gui7.com/kahe/vip/right.png" mode="aspectFit"
+            <image class="page-control-arrow" src="/static/kahe/vip/right.png" mode="aspectFit"
                 @tap.stop="changePage(true)" />
         </view>
         <common-model v-model:show="modelShow" :title="title" :content="content" />

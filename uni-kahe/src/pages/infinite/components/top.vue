@@ -1,14 +1,14 @@
 <template>
   <view class="top">
-    <image class="top-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/machine/top-bg.png" />
+    <image class="top-bg" src="/static/kahe-202510/ka-he/machine/top-bg.png" />
     <image
       v-if="types"
       class="top-center"
-      src="https://jms.85gui7.com/kahe-202510/images/infinite-girl.gif"
+      src="/static/kahe-202510/images/infinite-girl.gif"
     />
-    <image v-else class="top-center" src="https://jms.85gui7.com/kahe-202510/images/card-girl.gif" />
+    <image v-else class="top-center" src="/static/kahe-202510/images/card-girl.gif" />
     <view class="top-left">
-      <image class="top-left-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/machine/card-item-bg.png" />
+      <image class="top-left-bg" src="/static/kahe-202510/ka-he/machine/card-item-bg.png" />
       <view class="top-left-tips">vip客服-可可</view>
       <view v-if="types" class="top-left-title">
         主人，请选择心仪的抽卡机，海量卡牌任您挑选。

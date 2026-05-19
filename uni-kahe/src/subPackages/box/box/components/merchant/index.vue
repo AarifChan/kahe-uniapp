@@ -22,7 +22,7 @@
       <image
         class="merchantBox-arrow"
         :style="{ transform: isExpand ? 'rotate(180deg)' : 'rotate(0)' }"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/common/down-arrow.png"
+        src="/static/kahe-202510/ka-he/common/down-arrow.png"
       />
     </view>
     <view v-if="isExpand">

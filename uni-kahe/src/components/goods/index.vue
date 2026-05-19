@@ -1,7 +1,7 @@
 <template>
     <view class="goodsInfo">
         <view class="goodsInfo-empty" v-if="item.productNum === 0">
-            <image style="width:137rpx;height: 63rpx" src="https://jms.85gui7.com/jos/1214/sell-out.png" />
+            <image style="width:137rpx;height: 63rpx" src="/static/jos/1214/sell-out.png" />
         </view>
         <view class="goodsInfo-cover">
             <image class="goodsInfo-cover-img" :src="item.image" mode="heightFix" />
@@ -47,7 +47,7 @@ defineProps({
 })
 
 const formatLabelImage = (index: number) => {
-    return 'https://jms.85gui7.com/kahe-202510/tags/mode' + index + '.png'
+    return '/static/kahe-202510/tags/mode' + index + '.png'
 }
 </script>
 

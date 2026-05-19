@@ -8,16 +8,16 @@
         <view class="inGroupModal">
             <image
                 class="inGroupModal-bg"
-                src="https://jms.85gui7.com/kahe-202510/home-upgrade/inGroup-bg.png"
+                src="/static/kahe-202510/home-upgrade/inGroup-bg.png"
             />
             <image
                 class="inGroupModal-qrcode"
-                src="https://jms.85gui7.com/kahe-202510/home-upgrade/inGroup.png"
+                src="/static/kahe-202510/home-upgrade/inGroup.png"
                 @longpress="emits('showImage')"
             />
             <image
                 class="inGroupModal-close"
-                src="https://jms.85gui7.com/kahe-202510/home-upgrade/inGroup-close.png"
+                src="/static/kahe-202510/home-upgrade/inGroup-close.png"
                 @click="emits('update:show', false)"
             />
         </view>

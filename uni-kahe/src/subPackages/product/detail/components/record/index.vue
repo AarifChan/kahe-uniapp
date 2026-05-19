@@ -9,8 +9,8 @@
                 class="product-record-item-bg"
                 :src="
                     item.isSpec
-                        ? 'https://jms.85gui7.com/kahe/product/record-spec.png'
-                        : 'https://jms.85gui7.com/kahe/product/record-normal.png'
+                        ? '/static/kahe/product/record-spec.png'
+                        : '/static/kahe/product/record-normal.png'
                 "
             /> -->
             <view class="product-record-item-bg" />
@@ -33,7 +33,7 @@
                 <image
                     v-if="item.isHide"
                     class="product-record-item-content-hide"
-                    src="https://jms.85gui7.com/jos/common/hide-show.png"
+                    src="/static/jos/common/hide-show.png"
                 />
                 <image
                     class="product-record-item-content-level"

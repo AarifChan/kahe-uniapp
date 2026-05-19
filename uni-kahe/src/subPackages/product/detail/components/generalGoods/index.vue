@@ -12,7 +12,7 @@
       <view v-if="!item.isHide && !isInfinite" class="goodsBox-top-numBg">
         <image
           class="goodsBox-top-numBg-bg"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/common/num_bg.png"
+          src="/static/kahe-202510/ka-he/common/num_bg.png"
         />
         <text class="goodsBox-top-numBg-num" v-if="item.isSky">{{
           item.num
@@ -30,7 +30,7 @@
       <view class="goodsBox-top-empty" v-if="item.isSellOut">
         <image
           style="width: 132rpx; height: 113rpx"
-          src="https://jms.85gui7.com/kahe-202510/product/sell-out.png"
+          src="/static/kahe-202510/product/sell-out.png"
         />
       </view>
       <image
@@ -42,7 +42,7 @@
       <image
         v-if="item.isDemon"
         class="goodsBox-top-king"
-        src="https://jms.85gui7.com/kahe-202510/common/king.png"
+        src="/static/kahe-202510/common/king.png"
       />
     </view>
     <view class="goodsBox-info">

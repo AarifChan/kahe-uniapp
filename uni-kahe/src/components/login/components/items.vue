@@ -1,6 +1,6 @@
 <template>
     <view class="login-item">
-        <image class="login-item-bg" src="https://jms.85gui7.com/kahe/login/item-bg.png" />
+        <image class="login-item-bg" src="/static/kahe/login/item-bg.png" />
         <view class="login-item-content">
             <view class="login-item-content-left">
                 <text class="login-item-content-left-title theme-font">{{item.title}}</text>

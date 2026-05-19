@@ -13,8 +13,8 @@
       class="agreement-img"
       :src="
         checked
-          ? 'https://jms.85gui7.com/kahe/common/checked.png'
-          : 'https://jms.85gui7.com/kahe/common/unchecked.png'
+          ? '/static/kahe/common/checked.png'
+          : '/static/kahe/common/unchecked.png'
       "
       @tap.stop="emits('update:checked', !checked)"
     />

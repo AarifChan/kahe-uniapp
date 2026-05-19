@@ -2,9 +2,9 @@
     <tn-popup v-model="vShow" open-direction="bottom" @close="emits('update:show', false)" bg-color="#DFEFFF">
         <view class="recharge">
             <view class="recharge-top">
-                <image class="recharge-top-bg" src="https://jms.85gui7.com/kahe-202510/images/recharge-title.png" />
+                <image class="recharge-top-bg" src="/static/kahe-202510/images/recharge-title.png" />
                 <view class="recharge-top-title theme-font">充值余额</view>
-                <image class="recharge-top-close" src="https://jms.85gui7.com/kahe-202510/images/recharge-close.png" @tap.stop="emits('update:show', false)"  />
+                <image class="recharge-top-close" src="/static/kahe-202510/images/recharge-close.png" @tap.stop="emits('update:show', false)"  />
             </view>
             <view class="recharge-content">
                 <view class="recharge-content-option">

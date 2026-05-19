@@ -8,17 +8,17 @@
         <view class="dailySuccess">
             <image
                 class="dailySuccess-bg"
-                src="https://jms.85gui7.com/kahe-202510/home-upgrade/modal-success.png"
+                src="/static/kahe-202510/home-upgrade/modal-success.png"
             />
             <image
                 class="dailySuccess-close"
-                src="https://jms.85gui7.com/kahe-202510/home-upgrade/close.png"
+                src="/static/kahe-202510/home-upgrade/close.png"
                 @tap.stop="emits('update:show', false)"
             />
             <view class="dailySuccess-btn" @tap.stop="emits('didClickUse')">
                 <image
                     class="dailySuccess-btn-img"
-                    src="https://jms.85gui7.com/kahe-202510/home-upgrade/btn-style2-normal.png"
+                    src="/static/kahe-202510/home-upgrade/btn-style2-normal.png"
                 />
                 <view class="dailySuccess-btn-title theme-font">去使用</view>
             </view>

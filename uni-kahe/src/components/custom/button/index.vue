@@ -9,7 +9,7 @@
       <image
         v-if="icon === 'wechat'"
         style="width: 25px; height: 25px"
-        src="https://jms.85gui7.com/kahe-202510/images/weixin.png"
+        src="/static/kahe-202510/images/weixin.png"
       />
       <text
         class="customButton-content-title"
@@ -29,7 +29,7 @@
   <view class="bottom-Button" v-else :style="{ position: position }">
     <image
       class="customButton-button"
-      src="https://jms.85gui7.com/kahe-202510/ka-he/common/long-btn-bg.png"
+      src="/static/kahe-202510/ka-he/common/long-btn-bg.png"
     />
     <text class="big-title theme-font">{{ title }}</text>
   </view>

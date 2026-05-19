@@ -1,6 +1,6 @@
 <template>
     <view class="redEnvelope">
-        <image class="redEnvelope-bg" src="https://jms.85gui7.com/kahe-202510/redEnvelope/bg1.png" />
+        <image class="redEnvelope-bg" src="/static/kahe-202510/redEnvelope/bg1.png" />
         <view class="redEnvelope-content">
             <view class="redEnvelope-content-top">
                 <decorate-avatar
@@ -51,7 +51,7 @@
                     </view>
                     <image
                         class="redEnvelope-content-card-item-bg"
-                        src="https://jms.85gui7.com/kahe-202510/redEnvelope/item-bg.png"
+                        src="/static/kahe-202510/redEnvelope/item-bg.png"
                     />
                 </view>
             </view>
@@ -65,7 +65,7 @@
                     <view class="redEnvelope-content-center-head-center">
                         <image
                             class="redEnvelope-content-center-head-center-img"
-                            src="https://jms.85gui7.com/kahe-202510/redEnvelope/count.png"
+                            src="/static/kahe-202510/redEnvelope/count.png"
                         />
                         <text
                             class="redEnvelope-content-center-head-center-title"
@@ -85,7 +85,7 @@
                     >
                         <image
                             class="redEnvelope-content-center-list-empty-img"
-                            src="https://jms.85gui7.com/kahe-202510/redEnvelope/big.png"
+                            src="/static/kahe-202510/redEnvelope/big.png"
                         />
                         <text
                             class="redEnvelope-content-center-list-empty-title"
@@ -106,7 +106,7 @@
                     >
                         <image
                             class="redEnvelope-content-center-tips-btn-img"
-                            src="https://jms.85gui7.com/kahe-202510/redEnvelope/exchange.png"
+                            src="/static/kahe-202510/redEnvelope/exchange.png"
                         />
                         <text
                             class="redEnvelope-content-center-tips-btn-title theme-font"
@@ -130,7 +130,7 @@
                     >
                     <image
                         class="redEnvelope-content-bottom-head-img"
-                        src="https://jms.85gui7.com/kahe-202510/redEnvelope/ticket.png"
+                        src="/static/kahe-202510/redEnvelope/ticket.png"
                     />
                     <text class="redEnvelope-content-bottom-head-value">{{
                         Number(
@@ -145,7 +145,7 @@
                 >
                     <image
                         class="redEnvelope-content-bottom-btn-bg"
-                        src="https://jms.85gui7.com/kahe-202510/redEnvelope/share-btn.png"
+                        src="/static/kahe-202510/redEnvelope/share-btn.png"
                     />
                     <text
                         class="redEnvelope-content-bottom-btn-title theme-font"
@@ -160,7 +160,7 @@
                 >
                     <image
                         class="redEnvelope-content-bottom-btn-bg"
-                        src="https://jms.85gui7.com/kahe-202510/redEnvelope/share-btn.png"
+                        src="/static/kahe-202510/redEnvelope/share-btn.png"
                     />
                     <text
                         class="redEnvelope-content-bottom-btn-title theme-font"
@@ -182,7 +182,7 @@
                 <view class="redEnvelope-content-bottom-time">
                     <image
                         class="redEnvelope-content-bottom-time-img"
-                        src="https://jms.85gui7.com/kahe-202510/redEnvelope/time.png"
+                        src="/static/kahe-202510/redEnvelope/time.png"
                     />
                     <text class="redEnvelope-content-bottom-time-title"
                         >截止时间：{{ detail?.redbag.expiretime }}</text

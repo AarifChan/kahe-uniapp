@@ -1,11 +1,11 @@
 <template>
     <view class="boxChooseBottom">
-        <image class="boxChooseBottom-bg" src="https://jms.85gui7.com/kahe/product/normal-bottom-bg1.png" />
+        <image class="boxChooseBottom-bg" src="/static/kahe/product/normal-bottom-bg1.png" />
         <view class="boxChooseBottom-other" />
         <view class="boxChooseBottom-info">
             <text class="boxChooseBottom-info-title">请选择福袋</text>
             <view class="boxChooseBottom-info-right">
-                <image class="boxChooseBottom-info-right-bg" src="https://jms.85gui7.com/kahe/product/chase-btn.png" />
+                <image class="boxChooseBottom-info-right-bg" src="/static/kahe/product/chase-btn.png" />
                 <text class="boxChooseBottom-info-right-title theme-font">立即购买</text>
             </view>
         </view>

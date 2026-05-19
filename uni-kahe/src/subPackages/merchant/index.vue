@@ -8,14 +8,14 @@
     <!--        <view class="merchantInfo-contact" @tap.stop="handleClickQrCode"-->
     <!--            ><image-->
     <!--                class="merchantInfo-contact-img"-->
-    <!--                src="https://jms.85gui7.com/kahe-202510/merchant/contact.png"-->
+    <!--                src="/static/kahe-202510/merchant/contact.png"-->
     <!--            />联系商家</view-->
     <!--        >-->
     <!-- #ifdef MP-WEIXIN -->
     <button class="merchantInfo-share merchantInfo-share-btn" open-type="share">
       <image
         class="merchantInfo-contact-img"
-        src="https://jms.85gui7.com/share.png"
+        src="/static/share.png"
       />分享商家
     </button>
     <!-- #endif -->
@@ -23,20 +23,20 @@
     <view class="merchantInfo-share" @tap.stop="handleClickShare">
       <image
         class="merchantInfo-contact-img"
-        src="https://jms.85gui7.com/share.png"
+        src="/static/share.png"
       />分享商家
     </view>
     <!-- #endif -->
     <view class="merchantInfo-complain" @tap.stop="handleClickComplain">
       <image
         class="merchantInfo-contact-img"
-        src="https://jms.85gui7.com/kahe-202510/merchant/complaint.png"
+        src="/static/kahe-202510/merchant/complaint.png"
       />投诉商家
     </view>
     <view class="merchantInfo-content">
       <view class="welfare">
         <img
-          src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/card-bg.png"
+          src="/static/kahe-202510/ka-he/merchant/card-bg.png"
           alt=""
           class="welfare-bg"
         />
@@ -73,7 +73,7 @@
             @tap.stop="handleClickQrCode"
           >
             <image
-              src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/btn.png"
+              src="/static/kahe-202510/ka-he/merchant/btn.png"
               class="imgBg"
             />
             <text>进群豪礼</text>
@@ -84,7 +84,7 @@
       <!--      <view class="merchantInfo-content-score" @tap.stop="didClickScore">-->
       <!--        <image-->
       <!--          class="merchantInfo-content-score-img"-->
-      <!--          src="https://jms.85gui7.com/kahe-202510/home-upgrade/score-item-new.png"-->
+      <!--          src="/static/kahe-202510/home-upgrade/score-item-new.png"-->
       <!--        />-->
       <!--      </view>-->
 
@@ -178,7 +178,7 @@ const handleClickQrCode = () => {
 };
 
 const handleClickComplain = () => {
-  const image = "https://jms.85gui7.com/kahe-202510/ka-he/common/qrcode.png";
+  const image = "/static/kahe-202510/ka-he/common/qrcode.png";
   uni.previewImage({
     current: image,
     urls: [image],
@@ -196,7 +196,7 @@ const handleClickShare = () => {
     imageUrl:
       detail.value.icon ||
       detail.value.logo ||
-      "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
+      "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: `/subPackages/merchant/index?merchantId=${id}`,
   });
 };

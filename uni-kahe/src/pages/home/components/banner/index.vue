@@ -31,8 +31,8 @@
         class="indicator-dot"
         :src="
           current === index
-            ? 'https://jms.85gui7.com/kahe-202510/ka-he/home/indicator-active.png'
-            : 'https://jms.85gui7.com/kahe-202510/ka-he/home/indicator-normal.png'
+            ? '/static/kahe-202510/ka-he/home/indicator-active.png'
+            : '/static/kahe-202510/ka-he/home/indicator-normal.png'
         "
       />
     </view>

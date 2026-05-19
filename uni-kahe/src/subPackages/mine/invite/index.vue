@@ -1,11 +1,11 @@
 <template>
   <view class="invite">
-    <image class="invite-bg" src="https://jms.85gui7.com/kahe-202510/invite/invite-bg.png" />
+    <image class="invite-bg" src="/static/kahe-202510/invite/invite-bg.png" />
     <view class="invite-content">
       <view class="invite-content-share">
         <image
           class="invite-content-share-bg"
-          src="https://jms.85gui7.com/kahe-202510/invite/invite-tag.png"
+          src="/static/kahe-202510/invite/invite-tag.png"
         />
         <button openType="share" class="invite-content-share-btn theme-font">
           点击邀请盟友
@@ -14,11 +14,11 @@
       <view class="invite-content-info">
         <image
           class="invite-content-info-bg"
-          src="https://jms.85gui7.com/kahe-202510/invite/invite-1-bg.png"
+          src="/static/kahe-202510/invite/invite-1-bg.png"
         />
         <image
           class="invite-content-info-item"
-          src="https://jms.85gui7.com/kahe-202510/invite/invite-item1.png"
+          src="/static/kahe-202510/invite/invite-item1.png"
         />
         <view class="invite-content-info-title theme-font">我的盟主</view>
         <view class="invite-content-info-subTitle"
@@ -29,7 +29,7 @@
             <view class="invite-content-info-agent-info-avatar">
               <image
                 class="invite-content-info-agent-info-avatar-bg"
-                src="https://jms.85gui7.com/kahe-202510/invite/invite-avatar-bg.png"
+                src="/static/kahe-202510/invite/invite-avatar-bg.png"
               />
               <image
                 class="invite-content-info-agent-info-avatar-decorate"
@@ -44,7 +44,7 @@
             <view class="invite-content-info-agent-record-item">
               <image
                 class="invite-content-info-agent-record-item-row1"
-                src="https://jms.85gui7.com/kahe-202510/invite/invite-row1.png"
+                src="/static/kahe-202510/invite/invite-row1.png"
               />
               <view class="invite-content-info-agent-record-item-title"
                 >累计奖励</view
@@ -57,7 +57,7 @@
             <view class="invite-content-info-agent-record-item">
               <image
                 class="invite-content-info-agent-record-item-row2"
-                src="https://jms.85gui7.com/kahe-202510/invite/invite-row2.png"
+                src="/static/kahe-202510/invite/invite-row2.png"
               />
               <view class="invite-content-info-agent-record-item-title"
                 >累计人数</view
@@ -85,7 +85,7 @@
           >
             <image
               class="invite-content-info-invite-btn-bg"
-              src="https://jms.85gui7.com/kahe-202510/invite/invite-tag.png"
+              src="/static/kahe-202510/invite/invite-tag.png"
             />
             <view class="invite-content-info-invite-btn-text theme-font"
               >确认邀请</view
@@ -96,11 +96,11 @@
       <view class="invite-content-info">
         <image
           class="invite-content-info-bg"
-          src="https://jms.85gui7.com/kahe-202510/invite/invite-1-bg.png"
+          src="/static/kahe-202510/invite/invite-1-bg.png"
         />
         <image
           class="invite-content-info-item"
-          src="https://jms.85gui7.com/kahe-202510/invite/invite-item2.png"
+          src="/static/kahe-202510/invite/invite-item2.png"
         />
         <view class="invite-content-info-title theme-font">我的联盟</view>
         <view class="invite-content-info-subTitle"
@@ -111,7 +111,7 @@
             <view class="invite-content-info-content-info-avatar">
               <image
                 class="invite-content-info-content-info-avatar-bg"
-                src="https://jms.85gui7.com/kahe-202510/invite/invite-avatar-bg.png"
+                src="/static/kahe-202510/invite/invite-avatar-bg.png"
               />
               <image
                 class="invite-content-info-content-info-avatar-decorate"
@@ -126,7 +126,7 @@
             <view class="invite-content-info-content-record-item">
               <image
                 class="invite-content-info-content-record-item-row1"
-                src="https://jms.85gui7.com/kahe-202510/invite/invite-row1.png"
+                src="/static/kahe-202510/invite/invite-row1.png"
               />
 
               <view class="invite-content-info-content-record-item-title"
@@ -142,7 +142,7 @@
             <view class="invite-content-info-content-record-item">
               <image
                 class="invite-content-info-content-record-item-row2"
-                src="https://jms.85gui7.com/kahe-202510/invite/invite-row2.png"
+                src="/static/kahe-202510/invite/invite-row2.png"
               />
 
               <view class="invite-content-info-content-record-item-title"
@@ -158,7 +158,7 @@
             <view class="invite-content-info-content-record-item">
               <image
                 class="invite-content-info-content-record-item-row3"
-                src="https://jms.85gui7.com/kahe-202510/invite/invite-row3.png"
+                src="/static/kahe-202510/invite/invite-row3.png"
               />
               <view class="invite-content-info-content-record-item-title"
                 >盟友人数</view
@@ -174,7 +174,7 @@
       <view class="invite-content-list">
         <image
           class="invite-content-list-bg"
-          src="https://jms.85gui7.com/kahe-202510/invite/invite-2-bg.png"
+          src="/static/kahe-202510/invite/invite-2-bg.png"
         />
         <view class="invite-content-list-title theme-font">联盟成员</view>
         <scroll-view
@@ -278,7 +278,7 @@ onShareAppMessage(() => {
   const userId = agentInfo.value?.user?.user.username;
   return {
     title: "和我成为盟友，一起瓜分收益！",
-    imageUrl: "https://jms.85gui7.com/kahe-202510/resources/share-img.jpg",
+    imageUrl: "/static/kahe-202510/resources/share-img.jpg",
     path: `/subPackages/mine/invite/index?agent=${userId}`,
   };
 });
@@ -286,7 +286,7 @@ onShareTimeline(() => {
   const userId = agentInfo.value?.user?.user.username;
   return {
     title: "和我成为盟友，一起瓜分收益！",
-    imageUrl: "https://jms.85gui7.com/kahe-202510/resources/share-img.jpg",
+    imageUrl: "/static/kahe-202510/resources/share-img.jpg",
     path: `/subPackages/mine/invite/index?agent=${userId}`,
   };
 });

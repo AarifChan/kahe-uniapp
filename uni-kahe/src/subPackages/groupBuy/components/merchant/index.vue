@@ -55,7 +55,7 @@ defineProps({
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-image: url("https://jms.85gui7.com/kahe-202510/groupBuy/merchat-bg.png");
+  background-image: url("/static/kahe-202510/groupBuy/merchat-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }

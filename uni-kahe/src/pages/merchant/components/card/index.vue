@@ -31,7 +31,7 @@
           class="merchant-card-content-top-btn"
           @tap.stop="emits('didClickInfo', item)"
         >
-          <!--                    <image class="merchant-card-content-top-btn-bg" src="https://jms.85gui7.com/kahe-202510/merchant/btn.png" />-->
+          <!--                    <image class="merchant-card-content-top-btn-bg" src="/static/kahe-202510/merchant/btn.png" />-->
           <text class="merchant-card-content-top-btn-text theme-font"
             >进店看看</text
           >
@@ -45,7 +45,7 @@
         <!--        <view class="merchant-card-content-list-coupon">-->
         <!--          <image-->
         <!--            class="merchant-card-content-list-coupon-img"-->
-        <!--            src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/coupon-bg.png"-->
+        <!--            src="/static/kahe-202510/ka-he/merchant/coupon-bg.png"-->
         <!--          />-->
         <!--          <view class="merchant-card-content-list-coupon-content">-->
         <!--            <view class="merchant-card-content-list-coupon-content-title"-->

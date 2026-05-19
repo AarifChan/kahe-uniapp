@@ -1,6 +1,6 @@
 <template>
   <view class="coupon">
-    <image class="coupon-bg" src="https://jms.85gui7.com/kahe-202510/common/common-bg.png" />
+    <image class="coupon-bg" src="/static/kahe-202510/common/common-bg.png" /> <!-- 缺失图片: common-bg.png -->
     <view class="coupon-content">
       <view class="coupon-content-tab">
         <view
@@ -12,7 +12,7 @@
           <image
             v-if="current === index"
             class="coupon-content-tab-item-bg"
-            src="https://jms.85gui7.com/kahe-202510/coupon/tab1.png"
+            src="/static/kahe-202510/coupon/tab1.png"
           />
           <view
             class="coupon-content-tab-item-title theme-font"

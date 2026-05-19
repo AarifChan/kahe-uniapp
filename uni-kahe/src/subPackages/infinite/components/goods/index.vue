@@ -2,12 +2,12 @@
   <view class="homeGoods">
     <image
       class="homeGoods-bg"
-      src="https://jms.85gui7.com/kahe-202510/ka-he/home/item-bg.png"
+      src="/static/kahe-202510/ka-he/home/item-bg.png"
     />
     <!--        <view class="homeGoods-empty" v-if="item.isSellout">-->
     <!--            <image-->
     <!--                style="width:137rpx;height: 63rpx"-->
-    <!--                src="https://jms.85gui7.com/jos/1214/sell-out.png"-->
+    <!--                src="/static/jos/1214/sell-out.png"-->
     <!--            />-->
     <!--        </view>-->
 
@@ -40,7 +40,7 @@
             <view class="homeGoods-info-content-bottom-row1-price">
               <image
                 class="homeGoods-info-content-bottom-row1-price-img"
-                src="https://jms.85gui7.com/kahe-202510/ka-he/integral/price-bg.png"
+                src="/static/kahe-202510/ka-he/integral/price-bg.png"
               />
               <text
                 class="homeGoods-info-content-bottom-row1-price-title price-font"
@@ -85,7 +85,7 @@ defineProps({
 });
 
 const formatLabelImage = (index: number) => {
-  return "https://jms.85gui7.com/kahe-202510/tags/mode" + index + ".png";
+  return "/static/kahe-202510/tags/mode" + index + ".png";
 };
 </script>
 

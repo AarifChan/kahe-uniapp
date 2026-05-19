@@ -1,10 +1,10 @@
 <template>
     <view class="activity">
-        <image class="activity-bg" src="https://jms.85gui7.com/kahe-202510/images/rank-bg.png" />
+        <image class="activity-bg" src="/static/kahe-202510/images/rank-bg.png" />
         <view class="activity-content">
             <image
                 class="activity-content-rankbtn"
-                src="https://jms.85gui7.com/kahe-202510/images/rankbtn.png"
+                src="/static/kahe-202510/images/rankbtn.png"
             />
             <view class="activity-content-time">活动结束时间{{ endTime }}</view>
             <view class="activity-content-rank">
@@ -21,7 +21,7 @@
             <view class="activity-content-leader">
                 <image
                     class="activity-content-leader-bg"
-                    src="https://jms.85gui7.com/kahe-202510/images/leader.png"
+                    src="/static/kahe-202510/images/leader.png"
                 />
                 <view class="activity-content-leader-num theme-font">{{
                     rankList[2].rank
@@ -79,21 +79,21 @@ const rankList = ref(
     [
         {
             avatar: '',
-            decorate: 'https://jms.85gui7.com/kahe-202510/images/top2.png',
+            decorate: '/static/kahe-202510/images/top2.png',
             nickName: '',
             score: '',
             rank: 2
         },
         {
             avatar: '',
-            decorate: 'https://jms.85gui7.com/kahe-202510/images/top1.png',
+            decorate: '/static/kahe-202510/images/top1.png',
             nickName: '',
             score: '',
             rank: 1
         },
         {
             avatar: '',
-            decorate: 'https://jms.85gui7.com/kahe-202510/images/top3.png',
+            decorate: '/static/kahe-202510/images/top3.png',
             nickName: '',
             score: '',
             rank: 3

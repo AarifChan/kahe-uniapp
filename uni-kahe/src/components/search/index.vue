@@ -13,13 +13,13 @@
         v-if="black"
         @tap.stop="emits('didTapSearch', search)"
         class="search-content-iconNew"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/home/search-new.png"
+        src="/static/kahe-202510/ka-he/home/search-new.png"
       />
       <image
         v-else
         @tap.stop="emits('didTapSearch', search)"
         class="search-content-icon"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/common/search.png"
+        src="/static/kahe-202510/ka-he/common/search.png"
       />
     </view>
   </view>

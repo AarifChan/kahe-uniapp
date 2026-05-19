@@ -52,7 +52,7 @@ import { getTitleByQuality } from "@/utils";
 
 const qualityTagStyle = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/ka-he/common/num_bg.png)",
+    "url(/static/kahe-202510/ka-he/common/num_bg.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",

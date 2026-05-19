@@ -57,7 +57,7 @@ import { ChallengeOrderGate } from "@/subPackages/challenge/api";
 import { getLevelImage } from "@/subPackages/challenge";
 
 const resultPopupBgStyle = {
-  backgroundImage: "url(https://jms.85gui7.com/kahe-202510/challenge/result.png)",
+  backgroundImage: "url(/static/kahe-202510/challenge/result.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -65,7 +65,7 @@ const resultPopupBgStyle = {
 
 const resultBtnAgainStyle = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/challenge/btn-style2.png)",
+    "url(/static/kahe-202510/challenge/btn-style2.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -74,7 +74,7 @@ const resultBtnAgainStyle = {
 
 const resultBtnShipmentStyle = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/challenge/btn-style1.png)",
+    "url(/static/kahe-202510/challenge/btn-style1.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",

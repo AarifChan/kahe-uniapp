@@ -58,27 +58,27 @@ const limitTabList = [
   {
     title: "宝可梦",
     value: 6,
-    icon: "https://jms.85gui7.com/kahe-202510/ka-he/machine/cat1.png",
+    icon: "/static/kahe-202510/ka-he/machine/cat1.png",
   },
   {
     title: "航海王",
     value: 7,
-    icon: "https://jms.85gui7.com/kahe-202510/ka-he/machine/cat2.png",
+    icon: "/static/kahe-202510/ka-he/machine/cat2.png",
   },
   {
     title: "洛卡纳",
     value: 8,
-    icon: "https://jms.85gui7.com/kahe-202510/ka-he/machine/cat3.png",
+    icon: "/static/kahe-202510/ka-he/machine/cat3.png",
   },
   {
     title: "WS黑白双翼",
     value: 9,
-    icon: "https://jms.85gui7.com/kahe-202510/ka-he/machine/cat4.png",
+    icon: "/static/kahe-202510/ka-he/machine/cat4.png",
   },
   {
     title: "UA",
     value: 10,
-    icon: "https://jms.85gui7.com/kahe-202510/ka-he/machine/cat5.png",
+    icon: "/static/kahe-202510/ka-he/machine/cat5.png",
   },
 ];
 

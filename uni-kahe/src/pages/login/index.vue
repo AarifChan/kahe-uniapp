@@ -1,15 +1,12 @@
 <template>
   <view class="pageLogin">
-    <image
-      class="pageLogin-bg"
-      src="https://jms.85gui7.com/kahe-202510/new-login/bg.png"
-    />
+    <image class="pageLogin-bg" src="/static/kahe-202510/new-login/bg.png" />
     <view class="pageLogin-content">
       <view class="pageLogin-content-top">
         <view class="pageLogin-content-top-title theme-font">欢迎登录</view>
         <image
           class="pageLogin-content-top-subTitle"
-          src="https://jms.85gui7.com/kahe-202510/new-login/item.png"
+          src="/static/kahe-202510/new-login/item.png"
         />
       </view>
 
@@ -23,7 +20,7 @@
         >
           <image
             class="pageLogin-content-actions-btn-img"
-            src="https://jms.85gui7.com/kahe-202510/new-login/btn1.png"
+            src="/static/kahe-202510/new-login/btn1.png"
           />
           <view class="pageLogin-content-actions-btn-title"
             >手机号授权登录</view
@@ -36,7 +33,7 @@
         >
           <image
             class="pageLogin-content-actions-btn-img"
-            src="https://jms.85gui7.com/kahe-202510/new-login/btn1.png"
+            src="/static/kahe-202510/new-login/btn1.png"
           />
           <view class="pageLogin-content-actions-btn-title"
             >手机号授权登录</view
@@ -105,7 +102,7 @@
           >
             <image
               class="pageLogin-content-actions-btn-img"
-              src="https://jms.85gui7.com/kahe-202510/new-login/btn1.png"
+              src="/static/kahe-202510/new-login/btn1.png"
             />
             <view class="pageLogin-content-actions-btn-title">登录</view>
           </button>
@@ -118,7 +115,7 @@
           >
             <image
               class="pageLogin-content-actions-btn-img"
-              src="https://jms.85gui7.com/kahe-202510/new-login/btn2.png"
+              src="/static/kahe-202510/new-login/btn2.png"
             />
             <view
               class="pageLogin-content-actions-btn-title"
@@ -130,11 +127,11 @@
         </view>
         <!-- #endif -->
 
-        <button class="pageLogin-content-actions-btn" @tap.stop="handleUnLogin">
-          <image
-            class="pageLogin-content-actions-btn-img"
-            src="https://jms.85gui7.com/kahe-202510/new-login/btn2.png"
-          />
+        <button
+          class="pageLogin-content-actions-btn"
+          style="border: 1rpx solid black"
+          @tap.stop="handleUnLogin"
+        >
           <view class="pageLogin-content-actions-btn-title" style="color: black"
             >暂不登录</view
           >
@@ -196,8 +193,8 @@ onShow(() => {
   // #ifdef APP-PLUS
   // 检测微信是否安装
   isWechatInstalled.value = plus.runtime.isApplicationExist({
-    pname: 'com.tencent.mm',
-    action: 'weixin://'
+    pname: "com.tencent.mm",
+    action: "weixin://",
   });
   // #endif
 });
@@ -560,9 +557,10 @@ const handleAgreement = () => {
         position: relative;
         margin: 10rpx 0;
         width: 494rpx;
-        height: 67rpx;
+        height: 68rpx;
         padding: 0;
         border: none;
+        border-radius: 34rpx;
         background-color: transparent;
         &-img {
           width: 100%;
@@ -582,6 +580,7 @@ const handleAgreement = () => {
       &-btn::after {
         padding: 0;
         border: none;
+
         background-color: transparent;
       }
     }

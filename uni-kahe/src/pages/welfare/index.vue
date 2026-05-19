@@ -3,7 +3,7 @@
   <view class="welfare">
     <image
       class="welfare-bg"
-      src="https://jms.85gui7.com/kahe-202510/ka-he/welfare/welfare-bg.png"
+      src="/static/kahe-202510/ka-he/welfare/welfare-bg.png"
     />
     <view class="welfare-content">
       <view class="welfare-content-top" />
@@ -16,7 +16,7 @@
         >
           <image
             class="welfare-content-padding-item-img"
-            src="https://jms.85gui7.com/kahe-202510/ka-he/welfare/card-bg.png"
+            src="/static/kahe-202510/ka-he/welfare/card-bg.png"
           />
           <view class="welfare-content-padding-item-content">
             <view
@@ -124,42 +124,42 @@ const clickItem = (item: WelfareItem) => {
 
 const itemList = ref([
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item1.png",
+    image: "/static/kahe-202510/ka-he/welfare/item1.png",
     itemType: WelfareItemType.integral,
     title: "积分专区",
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item2.png",
+    image: "/static/kahe-202510/ka-he/welfare/item2.png",
     itemType: WelfareItemType.vip,
     title: "会员权益",
   },
   // {
-  //   image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item3.png",
+  //   image: "/static/kahe-202510/ka-he/welfare/item3.png",
   //   itemType: WelfareItemType.invite,
   //   title: "联盟收益",
   // },
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item4.png",
+    image: "/static/kahe-202510/ka-he/welfare/item4.png",
     itemType: WelfareItemType.redBag,
     title: "特惠礼包",
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item5.png",
+    image: "/static/kahe-202510/ka-he/welfare/item5.png",
     itemType: WelfareItemType.activity,
     title: "福利抽选",
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item6.png",
+    image: "/static/kahe-202510/ka-he/welfare/item6.png",
     itemType: WelfareItemType.dailyCoupon,
     title: "每日放券",
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item7.png",
+    image: "/static/kahe-202510/ka-he/welfare/item7.png",
     itemType: WelfareItemType.collect,
     title: "集赏行动",
   },
   {
-    image: "https://jms.85gui7.com/kahe-202510/ka-he/welfare/item8.png",
+    image: "/static/kahe-202510/ka-he/welfare/item8.png",
     itemType: WelfareItemType.rank,
     title: "排名奖励",
   },
@@ -167,14 +167,14 @@ const itemList = ref([
 onShareAppMessage(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
+    imageUrl: "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: "/pages/welcome/index",
   };
 });
 onShareTimeline(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
+    imageUrl: "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: "/pages/welcome/index",
   };
 });

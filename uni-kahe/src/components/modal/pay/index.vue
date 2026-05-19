@@ -9,7 +9,7 @@
       <view class="pay-head">
         <image
           class="pay-head-arrow"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/common/right-arrow.png"
+          src="/static/kahe-202510/ka-he/common/right-arrow.png"
           @tap.stop="emits('update:show', false)"
         />
         <view class="pay-head-title">确认购买</view>
@@ -51,7 +51,7 @@
               <view class="merchant-tag">
                 <image
                   class="merchant-tag-icon"
-                  src="https://jms.85gui7.com/kahe-202510/jikaquan/safe.png"
+                  src="/static/kahe-202510/jikaquan/safe.png"
                   mode="aspectFit"
                 />
                 <text>产品由商家寄售</text>
@@ -101,17 +101,17 @@
               </view>
             </view>
             <view class="pay-scroll-info-bottom-row">
-              <view class="pay-scroll-info-bottom-row-title">点券</view>
+              <view class="pay-scroll-info-bottom-row-title">无门槛抵扣券</view>
               <view class="pay-scroll-info-bottom-row-value"
                 >{{ userInfo.money }}(抵扣{{ goods.usedMoney }})</view
               >
             </view>
-            <view class="pay-scroll-info-bottom-row">
-              <view class="pay-scroll-info-bottom-row-title">绑定点券</view>
-              <view class="pay-scroll-info-bottom-row-value"
-                >{{ userInfo.coin }}(抵扣{{ goods.usedCoin }})</view
-              >
-            </view>
+            <!--            <view class="pay-scroll-info-bottom-row">-->
+            <!--              <view class="pay-scroll-info-bottom-row-title">绑定点券</view>-->
+            <!--              <view class="pay-scroll-info-bottom-row-value"-->
+            <!--                >{{ userInfo.coin }}(抵扣{{ goods.usedCoin }})</view-->
+            <!--              >-->
+            <!--            </view>-->
             <view class="pay-scroll-info-bottom-row">
               <view class="pay-scroll-info-bottom-row-title">积分</view>
               <view class="pay-scroll-info-bottom-row-value"
@@ -144,21 +144,21 @@
                 <view class="black-text">极速发货 </view>
                 <image
                   class="ok-icon"
-                  src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png"
+                  src="/static/kahe-202510/ka-he/common/ok.png"
                 />
               </view>
               <view class="row" style="margin-right: 8rpx">
                 <view class="black-text">品质保证 </view>
                 <image
                   class="ok-icon"
-                  src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png"
+                  src="/static/kahe-202510/ka-he/common/ok.png"
                 />
               </view>
               <view class="row">
                 <view class="black-text">售后无忧 </view>
                 <image
                   class="ok-icon"
-                  src="https://jms.85gui7.com/kahe-202510/ka-he/common/ok.png"
+                  src="/static/kahe-202510/ka-he/common/ok.png"
                 />
               </view>
             </view>
@@ -238,7 +238,7 @@
                 <view class="pay-type-icon wechat-icon">
                   <image
                     class="pay-type-icon-img"
-                    src="https://jms.85gui7.com/kahe-202510/wechat-pay.svg"
+                    src="/static/kahe-202510/wechat-pay.svg"
                     mode="aspectFit"
                   />
                 </view>
@@ -267,7 +267,7 @@
                 <view class="pay-type-icon alipay-icon">
                   <image
                     class="pay-type-icon-img"
-                    src="https://jms.85gui7.com/kahe-202510/alipay.svg"
+                    src="/static/kahe-202510/alipay.svg"
                     mode="aspectFit"
                   />
                 </view>

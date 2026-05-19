@@ -1,12 +1,12 @@
 <template>
   <view class="remark">
-    <image class="remark-bg" src="https://jms.85gui7.com/kahe-202510/groupBuy/remark-bg.png" />
+    <image class="remark-bg" src="/static/kahe-202510/groupBuy/remark-bg.png" />
     <view class="remark-content">
       <view class="remark-content-info">
         <view class="title">随机卡密</view>
-        <image class="icon" src="https://jms.85gui7.com/kahe-202510/groupBuy/info.png" />
+        <image class="icon" src="/static/kahe-202510/groupBuy/info.png" />
       </view>
-      <image class="remark-content-gift" src="https://jms.85gui7.com/kahe-202510/groupBuy/gift.png" />
+      <image class="remark-content-gift" src="/static/kahe-202510/groupBuy/gift.png" />
       <view class="remark-content-title">{{ detail.title }}卡密一张</view>
       <view class="remark-content-content" @tap.stop="emits('didClick')">
         <view class="remark-content-content-title theme-font">备注</view>
@@ -15,7 +15,7 @@
         }}</view>
         <image
           class="remark-content-content-right"
-          src="https://jms.85gui7.com/kahe-202510/groupBuy/right-arrow.png"
+          src="/static/kahe-202510/groupBuy/right-arrow.png"
         />
       </view>
     </view>

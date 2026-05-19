@@ -1,7 +1,7 @@
 <template>
     <view class="boxItem">
-        <image class="boxItem-img" src="https://jms.85gui7.com/kahe/product/box-selected.png" v-if="selected" />
-        <image class="boxItem-img" src="https://jms.85gui7.com/kahe/product/box-normal.png" v-else />
+        <image class="boxItem-img" src="/static/kahe/product/box-selected.png" v-if="selected" />
+        <image class="boxItem-img" src="/static/kahe/product/box-normal.png" v-else />
         <text class="boxItem-title">{{index}}</text>
     </view>
 </template>

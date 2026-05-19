@@ -75,20 +75,20 @@
       <view class="detail-bottom">
         <image
           class="detail-bottom-bg"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/welfare/bottom-bg.png"
+          src="/static/kahe-202510/ka-he/welfare/bottom-bg.png"
         />
         <view class="detail-bottom-content">
           <view class="detail-bottom-left">
             <view class="detail-bottom-left-box" @tap.stop="clickActivity">
               <image
-                src="https://jms.85gui7.com/kahe-202510/ka-he/welfare/bottom-item1.png"
+                src="/static/kahe-202510/ka-he/welfare/bottom-item1.png"
                 class="detail-bottom-left-box-img"
               />
               <view class="detail-bottom-left-box-text"> 活动 </view>
             </view>
             <view class="detail-bottom-left-box" @tap.stop="clickRewardCode">
               <image
-                src="https://jms.85gui7.com/kahe-202510/ka-he/welfare/bottom-item2.png"
+                src="/static/kahe-202510/ka-he/welfare/bottom-item2.png"
                 class="detail-bottom-left-box-img2"
               />
               <view class="detail-bottom-left-box-text"> 抽奖码 </view>
@@ -99,7 +99,7 @@
             <button class="detail-bottom-share" open-type="share">
               <image
                 class="detail-bottom-share-img"
-                src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
+                src="/static/kahe-202510/ka-he/common/common-btn-bg.png"
               />
               <view
                 class="detail-bottom-share-title theme-font text-stroke-main"
@@ -112,7 +112,7 @@
             <view class="detail-bottom-share" @tap.stop="handleClickShare">
               <image
                 class="detail-bottom-share-img"
-                src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
+                src="/static/kahe-202510/ka-he/common/common-btn-bg.png"
               />
               <view
                 class="detail-bottom-share-title theme-font text-stroke-main"
@@ -128,7 +128,7 @@
             >
               <image
                 class="detail-bottom-right-img"
-                src="https://jms.85gui7.com/kahe-202510/ka-he/common/btn-big-bg.png"
+                src="/static/kahe-202510/ka-he/common/btn-big-bg.png"
               />
               <view
                 class="detail-bottom-right-title theme-font text-stroke-main"
@@ -139,7 +139,7 @@
             <view v-else class="detail-bottom-right" @tap.stop="tapPrizeAction">
               <image
                 class="detail-bottom-right-img"
-                src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
+                src="/static/kahe-202510/ka-he/common/common-btn-bg.png"
               />
               <view
                 class="detail-bottom-right-title theme-font text-stroke-main"
@@ -266,7 +266,7 @@ const handleClickShare = () => {
     title: `${UserModule.userInfo.nickname}邀请您来助力免费得奖品！`,
     imageUrl:
       welfareDetails.value.logo ||
-      "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
+      "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: `/subPackages/product/welfare-detail/index?aid=${aid.value}&obj=${UserModule.userInfo.uid}`,
   });
 };

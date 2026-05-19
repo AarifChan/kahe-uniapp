@@ -1,6 +1,6 @@
 <template>
     <view class="custom-btn theme-font text-stroke-main">
-        <image class="custom-btn-small" src="https://jms.85gui7.com/kahe-202510/discount/btn.png" />
+        <image class="custom-btn-small" src="/static/kahe-202510/discount/btn.png" />
         <view class="custom-btn-content">
             <slot />
             <text :class="size === 'small' ? 'custom-btn-content-small' : 'custom-btn-content-big' ">{{title}}</text>

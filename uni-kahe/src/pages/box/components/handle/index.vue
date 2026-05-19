@@ -1,6 +1,6 @@
 <template>
   <view class="box-handle">
-    <image class="box-handle-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/common/box-bg.png" />
+    <image class="box-handle-bg" src="/static/kahe-202510/ka-he/common/box-bg.png" />
     <view class="box-handle-content">
       <view class="box-handle-content-all" @tap.stop="emits('didTapItem', 0)">
         <view class="box-handle-content-all-select">

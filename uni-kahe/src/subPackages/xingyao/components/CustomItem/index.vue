@@ -6,7 +6,7 @@
       :key="`item-${index}`"
     >
       <view class="box">
-        <image src="https://jms.85gui7.com/kahe-202510/shine/item.png" mode="scaleToFill" class="box-bg" />
+        <image src="/static/kahe-202510/shine/item.png" mode="scaleToFill" class="box-bg" />
         <view class="box-text">{{ item.text }}</view>
         <view class="box-text">{{ item.content }}</view>
       </view>
@@ -14,7 +14,7 @@
         class="arrow"
         v-if="index !== 2"
         mode="scaleToFill"
-        src="https://jms.85gui7.com/kahe-202510/shine/arrow.png"
+        src="/static/kahe-202510/shine/arrow.png"
       ></image>
     </view>
   </view>

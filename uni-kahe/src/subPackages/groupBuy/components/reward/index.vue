@@ -1,14 +1,14 @@
 <template>
     <view class="groupBuyReward">
-        <image class="groupBuyReward-bg" src="https://jms.85gui7.com/kahe-202510/groupBuy/reward-bg.png" />
+        <image class="groupBuyReward-bg" src="/static/kahe-202510/groupBuy/reward-bg.png" />
         <view class="groupBuyReward-content" v-if="!opened">
             <view class="groupBuyReward-content-open">
                 <view class="groupBuyReward-content-center-title" />
-                <image class="groupBuyReward-content-center-card" :style="{transform: 'scale(1.4)'}" src="https://jms.85gui7.com/kahe-202510/groupBuy/open-reward.png"  />
+                <image class="groupBuyReward-content-center-card" :style="{transform: 'scale(1.4)'}" src="/static/kahe-202510/groupBuy/open-reward.png"  />
             </view>
         </view>
         <view class="groupBuyReward-content" v-else>
-            <image class="groupBuyReward-content-bottom" src="https://jms.85gui7.com/kahe-202510/groupBuy/reward-item.png" />
+            <image class="groupBuyReward-content-bottom" src="/static/kahe-202510/groupBuy/reward-item.png" />
             <view class="groupBuyReward-content-center">
                 <z-swiper v-model="cardList">
                     <z-swiper-item
@@ -17,7 +17,7 @@
                         :key="'ccc'+index"
                     >
                         <view class="groupBuyReward-content-center-title">#{{item.sid}}-{{item.name}} {{item.sname}} {{getNormalLevelNameByLevel(item.level)}}</view>
-                        <image class="groupBuyReward-content-center-card" src="https://jms.85gui7.com/kahe-202510/groupBuy/reward-card1.png" />
+                        <image class="groupBuyReward-content-center-card" src="/static/kahe-202510/groupBuy/reward-card1.png" />
                     </z-swiper-item>
                 </z-swiper>
             </view>

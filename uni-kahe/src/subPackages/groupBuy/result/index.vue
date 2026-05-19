@@ -4,7 +4,7 @@
       <view class="groupBuyResult-content-top">
         <image
           class="groupBuyResult-content-top-live"
-          src="https://jms.85gui7.com/kahe-202510/groupBuy/result-bg.png"
+          src="/static/kahe-202510/groupBuy/result-bg.png"
           @tap.stop="showLiveAddress"
         />
         <view class="groupBuyResult-content-top-tab">

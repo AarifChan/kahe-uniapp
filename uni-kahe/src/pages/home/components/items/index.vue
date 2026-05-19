@@ -1,13 +1,13 @@
 <template>
     <view class="home-buttons">
         <view class="home-buttons-left" @tap.stop="handleItem(HomeItemType.invite)">
-            <image class="home-buttons-left-img" src="https://jms.85gui7.com/kahe-202510/home/card1.png" />
+            <image class="home-buttons-left-img" src="/static/kahe-202510/home/card1.png" /> <!-- 缺失图片: card1.png -->
         </view>
         <view class="home-buttons-center" @tap.stop="handleItem(HomeItemType.mall)">
-            <image class="home-buttons-left-img" src="https://jms.85gui7.com/kahe-202510/home/card2.png" />
+            <image class="home-buttons-left-img" src="/static/kahe-202510/home/card2.png" /> <!-- 缺失图片: card2.png -->
         </view>
         <view class="home-buttons-right" @tap.stop="handleItem(HomeItemType.welfare)">
-            <image class="home-buttons-right-img" src="https://jms.85gui7.com/kahe-202510/home/card3.png" />
+            <image class="home-buttons-right-img" src="/static/kahe-202510/home/card3.png" /> <!-- 缺失图片: card3.png -->
         </view>
     </view>
 </template>

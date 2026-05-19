@@ -8,7 +8,7 @@
     <view class="smash">
       <image
         class="smash-bg"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/common/smash-bg.png"
+        src="/static/kahe-202510/ka-he/common/smash-bg.png"
       />
       <view class="smash-content">
         <view class="smash-content-top">
@@ -56,7 +56,7 @@
           </view>
           <image
             class="smash-content-forbidden-img"
-            src="https://jms.85gui7.com/kahe/product/18age.png"
+            src="/static/kahe/product/18age.png"
           />
         </view>
         <view
@@ -78,7 +78,7 @@
 
       <image
         class="smash-close"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/common/close.png"
+        src="/static/kahe-202510/ka-he/common/close.png"
         @tap.stop="emits('update:show', false)"
       />
     </view>

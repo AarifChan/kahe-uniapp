@@ -8,10 +8,10 @@
     <!--      @tapLampAction="tapLampAction"-->
     <!--    />-->
     <view class="nav-box">
-      <image src="https://jms.85gui7.com/kahe-202510/shine/nav.png" mode="scaleToFill" class="bg" />
+      <image src="/static/kahe-202510/shine/nav.png" mode="scaleToFill" class="bg" />
 
       <!-- 这里是动态图片 -->
-      <!--      <image src="https://jms.85gui7.com/kahe-202510/shine/title.png" mode="scaleToFill" class="goods" />-->
+      <!--      <image src="/static/kahe-202510/shine/title.png" mode="scaleToFill" class="goods" />-->
       <image
         mode="aspectFit"
         class="goods"
@@ -24,7 +24,7 @@
       </view>
       <view class="texts"> 本期赠品 </view>
       <view class="top">
-        <image src="https://jms.85gui7.com/kahe-202510/shine/top.png" mode="scaleToFill" class="top-bg" />
+        <image src="/static/kahe-202510/shine/top.png" mode="scaleToFill" class="top-bg" />
         <text>第{{ info?.id ?? 0 }}期</text>
       </view>
     </view>
@@ -72,28 +72,28 @@ const props = defineProps({
 import { onMounted, Prop, ref, watch } from "vue";
 
 const itemList = ref([
-  { icon: "https://jms.85gui7.com/kahe-202510/shine/icon1.png", text: "规则", key: 1 },
-  { icon: "https://jms.85gui7.com/kahe-202510/shine/icon2.png", text: "往期", key: 2 },
+  { icon: "/static/kahe-202510/shine/icon1.png", text: "规则", key: 1 },
+  { icon: "/static/kahe-202510/shine/icon2.png", text: "往期", key: 2 },
 ]);
 const lampRef = ref();
 const lampList = ref([
   {
-    avatar: "https://jms.85gui7.com/kahe-202510/shine/item.png",
+    avatar: "/static/kahe-202510/shine/item.png",
     userName: "啊权",
     content: "hhhhhhhhhhh",
   },
   {
-    avatar: "https://jms.85gui7.com/kahe-202510/shine/item.png",
+    avatar: "/static/kahe-202510/shine/item.png",
     userName: "啊权",
     content: "hhhhhhhhhhh",
   },
   {
-    avatar: "https://jms.85gui7.com/kahe-202510/shine/item.png",
+    avatar: "/static/kahe-202510/shine/item.png",
     userName: "啊权",
     content: "hhhhhhhhhhh",
   },
   {
-    avatar: "https://jms.85gui7.com/kahe-202510/shine/item.png",
+    avatar: "/static/kahe-202510/shine/item.png",
     userName: "啊权",
     content: "hhhhhhhhhhh",
   },
@@ -231,7 +231,7 @@ onMounted(() => {
       position: relative;
       width: 82rpx;
       height: 94rpx;
-      background-image: url("https://jms.85gui7.com/kahe-202510/shine/btn.png");
+      background-image: url("/static/kahe-202510/shine/btn.png");
       background-size: 100%;
       background-repeat: no-repeat;
       display: flex;

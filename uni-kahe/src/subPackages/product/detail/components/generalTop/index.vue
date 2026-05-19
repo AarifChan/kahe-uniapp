@@ -2,7 +2,7 @@
   <view class="general-top">
     <image
       class="general-top-img"
-      src="https://jms.85gui7.com/kahe-202510/ka-he/product/product-top.png"
+      src="/static/kahe-202510/ka-he/product/product-top.png"
     />
     <view class="general-top-btn">
       <view
@@ -79,13 +79,13 @@
     >
       <image
         class="general-top-reload-icon"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/product/reload-icon.png"
+        src="/static/kahe-202510/ka-he/product/reload-icon.png"
       />
       <text class="general-top-reload-text theme-font">换一套</text>
     </view>
     <image
       class="general-top-logo"
-      src="https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-logo.png"
+      src="/static/kahe-202510/jikaquan/jikaquan-logo.png"
     />
   </view>
 </template>

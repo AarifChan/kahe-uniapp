@@ -1,20 +1,20 @@
 <template>
     <view class="mergeTop">
-        <image class="mergeTop-bg" src="https://jms.85gui7.com/kahe-202510/pet/merge-bg.png" />
+        <image class="mergeTop-bg" src="/static/kahe-202510/pet/merge-bg.png" />
         <view class="mergeTop-side leftSide">
-            <image class="mergeTop-side-bg" :src=" left ? 'https://jms.85gui7.com/kahe-202510/pet/merge-empty.png' : 'https://jms.85gui7.com/kahe-202510/pet/merge-add.png' " />
+            <image class="mergeTop-side-bg" :src=" left ? '/static/kahe-202510/pet/merge-empty.png' : '/static/kahe-202510/pet/merge-add.png' " />
         </view>
         <view class="mergeTop-icon leftSide" v-if="left" @tap.stop="emits('update:left', null)">
             <image class="mergeTop-icon-bg" :src="left?.icon" />
         </view>
         <view class="mergeTop-side rightSide">
-            <image class="mergeTop-side-bg" :src=" right ? 'https://jms.85gui7.com/kahe-202510/pet/merge-empty.png' : 'https://jms.85gui7.com/kahe-202510/pet/merge-add.png' " />
+            <image class="mergeTop-side-bg" :src=" right ? '/static/kahe-202510/pet/merge-empty.png' : '/static/kahe-202510/pet/merge-add.png' " />
         </view>
         <view class="mergeTop-icon rightSide" v-if="right" @tap.stop="emits('update:right', null)">
             <image class="mergeTop-icon-bg" :src="right?.icon" />
         </view>
-        <image class="leftArrow" src="https://jms.85gui7.com/kahe-202510/pet/side-left.png" />
-        <image class="rightArrow" src="https://jms.85gui7.com/kahe-202510/pet/side-right.png" />
+        <image class="leftArrow" src="/static/kahe-202510/pet/side-left.png" />
+        <image class="rightArrow" src="/static/kahe-202510/pet/side-right.png" />
         <text class="mergeTop-tips">放入两个同等级的宠物，会随机一个同等级的宠物</text>
         <custom-pet-btn v-if="left && right" class="mergeTop-action theme-font"  @tap.stop="emits('didClickMerge')" title="融合"></custom-pet-btn>
     </view>

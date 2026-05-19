@@ -14,7 +14,7 @@
         <!--        <view class="open-content-subTitle">已成功购买{{ num }}张商品卡</view>-->
         <image
           class="open-content-img"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/product/all-open.png"
+          src="/static/kahe-202510/ka-he/product/all-open.png"
         />
         <view class="open-content-title1 theme-font">距最晚公布结果</view>
         <view class="open-content-time">
@@ -28,7 +28,7 @@
           <view class="open-content-time-title">秒</view>
         </view>
         <view class="open-content-row1">
-          <image class="icon" src="https://jms.85gui7.com/kahe-202510/ka-he/product/open-info.png" />
+          <image class="icon" src="/static/kahe-202510/ka-he/product/open-info.png" />
           <view class="open-content-row1-title"
             >若提前售完，将立即公布结果；若未能售完，将对所有订单退款</view
           >
@@ -37,7 +37,7 @@
           >积分将在揭晓结果后获得，可在积分专区兑好礼！</view
         >
         <button class="btn" open-type="share">
-          <image class="btn-img" src="https://jms.85gui7.com/kahe-202510/ka-he/product/open-btn.png" />
+          <image class="btn-img" src="/static/kahe-202510/ka-he/product/open-btn.png" />
           <view class="btn-title theme-font">分享并加速开奖</view>
         </button>
         <view
@@ -46,11 +46,11 @@
           >继续购买</view
         >
       </view>
-      <image class="open-decorate1" src="https://jms.85gui7.com/kahe-202510/ka-he/product/open2.png" />
-      <image class="open-decorate2" src="https://jms.85gui7.com/kahe-202510/ka-he/product/open1.png" />
+      <image class="open-decorate1" src="/static/kahe-202510/ka-he/product/open2.png" />
+      <image class="open-decorate2" src="/static/kahe-202510/ka-he/product/open1.png" />
       <image
         class="open-close"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/product/open-close.png"
+        src="/static/kahe-202510/ka-he/product/open-close.png"
         @tap.stop="emits('update:show', false)"
       />
     </view>

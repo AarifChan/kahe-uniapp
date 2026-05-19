@@ -45,7 +45,7 @@
           <view class="address-addressInput-wechat">
             <image
               class="address-addressInput-wechat-img"
-              src="https://jms.85gui7.com/kahe-202510/images/weixin.png"
+              src="/static/kahe-202510/images/weixin.png"
             />
             <text
               class="address-addressInput-content-item-title"

@@ -1,6 +1,6 @@
 <template>
     <view class="groupBuyIndex">
-        <!--    <image class="groupBuyIndex-bg" src="https://jms.85gui7.com/kahe-202510/groupBuy/groupBuyBg.png" />-->
+        <!--    <image class="groupBuyIndex-bg" src="/static/kahe-202510/groupBuy/groupBuyBg.png" />-->
         <view class="groupBuyIndex-content">
             <view class="groupBuyIndex-content-top">
                 <search placeholder="请输入你想要搜索的内容" @did-tap-search="handleSearch" style="flex: 1;" />

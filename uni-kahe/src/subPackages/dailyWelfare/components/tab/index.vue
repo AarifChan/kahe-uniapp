@@ -5,8 +5,8 @@
                 class="dailyTab-btn-img"
                 :src="
                     isAll
-                        ? 'https://jms.85gui7.com/kahe-202510/home-upgrade/btn-style3-selected.png'
-                        : 'https://jms.85gui7.com/kahe-202510/home-upgrade/btn-style3-normal.png'
+                        ? '/static/kahe-202510/home-upgrade/btn-style3-selected.png'
+                        : '/static/kahe-202510/home-upgrade/btn-style3-normal.png'
                 "
             />
             <view
@@ -20,8 +20,8 @@
                 class="dailyTab-btn-img"
                 :src="
                     !isAll
-                        ? 'https://jms.85gui7.com/kahe-202510/home-upgrade/btn-style3-selected.png'
-                        : 'https://jms.85gui7.com/kahe-202510/home-upgrade/btn-style3-normal.png'
+                        ? '/static/kahe-202510/home-upgrade/btn-style3-selected.png'
+                        : '/static/kahe-202510/home-upgrade/btn-style3-normal.png'
                 "
             />
             <view

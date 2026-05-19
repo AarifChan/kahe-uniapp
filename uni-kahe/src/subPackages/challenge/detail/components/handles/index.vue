@@ -19,7 +19,7 @@
       >
         <image
           class="w-[66rpx] h-[66rpx]"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/product/item-bg.png"
+          src="/static/kahe-202510/ka-he/product/item-bg.png"
           mode="aspectFill"
         />
         <image
@@ -42,7 +42,7 @@
       >
         <image
           class="w-[66rpx] h-[66rpx]"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/product/item-bg.png"
+          src="/static/kahe-202510/ka-he/product/item-bg.png"
           mode="aspectFill"
         />
         <image
@@ -71,7 +71,7 @@
       >
         <image
           class="w-[66rpx] h-[66rpx]"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/product/item-bg.png"
+          src="/static/kahe-202510/ka-he/product/item-bg.png"
           mode="aspectFill"
         />
         <image
@@ -103,27 +103,27 @@ const { checkIsFavorite, handleFavoriteAction } = useFavorite();
 
 const actionList = ref([
   {
-    icon: "https://jms.85gui7.com/kahe-202510/ka-he/product/kefu.png",
+    icon: "/static/kahe-202510/ka-he/product/kefu.png",
     title: "客服",
     action: 4,
   },
   {
-    icon: "https://jms.85gui7.com/kahe-202510/ka-he/product/save.png",
+    icon: "/static/kahe-202510/ka-he/product/save.png",
     title: "寄存",
     action: 1,
   },
   // {
-  //   icon: "https://jms.85gui7.com/kahe-202510/ka-he/product/favorite.png",
+  //   icon: "/static/kahe-202510/ka-he/product/favorite.png",
   //   title: "收藏",
   //   action: 2,
   // },
   {
-    icon: "https://jms.85gui7.com/kahe-202510/ka-he/product/reload.png",
+    icon: "/static/kahe-202510/ka-he/product/reload.png",
     title: "刷新",
     action: 3,
   },
   {
-    icon: "https://jms.85gui7.com/share.png",
+    icon: "/static/share.png",
     title: "分享",
     action: 5,
   },
@@ -195,7 +195,7 @@ const handleShare = () => {
     title: `【${props.product?.box.name}】这个箱子快出货了，速来！`,
     imageUrl:
       props.product?.box?.logo ||
-      "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
+      "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: sharePath,
   });
 };

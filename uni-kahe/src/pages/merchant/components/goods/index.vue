@@ -1,8 +1,8 @@
 <template>
     <view class="merchantGoods">
-        <image class="merchantGoods-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/item-bg.png" />
+        <image class="merchantGoods-bg" src="/static/kahe-202510/ka-he/merchant/item-bg.png" />
         <view class="merchantGoods-empty" v-if="item.productNum === 0">
-            <image style="width: 120rpx; height: 100rpx" src="https://jms.85gui7.com/kahe-202510/ka-he/common/Sellingout.png" />
+            <image style="width: 120rpx; height: 100rpx" src="/static/kahe-202510/ka-he/common/Sellingout.png" />
         </view>
         <view class="merchantGoods-cover">
             <image class="merchantGoods-cover-img" :src="item.logo" />
@@ -18,7 +18,7 @@
                     </view>
                     <view class="merchantGoods-info-content-bottom-row1">
                         <image class="merchantGoods-info-content-bottom-row1-bg"
-                            src="https://jms.85gui7.com/kahe-202510/ka-he/home/price-bg.png" />
+                            src="/static/kahe-202510/ka-he/home/price-bg.png" />
                         <text class="merchantGoods-info-content-bottom-row1-title price-font">{{ item.price }}</text>
                     </view>
                 </view>
@@ -48,7 +48,7 @@ defineProps({
 });
 
 const formatLabelImage = (index: number) => {
-    return "https://jms.85gui7.com/kahe-202510/ka-he/tag/tag" + index + ".png";
+    return "/static/kahe-202510/ka-he/tag/tag" + index + ".png";
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <view class="infinite">
-    <image class="infinite-bg" src="https://jms.85gui7.com/kahe-202510/images/rank-bg.png" />
+    <image class="infinite-bg" src="/static/kahe-202510/images/rank-bg.png" />
     <scroll-view
       class="infinite-container"
       :scroll-y="true"

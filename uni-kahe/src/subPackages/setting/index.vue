@@ -2,7 +2,7 @@
   <view class="setting">
     <image
       class="setting-bg"
-      src="https://jms.85gui7.com/kahe-202510/images/mine-bg.png"
+      src="/static/kahe-202510/images/mine-bg.png"
     />
     <view class="setting-content">
       <view class="setting-content-row">

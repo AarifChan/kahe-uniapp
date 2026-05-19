@@ -22,7 +22,7 @@ export const getTagBg = (tag: number) => {
   if (!tag) {
     return "";
   }
-  return `https://jms.85gui7.com/kahe-202510/ka-he/merchant/bg${tag}.png`;
+  return `/static/kahe-202510/ka-he/merchant/bg${tag}.png`;
 };
 
 export const getTagBgColor = (tag: number) => {
@@ -44,7 +44,7 @@ export const getTagIcon = (tag: number) => {
   if (!tag) {
     return "";
   }
-  return `https://jms.85gui7.com/kahe-202510/merchant/tag-level${tag}.png`;
+  return `/static/kahe-202510/merchant/tag-level${tag}.png`;
 };
 
 export function useMerchant() {

@@ -1,7 +1,7 @@
 <template>
     <view class="tall">
         <view class="inGroup">
-            <image src="https://jms.85gui7.com/kahe-202510/ka-he/product/gogao.png" class="inGroup-bg" />
+            <image src="/static/kahe-202510/ka-he/product/gogao.png" class="inGroup-bg" />
             <view class="inGroup-left text-flow-ellipsis-single">{{
                 stripHTMLTags(content)
                 }}</view>

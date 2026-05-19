@@ -49,7 +49,7 @@ import type { BarrageItem } from "../../api";
 
 const lampBarBgStyle = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/ka-he/integral/infinite-bg.png)",
+    "url(/static/kahe-202510/ka-he/integral/infinite-bg.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -59,7 +59,7 @@ const emits = defineEmits(["tapLampAction"]);
 
 // 获取等级图片
 const getLevelImage = (index: number) => {
-  return `https://jms.85gui7.com/tags/level${index}.png`;
+  return `/static/tags/level${index}.png`;
 };
 
 // 解析 sourceEx JSON

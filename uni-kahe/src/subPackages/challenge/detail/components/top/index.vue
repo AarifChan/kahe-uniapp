@@ -12,7 +12,7 @@ const emits = defineEmits(["didClick"]);
 
 const challengeTopBgStyle = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/challenge/top-bg.png)",
+    "url(/static/kahe-202510/challenge/top-bg.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",

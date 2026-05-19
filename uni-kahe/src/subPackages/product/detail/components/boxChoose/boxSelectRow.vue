@@ -1,6 +1,6 @@
 <template>
     <view class="boxSelectRow">
-        <image class="boxSelectRow-bg" mode="widthFix" src="https://jms.85gui7.com/kahe/product/box-select-row-bg.png" />
+        <image class="boxSelectRow-bg" mode="widthFix" src="/static/kahe/product/box-select-row-bg.png" />
         <view class="boxSelectRow-content">
             <box-item
                 v-for="(item,zIndex) in  boxList"

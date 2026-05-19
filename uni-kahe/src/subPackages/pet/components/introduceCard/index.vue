@@ -3,7 +3,7 @@
         <view class="introduceCard-info">
             <image
                 class="introduceCard-info-bg"
-                src="https://jms.85gui7.com/kahe-202510/pet/info-bg.png"
+                src="/static/kahe-202510/pet/info-bg.png"
             />
             <text class="introduceCard-info-title theme-font text-stroke">{{ item.skill }}</text>
             <text class="introduceCard-info-sub">{{ item.mark }}</text>

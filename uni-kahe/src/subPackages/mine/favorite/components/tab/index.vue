@@ -12,7 +12,7 @@
             class="favoriteTab-list-item-content-select theme-font"
           /> -->
           <image
-            src="https://jms.85gui7.com/kahe-202510/ka-he/home/round.png"
+            src="/static/kahe-202510/ka-he/home/round.png"
             class="img"
             v-if="current === index"
           />

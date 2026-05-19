@@ -8,7 +8,7 @@
     <view class="modal-detail">
       <image
         class="modal-detail-bg"
-        src="https://jms.85gui7.com/kahe-202510/common/detail-bg.png"
+        src="/static/kahe-202510/common/detail-bg.png"
       />
       <view class="modal-detail-content">
         <view class="modal-detail-content-center">

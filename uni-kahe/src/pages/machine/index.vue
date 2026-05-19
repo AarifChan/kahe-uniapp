@@ -6,12 +6,12 @@
   >
     <image
       class="machine-bg"
-      src="https://jms.85gui7.com/kahe-202510/ka-he/merchant/bg-top.png"
+      src="/static/kahe-202510/ka-he/merchant/bg-top.png"
     />
     <view class="machine-content">
       <image
         class="machine-logo"
-        src="https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-logo.png"
+        src="/static/kahe-202510/jikaquan/jikaquan-logo.png"
       />
       <Top :types="false" :goods="barrageList" />
       <tab
@@ -56,14 +56,14 @@ onMounted(() => {
 onShareAppMessage(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
+    imageUrl: "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: "/pages/welcome/index",
   };
 });
 onShareTimeline(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-share.jpg",
+    imageUrl: "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
     path: "/pages/welcome/index",
   };
 });

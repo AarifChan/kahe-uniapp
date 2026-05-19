@@ -1,25 +1,25 @@
 <template>
     <view class="normalBottom">
-        <image class="normalBottom-bg" src="https://jms.85gui7.com/kahe/product/normal-bottom-bg2.png" />
+        <image class="normalBottom-bg" src="/static/kahe/product/normal-bottom-bg2.png" />
         <view class="normalBottom-other" />
         <view class="normalBottom-info">
             <view class="normalBottom-info-top">
-                <image class="normalBottom-info-top-side" src="https://jms.85gui7.com/kahe/product/left-btn.png" @tap.stop="handleChangeNum(true)" />
+                <image class="normalBottom-info-top-side" src="/static/kahe/product/left-btn.png" @tap.stop="handleChangeNum(true)" />
                 <view class="normalBottom-info-top-center">
                     <text class="normalBottom-info-top-center-title theme-font text-stroke-white">冲</text>
                     <text class="normalBottom-info-top-center-value theme-font text-stroke-white">{{current}}</text>
                     <text class="normalBottom-info-top-center-title theme-font text-stroke-white">发</text>
                 </view>
-                <image class="normalBottom-info-top-side" src="https://jms.85gui7.com/kahe/product/right-btn.png" @tap.stop="handleChangeNum(false)" />
+                <image class="normalBottom-info-top-side" src="/static/kahe/product/right-btn.png" @tap.stop="handleChangeNum(false)" />
             </view>
             <view class="normalBottom-info-center">
                 <view class="normalBottom-info-center-item" v-for="(item, index) in cardsArray" :key="'card-index'+index" @tap.stop="didSelectCard(item)">
-                    <image class="normalBottom-info-center-item-bg" :src="item.num === current ? 'https://jms.85gui7.com/kahe/product/item1.png' : 'https://jms.85gui7.com/kahe/product/item2.png'" />
+                    <image class="normalBottom-info-center-item-bg" :src="item.num === current ? '/static/kahe/product/item1.png' : '/static/kahe/product/item2.png'" />
                     <text class="normalBottom-info-center-item-title theme-font text-stroke">冲{{item.num}}发</text>
                 </view>
             </view>
             <view class="normalBottom-info-btn" @tap.stop="emits('didTapChoose')">
-                <image class="normalBottom-info-btn-bg" src="https://jms.85gui7.com/kahe/product/normal-chase-bg.png" />
+                <image class="normalBottom-info-btn-bg" src="/static/kahe/product/normal-chase-bg.png" />
                 <text class="normalBottom-info-btn-title theme-font text-stroke">立即抽赏</text>
             </view>
         </view>

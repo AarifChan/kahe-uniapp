@@ -10,7 +10,7 @@
         </view>
         <image
             class="bottom-btn"
-            src="https://jms.85gui7.com/kahe-202510/images/rewardbtn.png"
+            src="/static/kahe-202510/images/rewardbtn.png"
             @tap.stop="emits('didClickReward')"
         />
     </view>

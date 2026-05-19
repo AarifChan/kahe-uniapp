@@ -2,7 +2,7 @@
   <view class="welcome">
     <image
       class="welcome-logo"
-      src="https://jms.85gui7.com/kahe-202510/jikaquan/jikaquan-logo.png"
+      src="/static/kahe-202510/jikaquan/jikaquan-logo.png"
     />
   </view>
 </template>

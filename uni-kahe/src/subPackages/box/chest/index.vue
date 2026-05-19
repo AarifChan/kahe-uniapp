@@ -1,16 +1,16 @@
 <template>
     <view class="luckDraw">
-        <image src="https://jms.85gui7.com/kahe-202510/images/treasure-chest-bg-small.png" class="luckDraw-bg" mode="widthFix" />
+        <image src="/static/kahe-202510/images/treasure-chest-bg-small.png" class="luckDraw-bg" mode="widthFix" />
         <view class="luckDraw-TreasureChest">
             <view class="luckDraw-TreasureChest-title">
                 <image
-                    src="https://jms.85gui7.com/kahe-202510/images/box-chest-title.png"
+                    src="/static/kahe-202510/images/box-chest-title.png"
                     class="luckDraw-TreasureChest-title-image"
                 />
             </view>
             <view class="luckDraw-TreasureChest-box">
                 <image
-                    src="https://jms.85gui7.com/kahe-202510/images/treasure-chest-small.png"
+                    src="/static/kahe-202510/images/treasure-chest-small.png"
                     class="luckDraw-TreasureChest-box-img"
                 />
             </view>
@@ -25,7 +25,7 @@
                 @tap.stop="openChestAction(chestlist)"
             >
                 <image
-                    src="https://jms.85gui7.com/kahe-202510/images/box-btn.png"
+                    src="/static/kahe-202510/images/box-btn.png"
                     class="luckDraw-TreasureChest-TreasureChestBtn-btnBg"
                 />
                 <view
@@ -36,7 +36,7 @@
             <view class="luckDraw-TreasureChest-goods">
                 <view class="luckDraw-TreasureChest-goods-text">开启宝箱有机会获得以下物品</view>
                 <image
-                    src="https://jms.85gui7.com/kahe-202510/images/luckDraw-bg.png"
+                    src="/static/kahe-202510/images/luckDraw-bg.png"
                     class="luckDraw-TreasureChest-goods-bg"
                 />
                 <scroll-view

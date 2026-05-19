@@ -1,6 +1,6 @@
 <template>
   <view class="groupBuy">
-    <!--    <image class="groupBuy-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/home/good-tiem.png" />-->
+    <!--    <image class="groupBuy-bg" src="/static/kahe-202510/ka-he/home/good-tiem.png" />-->
     <view class="groupBuy-content">
       <image class="groupBuy-content-icon" :src="item.logo" />
       <view class="groupBuy-content-info">
@@ -60,7 +60,7 @@
       </view>
       <image
         class="groupBuy-content-tag"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/home/kami-tag.png"
+        src="/static/kahe-202510/ka-he/home/kami-tag.png"
       />
     </view>
   </view>
@@ -108,7 +108,7 @@ onMounted(() => {
   width: 559rpx;
   height: 202rpx;
   margin-right: 12rpx;
-  background-image: url("https://jms.85gui7.com/kahe-202510/ka-he/home/good-tiem.png");
+  background-image: url("/static/kahe-202510/ka-he/home/good-tiem.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   &-content {

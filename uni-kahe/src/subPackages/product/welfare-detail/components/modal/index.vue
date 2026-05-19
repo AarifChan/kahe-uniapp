@@ -8,7 +8,7 @@
         <view class="priceInput">
             <image
                 class="priceInput-bg"
-                src="https://jms.85gui7.com/kahe-202510/home-upgrade/price-input.png"
+                src="/static/kahe-202510/home-upgrade/price-input.png"
             />
             <view class="priceInput-content">
                 <view class="priceInput-content-title">请输入本次活动指令</view>
@@ -29,7 +29,7 @@
                 >
                     <image
                         class="priceInput-content-btn-bg"
-                        src="https://jms.85gui7.com/kahe-202510/home-upgrade/price-input-btn.png"
+                        src="/static/kahe-202510/home-upgrade/price-input-btn.png"
                     />
                     <view class="priceInput-content-btn-title">确定</view>
                 </view>

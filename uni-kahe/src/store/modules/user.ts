@@ -347,13 +347,13 @@ class User extends VuexModule {
         let image = "";
 
         if (item.id === 1) {
-          image = "https://jms.85gui7.com/kahe-202510/images/vip-item1.png";
+          image = "/static/kahe-202510/images/vip-item1.png";
         } else if (item.id >= 1000 && item.id < 10000) {
-          image = "https://jms.85gui7.com/swcw/common/coupon.jpg";
+          image = "/static/swcw/common/coupon.jpg";
         } else if (item.id === 2) {
-          image = "https://jms.85gui7.com/kahe-202510/images/vip-item3.png";
+          image = "/static/kahe-202510/images/vip-item3.png";
         } else if (item.id === 6) {
-          image = "https://jms.85gui7.com/swcw/common/integral.jpg";
+          image = "/static/swcw/common/integral.jpg";
         } else if (item.id >= 10000) {
           image = item.logo;
         }

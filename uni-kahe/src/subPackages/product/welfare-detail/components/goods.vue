@@ -5,14 +5,14 @@
         :key="index"
         @tap.stop="emits('tapCardListItem', item)"
     >
-        <image class="goods-bg" src="https://jms.85gui7.com/kahe-202510/images/machine-goods-bg.png" />
+        <image class="goods-bg" src="/static/kahe-202510/images/machine-goods-bg.png" />
         <view class="goods-left">
             <image class="goods-left-img" :src="item.logo"></image>
         </view>
         <view class="goods-right">
             <view class="goods-right-num">
                 <image
-                    src="https://jms.85gui7.com/kahe-202510/images/huo.png"
+                    src="/static/kahe-202510/images/huo.png"
                     class="goods-right-num-img"
                 ></image>
                 <view class="goods-right-num-text">10w+</view>

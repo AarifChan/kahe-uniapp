@@ -1,6 +1,6 @@
 <template>
   <view class="topInfo">
-    <image class="topInfo-bg" src="https://jms.85gui7.com/kahe-202510/groupBuy/top-card.png" />
+    <image class="topInfo-bg" src="/static/kahe-202510/groupBuy/top-card.png" />
     <view class="topInfo-content">
       <view class="topInfo-content-head">
         <view class="left">{{ detail.price }}</view>
@@ -11,7 +11,7 @@
               <view class="timeItem">
                 <image
                   class="timeItem-img"
-                  src="https://jms.85gui7.com/kahe-202510/groupBuy/time-item.png"
+                  src="/static/kahe-202510/groupBuy/time-item.png"
                 />
                 <view class="timeItem-day">{{ day }}</view>
                 <view class="timeItem-unit">天</view>
@@ -19,7 +19,7 @@
               <view class="timeItem">
                 <image
                   class="timeItem-img"
-                  src="https://jms.85gui7.com/kahe-202510/groupBuy/time-item.png"
+                  src="/static/kahe-202510/groupBuy/time-item.png"
                 />
                 <view class="timeItem-day">{{ hour }}</view>
                 <view class="timeItem-unit">时</view>
@@ -27,7 +27,7 @@
               <view class="timeItem">
                 <image
                   class="timeItem-img"
-                  src="https://jms.85gui7.com/kahe-202510/groupBuy/time-item.png"
+                  src="/static/kahe-202510/groupBuy/time-item.png"
                 />
                 <view class="timeItem-day">{{ minute }}</view>
                 <view class="timeItem-unit">分</view>
@@ -35,7 +35,7 @@
               <view class="timeItem">
                 <image
                   class="timeItem-img"
-                  src="https://jms.85gui7.com/kahe-202510/groupBuy/time-item.png"
+                  src="/static/kahe-202510/groupBuy/time-item.png"
                 />
                 <view class="timeItem-day">{{ second }}</view>
                 <view class="timeItem-unit">秒</view>
@@ -236,7 +236,7 @@ onMounted(() => {});
         font-size: 20rpx;
         color: #794627;
         text-align: center;
-        background-image: url("https://jms.85gui7.com/kahe-202510/groupBuy/discount-item.png");
+        background-image: url("/static/kahe-202510/groupBuy/discount-item.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         border-radius: 4rpx;

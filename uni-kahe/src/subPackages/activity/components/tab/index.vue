@@ -11,8 +11,8 @@
         class="activityTab-item-img"
         :src="
           index === current
-            ? 'https://jms.85gui7.com/kahe-202510/ka-he/welfare/btn-selected.png'
-            : 'https://jms.85gui7.com/kahe-202510/ka-he/welfare/btn-normal.png'
+            ? '/static/kahe-202510/ka-he/welfare/btn-selected.png'
+            : '/static/kahe-202510/ka-he/welfare/btn-normal.png'
         "
       />
       <text class="activityTab-item-title theme-font">{{ item.title }}</text>

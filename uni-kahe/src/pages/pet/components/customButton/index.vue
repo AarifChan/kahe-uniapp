@@ -1,13 +1,13 @@
 <template>
     <view class="petButton" :style="{ width: width}">
-        <image class="petButton-bg" src="https://jms.85gui7.com/kahe-202510/pet/btn-bg.png" />
+        <image class="petButton-bg" src="/static/kahe-202510/pet/btn-bg.png" />
         <view class="petButton-content">
             <text class="petButton-content-title theme-font">{{title}}</text>
         </view>
 
         <view class="petButton-sort" v-if="sorted">
-            <image class="petButton-sort-up" :src="sorted ? 'https://jms.85gui7.com/kahe-202510/pet/up-active.png': 'https://jms.85gui7.com/kahe-202510/pet/up.png' "  />
-            <image class="petButton-sort-down" :src="sorted ? 'https://jms.85gui7.com/kahe-202510/pet/down.png': 'https://jms.85gui7.com/kahe-202510/pet/down-active.png' "  />
+            <image class="petButton-sort-up" :src="sorted ? '/static/kahe-202510/pet/up-active.png': '/static/kahe-202510/pet/up.png' "  />
+            <image class="petButton-sort-down" :src="sorted ? '/static/kahe-202510/pet/down.png': '/static/kahe-202510/pet/down-active.png' "  />
         </view>
     </view>
 </template>

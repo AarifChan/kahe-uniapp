@@ -1,6 +1,6 @@
 <template>
     <view class="pet">
-        <image class="pet-bg" src="https://jms.85gui7.com/kahe-202510/pet/pet-bg.png" />
+        <image class="pet-bg" src="/static/kahe-202510/pet/pet-bg.png" />
         <view class="pet-top">
             <top @did-click-item="handleClickItem" />
         </view>

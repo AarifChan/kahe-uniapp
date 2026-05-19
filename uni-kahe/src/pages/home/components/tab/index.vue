@@ -5,7 +5,7 @@
                 <view class="homeTab-list-item" v-for="(item, index) in list" :key="index" @tap.stop="clickItem(index)">
                     <view class="homeTab-list-item-select theme-font" v-if="current === index">
                         {{ item.title }}
-                        <image src="https://jms.85gui7.com/kahe-202510/ka-he/home/round.png" class="img" />
+                        <image src="/static/kahe-202510/ka-he/home/round.png" class="img" />
                     </view>
 
                     <view v-else class="homeTab-list-item-normal theme-font">{{ item.title }}</view>

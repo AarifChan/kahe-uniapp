@@ -4,7 +4,7 @@
             <view class="merchantTab-list-item" v-for="(item, index) in list" :key="index" @tap.stop="clickItem(index)">
                 <view class="merchantTab-list-item-content">
                     <view class="merchantTab-list-item-content-select theme-font" v-if="current === index">
-                        <image src="https://jms.85gui7.com/kahe-202510/ka-he/home/round.png" class="img" />
+                        <image src="/static/kahe-202510/ka-he/home/round.png" class="img" />
                         {{ item.title }}
                     </view>
                     <text class="merchantTab-list-item-content-title theme-font" v-else>{{ item.title }}</text>

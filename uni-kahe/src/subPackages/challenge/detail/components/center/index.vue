@@ -10,7 +10,7 @@ defineProps({
 
 const usageBgStyle = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/challenge/usage-bg.png)",
+    "url(/static/kahe-202510/challenge/usage-bg.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -32,7 +32,7 @@ const usageBgStyle = {
           开启精灵球出现
           <image
             class="w-52 h-31"
-            src="https://jms.85gui7.com/kahe-202510/challenge/pika-item.png"
+            src="/static/kahe-202510/challenge/pika-item.png"
             mode="aspectFit"
           />
           则可继续或领取赏退出。

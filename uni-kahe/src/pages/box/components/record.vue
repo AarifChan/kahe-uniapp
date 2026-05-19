@@ -51,7 +51,7 @@
       </scroll-view>
     </view>
     <view class="box-record-num">
-      <image class="box-record-num-bg" src="https://jms.85gui7.com/kahe-202510/images/num-bg.png" />
+      <image class="box-record-num-bg" src="/static/kahe-202510/images/num-bg.png" />
       <text class="box-record-num-title theme-font">共{{ total }}件</text>
     </view>
   </view>

@@ -1,6 +1,6 @@
 <template>
     <view class="category-detail container">
-        <image class="category-detail-bg" src="https://jms.85gui7.com/kahe-202510/images/mall-bg.png" />
+        <image class="category-detail-bg" src="/static/kahe-202510/images/mall-bg.png" />
         <!--        <text class="category-detail-title theme-font">{{ model.name ?? '' }}</text>-->
         <!--        <view class="custom-h-padding">-->
 

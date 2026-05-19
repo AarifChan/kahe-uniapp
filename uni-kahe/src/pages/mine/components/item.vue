@@ -1,6 +1,6 @@
 <template>
     <view class="mine-data">
-        <image class="mine-data-moneyBg" src="https://jms.85gui7.com/kahe-202510/images/money-bg.png">
+        <image class="mine-data-moneyBg" src="/static/kahe-202510/images/money-bg.png">
         </image>
         <image
             class="mine-data-icon"

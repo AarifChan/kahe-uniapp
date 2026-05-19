@@ -1,6 +1,6 @@
 <template>
     <view class="limitlessItem">
-        <image class="limitlessItem-bg" src="https://jms.85gui7.com/kahe/product/limitless-card.png" />
+        <image class="limitlessItem-bg" src="/static/kahe/product/limitless-card.png" />
         <view class="limitlessItem-info">
             <text class="limitlessItem-info-title theme-font">{{item.title}}</text>
             <image class="limitlessItem-info-image" :src="item.image" />

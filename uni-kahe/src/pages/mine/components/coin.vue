@@ -22,23 +22,23 @@ const emits = defineEmits(["didClickItem"]);
     <view class="coinListItem">
       <image
         class="bg"
-        src="https://jms.85gui7.com/kahe-202510/mine/coin-bg1.png"
+        src="/static/kahe-202510/mine/coin-bg1.png"
       />
       <image
         class="decorate"
-        src="https://jms.85gui7.com/kahe-202510/mine/coin1.png"
+        src="/static/kahe-202510/mine/coin1.png"
       />
       <view class="value" style="color: #3b1900">{{ momey }}</view>
-      <view class="unit" style="color: #3b1900">无门槛券</view>
+      <view class="unit" style="color: #3b1900">无门槛抵扣券</view>
     </view>
     <!--    <view class="coinListItem">-->
     <!--      <image-->
     <!--        class="bg"-->
-    <!--        src="https://jms.85gui7.com/kahe-202510/mine/coin-bg2.png"-->
+    <!--        src="/static/kahe-202510/mine/coin-bg2.png"-->
     <!--      />-->
     <!--      <image-->
     <!--        class="decorate"-->
-    <!--        src="https://jms.85gui7.com/kahe-202510/mine/coin2.png"-->
+    <!--        src="/static/kahe-202510/mine/coin2.png"-->
     <!--      />-->
     <!--      <view class="value" style="color: #785020">{{ coin }}</view>-->
     <!--      <view class="unit" style="color: #785020">今日怒气值</view>-->
@@ -46,17 +46,17 @@ const emits = defineEmits(["didClickItem"]);
     <view class="coinListItem" @tap.stop="emits('didClickItem', 'integral')">
       <image
         class="bg"
-        src="https://jms.85gui7.com/kahe-202510/mine/coin-bg3.png"
+        src="/static/kahe-202510/mine/coin-bg3.png"
       />
       <image
         class="decorate"
-        src="https://jms.85gui7.com/kahe-202510/mine/coin3.png"
+        src="/static/kahe-202510/mine/coin3.png"
       />
       <view class="value" style="color: #226b05">{{ integral }}</view>
       <view class="unit" style="color: #226b05">积分</view>
       <image
         class="action"
-        src="https://jms.85gui7.com/kahe-new-mp/ka-he/mine/nav.png"
+        src="/static/kahe-new-mp/ka-he/mine/nav.png"
       />
     </view>
   </view>

@@ -35,7 +35,7 @@
             <view class="relative w-137 h-46">
               <image
                 class="w-full h-full"
-                src="https://jms.85gui7.com/kahe-202510/ka-he/integral/price-bg.png"
+                src="/static/kahe-202510/ka-he/integral/price-bg.png"
               />
               <text
                 class="absolute left-54 top-4 leading-42 text-black text-28 price-font"
@@ -70,7 +70,7 @@ import { getMainTagImagePath } from "@/utils/tools/image";
 
 const challengeCardBgStyle = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/ka-he/home/item-bg.png)",
+    "url(/static/kahe-202510/ka-he/home/item-bg.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -92,6 +92,6 @@ defineProps({
 });
 
 const formatLabelImage = (index: number) => {
-  return "https://jms.85gui7.com/kahe-202510/tags/mode" + index + ".png";
+  return "/static/kahe-202510/tags/mode" + index + ".png";
 };
 </script>

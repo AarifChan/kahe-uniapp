@@ -2,14 +2,14 @@
   <view class="password">
     <image
       class="password-bg"
-      src="https://jms.85gui7.com/kahe-202510/new-login/bg.png"
+      src="/static/kahe-202510/new-login/bg.png"
     />
     <view class="password-content">
       <view class="password-content-top">
         <text class="password-content-top-title theme-font">修改密码</text>
         <image
           class="password-content-top-subTitle"
-          src="https://jms.85gui7.com/kahe-202510/new-login/item.png"
+          src="/static/kahe-202510/new-login/item.png"
         />
       </view>
 
@@ -84,7 +84,7 @@
       <view class="password-content-login" @tap.stop="handleConfirm">
         <image
           class="password-content-login-img"
-          src="https://jms.85gui7.com/kahe-202510/login/login-btn-bg.png"
+          src="/static/kahe-202510/login/login-btn-bg.png"
         />
         <text class="password-content-login-text theme-font">确定修改</text>
       </view>

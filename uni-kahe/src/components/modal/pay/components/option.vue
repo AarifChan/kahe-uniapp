@@ -8,7 +8,7 @@
         />
         <view class="pay-row-right">
             <text class="pay-row-right-value">{{value}}</text>
-            <image class="pay-row-right-img" src="https://jms.85gui7.com/kahe/common/right-arrow.png" />
+            <image class="pay-row-right-img" src="/static/kahe/common/right-arrow.png" />
         </view>
     </view>
 </template>

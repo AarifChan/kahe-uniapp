@@ -1,6 +1,6 @@
 <template>
     <view class="pay-button">
-        <image class="pay-button-payBtn" src="https://jms.85gui7.com/kahe-202510/images/pay-button.png" />
+        <image class="pay-button-payBtn" src="/static/kahe-202510/images/pay-button.png" />
         <text class="pay-button-title theme-font text-stroke-main">去支付</text>
         <text class="pay-button-value theme-font text-stroke-main"
             >{{ isMall ? '¥' : '' }}{{ price }}</text
@@ -9,7 +9,7 @@
             <view class="pay-button-tips-content" v-if="discountPrice > 0">
                 <image
                     class="pay-button-tips-content-img"
-                    src="https://jms.85gui7.com/kahe/common/pay-price-count.png"
+                    src="/static/kahe/common/pay-price-count.png"
                 />
                 <text class="pay-button-tips-content-title"
                     >已抵扣¥{{ discountPrice }}</text

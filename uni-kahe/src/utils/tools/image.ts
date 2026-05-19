@@ -237,64 +237,64 @@ export function getMainTagName(tag: number): string {
 export function getMainTagImagePath(tag: number): string {
   switch (tag) {
     case 1:
-      return "https://jms.85gui7.com/kahe/tags/dream.png";
+      return "/static/kahe/tags/dream.png";
     case 2:
-      return "https://jms.85gui7.com/kahe/tags/limit.png";
+      return "/static/kahe/tags/limit.png";
     case 3:
-      return "https://jms.85gui7.com/kahe/tags/enjoy.png";
+      return "/static/kahe/tags/enjoy.png";
     case 4:
-      return "https://jms.85gui7.com/kahe/tags/welfare.png";
+      return "/static/kahe/tags/welfare.png";
     case 5:
-      return "https://jms.85gui7.com/kahe/tags/activity.png";
+      return "/static/kahe/tags/activity.png";
     case 6:
-      return "https://jms.85gui7.com/kahe/tags/battle.png";
+      return "/static/kahe/tags/battle.png";
     case 7:
-      return "https://jms.85gui7.com/kahe/tags/picker.png";
+      return "/static/kahe/tags/picker.png";
     case 8:
-      return "https://jms.85gui7.com/kahe/tags/yifanshang.png";
+      return "/static/kahe/tags/yifanshang.png";
     case 9:
-      return "https://jms.85gui7.com/kahe/tags/goods.png";
+      return "/static/kahe/tags/goods.png";
     case 10:
-      return "https://jms.85gui7.com/kahe/tags/notice.png";
+      return "/static/kahe/tags/notice.png";
     case 11:
-      return "https://jms.85gui7.com/kahe/tags/longzhu.png";
+      return "/static/kahe/tags/longzhu.png";
     case 12:
-      return "https://jms.85gui7.com/kahe/tags/huoying.png";
+      return "/static/kahe/tags/huoying.png";
     case 13:
-      return "https://jms.85gui7.com/kahe/tags/haizei.png";
+      return "/static/kahe/tags/haizei.png";
     case 14:
-      return "https://jms.85gui7.com/kahe/tags/nvshen.png";
+      return "/static/kahe/tags/nvshen.png";
     case 15:
-      return "https://jms.85gui7.com/kahe/tags/theme.png";
+      return "/static/kahe/tags/theme.png";
     case 16:
-      return "https://jms.85gui7.com/kahe/tags/infinite.png";
+      return "/static/kahe/tags/infinite.png";
     case 17:
-      return "https://jms.85gui7.com/kahe/tags/presales.png";
+      return "/static/kahe/tags/presales.png";
     case 18:
-      return "https://jms.85gui7.com/kahe/tags/gaobao.png";
+      return "/static/kahe/tags/gaobao.png";
     case 19:
-      return "https://jms.85gui7.com/kahe/tags/fudai.png";
+      return "/static/kahe/tags/fudai.png";
     case 20:
-      return "https://jms.85gui7.com/kahe/tags/manrenkai.png";
+      return "/static/kahe/tags/manrenkai.png";
     case 21:
-      return "https://jms.85gui7.com/kahe/tags/chongbang.png";
+      return "/static/kahe/tags/chongbang.png";
     default:
-      return "https://jms.85gui7.com/kahe/tags/theme.png";
+      return "/static/kahe/tags/theme.png";
   }
 }
 
 export function getSubTagImagePath(tag: number): string {
   switch (tag) {
     case 1:
-      return "https://jms.85gui7.com/kahe/tags/infinite.pn";
+      return "/static/kahe/tags/infinite.pn";
     case 2:
-      return "https://jms.85gui7.com/kahe/tags/yifanshang.png";
+      return "/static/kahe/tags/yifanshang.png";
     case 3:
-      return "https://jms.85gui7.com/kahe/tags/battle.png";
+      return "/static/kahe/tags/battle.png";
     case 4:
-      return "https://jms.85gui7.com/kahe/tags/welfare.png";
+      return "/static/kahe/tags/welfare.png";
     case 5:
-      return "https://jms.85gui7.com/kahe/tags/fudai.png";
+      return "/static/kahe/tags/fudai.png";
     case 6:
       return "";
     case 7:
@@ -302,26 +302,26 @@ export function getSubTagImagePath(tag: number): string {
     case 8:
       return "";
     case 13:
-      return "https://jms.85gui7.com/tags/chuangguan.png";
+      return "/static/tags/chuangguan.png";
     default:
-      return "https://jms.85gui7.com/kahe/tags/single.png";
+      return "/static/kahe/tags/single.png"; // 缺失图片: single.png
   }
 }
 
 export function getLevelFullImagePath(level: number, _ = false): string {
-  return "https://jms.85gui7.com/yqoh/level/" + getLevelName(level) + ".png";
+  return "/static/yqoh/level/" + getLevelName(level) + ".png";
   // return isLucky
   //   ? getLuckyLevelImagePath(enum)
-  //   : 'https://jms.85gui7.com/kahe/enum/' + getLevelName(enum) + '.png';
+  //   : '/static/kahe/enum/' + getLevelName(enum) + '.png';
 }
 
 const limitLevel = [118, 117, 116, 115, 114];
 
 export function getLuckyLevelImagePath(level: number): string {
   if (limitLevel.filter((n) => n === level).length > 0) {
-    return "https://jms.85gui7.com/kahe/limit/" + getLevelName(level) + ".png";
+    return "/static/kahe/limit/" + getLevelName(level) + ".png";
   } else {
-    return "https://jms.85gui7.com/kahe/enum/" + getLevelName(level) + ".png";
+    return "/static/kahe/enum/" + getLevelName(level) + ".png";
   }
 }
 

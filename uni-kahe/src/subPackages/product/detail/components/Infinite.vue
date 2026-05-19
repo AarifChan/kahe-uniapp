@@ -1,7 +1,7 @@
 <template>
     <view class="infinite">
         <view class="infinite-top">
-            <image src="https://jms.85gui7.com/kahe-202510/ka-he/product/infinite-top-bg.png"
+            <image src="/static/kahe-202510/ka-he/product/infinite-top-bg.png"
                 class="infinite-top-img" />
             <view class="infinite-top-btn">
                 <view class="infinite-top-btn-item style1 theme-font" @tap.stop="tapShowModel(0)">发货须知</view>
@@ -18,13 +18,13 @@
             <!--        @tap.stop="emits('tapShowModel', 1)"-->
             <!--        >购买说明</view-->
             <!--      >-->
-            <image class="infinite-top-logo" src="https://jms.85gui7.com/kahe-202510/ka-he/common/logo.png" />
+            <image class="infinite-top-logo" src="/static/kahe-202510/ka-he/common/logo.png" />
         </view>
         <view class="infinite-top-swiper">
             <z-swiper v-model="bannerList" :options="options">
                 <z-swiper-item :custom-style="slideCustomStyle" v-for="(item, index) in bannerList" :key="index">
                     <view class="imageBox">
-                        <image src="https://jms.85gui7.com/kahe-202510/product/card-bg.png" class="imageBg" />
+                        <image src="/static/kahe-202510/product/card-bg.png" class="imageBg" />
                         <image class="image" :src="item" mode="aspectFill" />
                     </view>
                 </z-swiper-item>
@@ -33,10 +33,10 @@
         <King v-if="product.isKindMode" :product="product" />
         <view class="infinite-center" v-else>
             <view class="boxItem">
-                <image src="https://jms.85gui7.com/kahe-202510/ka-he/product/kings-bg.png" class="border-bg" />
+                <image src="/static/kahe-202510/ka-he/product/kings-bg.png" class="border-bg" />
                 <view class="infinite-center-right" @tap.stop="openChestModal(1)">
                     <image class="infinite-center-right-img"
-                        src="https://jms.85gui7.com/kahe-202510/ka-he/product/chest.png" />
+                        src="/static/kahe-202510/ka-he/product/chest.png" />
                     <view class="infinite-center-right-title theme-font">查看宝箱</view>
                 </view>
                 <view class="infinite-center-left">
@@ -50,7 +50,7 @@
             </view>
         </view>
         <view class="infinite-tips" v-if="product?.attachList?.length > 0" @tap.stop="openChestModal(0)">
-            <image class="infinite-tips-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/product/decorate.png" />
+            <image class="infinite-tips-bg" src="/static/kahe-202510/ka-he/product/decorate.png" />
             <view class="infinite-tips-title theme-font">隐藏掉落</view>
             <view class="infinite-tips-tips">每次购买均有独立概率触发掉落，存在一次多得的情况</view>
         </view>

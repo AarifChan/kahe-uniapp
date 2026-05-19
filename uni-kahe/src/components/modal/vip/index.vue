@@ -6,7 +6,7 @@
         @close="emits('update:show', false)"
     >
         <view class="vipModal">
-            <image class="vipModal-bg" src="https://jms.85gui7.com/kahe-202510/images/vip-bg.png" />
+            <image class="vipModal-bg" src="/static/kahe-202510/images/vip-bg.png" />
             <view class="vipModal-content">
                 <view class="vipModal-content-top">
                     <text class="vipModal-content-top-title"

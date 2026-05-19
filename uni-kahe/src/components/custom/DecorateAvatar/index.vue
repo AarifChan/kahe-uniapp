@@ -36,7 +36,7 @@ const levelImage = computed(() => {
     if (!level) {
         return ''
     }
-    return `https://jms.85gui7.com/kahe-202510/vip/${level}.png`
+    return `/static/kahe-202510/vip/${level}.png`
 })
 </script>
 

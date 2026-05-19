@@ -69,23 +69,23 @@ export default defineComponent({
     const dataMap = reactive({
       bgImage: computed(() => {
         return props.item
-          ? "https://jms.85gui7.com/cyd/lottery/card-lottery" +
+          ? "/static/cyd/lottery/card-lottery" +
               getLevelNum(props.item?.level) +
               ".png"
           : "";
       }),
-      cardInfoImage: "https://jms.85gui7.com/cyd/lottery/card-bg.png",
-      cardCoverImage: "https://jms.85gui7.com/kahe-202510/lottery/card-cover.png",
+      cardInfoImage: "/static/cyd/lottery/card-bg.png",
+      cardCoverImage: "/static/kahe-202510/lottery/card-cover.png",
       levelBgImage: computed(() => {
         return props.item
-          ? "https://jms.85gui7.com/yqoh/lottery/level-bg-" +
+          ? "/static/yqoh/lottery/level-bg-" +
               getLevelNum(props.item?.level) +
               ".png"
           : "";
       }),
       levelImage: computed(() => {
         return props.item
-          ? "https://jms.85gui7.com/yqoh/level/" +
+          ? "/static/yqoh/level/" +
               getLevelName(props.item?.level) +
               ".png"
           : "";

@@ -1,6 +1,6 @@
 <template>
     <view class="wish">
-        <image class="wish-bg" src="https://jms.85gui7.com/kahe-202510/pet/wish-bg.png" />
+        <image class="wish-bg" src="/static/kahe-202510/pet/wish-bg.png" />
         <scroll-view class="wish-content" :scroll-y="true" :scroll-x="false">
             <text class="wish-content-title theme-font">今日心愿(满足心愿可获得神秘奖励)</text>
             <text

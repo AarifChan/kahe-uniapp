@@ -2,7 +2,7 @@
     <tn-popup v-model="vShow" :overlay-opacity="0.88" open-direction="center" bg-color="transparent"
         :overlay-closeable="false" @close="emits('update:show', false)">
         <view class="chestModal">
-            <!-- <image class="chestModal-bg" src="https://jms.85gui7.com/kahe-202510/infinite-mode/bg.png" /> -->
+            <!-- <image class="chestModal-bg" src="/static/kahe-202510/infinite-mode/bg.png" /> -->
 
             <view class="chestModal-content">
                 <view class="chestModal-content-title theme-font">
@@ -30,7 +30,7 @@
                     </view>
                 </scroll-view>
             </view>
-            <image class="chestModal-close" src="https://jms.85gui7.com/kahe-202510/infinite-mode/close.png"
+            <image class="chestModal-close" src="/static/kahe-202510/infinite-mode/close.png"
                 @tap.stop="emits('update:show', false)" />
         </view>
     </tn-popup>

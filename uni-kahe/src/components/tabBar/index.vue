@@ -2,7 +2,7 @@
   <view class="tab-bar">
     <image
       class="tab-bar-bg"
-      src="https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/tabBar-bg2.png"
+      src="/static/kahe-202510/ka-he/tab-bar/tabBar-bg2.png"
     />
     <view class="tab-bar-content">
       <view
@@ -16,13 +16,13 @@
           <!-- <image
             v-show="index === currentIndex"
             class="tab-bar-content-item-select-img"
-            src="https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item-active.png"
+            src="/static/kahe-202510/ka-he/tab-bar/item-active.png"
           />
 
           <image
             v-show="index !== currentIndex"
             class="tab-bar-content-item-select-img"
-            src="https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item-normal.png"
+            src="/static/kahe-202510/ka-he/tab-bar/item-normal.png"
           /> -->
         </view>
         <view class="tab-bar-content-item-info">
@@ -97,42 +97,42 @@ const tabList: TabBarItem[] = [
     text: "首页",
     title: "首页",
     selectPath: "/pages/home/index",
-    iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item1.png",
+    iconNormal: "/static/kahe-202510/ka-he/tab-bar/item1.png",
     iconSelected:
-      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item1-active.png",
+      "/static/kahe-202510/ka-he/tab-bar/item1-active.png",
   },
   {
     text: "商家",
     title: "商家",
     selectPath: "/pages/merchant/index",
-    iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item2.png",
+    iconNormal: "/static/kahe-202510/ka-he/tab-bar/item2.png",
     iconSelected:
-      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item2-active.png",
+      "/static/kahe-202510/ka-he/tab-bar/item2-active.png",
   },
   {
     text: "抽卡机",
     title: "抽卡机",
     selectPath: "/pages/machine/index",
     iconNormal:
-      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item3-active.png",
+      "/static/kahe-202510/ka-he/tab-bar/item3-active.png",
     iconSelected:
-      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item3-active.png",
+      "/static/kahe-202510/ka-he/tab-bar/item3-active.png",
   },
   {
     text: "寄存柜",
     title: "寄存柜",
     selectPath: "/pages/box/index",
-    iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item4.png",
+    iconNormal: "/static/kahe-202510/ka-he/tab-bar/item4.png",
     iconSelected:
-      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item4-active.png",
+      "/static/kahe-202510/ka-he/tab-bar/item4-active.png",
   },
   {
     text: "我的",
     title: "我的",
     selectPath: "/pages/mine/index",
-    iconNormal: "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item5.png",
+    iconNormal: "/static/kahe-202510/ka-he/tab-bar/item5.png",
     iconSelected:
-      "https://jms.85gui7.com/kahe-202510/ka-he/tab-bar/item5-active.png",
+      "/static/kahe-202510/ka-he/tab-bar/item5-active.png",
   },
 ];
 

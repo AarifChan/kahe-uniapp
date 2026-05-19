@@ -1,6 +1,6 @@
 <template>
     <view class="container">
-        <image class="mallLogo" src="https://jms.85gui7.com/kahe-202510/mall/mall-tab-title.png" />
+        <image class="mallLogo" src="/static/kahe-202510/mall/mall-tab-title.png" />
         <view class="mallTab">
             <text
                 class="mallTab-item price-font"

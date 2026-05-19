@@ -3,7 +3,7 @@
               :overlay-closeable="false"
     >
         <view class="collect-alert ">
-            <image class="collect-alert-bg" src="https://jms.85gui7.com/kahe-202510/collect/modal-bg.png" />
+            <image class="collect-alert-bg" src="/static/kahe-202510/collect/modal-bg.png" />
             <view class="collect-alert-content">
                 <view class="collect-alert-content-title">集赏行动</view>
 
@@ -12,11 +12,11 @@
                 </view>
                 <view class="collect-alert-content-bottom">
                     <view class="collect-alert-content-bottom-btn" @tap.stop="emits('confirm')">
-                        <image class="collect-alert-content-bottom-btn-img" src="https://jms.85gui7.com/kahe-202510/collect/btn2.png" />
+                        <image class="collect-alert-content-bottom-btn-img" src="/static/kahe-202510/collect/btn2.png" />
                         <view class="collect-alert-content-bottom-btn-title">确定</view>
                     </view>
                     <view class="collect-alert-content-bottom-btn" @tap.stop="emits('update:show', false)">
-                        <image class="collect-alert-content-bottom-btn-img" src="https://jms.85gui7.com/kahe-202510/collect/btn1.png" />
+                        <image class="collect-alert-content-bottom-btn-img" src="/static/kahe-202510/collect/btn1.png" />
                         <view class="collect-alert-content-bottom-btn-title">取消</view>
                     </view>
                 </view>

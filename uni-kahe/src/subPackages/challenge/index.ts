@@ -306,5 +306,5 @@ export function useChallenge() {
   };
 }
 export const getLevelImage = (index: number) => {
-  return `https://jms.85gui7.com/tags/level${index}.png`;
+  return `/static/tags/level${index}.png`;
 };

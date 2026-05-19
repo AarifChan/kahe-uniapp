@@ -79,7 +79,7 @@ export default {
       openList: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
       isAnimating: false,
       gifShow: true,
-      gifUrl: "https://jms.85gui7.com/common/resources/reward-240829.gif",
+      gifUrl: "/static/common/resources/reward-240829.gif",
       isReady: false,
       gifPath: "",
       isAllOpen: computed(() => {}),
@@ -182,7 +182,7 @@ export default {
       },
       playAudio: () => {
         const audio = uni.createInnerAudioContext();
-        audio.src = "https://jms.85gui7.com/common/resources/audio-240829.mp3";
+        audio.src = "/static/common/resources/audio-240829.mp3";
         audio.play();
       },
     });
@@ -368,7 +368,7 @@ export default {
   &-all {
     width: 248rpx;
     height: 78rpx;
-    background-image: url("https://jms.85gui7.com/hhs/lottery/btn-bg.png");
+    background-image: url("/static/hhs/lottery/btn-bg.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     color: white;
@@ -380,7 +380,7 @@ export default {
   &-close {
     width: 248rpx;
     height: 78rpx;
-    background-image: url("https://jms.85gui7.com/hhs/lottery/btn-bg.png");
+    background-image: url("/static/hhs/lottery/btn-bg.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     color: white;

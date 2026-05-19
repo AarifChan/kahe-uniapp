@@ -4,21 +4,21 @@
       <view class="favorite-content-item" @tap.stop="$emit('didClickFavorite')">
         <image
           class="favorite-content-item-img"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/mine/favorite.png"
+          src="/static/kahe-202510/ka-he/mine/favorite.png"
         />
         <text class="favorite-content-item-title">收藏</text>
       </view>
       <view class="favorite-content-item" @tap.stop="$emit('didClickCoupon')">
         <image
           class="favorite-content-item-img"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/mine/card.png"
+          src="/static/kahe-202510/ka-he/mine/card.png"
         />
         <text class="favorite-content-item-title">卡券</text>
       </view>
       <view class="favorite-content-item" @tap.stop="$emit('didClickContact')">
         <image
           class="favorite-content-item-img"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/mine/contact.png"
+          src="/static/kahe-202510/ka-he/mine/contact.png"
         />
         <text class="favorite-content-item-title">联系客服</text>
         <view v-if="unReadNum > 0" class="favorite-content-item-num">{{
@@ -28,7 +28,7 @@
       <!--      <button class="favorite-content-item" openType="contact">-->
       <!--        <image-->
       <!--          class="favorite-content-item-img"-->
-      <!--          src="https://jms.85gui7.com/kahe-202510/ka-he/mine/contact.png"-->
+      <!--          src="/static/kahe-202510/ka-he/mine/contact.png"-->
       <!--        />-->
       <!--        <text class="favorite-content-item-title">联系客服</text>-->
       <!--      </button>-->

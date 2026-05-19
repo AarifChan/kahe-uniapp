@@ -1,8 +1,8 @@
 <template>
     <view class="top">
-        <image class="top-bg" src="https://jms.85gui7.com/kahe-202510/images/infinite-top-bg.png" />
+        <image class="top-bg" src="/static/kahe-202510/images/infinite-top-bg.png" />
         <view class="top-left">
-            <image class="top-left-bg" src="https://jms.85gui7.com/kahe-202510/product/card-item-bg.png" />
+            <image class="top-left-bg" src="/static/kahe-202510/product/card-item-bg.png" />
             <view class="top-left-tips">vip客服-可可</view>
             <view class="top-left-title" v-if="types">
                 主人，请选择心仪的抽卡机，海量卡牌任您挑选。
@@ -11,8 +11,8 @@
                 主人，请选择心仪的抽卡机，海量卡牌任您挑选。
             </view>
         </view>
-        <image class="top-center" src="https://jms.85gui7.com/kahe-202510/images/infinite-girl.gif"  v-if="types" />
-        <image class="top-center" src="https://jms.85gui7.com/kahe-202510/images/card-girl.gif"  v-else />
+        <image class="top-center" src="/static/kahe-202510/images/infinite-girl.gif"  v-if="types" />
+        <image class="top-center" src="/static/kahe-202510/images/card-girl.gif"  v-else />
         <view class="top-right">
             <Barrage :list="goods" />
         </view>

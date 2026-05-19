@@ -5,10 +5,10 @@
                 @tap.stop="emits('didTapChoose', item.num)">
                 <view v-if="queueLockTime && item.num === 1" class="cards-list-item-queue">
                     <image class="cards-list-item-queue-bg"
-                        src="https://jms.85gui7.com/kahe-202510/product/lock-queue.png" />
+                        src="/static/kahe-202510/product/lock-queue.png" />
                     <text class="cards-list-item-queue-title">每发锁{{ queueLockTime }}秒</text>
                 </view>
-                <image src="https://jms.85gui7.com/kahe-202510/ka-he/common/common-btn-bg.png"
+                <image src="/static/kahe-202510/ka-he/common/common-btn-bg.png"
                     class="cards-list-item-img" />
                 <text class="cards-list-item-text theme-font">冲{{ item.num }}发</text>
             </view>
@@ -17,14 +17,14 @@
         <!--      <view class="cards-bottom-exchange" @tap.stop="emits('didTapChangeBox')">-->
         <!--        <image-->
         <!--          class="cards-bottom-exchange-img"-->
-        <!--          src="https://jms.85gui7.com/kahe-202510/product/reload.png"-->
+        <!--          src="/static/kahe-202510/product/reload.png"-->
         <!--        />-->
         <!--        <text class="cards-bottom-exchange-text theme-font">换箱</text>-->
         <!--      </view>-->
         <!--      <image-->
         <!--        v-if="allShow"-->
         <!--        class="cards-bottom-other"-->
-        <!--        src="https://jms.85gui7.com/kahe-202510/product/other-bg.png"-->
+        <!--        src="/static/kahe-202510/product/other-bg.png"-->
         <!--        @tap.stop="emits('didTapChoose', -1)"-->
         <!--      />-->
         <!--    </view>-->

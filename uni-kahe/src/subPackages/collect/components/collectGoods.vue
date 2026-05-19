@@ -17,7 +17,7 @@
       >
     </view>
 
-    <image class="collect-goods-bg" src="https://jms.85gui7.com/kahe-202510/collect/card-bg.png" />
+    <image class="collect-goods-bg" src="/static/kahe-202510/collect/card-bg.png" />
     <view class="collect-goods-select">
       <view v-if="item.selected" class="collect-goods-select-target" />
     </view>

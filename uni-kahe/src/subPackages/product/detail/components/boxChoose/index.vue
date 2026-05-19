@@ -1,6 +1,6 @@
 <template>
     <view class="boxChoose">
-        <image class="boxChoose-bg" src="https://jms.85gui7.com/kahe/product/choose-title-bg.png" />
+        <image class="boxChoose-bg" src="/static/kahe/product/choose-title-bg.png" />
         <text class="boxChoose-title theme-font">本福袋已开启排队机制 </text>
         <text class="boxChoose-tips theme-font">1发包邮，本福袋有保护机制!抽到皮卡皮卡卡牌默认不 发货需要的到付发平卡邮费
             自理!本福袋为玩家福袋有任何问题请联系转发福袋的玩家与福袋商家无关! </text>

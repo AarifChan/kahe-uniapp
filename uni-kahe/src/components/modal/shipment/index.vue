@@ -5,7 +5,7 @@
                 <view class="shipment-content-top">
                     <view class="shipment-content-top-title theme-font text-stroke-main">发货确认</view>
                     <view class="shipment-content-top-closeBg">
-                        <image class="shipment-content-top-closeBg-close" @tap.stop="emits('update:show', false)" src="https://jms.85gui7.com/kahe/common/close-white.png" />
+                        <image class="shipment-content-top-closeBg-close" @tap.stop="emits('update:show', false)" src="/static/kahe/common/close-white.png" />
                     </view>
                 </view>
                 <view class="shipment-content-info" v-if="address?.price ?? false">
@@ -34,7 +34,7 @@
                         </view>
 
                         <view class="shipment-content-center-scroll-num">
-                            <image class="shipment-content-center-scroll-num-bg" src="https://jms.85gui7.com/kahe-202510/images/num-bg.png" />
+                            <image class="shipment-content-center-scroll-num-bg" src="/static/kahe-202510/images/num-bg.png" />
                             <text class="shipment-content-center-scroll-num-title theme-font">共{{ total }}件</text>
                         </view>
                     </scroll-view>

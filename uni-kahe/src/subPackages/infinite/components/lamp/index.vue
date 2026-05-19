@@ -11,7 +11,7 @@
       <view class="ma1-content">
         <image
           class="ma1-content-bg"
-          src="https://jms.85gui7.com/kahe-202510/ka-he/integral/infinite-bg.png"
+          src="/static/kahe-202510/ka-he/integral/infinite-bg.png"
         />
         <view class="ma1-content-title theme-font">欧皇来袭</view>
         <view class="ma1-content-info">

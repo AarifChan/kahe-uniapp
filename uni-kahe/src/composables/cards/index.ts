@@ -4,19 +4,19 @@ export function userCards() {
   const cardShow = ref(false);
   const itemList = ref([
     {
-      text: "https://jms.85gui7.com/kahe-202510/product/rule-text.png",
+      text: "/static/kahe-202510/product/rule-text.png",
       value: 1,
-      image: "https://jms.85gui7.com/kahe-202510/product/rule.png",
+      image: "/static/kahe-202510/product/rule.png",
     },
     {
-      text: "https://jms.85gui7.com/kahe-202510/product/prob-text.png",
+      text: "/static/kahe-202510/product/prob-text.png",
       value: 2,
-      image: "https://jms.85gui7.com/kahe-202510/product/prob.png",
+      image: "/static/kahe-202510/product/prob.png",
     },
     {
-      text: "https://jms.85gui7.com/kahe-202510/product/record-text.png",
+      text: "/static/kahe-202510/product/record-text.png",
       value: 3,
-      image: "https://jms.85gui7.com/kahe-202510/product/record.png",
+      image: "/static/kahe-202510/product/record.png",
     },
   ] as UIIconItem[]);
   const currentValue = ref(1);

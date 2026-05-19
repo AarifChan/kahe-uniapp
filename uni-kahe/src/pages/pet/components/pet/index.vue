@@ -2,10 +2,10 @@
     <view class="petCard">
         <view class="petCard-bg" />
         <image class="petCard-bg" :src="item.icon" />
-        <image class="petCard-decorate" src="https://jms.85gui7.com/kahe-202510/pet/card-bottom.png" />
+        <image class="petCard-decorate" src="/static/kahe-202510/pet/card-bottom.png" />
         <text class="petCard-name theme-font text-stroke">{{item.name}}</text>
-        <image class="petCard-level" :src="'https://jms.85gui7.com/kahe-202510/pet/level' + item.level + '.png' " />
-        <image v-if="selected" class="petCard-select" src="https://jms.85gui7.com/kahe-202510/pet/select.png" />
+        <image class="petCard-level" :src="'/static/kahe-202510/pet/level' + item.level + '.png' " />
+        <image v-if="selected" class="petCard-select" src="/static/kahe-202510/pet/select.png" />
     </view>
 </template>
 

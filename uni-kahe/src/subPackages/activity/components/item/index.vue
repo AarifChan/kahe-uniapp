@@ -1,11 +1,11 @@
 <template>
   <view class="activityItem">
-    <image class="activityItem-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/welfare/item-bg.png" />
+    <image class="activityItem-bg" src="/static/kahe-202510/ka-he/welfare/item-bg.png" />
 
     <view class="activityItem-top">
       <image
         class="activityItem-top-bg"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/welfare/title-bg.png"
+        src="/static/kahe-202510/ka-he/welfare/title-bg.png"
       />
       <view class="activityItem-top-title">{{ item.title }}</view>
     </view>
@@ -33,7 +33,7 @@
     <view class="activityItem-btn" @tap.stop="emits('didClickItem', item)">
       <image
         class="activityItem-btn-img"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/welfare/btn-bg.png"
+        src="/static/kahe-202510/ka-he/welfare/btn-bg.png"
       />
       <view class="activityItem-btn-title theme-font">立即进入</view>
     </view>

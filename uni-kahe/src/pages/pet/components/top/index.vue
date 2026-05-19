@@ -1,15 +1,15 @@
 <template>
     <view class="petTop">
-        <image class="petTop-bg" src="https://jms.85gui7.com/kahe-202510/pet/pet-top.png" />
+        <image class="petTop-bg" src="/static/kahe-202510/pet/pet-top.png" />
         <view class="petTop-right" v-if="handle">
-            <icon-button v-for="(item, index) in itemList" :icon="'https://jms.85gui7.com/kahe-202510/pet/item'+(index+1)+'.png'" :title="item.title" :key="'iconBtn'+index"
+            <icon-button v-for="(item, index) in itemList" :icon="'/static/kahe-202510/pet/item'+(index+1)+'.png'" :title="item.title" :key="'iconBtn'+index"
                          @tap.stop="emits('didClickItem', index)"
             />
         </view>
         <view class="petTop-eggs" v-if="eggs" @tap.stop="emits('didClickEgg')">
             <text class="petTop-eggs-title theme-font text-stroke">点击敲碎蛋壳，孵化宠物</text>
-            <image class="petTop-eggs-target" src="https://jms.85gui7.com/kahe-202510/pet/eggs.png" />
-            <image class="petTop-eggs-shadow" src="https://jms.85gui7.com/kahe-202510/pet/shadow.png" />
+            <image class="petTop-eggs-target" src="/static/kahe-202510/pet/eggs.png" />
+            <image class="petTop-eggs-shadow" src="/static/kahe-202510/pet/shadow.png" />
         </view>
     </view>
 </template>

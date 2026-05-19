@@ -1,12 +1,12 @@
 <template>
   <view class="discountCard">
     <view class="discountCard-top">
-      <image class="discountCard-top-item" src="https://jms.85gui7.com/kahe-202510/discount/icon1.png" />
+      <image class="discountCard-top-item" src="/static/kahe-202510/discount/icon1.png" />
       <view class="discountCard-top-info">
         <text class="discountCard-top-info-title theme-font">首充礼包</text>
       </view>
       <view class="discountCard-top-btn" @tap.stop="emits('didClickItem')">
-        <image class="discountCard-top-btn-bg" src="https://jms.85gui7.com/kahe-202510/merchant/btn.png" />
+        <image class="discountCard-top-btn-bg" src="/static/kahe-202510/merchant/btn.png" />
         <text class="discountCard-top-btn-text text-stroke theme-font"
           >领 取</text
         >
@@ -16,7 +16,7 @@
       <view class="discountCard-bottom-item">
         <image
           class="discountCard-bottom-item-img"
-          src="https://jms.85gui7.com/kahe-202510/discount/item1.png"
+          src="/static/kahe-202510/discount/item1.png"
         />
         <view class="discountCard-bottom-item-info">
           <view class="discountCard-bottom-item-info-title">购买必得</view>
@@ -26,7 +26,7 @@
       <view class="discountCard-bottom-item">
         <image
           class="discountCard-bottom-item-img"
-          src="https://jms.85gui7.com/kahe-202510/discount/item2.png"
+          src="/static/kahe-202510/discount/item2.png"
         />
         <view class="discountCard-bottom-item-info">
           <view class="discountCard-bottom-item-info-title">购买必得</view>

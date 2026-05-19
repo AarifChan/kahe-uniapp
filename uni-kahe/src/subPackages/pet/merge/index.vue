@@ -1,6 +1,6 @@
 <template>
     <view class="merge">
-        <image class="merge-bg" src="https://jms.85gui7.com/kahe-202510/pet/pet-bg.png" />
+        <image class="merge-bg" src="/static/kahe-202510/pet/pet-bg.png" />
         <view class="merge-top">
             <top v-model:left="leftSelectPet" v-model:right="rightSelectPet" @did-click-merge="handleMerge" />
         </view>

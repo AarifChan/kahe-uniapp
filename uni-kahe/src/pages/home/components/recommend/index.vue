@@ -38,11 +38,11 @@
       </view>
     </view>
     <!--    <view class="recommend">-->
-    <!--      &lt;!&ndash; <image class="recommend-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/common/card-item.png" /> &ndash;&gt;-->
+    <!--      &lt;!&ndash; <image class="recommend-bg" src="/static/kahe-202510/ka-he/common/card-item.png" /> &ndash;&gt;-->
 
     <!--      <view class="recommend-box">-->
-    <!--        &lt;!&ndash; <image class="recommend-box-img" src="https://jms.85gui7.com/kahe-202510/ka-he/home/kami-title1.png" />-->
-    <!--              <image class="recommend-box-go" src="https://jms.85gui7.com/kahe-202510/ka-he/home/kami-go1.png" @tap.stop="handleGroupBuyPage" /> &ndash;&gt;-->
+    <!--        &lt;!&ndash; <image class="recommend-box-img" src="/static/kahe-202510/ka-he/home/kami-title1.png" />-->
+    <!--              <image class="recommend-box-go" src="/static/kahe-202510/ka-he/home/kami-go1.png" @tap.stop="handleGroupBuyPage" /> &ndash;&gt;-->
     <!--        <view class="top">-->
     <!--          <view class="top-title theme-font">热门拼团</view>-->
     <!--          <view class="top-hot">-->
@@ -86,7 +86,7 @@ const moreBtnStyle = {
 
 const challengeItem1Style = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/challenge/challenge-item1.png)",
+    "url(/static/kahe-202510/challenge/challenge-item1.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -94,7 +94,7 @@ const challengeItem1Style = {
 
 const challengeItem2Style = {
   backgroundImage:
-    "url(https://jms.85gui7.com/kahe-202510/challenge/challenge-item2.png)",
+    "url(/static/kahe-202510/challenge/challenge-item2.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",

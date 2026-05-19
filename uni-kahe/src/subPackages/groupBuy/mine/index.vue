@@ -1,6 +1,6 @@
 <template>
   <view class="groupBuyMine">
-    <!--    <image class="groupBuyMine-bg" src="https://jms.85gui7.com/kahe-202510/groupBuy/groupBuyBg.png" />-->
+    <!--    <image class="groupBuyMine-bg" src="/static/kahe-202510/groupBuy/groupBuyBg.png" />-->
     <view class="groupBuyMine-content">
       <view class="groupBuyMine-content-top">
         <search placeholder="" @did-tap-search="handleSearch" :black="true" />
@@ -46,7 +46,7 @@
       <view class="groupBuyMine-bottom-side" @tap.stop="changePage(true)">
         <!--        <image-->
         <!--          class="groupBuyMine-bottom-side-bg"-->
-        <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/btn5.png"-->
+        <!--          src="/static/kahe-202510/groupBuy/btn5.png"-->
         <!--        />-->
         <view class="groupBuyMine-bottom-side-title theme-font">上一页</view>
       </view>
@@ -56,7 +56,7 @@
       <view class="groupBuyMine-bottom-side" @tap.stop="changePage(false)">
         <!--        <image-->
         <!--          class="groupBuyMine-bottom-side-bg"-->
-        <!--          src="https://jms.85gui7.com/kahe-202510/groupBuy/btn5.png"-->
+        <!--          src="/static/kahe-202510/groupBuy/btn5.png"-->
         <!--        />-->
         <view class="groupBuyMine-bottom-side-title theme-font">下一页</view>
       </view>
@@ -66,7 +66,7 @@
     <!--                <view class="groupBuyMine-bottom-line-left">-->
     <!--                </view>-->
     <!--                <view class="groupBuyMine-bottom-line-right">-->
-    <!--                    <image class="groupBuyMine-bottom-line-right-img" src="https://jms.85gui7.com/kahe-202510/groupBuy/btn.png" />-->
+    <!--                    <image class="groupBuyMine-bottom-line-right-img" src="/static/kahe-202510/groupBuy/btn.png" />-->
     <!--                    <view class="groupBuyMine-bottom-line-right-title text-stroke-main STHupo-font">去转赠</view>-->
     <!--                </view>-->
     <!--            </view>-->

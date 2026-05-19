@@ -39,20 +39,20 @@ const tabList = [
   {
     value: 1,
     title: "卡牌",
-    normalIcon: "https://jms.85gui7.com/kahe-202510/ka-he/merchant/item1-normal.png",
-    selectIcon: "https://jms.85gui7.com/kahe-202510/ka-he/merchant/item1-selected.png",
+    normalIcon: "/static/kahe-202510/ka-he/merchant/item1-normal.png",
+    selectIcon: "/static/kahe-202510/ka-he/merchant/item1-selected.png",
   },
   {
     value: 2,
     title: "潮玩",
-    normalIcon: "https://jms.85gui7.com/kahe-202510/ka-he/merchant/item2-normal.png",
-    selectIcon: "https://jms.85gui7.com/kahe-202510/ka-he/merchant/item2-selected.png",
+    normalIcon: "/static/kahe-202510/ka-he/merchant/item2-normal.png",
+    selectIcon: "/static/kahe-202510/ka-he/merchant/item2-selected.png",
   },
   {
     value: 3,
     title: "谷子",
-    normalIcon: "https://jms.85gui7.com/kahe-202510/ka-he/merchant/item3-normal.png",
-    selectIcon: "https://jms.85gui7.com/kahe-202510/ka-he/merchant/item3-selected.png",
+    normalIcon: "/static/kahe-202510/ka-he/merchant/item3-normal.png",
+    selectIcon: "/static/kahe-202510/ka-he/merchant/item3-selected.png",
   },
 ];
 

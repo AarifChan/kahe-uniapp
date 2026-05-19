@@ -7,44 +7,44 @@ const steps = ref([
     num: "01",
     title: "提交资料",
     desc: "填写信息申请入驻",
-    icon: "https://jms.85gui7.com/kahe-202510/jikaquan/enroll-top-item1.png",
+    icon: "/static/kahe-202510/jikaquan/enroll-top-item1.png",
   },
   {
     num: "02",
     title: "等待审核",
     desc: "平台审核入驻资料",
-    icon: "https://jms.85gui7.com/kahe-202510/jikaquan/enroll-top-item2.png",
+    icon: "/static/kahe-202510/jikaquan/enroll-top-item2.png",
   },
   {
     num: "03",
     title: "设置账户",
     desc: "登录后台完成设置",
-    icon: "https://jms.85gui7.com/kahe-202510/jikaquan/enroll-top-item3.png",
+    icon: "/static/kahe-202510/jikaquan/enroll-top-item3.png",
   },
   {
     num: "04",
     title: "入驻成功",
     desc: "店铺开通发布商品",
-    icon: "https://jms.85gui7.com/kahe-202510/jikaquan/enroll-top-item4.png",
+    icon: "/static/kahe-202510/jikaquan/enroll-top-item4.png",
   },
 ]);
 
 const materials = ref([
   {
     name: "法人身份证",
-    icon: "https://jms.85gui7.com/kahe-202510/jikaquan/enroll-bottom-item1.png",
+    icon: "/static/kahe-202510/jikaquan/enroll-bottom-item1.png",
   },
   {
     name: "营业执照",
-    icon: "https://jms.85gui7.com/kahe-202510/jikaquan/enroll-bottom-item2.png",
+    icon: "/static/kahe-202510/jikaquan/enroll-bottom-item2.png",
   },
   {
     name: "社群截图",
-    icon: "https://jms.85gui7.com/kahe-202510/jikaquan/enroll-bottom-item3.png",
+    icon: "/static/kahe-202510/jikaquan/enroll-bottom-item3.png",
   },
   {
     name: "签署合同",
-    icon: "https://jms.85gui7.com/kahe-202510/jikaquan/enroll-bottom-item4.png",
+    icon: "/static/kahe-202510/jikaquan/enroll-bottom-item4.png",
   },
 ]);
 
@@ -54,7 +54,7 @@ const handleEnroll = () => {
 </script>
 
 <template>
-  <view class="h-screen w-screen relative bg-no-repeat" style="background-image: url('https://jms.85gui7.com/kahe-202510/jikaquan/invite-bg.png'); background-size: 100% auto;">
+  <view class="h-screen w-screen relative bg-no-repeat" style="background-image: url('/static/kahe-202510/jikaquan/invite-bg.png'); background-size: 100% auto;">
     <view class="w-full relative">
       <view class="absolute left-40 top-40">
         <text class="text-54 text-[#3D8CE8] block font-theme">加入集卡圈</text>
@@ -82,7 +82,7 @@ const handleEnroll = () => {
             </view>
             <text class="text-24 text-#999">{{ step.desc }}</text>
             <view v-if="index < steps.length - 1 && index % 2 === 0" class="absolute" style="right: -20%; top: 50%; transform: translateY(-50%)">
-              <image class="w-72 h-51" src="https://jms.85gui7.com/kahe-202510/jikaquan/top-arrow.png" mode="aspectFit" />
+              <image class="w-72 h-51" src="/static/kahe-202510/jikaquan/top-arrow.png" mode="aspectFit" />
             </view>
             <view v-if="index === 1" class="absolute" style="right: 20%; bottom: -10rpx; transform: rotate(90deg)">
               <text class="text-36 text-#00d4aa font-bold">→</text>

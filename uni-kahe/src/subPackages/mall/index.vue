@@ -4,7 +4,7 @@
     :scroll-y="true"
     @scrolltolower="handleMallScrollToLower"
   >
-    <image class="mall-bg" src="https://jms.85gui7.com/kahe-202510/box/box-bg.png" />
+    <image class="mall-bg" src="/static/kahe-202510/box/box-bg.png" />
     <search @did-tap-search="didTapSearch" />
     <category />
     <tab @did-change="sortDidChange" />

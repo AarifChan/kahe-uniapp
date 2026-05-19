@@ -6,7 +6,7 @@
       v-if="showArrow"
       class="setting-cell-arrow"
       mode="heightFix"
-      src="https://jms.85gui7.com/kahe-202510/ka-he/common/right-arrow.png"
+      src="/static/kahe-202510/ka-he/common/right-arrow.png"
     />
   </view>
 </template>

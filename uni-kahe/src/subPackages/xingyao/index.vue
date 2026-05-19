@@ -1,13 +1,13 @@
 <template>
   <view class="shine">
     <image
-      src="https://jms.85gui7.com/kahe-202510/shine/bg.png"
+      src="/static/kahe-202510/shine/bg.png"
       mode="scaleToFill"
       class="bg"
     />
     <view class="shine-container">
       <image
-        src="https://jms.85gui7.com/kahe-202510/shine/title.png"
+        src="/static/kahe-202510/shine/title.png"
         mode="scaleToFill"
         class="title"
       />

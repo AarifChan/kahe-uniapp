@@ -1,7 +1,7 @@
 <template>
   <view class="pageControl">
     <view class="pageControl-side" @tap.stop="emits('didClickChangeBox', true)">
-      <image class="pageControl-side-bg" src="https://jms.85gui7.com/kahe-202510/ka-he/product/left.png" />
+      <image class="pageControl-side-bg" src="/static/kahe-202510/ka-he/product/left.png" />
     </view>
     <view class="pageControl-center">
       <text class="pageControl-center-title">第</text>
@@ -18,7 +18,7 @@
     >
       <image
         class="pageControl-side-bg"
-        src="https://jms.85gui7.com/kahe-202510/ka-he/product/right.png"
+        src="/static/kahe-202510/ka-he/product/right.png"
       />
     </view>
   </view>
