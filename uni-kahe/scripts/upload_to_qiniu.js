@@ -5,10 +5,10 @@ const { spawn } = require("child_process");
 const qiniu = require("qiniu");
 
 // 七牛云配置
-const accessKey = "5UjmGRCWvjvVLFwrjXOA35GJ2CnqXv-HJHPGxzHL";
-const secretKey = "_Fr6qdmLWIn9tknGE_DQoep9h_oECiXaKaH-E50X";
-const bucket = "jm-blindbox";
-const cdnDomain = "https://jms.85gui7.com";
+const accessKey = "a56wewbWcQRZfS-EC2p_-Qm83A0M8DAyqY-Z9H9X";
+const secretKey = "ZfovhlIEt2WiCRYlh7nNDAt2nccb11e_s278gLU7";
+const bucket = "91tcg";
+const cdnDomain = "https://cdn.91tcg.com";
 
 const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 const config = new qiniu.conf.Config();
@@ -113,7 +113,9 @@ async function updateAndroidDownloadUrlInH5(url) {
   const original = await fsp.readFile(H5_INDEX_FILE, "utf8");
   const pattern = /const ANDROID_APK_URL = ['"][^'"]*['"]/;
   if (!pattern.test(original)) {
-    throw new Error(`未在 ${H5_INDEX_FILE} 找到 ANDROID_APK_URL 常量，请先接入页面常量`);
+    throw new Error(
+      `未在 ${H5_INDEX_FILE} 找到 ANDROID_APK_URL 常量，请先接入页面常量`
+    );
   }
   const updated = original.replace(pattern, `const ANDROID_APK_URL = '${url}'`);
   await fsp.writeFile(H5_INDEX_FILE, updated, "utf8");
@@ -203,8 +205,12 @@ async function main() {
     return;
   }
   console.log("用法:");
-  console.log("  node ./scripts/upload_to_qiniu.js apk     # 一键打包 Android 离线 UniApp + 上传 APK + 回填 H5 下载地址");
-  console.log("  node ./scripts/upload_to_qiniu.js images  # 上传 static 图片到七牛");
+  console.log(
+    "  node ./scripts/upload_to_qiniu.js apk     # 一键打包 Android 离线 UniApp + 上传 APK + 回填 H5 下载地址"
+  );
+  console.log(
+    "  node ./scripts/upload_to_qiniu.js images  # 上传 static 图片到七牛"
+  );
 }
 
 main().catch((err) => {
