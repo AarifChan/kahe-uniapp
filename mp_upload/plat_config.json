@@ -1,5 +1,6 @@
 {
     "remote_host": "jmcw",
+    "compress_png_strict": true,
     "plats": [
         {
             "name": "wx_ma",

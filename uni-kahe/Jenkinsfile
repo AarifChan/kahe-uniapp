@@ -1,0 +1,251 @@
+/**
+ * UniApp 小程序企业级 CI/CD Pipeline
+ *
+ * 功能：
+ * - 参数化构建（环境、平台、测试跳过、干跑模式）
+ * - 静态资源上传七牛 CDN 并替换引用
+ * - 包体积分析与优化
+ * - 小程序平台自动上传（微信/支付宝）
+ * - 产物归档与回滚支持
+ * - 钉钉/企微通知
+ * - 生产环境审批门控
+ *
+ * Jenkins 配置要求：
+ * 1. 安装 Node.js 插件，配置 Node 18+
+ * 2. 配置 Credentials:
+ *    - QINIU_ACCESS_KEY / QINIU_SECRET_KEY (Secret text)
+ *    - WEIXIN_PRIVATE_KEY (Secret file, 上传 private.key)
+ *    - ALIPAY_TOKEN (Secret text)
+ *    - DINGTALK_WEBHOOK / WECHAT_WORK_WEBHOOK (Secret text)
+ * 3. 安装插件: Pipeline, Git, NodeJS
+ */
+
+pipeline {
+    agent any
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '5'))
+        timeout(time: 30, unit: 'MINUTES')
+        disableConcurrentBuilds()
+        timestamps()
+    }
+
+    parameters {
+        choice(
+            name: 'ENVIRONMENT',
+            choices: ['dev', 'test', 'prod'],
+            description: '部署环境'
+        )
+        choice(
+            name: 'PLATFORM',
+            choices: ['mp-weixin', 'mp-alipay'],
+            description: '小程序平台'
+        )
+        booleanParam(
+            name: 'SKIP_TESTS',
+            defaultValue: false,
+            description: '跳过测试阶段'
+        )
+        booleanParam(
+            name: 'DRY_RUN',
+            defaultValue: false,
+            description: '干跑模式（不上传小程序平台）'
+        )
+        booleanParam(
+            name: 'COMPRESS_IMAGES',
+            defaultValue: true,
+            description: '压缩图片以减小包体积'
+        )
+    }
+
+    environment {
+        // 从 Jenkins Credential Store 读取敏感信息
+        QINIU_ACCESS_KEY = credentials('qiniu-access-key')
+        QINIU_SECRET_KEY = credentials('qiniu-secret-key')
+        WEIXIN_PRIVATE_KEY_PATH = credentials('weixin-private-key-file')
+        ALIPAY_TOKEN = credentials('alipay-token')
+        DINGTALK_WEBHOOK = credentials('dingtalk-webhook')
+        WECHAT_WORK_WEBHOOK = credentials('wechat-work-webhook')
+
+        // 环境标识
+        ENVIRONMENT = "${params.ENVIRONMENT}"
+        PLATFORM = "${params.PLATFORM}"
+        CI_LOG_LEVEL = "INFO"
+
+        // 构建产物目录
+        ARTIFACT_DIR = "${WORKSPACE}/dist/artifacts"
+    }
+
+    tools {
+        nodejs 'Node-18'  // 需要在 Jenkins 全局工具配置中定义
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    env.GIT_COMMIT = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
+                    env.GIT_BRANCH = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
+                    env.GIT_TAG = sh(script: 'git describe --tags --exact-match 2>/dev/null || echo ""', returnStdout: true).trim()
+                }
+                echo "Git Commit: ${env.GIT_COMMIT}"
+                echo "Git Branch: ${env.GIT_BRANCH}"
+                echo "Git Tag: ${env.GIT_TAG}"
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                dir('uni-kahe') {
+                    sh 'npm ci --prefer-offline --no-audit'
+                }
+            }
+        }
+
+        stage('Generate Manifest') {
+            steps {
+                dir('uni-kahe') {
+                    sh 'node scripts/ci/generate-manifest.js'
+                }
+            }
+        }
+
+        stage('Lint & Type Check') {
+            when {
+                expression { !params.SKIP_TESTS }
+            }
+            steps {
+                dir('uni-kahe') {
+                    sh 'npm run lint || true'
+                    sh 'npx vue-tsc --noEmit || true'
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('uni-kahe') {
+                    script {
+                        def platformFlag = params.PLATFORM == 'mp-weixin' ? 'mp-weixin' : 'mp-alipay'
+                        sh "npx uni build --platform ${platformFlag}"
+                    }
+                }
+            }
+        }
+
+        stage('Upload Assets to CDN') {
+            steps {
+                dir('uni-kahe') {
+                    sh 'node scripts/ci/upload-assets.js'
+                }
+            }
+        }
+
+        stage('Replace CDN URLs') {
+            steps {
+                dir('uni-kahe') {
+                    sh 'node scripts/ci/replace-cdn-urls.js'
+                }
+            }
+        }
+
+        stage('Optimize Package') {
+            steps {
+                dir('uni-kahe') {
+                    script {
+                        env.COMPRESS_IMAGES = params.COMPRESS_IMAGES ? 'true' : 'false'
+                        env.REMOVE_SOURCE_MAPS = params.ENVIRONMENT == 'dev' ? 'false' : 'true'
+                        env.FAIL_ON_SIZE_LIMIT = params.ENVIRONMENT == 'prod' ? 'true' : 'false'
+                    }
+                    sh 'node scripts/ci/optimize-package.js'
+                }
+            }
+        }
+
+        stage('Archive Artifact') {
+            steps {
+                dir('uni-kahe') {
+                    sh 'node scripts/ci/archive-artifact.js'
+                }
+            }
+        }
+
+        stage('Approval Gate (Production)') {
+            when {
+                allOf {
+                    expression { params.ENVIRONMENT == 'prod' }
+                    expression { !params.DRY_RUN }
+                }
+            }
+            steps {
+                script {
+                    def approvers = input(
+                        message: '确认发布到生产环境？',
+                        ok: '确认发布',
+                        submitterParameter: 'APPROVER',
+                        parameters: [
+                            text(
+                                name: 'RELEASE_NOTES',
+                                defaultValue: '',
+                                description: '发布说明（可选）'
+                            )
+                        ]
+                    )
+                    env.APPROVER = approvers.APPROVER ?: 'unknown'
+                    env.RELEASE_NOTES = approvers.RELEASE_NOTES ?: ''
+                    echo "Approved by: ${env.APPROVER}"
+                }
+            }
+        }
+
+        stage('Upload Miniapp') {
+            when {
+                expression { !params.DRY_RUN }
+            }
+            steps {
+                dir('uni-kahe') {
+                    sh 'node scripts/ci/upload-miniprogram.js'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            dir('uni-kahe') {
+                // 恢复 manifest.json
+                sh 'node scripts/ci/generate-manifest.js restore || true'
+
+                // 归档报告文件
+                archiveArtifacts(
+                    artifacts: 'dist/package-report.json, dist/asset-manifest.json',
+                    allowEmptyArchive: true
+                )
+            }
+        }
+
+        success {
+            script {
+                env.BUILD_DURATION = currentBuild.durationString
+            }
+            dir('uni-kahe') {
+                sh 'node scripts/ci/notify.js success "${BUILD_DURATION}" || true'
+            }
+        }
+
+        failure {
+            script {
+                env.BUILD_DURATION = currentBuild.durationString
+            }
+            dir('uni-kahe') {
+                sh 'node scripts/ci/notify.js failure "${BUILD_DURATION}" || true'
+            }
+        }
+
+        unstable {
+            dir('uni-kahe') {
+                sh 'node scripts/ci/notify.js failure "${BUILD_DURATION}" || true'
+            }
+        }
+    }
+}

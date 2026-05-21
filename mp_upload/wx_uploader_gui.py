@@ -1,9 +1,9 @@
 import os
 import json
+import shutil
 import subprocess
 import tkinter as tk
 from tkinter import filedialog, messagebox, simpledialog, ttk
-
 # ================= 配置区 =================
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -12,11 +12,16 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.join(os.path.dirname(CURRENT_DIR), "uni-kahe")
 AUTO_SCRIPT = os.path.join(CURRENT_DIR, "auto_wx_upload.sh")
 CONFIG_FILE = os.path.join(CURRENT_DIR, "plat_config.json")
+QINIU_CONFIG_FILE = os.path.join(CURRENT_DIR, "qiniu_config.json")
 WX_UPLOAD_DIR = os.path.join(CURRENT_DIR, "wx_upload")
+MP_WEIXIN_DIST = os.path.join(PROJECT_ROOT, "dist", "build", "mp-weixin")
+MP_WEIXIN_STATIC = os.path.join(MP_WEIXIN_DIST, "static")
 
 # 默认配置（如果配置文件不存在时使用）
 DEFAULT_CONFIG = {
     "remote_host": "jmcw",
+    # 未安装 pngquant 时是否中断七牛上传（对应 COMPRESS_PNG_STRICT）
+    "compress_png_strict": True,
     "plats": [
         {
             "name": "wx_ma",
@@ -177,6 +182,133 @@ def build_mp_weixin(mode: str = "production") -> bool:
     except FileNotFoundError:
         print("错误: 找不到 bash 命令")
         return False
+
+
+def build_mode_to_environment(mode: str) -> str:
+    """编译模式映射到 CI 环境标识"""
+    return "prod" if mode == "production" else "test"
+
+
+def load_qiniu_config() -> dict:
+    """
+    加载七牛配置：优先 mp_upload/qiniu_config.json，其次环境变量
+    """
+    cfg = {}
+    if os.path.exists(QINIU_CONFIG_FILE):
+        try:
+            with open(QINIU_CONFIG_FILE, "r", encoding="utf-8") as f:
+                cfg = json.load(f)
+        except Exception as e:
+            raise RuntimeError(f"读取七牛配置失败: {e}") from e
+
+    access_key = os.environ.get("QINIU_ACCESS_KEY") or cfg.get("accessKey")
+    secret_key = os.environ.get("QINIU_SECRET_KEY") or cfg.get("secretKey")
+    if not access_key or not secret_key:
+        raise RuntimeError(
+            "未配置七牛凭证。请复制 qiniu_config.example.json 为 qiniu_config.json 并填写 accessKey/secretKey，"
+            "或设置环境变量 QINIU_ACCESS_KEY、QINIU_SECRET_KEY。"
+        )
+
+    return {
+        "accessKey": access_key,
+        "secretKey": secret_key,
+        "bucket": cfg.get("bucket") or os.environ.get("QINIU_BUCKET") or "jm-blindbox",
+        "cdnDomain": cfg.get("cdnDomain") or os.environ.get("QINIU_CDN_DOMAIN") or "https://jms.85gui7.com",
+        "folder": cfg.get("folder") or os.environ.get("QINIU_FOLDER") or "kahe-mp",
+        # bucket 91tcg 在华南区，需使用 z2（up-z2.qiniup.com）
+        "zone": cfg.get("zone") or os.environ.get("QINIU_ZONE") or "z2",
+    }
+
+
+def run_node_ci_script(script_name: str, extra_env: dict) -> bool:
+    """在 uni-kahe 目录执行 CI 脚本"""
+    script_path = os.path.join(PROJECT_ROOT, "scripts", "ci", script_name)
+    if not os.path.isfile(script_path):
+        print(f"脚本不存在: {script_path}")
+        return False
+
+    env = os.environ.copy()
+    env.update(extra_env)
+
+    try:
+        subprocess.run(
+            ["node", script_path],
+            cwd=PROJECT_ROOT,
+            env=env,
+            check=True,
+        )
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"执行 {script_name} 失败: {e}")
+        return False
+
+
+def process_mp_static_cdn(build_mode: str, compress_png_strict: bool = True) -> bool:
+    """
+    编译后处理 static：
+    1. 上传 dist/build/mp-weixin/static 到七牛
+    2. 将构建产物中的 /static/ 引用替换为 CDN 地址
+    3. 删除本地 static 目录以减小上传包体积
+    """
+    print("=" * 60)
+    print("七牛 CDN：压缩 PNG → 上传 static（含 gif/字体）→ 替换引用")
+    print("=" * 60)
+
+    mp_dist = MP_WEIXIN_DIST
+    static_dir = MP_WEIXIN_STATIC
+
+    if not os.path.isdir(mp_dist):
+        print(f"构建目录不存在: {mp_dist}")
+        return False
+
+    try:
+        qiniu_cfg = load_qiniu_config()
+    except RuntimeError as e:
+        print(str(e))
+        return False
+
+    # 七牛上传目录以 qiniu_config.json 为准，不用 .env 的 VITE_APP_CDN_FOLDER 覆盖
+    # （.env 里可能是旧前缀如 kahe-mp，与实际上传路径 jikaquan 不一致）
+
+    ci_env = build_mode_to_environment(build_mode)
+    node_env = {
+        "ENVIRONMENT": ci_env,
+        "PLATFORM": "mp-weixin",
+        "QINIU_ACCESS_KEY": qiniu_cfg["accessKey"],
+        "QINIU_SECRET_KEY": qiniu_cfg["secretKey"],
+        "QINIU_BUCKET": qiniu_cfg["bucket"],
+        "QINIU_CDN_DOMAIN": qiniu_cfg["cdnDomain"],
+        "QINIU_FOLDER": qiniu_cfg["folder"],
+        "QINIU_ZONE": qiniu_cfg["zone"],
+        "UPLOAD_SOURCE_DIR": static_dir,
+        "COMPRESS_PNG_STRICT": "true" if compress_png_strict else "false",
+    }
+
+    print(f"PNG 严格模式:  {'开启（缺 pngquant 将失败）' if compress_png_strict else '关闭（缺 pngquant 仅警告）'}")
+    print(f"七牛 Bucket:   {qiniu_cfg['bucket']}")
+    print(f"七牛区域:      {qiniu_cfg['zone']} (z2=华南)")
+    print(f"CDN 域名:      {qiniu_cfg['cdnDomain']}")
+    print(f"CDN 目录:      {qiniu_cfg['folder']}")
+    print(f"static 源目录: {static_dir}")
+
+    # 上传脚本内会先 pngquant 压缩再上传七牛
+    if not run_node_ci_script("upload-mp-build-static.js", node_env):
+        return False
+
+    if not run_node_ci_script("replace-cdn-urls.js", node_env):
+        return False
+
+    if os.path.isdir(static_dir):
+        print(f"删除本地 static 目录: {static_dir}")
+        shutil.rmtree(static_dir)
+        print("static 目录已删除")
+    else:
+        print("static 目录不存在，跳过删除")
+
+    print("=" * 60)
+    print("七牛 CDN 处理完成")
+    print("=" * 60)
+    return True
 
 
 def upload_code_to_server(remote_host: str, remote_path: str) -> bool:
@@ -471,7 +603,7 @@ class WxUploaderGUI:
     def __init__(self, root):
         self.root = root
         root.title("微信小程序上传工具")
-        root.geometry("650x220")
+        root.geometry("650x250")
         
         # 加载配置
         self.config = load_config()
@@ -484,6 +616,13 @@ class WxUploaderGUI:
         self.build_mode_var = tk.StringVar(value="production")
         # 是否使用环境变量中的 plat
         self.use_env_plat_var = tk.BooleanVar(value=True)
+        # 未安装 pngquant 时是否中断上传（COMPRESS_PNG_STRICT）
+        self.compress_png_strict_var = tk.BooleanVar(
+            value=self.config.get("compress_png_strict", True)
+        )
+        self.compress_png_strict_var.trace_add(
+            "write", self._on_compress_png_strict_changed
+        )
         
         # 设置默认 plat
         self._set_default_plat()
@@ -520,7 +659,17 @@ class WxUploaderGUI:
         tk.Radiobutton(frame_build_mode, text="测试环境", value="development", 
                        variable=self.build_mode_var).pack(side="left", padx=5)
         
-        # ===== 行 4：一键编译发布按钮 =====
+        # ===== 行 4：PNG 压缩严格模式 =====
+        frame_png = tk.Frame(root)
+        frame_png.pack(fill="x", padx=10, pady=5)
+        
+        tk.Checkbutton(
+            frame_png,
+            text="PNG 严格模式（未安装 pngquant 时中断上传，需 brew install pngquant）",
+            variable=self.compress_png_strict_var,
+        ).pack(side="left")
+        
+        # ===== 行 5：一键编译发布按钮 =====
         frame_one_click = tk.Frame(root)
         frame_one_click.pack(fill="x", padx=10, pady=15)
         
@@ -581,6 +730,11 @@ class WxUploaderGUI:
         self.config = new_config
         self._set_default_plat()
         self._build_plat_options()
+    
+    def _on_compress_png_strict_changed(self, *_args):
+        """勾选变化时写入 plat_config.json"""
+        self.config["compress_png_strict"] = bool(self.compress_png_strict_var.get())
+        save_config(self.config)
     
     def choose_key_file(self):
         path = filedialog.askopenfilename(
@@ -671,6 +825,12 @@ class WxUploaderGUI:
         
         # 构建平台信息
         plat_info = f"使用环境变量: VITE_APP_PLATFORM={platform_env}" if plat_selection == "__env__" else f"手动选择: {actual_plat_name}"
+        png_strict = bool(self.compress_png_strict_var.get())
+        png_strict_text = (
+            "开启（未安装 pngquant 将失败）"
+            if png_strict
+            else "关闭（未安装 pngquant 仅警告并继续）"
+        )
         
         # 确认操作
         if not messagebox.askyesno("确认", 
@@ -678,11 +838,13 @@ class WxUploaderGUI:
             f"1. 编译微信小程序（{mode_text}）\n"
             f"   API地址: {base_url}\n"
             f"   平台标识: {platform_env}\n\n"
-            f"2. 上传代码到服务器并执行 run-mp.sh\n"
+            f"2. 压缩 static 内 PNG，上传七牛 CDN（含 gif/ttf 等字体），替换 CDN 地址并删除本地 static\n"
+            f"   PNG 严格模式: {png_strict_text}\n\n"
+            f"3. 上传代码到服务器并执行 run-mp.sh\n"
             f"   主机: {remote_host}\n"
             f"   路径: {remote_path}\n"
             f"   ({plat_info})\n\n"
-            f"3. 上传 key 文件并发布到微信\n"
+            f"4. 上传 key 文件并发布到微信\n"
             f"   AppID: {appid}\n"
             f"   路径: {remote_path}/{appid}\n\n"
             f"是否继续？"):
@@ -698,7 +860,19 @@ class WxUploaderGUI:
                 self.root.title("微信小程序上传工具")
                 return
             
-            # 步骤 2：上传代码到服务器并执行 run-mp.sh
+            # 步骤 2：static 上传七牛、替换 CDN、删除 static
+            self.root.title("微信小程序上传工具 - 正在处理七牛 CDN...")
+            self.root.update()
+            
+            if not process_mp_static_cdn(build_mode, compress_png_strict=png_strict):
+                messagebox.showerror(
+                    "错误",
+                    "七牛 CDN 处理失败。请检查 qiniu_config.json 与终端输出。"
+                )
+                self.root.title("微信小程序上传工具")
+                return
+            
+            # 步骤 3：上传代码到服务器并执行 run-mp.sh
             self.root.title("微信小程序上传工具 - 正在上传代码...")
             self.root.update()
             
@@ -707,7 +881,7 @@ class WxUploaderGUI:
                 self.root.title("微信小程序上传工具")
                 return
             
-            # 步骤 3：上传 key 文件并发布到微信
+            # 步骤 4：上传 key 文件并发布到微信
             self.root.title("微信小程序上传工具 - 正在发布到微信...")
             self.root.update()
             

@@ -1,0 +1,9 @@
+{
+  "accessKey": "你的七牛 AccessKey",
+  "secretKey": "你的七牛 SecretKey",
+  "bucket": "91tcg",
+  "cdnDomain": "https://cdn.91tcg.com",
+  "folder": "jikaquan",
+  "zone": "z2",
+  "_说明": "bucket 91tcg 为公开空间、华南区域，zone 必须填 z2（上传节点 up-z2.qiniup.com）"
+}

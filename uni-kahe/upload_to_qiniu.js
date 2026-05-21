@@ -43,7 +43,22 @@ const options = {
 const putPolicy = new qiniu.rs.PutPolicy(options)
 const uploadToken = putPolicy.uploadToken(mac)
 
-// 遍历 static 文件夹下的所有图片文件
+// 可上传的静态资源扩展名（含 gif、字体）
+const UPLOADABLE_EXT = new Set([
+    '.png',
+    '.jpg',
+    '.jpeg',
+    '.gif',
+    '.webp',
+    '.svg',
+    '.ttf',
+    '.otf',
+    '.woff',
+    '.woff2',
+    '.eot',
+])
+
+// 遍历 static 文件夹下的静态资源
 function traverseDirectory(dir, prefix = '') {
     fs.readdir(dir, function (err, files) {
         if (err) {
@@ -63,7 +78,7 @@ function traverseDirectory(dir, prefix = '') {
                     // 如果是文件，则上传到七牛云指定目录
                     const extname = path.extname(file).toLowerCase()
 
-                    if (extname === '.png' || extname === '.jpg' || extname === '.jpeg' || extname === '.gif') {
+                    if (UPLOADABLE_EXT.has(extname)) {
                         const key = prefix ? `${prefix}/${file}` : file
                         uploadFile(filePath, key)
                             .then((respBody) => {
@@ -83,5 +98,5 @@ function traverseDirectory(dir, prefix = '') {
     })
 }
 
-// 开始遍历 static 文件夹下的所有图片文件
+// 开始遍历 static 文件夹（图片、gif、字体等）
 traverseDirectory('./src/static', folderName)
