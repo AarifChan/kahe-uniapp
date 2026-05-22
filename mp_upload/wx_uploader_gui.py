@@ -22,6 +22,8 @@ DEFAULT_CONFIG = {
     "remote_host": "jmcw",
     # 未安装 pngquant 时是否中断七牛上传（对应 COMPRESS_PNG_STRICT）
     "compress_png_strict": True,
+    # 是否使用七牛：上传 static、替换 CDN、删除本地 static
+    "use_qiniu": True,
     "plats": [
         {
             "name": "wx_ma",
@@ -243,16 +245,26 @@ def run_node_ci_script(script_name: str, extra_env: dict) -> bool:
         return False
 
 
-def process_mp_static_cdn(build_mode: str, compress_png_strict: bool = True) -> bool:
+def process_mp_static_cdn(
+    build_mode: str,
+    compress_png_strict: bool = True,
+    upload_cdn: bool = True,
+) -> bool:
     """
     编译后处理 static：
-    1. 上传 dist/build/mp-weixin/static 到七牛
-    2. 将构建产物中的 /static/ 引用替换为 CDN 地址
-    3. 删除本地 static 目录以减小上传包体积
+    1. upload_cdn=True：仅上传有变更的图片到七牛
+       upload_cdn=False：跳过七牛上传，按 manifest/CDN 路径生成引用
+    2. 始终将构建产物中的 /static/ 替换为 CDN 地址
+    3. 始终删除本地 static 目录以减小上传包体积
     """
-    print("=" * 60)
-    print("七牛 CDN：压缩 PNG → 上传 static（含 gif/字体）→ 替换引用")
-    print("=" * 60)
+    if upload_cdn:
+        print("=" * 60)
+        print("CDN：增量上传 → 替换 CDN 引用 → 删除本地 static")
+        print("=" * 60)
+    else:
+        print("=" * 60)
+        print("CDN：跳过上传 → 替换 CDN 引用 → 删除本地 static")
+        print("=" * 60)
 
     mp_dist = MP_WEIXIN_DIST
     static_dir = MP_WEIXIN_STATIC
@@ -282,16 +294,18 @@ def process_mp_static_cdn(build_mode: str, compress_png_strict: bool = True) -> 
         "QINIU_ZONE": qiniu_cfg["zone"],
         "UPLOAD_SOURCE_DIR": static_dir,
         "COMPRESS_PNG_STRICT": "true" if compress_png_strict else "false",
+        "SKIP_QINIU_UPLOAD": "false" if upload_cdn else "true",
     }
 
-    print(f"PNG 严格模式:  {'开启（缺 pngquant 将失败）' if compress_png_strict else '关闭（缺 pngquant 仅警告）'}")
+    print(f"上传 CDN:      {'是（增量，未变更不重复上传）' if upload_cdn else '否（仅替换引用）'}")
+    print(f"PNG 严格模式:  {'开启（缺 pngquant 将失败）' if compress_png_strict and upload_cdn else '关闭/跳过'}")
     print(f"七牛 Bucket:   {qiniu_cfg['bucket']}")
     print(f"七牛区域:      {qiniu_cfg['zone']} (z2=华南)")
     print(f"CDN 域名:      {qiniu_cfg['cdnDomain']}")
     print(f"CDN 目录:      {qiniu_cfg['folder']}")
     print(f"static 源目录: {static_dir}")
 
-    # 上传脚本内会先 pngquant 压缩再上传七牛
+    # manifest（可选上传）→ 始终替换 CDN → 始终删除 static
     if not run_node_ci_script("upload-mp-build-static.js", node_env):
         return False
 
@@ -306,7 +320,7 @@ def process_mp_static_cdn(build_mode: str, compress_png_strict: bool = True) -> 
         print("static 目录不存在，跳过删除")
 
     print("=" * 60)
-    print("七牛 CDN 处理完成")
+    print("CDN 处理完成")
     print("=" * 60)
     return True
 
@@ -603,7 +617,7 @@ class WxUploaderGUI:
     def __init__(self, root):
         self.root = root
         root.title("微信小程序上传工具")
-        root.geometry("650x250")
+        root.geometry("650x290")
         
         # 加载配置
         self.config = load_config()
@@ -623,6 +637,11 @@ class WxUploaderGUI:
         self.compress_png_strict_var.trace_add(
             "write", self._on_compress_png_strict_changed
         )
+        # 是否使用七牛 CDN
+        self.use_qiniu_var = tk.BooleanVar(
+            value=self.config.get("use_qiniu", True)
+        )
+        self.use_qiniu_var.trace_add("write", self._on_use_qiniu_changed)
         
         # 设置默认 plat
         self._set_default_plat()
@@ -659,17 +678,31 @@ class WxUploaderGUI:
         tk.Radiobutton(frame_build_mode, text="测试环境", value="development", 
                        variable=self.build_mode_var).pack(side="left", padx=5)
         
-        # ===== 行 4：PNG 压缩严格模式 =====
+        # ===== 行 4：七牛 CDN =====
+        frame_qiniu = tk.Frame(root)
+        frame_qiniu.pack(fill="x", padx=10, pady=5)
+        
+        self.qiniu_check = tk.Checkbutton(
+            frame_qiniu,
+            text="是否需要上传 CDN",
+            variable=self.use_qiniu_var,
+            command=self._sync_png_strict_state,
+        )
+        self.qiniu_check.pack(side="left")
+        
+        # ===== 行 5：PNG 压缩严格模式 =====
         frame_png = tk.Frame(root)
         frame_png.pack(fill="x", padx=10, pady=5)
         
-        tk.Checkbutton(
+        self.png_strict_check = tk.Checkbutton(
             frame_png,
             text="PNG 严格模式（未安装 pngquant 时中断上传，需 brew install pngquant）",
             variable=self.compress_png_strict_var,
-        ).pack(side="left")
+        )
+        self.png_strict_check.pack(side="left")
+        self._sync_png_strict_state()
         
-        # ===== 行 5：一键编译发布按钮 =====
+        # ===== 行 6：一键编译发布按钮 =====
         frame_one_click = tk.Frame(root)
         frame_one_click.pack(fill="x", padx=10, pady=15)
         
@@ -735,6 +768,17 @@ class WxUploaderGUI:
         """勾选变化时写入 plat_config.json"""
         self.config["compress_png_strict"] = bool(self.compress_png_strict_var.get())
         save_config(self.config)
+    
+    def _on_use_qiniu_changed(self, *_args):
+        """七牛开关变化时写入 plat_config.json"""
+        self.config["use_qiniu"] = bool(self.use_qiniu_var.get())
+        save_config(self.config)
+    
+    def _sync_png_strict_state(self):
+        """未启用七牛时，PNG 严格模式无意义"""
+        use_qiniu = bool(self.use_qiniu_var.get())
+        state = "normal" if use_qiniu else "disabled"
+        self.png_strict_check.configure(state=state)
     
     def choose_key_file(self):
         path = filedialog.askopenfilename(
@@ -825,12 +869,28 @@ class WxUploaderGUI:
         
         # 构建平台信息
         plat_info = f"使用环境变量: VITE_APP_PLATFORM={platform_env}" if plat_selection == "__env__" else f"手动选择: {actual_plat_name}"
-        png_strict = bool(self.compress_png_strict_var.get())
+        use_qiniu = bool(self.use_qiniu_var.get())
+        png_strict = bool(self.compress_png_strict_var.get()) if use_qiniu else False
         png_strict_text = (
             "开启（未安装 pngquant 将失败）"
             if png_strict
             else "关闭（未安装 pngquant 仅警告并继续）"
         )
+        if use_qiniu:
+            static_step = (
+                f"2. CDN 处理\n"
+                f"   · 上传有变更的图片到 CDN（未变更不重复上传）\n"
+                f"   · 将 /static/ 替换为 CDN 地址并删除本地 static\n"
+                f"   PNG 严格模式: {png_strict_text}\n\n"
+            )
+        else:
+            static_step = (
+                f"2. CDN 处理\n"
+                f"   · 不上传 CDN（复用已有 CDN 资源）\n"
+                f"   · 仍将 /static/ 替换为 CDN 地址并删除本地 static\n\n"
+            )
+        step_server = "3"
+        step_weixin = "4"
         
         # 确认操作
         if not messagebox.askyesno("确认", 
@@ -838,13 +898,12 @@ class WxUploaderGUI:
             f"1. 编译微信小程序（{mode_text}）\n"
             f"   API地址: {base_url}\n"
             f"   平台标识: {platform_env}\n\n"
-            f"2. 压缩 static 内 PNG，上传七牛 CDN（含 gif/ttf 等字体），替换 CDN 地址并删除本地 static\n"
-            f"   PNG 严格模式: {png_strict_text}\n\n"
-            f"3. 上传代码到服务器并执行 run-mp.sh\n"
+            f"{static_step}"
+            f"{step_server}. 上传代码到服务器并执行 run-mp.sh\n"
             f"   主机: {remote_host}\n"
             f"   路径: {remote_path}\n"
             f"   ({plat_info})\n\n"
-            f"4. 上传 key 文件并发布到微信\n"
+            f"{step_weixin}. 上传 key 文件并发布到微信\n"
             f"   AppID: {appid}\n"
             f"   路径: {remote_path}/{appid}\n\n"
             f"是否继续？"):
@@ -860,14 +919,18 @@ class WxUploaderGUI:
                 self.root.title("微信小程序上传工具")
                 return
             
-            # 步骤 2：static 上传七牛、替换 CDN、删除 static
-            self.root.title("微信小程序上传工具 - 正在处理七牛 CDN...")
+            # 步骤 2：CDN 处理（可选上传，始终替换并删除 static）
+            self.root.title("微信小程序上传工具 - 正在处理 CDN...")
             self.root.update()
             
-            if not process_mp_static_cdn(build_mode, compress_png_strict=png_strict):
+            if not process_mp_static_cdn(
+                build_mode,
+                compress_png_strict=png_strict,
+                upload_cdn=use_qiniu,
+            ):
                 messagebox.showerror(
                     "错误",
-                    "七牛 CDN 处理失败。请检查 qiniu_config.json 与终端输出。"
+                    "CDN 处理失败。请检查 qiniu_config.json 与终端输出。"
                 )
                 self.root.title("微信小程序上传工具")
                 return
@@ -895,11 +958,17 @@ class WxUploaderGUI:
             
             self.root.title("微信小程序上传工具")
             plat_display = f"{actual_plat_name} (来自环境变量)" if plat_selection == "__env__" else actual_plat_name
+            qiniu_result = (
+                "已上传 CDN（增量）+ 替换引用 + 删除 static"
+                if use_qiniu
+                else "未上传 CDN + 替换引用 + 删除 static"
+            )
             messagebox.showinfo("完成",
                 f"一键发布完成！\n\n"
                 f"编译模式: {mode_text}\n"
                 f"API地址:  {base_url}\n"
                 f"平台标识: {platform_env}\n"
+                f"静态资源: {qiniu_result}\n"
                 f"目标平台: {plat_display}\n"
                 f"远程路径: {remote_path}\n"
                 f"AppID:    {appid}")

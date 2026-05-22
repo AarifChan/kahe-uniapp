@@ -208,14 +208,78 @@ class QiniuClient {
   }
 
   /**
-   * 批量上传目录
-   * @returns {Promise<{manifest: object, uploaded: number, skipped: number, refreshed: string[]}>}
+   * 从上次 manifest 查找缓存条目（相对路径一致且 hash 相同则无需再访问七牛）
+   */
+  lookupCachedAsset(cachedAssets, relativePath) {
+    if (!cachedAssets) return null;
+    const normRel = relativePath.replace(/\\/g, "/");
+    return cachedAssets[normRel] || cachedAssets[relativePath] || null;
+  }
+
+  /**
+   * 仅生成 manifest（不上传七牛），用于图片未变更、复用已有 CDN 资源
+   */
+  buildManifestOnly(localDir, options = {}) {
+    const manifest = {};
+    let cached = 0;
+    let mapped = 0;
+    const cachedAssets = options.cachedAssets || null;
+
+    let entries = this.walkDir(localDir);
+    let supplemented = 0;
+
+    if (options.supplementDir && fs.existsSync(options.supplementDir)) {
+      const supplementEntries = this.walkDir(options.supplementDir);
+      const pattern = options.supplementPattern || SUPPLEMENTAL_ASSET_PATTERN;
+      const merged = mergeSupplementalEntries(entries, supplementEntries, pattern);
+      entries = merged.entries;
+      supplemented = merged.supplemented;
+    }
+
+    for (const { localPath, relativePath } of entries) {
+      const normRel = relativePath.replace(/\\/g, "/");
+      const key = this.generateKey(localPath, relativePath, options);
+      const cdnUrl = `${this.cdnDomain}/${key}`;
+      const etag = this.computeEtag(localPath);
+      const size = fs.statSync(localPath).size;
+
+      const cachedEntry = this.lookupCachedAsset(cachedAssets, normRel);
+      if (cachedEntry && cachedEntry.hash === etag) {
+        cached++;
+        manifest[normRel] = {
+          key: cachedEntry.key || key,
+          cdnUrl: cachedEntry.cdnUrl || cdnUrl,
+          hash: etag,
+          size,
+        };
+      } else {
+        mapped++;
+        manifest[normRel] = { key, cdnUrl, hash: etag, size };
+      }
+    }
+
+    return {
+      manifest,
+      uploaded: 0,
+      skipped: 0,
+      cached,
+      mapped,
+      refreshed: [],
+      supplemented,
+      totalEntries: entries.length,
+    };
+  }
+
+  /**
+   * 批量上传目录（未变更文件可命中 manifest 缓存，跳过七牛 stat/上传）
    */
   async uploadDirectory(localDir, options = {}) {
     const manifest = {}; // localPath -> { key, cdnUrl, hash, size }
     let uploaded = 0;
     let skipped = 0;
+    let cached = 0;
     const refreshedUrls = [];
+    const cachedAssets = options.cachedAssets || null;
 
     let entries = this.walkDir(localDir);
     let supplemented = 0;
@@ -234,10 +298,24 @@ class QiniuClient {
     }
 
     for (const { localPath, relativePath } of entries) {
+      const normRel = relativePath.replace(/\\/g, "/");
       const key = this.generateKey(localPath, relativePath, options);
       const cdnUrl = `${this.cdnDomain}/${key}`;
       const etag = this.computeEtag(localPath);
       const size = fs.statSync(localPath).size;
+
+      const cachedEntry = this.lookupCachedAsset(cachedAssets, normRel);
+      if (cachedEntry && cachedEntry.hash === etag) {
+        cached++;
+        manifest[normRel] = {
+          key: cachedEntry.key || key,
+          cdnUrl: cachedEntry.cdnUrl || cdnUrl,
+          hash: etag,
+          size,
+        };
+        logger.debug(`Skipped (manifest cache): ${normRel}`);
+        continue;
+      }
 
       const exists = await this.checkExists(key, etag);
 
@@ -250,7 +328,7 @@ class QiniuClient {
         refreshedUrls.push(cdnUrl);
       }
 
-      manifest[relativePath] = { key, cdnUrl, hash: etag, size };
+      manifest[normRel] = { key, cdnUrl, hash: etag, size };
     }
 
     // 刷新 CDN
@@ -258,7 +336,15 @@ class QiniuClient {
       await this.refreshCdn(refreshedUrls);
     }
 
-    return { manifest, uploaded, skipped, refreshed: refreshedUrls, supplemented, totalEntries: entries.length };
+    return {
+      manifest,
+      uploaded,
+      skipped,
+      cached,
+      refreshed: refreshedUrls,
+      supplemented,
+      totalEntries: entries.length,
+    };
   }
 
   walkDir(dir, baseDir = dir, result = []) {
