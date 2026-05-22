@@ -1,14 +1,11 @@
 <template>
   <view class="box">
-    <image
-      class="box-bg"
-      src="/static/kahe-202510/ka-he/mine/mine-bg.png"
-    />
+    <image class="box-bg" src="/static/kahe-202510/ka-he/mine/mine-bg.png" />
     <!-- logo -->
     <view class="box-logo">
       <image
         class="box_img"
-        src="/static/kahe-202510/ka-he/common/logo.png"
+        src="/static/kahe-202510/jikaquan/jikaquan-logo.png"
       />
     </view>
     <!-- 公告 -->
@@ -203,8 +200,8 @@ eventBus.on("didLogin", async (_: any) => {
 
   &-logo {
     margin: 16rpx 0 16rpx 28rpx;
-    width: 149rpx;
-    height: 65rpx;
+    width: calc(149rpx * 1.3);
+    height: calc(53rpx * 1.3);
 
     .box_img {
       width: 100%;

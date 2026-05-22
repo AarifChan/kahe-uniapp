@@ -13,7 +13,7 @@
             </view>
 
             <view class="common-row" style="margin-top: 32rpx">
-                <image v-if="userInfo.uid" class="userVip" :src="`/static/kahe-202510/ka-he/vip/${userInfo.vip}.png`" />
+                <image v-if="userInfo.uid" class="userVip" :src="`/static/kahe-202510/vip/${userInfo.vip}.png`" />
                 <view class="common-col" style="margin-top: 16rpx">
                     <view class="vipUp">成长值:{{ userInfo.expDay }}</view>
                     <view class="progressBarBg">
