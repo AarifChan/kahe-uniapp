@@ -217,7 +217,7 @@ onShow(() => {
   width: 100%;
   height: calc(100vh - env(safe-area-inset-bottom) - 132rpx);
   overflow: hidden;
-  background-image: url("/static/kahe-202510/ka-he/mine/mine-bg.png");
+  background-image: url("https://cdn.richcw.cn/tycw-mp/kahe-202510/ka-he/mine/mine-bg.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   &-bg {

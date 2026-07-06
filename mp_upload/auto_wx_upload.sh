@@ -26,12 +26,13 @@ set -euo pipefail
 #####################################
 
 # 远程 SSH 主机（可以是别名，也可以是 user@host）
-REMOTE_HOST="jmcw"
+# 默认 jermy（新服务器）；可通过环境变量 REMOTE_HOST 覆盖
+REMOTE_HOST="${REMOTE_HOST:-jermy}"
 
 # 三个固定远程路径
-REMOTE_PATH_WX_MA_2="/home/aarif/jmcw/wx_ma_2"
-REMOTE_PATH_WX_MA_3="/home/aarif/jmcw/wx_ma_3"
-REMOTE_PATH_WX_MA="/home/aarif/jmcw/wx_ma"
+REMOTE_PATH_WX_MA_2="/root/jmcw/wx_ma_2"
+REMOTE_PATH_WX_MA_3="/root/jmcw/wx_ma_3"
+REMOTE_PATH_WX_MA="/root/jmcw/wx_ma"
 
 # 本地上传脚本与 key 文件统一放置的目录（相对于当前脚本所在目录）
 LOCAL_UPLOAD_DIR_NAME="wx_upload"
@@ -171,6 +172,9 @@ else
 fi
 
 echo "远程目录：${REMOTE_DIR}"
+
+echo "确保远程目录存在（服务器迁移后可能不存在）..."
+ssh "$REMOTE_HOST" "mkdir -p '${REMOTE_DIR}'"
 
 echo "通过 scp 上传压缩包到远程..."
 scp "$TARBALL_PATH" "${REMOTE_HOST}:${REMOTE_DIR}/"

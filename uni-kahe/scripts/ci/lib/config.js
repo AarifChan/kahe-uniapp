@@ -5,8 +5,54 @@
  */
 
 const path = require("path");
+const fs = require("fs");
 
 const PROJECT_ROOT = path.resolve(__dirname, "../../..");
+
+/**
+ * 轻量级 .env 加载器（零依赖）
+ * - 从根目录 .env.development / .env.production 读取（与 Vite 使用同一组文件）
+ * - 仅填充尚未存在于 process.env 的变量，保证 Jenkins / Shell 注入的值优先
+ * - 支持 KEY=VALUE，忽略空行与 # 注释，去除可选的成对引号
+ */
+function loadEnvFile(filePath) {
+  if (!fs.existsSync(filePath)) {
+    return;
+  }
+  const content = fs.readFileSync(filePath, "utf-8");
+  for (const rawLine of content.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith("#")) {
+      continue;
+    }
+    const eq = line.indexOf("=");
+    if (eq === -1) {
+      continue;
+    }
+    const key = line.slice(0, eq).trim();
+    let value = line.slice(eq + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    if (key && !(key in process.env)) {
+      process.env[key] = value;
+    }
+  }
+}
+
+// 根据 ENVIRONMENT 选择对应的根目录 .env 文件（dev -> development，test/prod -> production）
+const ENV_FILE_MAP = {
+  dev: ".env.development",
+  test: ".env.production",
+  prod: ".env.production",
+};
+const ENV_SELECTOR = process.env.ENVIRONMENT || "dev";
+loadEnvFile(path.join(PROJECT_ROOT, ENV_FILE_MAP[ENV_SELECTOR] || ".env.development"));
+
+
 
 // 环境配置
 const ENV_CONFIGS = {
@@ -18,9 +64,9 @@ const ENV_CONFIGS = {
     // 支付宝小程序测试号 appid
     mpAlipayAppid: process.env.DEV_MP_ALIPAY_APPID || "",
     qiniu: {
-      bucket: process.env.QINIU_BUCKET || "91tcg",
-      cdnDomain: process.env.QINIU_CDN_DOMAIN || "https://cdn.91tcg.com",
-      folder: "kahe-202510/dev",
+      bucket: process.env.QINIU_BUCKET || "kahe-blindbox",
+      cdnDomain: process.env.QINIU_CDN_DOMAIN || "https://cdn.richcw.cn",
+      folder: "tycw-mp",
     },
     upload: {
       // 微信：预览模式不上传，test 环境可配置为体验版
@@ -42,9 +88,9 @@ const ENV_CONFIGS = {
     mpWeixinAppid: process.env.TEST_MP_WEIXIN_APPID || "wxa59d33960bdab663",
     mpAlipayAppid: process.env.TEST_MP_ALIPAY_APPID || "",
     qiniu: {
-      bucket: process.env.QINIU_BUCKET || "91tcg",
-      cdnDomain: process.env.QINIU_CDN_DOMAIN || "https://cdn.91tcg.com",
-      folder: "kahe-202510/test",
+      bucket: process.env.QINIU_BUCKET || "kahe-blindbox",
+      cdnDomain: process.env.QINIU_CDN_DOMAIN || "https://cdn.richcw.cn",
+      folder: "tycw-mp",
     },
     upload: {
       weixin: {
@@ -65,9 +111,9 @@ const ENV_CONFIGS = {
     mpWeixinAppid: process.env.PROD_MP_WEIXIN_APPID || "wxa59d33960bdab663",
     mpAlipayAppid: process.env.PROD_MP_ALIPAY_APPID || "",
     qiniu: {
-      bucket: process.env.QINIU_BUCKET || "91tcg",
-      cdnDomain: process.env.QINIU_CDN_DOMAIN || "https://cdn.91tcg.com",
-      folder: "kahe-202510/prod",
+      bucket: process.env.QINIU_BUCKET || "kahe-blindbox",
+      cdnDomain: process.env.QINIU_CDN_DOMAIN || "https://cdn.richcw.cn",
+      folder: "tycw-mp",
     },
     upload: {
       weixin: {

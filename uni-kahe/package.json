@@ -41,7 +41,7 @@
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
     "type-check": "vue-tsc --noEmit",
-    "upload-images": "node ./scripts/upload_to_qiniu.js images",
+    "upload-images": "node ./upload_to_qiniu.js images",
     "build:android-offline:publish": "node ./scripts/upload_to_qiniu.js apk",
     "audit:dynamic-static": "node ./scripts/ci/audit-dynamic-static-paths.js",
     "replace-cdn": "node ./scripts/ci/replace-cdn-urls.js",

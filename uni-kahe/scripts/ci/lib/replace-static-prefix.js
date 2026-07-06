@@ -6,7 +6,7 @@
 /**
  * @param {string} cdnDomain
  * @param {string} [folder]
- * @returns {string} 例如 https://cdn.91tcg.com/jikaquan/
+ * @returns {string} 例如 https://cdn.richcw.cn/tycw-mp/
  */
 function buildCdnStaticPrefix(cdnDomain, folder) {
   const domain = (cdnDomain || "").replace(/\/$/, "");

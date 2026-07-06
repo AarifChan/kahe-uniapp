@@ -19,7 +19,7 @@ MP_WEIXIN_STATIC = os.path.join(MP_WEIXIN_DIST, "static")
 
 # 默认配置（如果配置文件不存在时使用）
 DEFAULT_CONFIG = {
-    "remote_host": "jmcw",
+    "remote_host": "jermy",
     # 未安装 pngquant 时是否中断七牛上传（对应 COMPRESS_PNG_STRICT）
     "compress_png_strict": True,
     # 是否使用七牛：上传 static、替换 CDN、删除本地 static
@@ -28,19 +28,19 @@ DEFAULT_CONFIG = {
         {
             "name": "wx_ma",
             "label": "wx_ma (默认)",
-            "remote_path": "/home/aarif/jmcw/wx_ma",
+            "remote_path": "/root/jmcw/wx_ma",
             "is_default": True
         },
         {
             "name": "wx_ma_2",
             "label": "wx_ma_2",
-            "remote_path": "/home/aarif/jmcw/wx_ma_2",
+            "remote_path": "/root/jmcw/wx_ma_2",
             "is_default": False
         },
         {
             "name": "wx_ma_3",
             "label": "wx_ma_3",
-            "remote_path": "/home/aarif/jmcw/wx_ma_3",
+            "remote_path": "/root/jmcw/wx_ma_3",
             "is_default": False
         }
     ]
@@ -327,7 +327,8 @@ def process_mp_static_cdn(
 
 def upload_code_to_server(remote_host: str, remote_path: str) -> bool:
     """
-    打包并上传编译后的代码到服务器，然后执行 run-mp.sh
+    打包并上传编译后的代码到服务器，然后在远程内联解压
+    （不依赖服务器上预置的 run-mp.sh 脚本）
     返回: True 表示成功，False 表示失败
     """
     print("=" * 60)
@@ -346,17 +347,30 @@ def upload_code_to_server(remote_host: str, remote_path: str) -> bool:
             cwd=PROJECT_ROOT,
             check=True
         )
-        
+
+        # 确保远程目录存在（服务器迁移后目录可能不存在）
+        print(f"确保远程目录存在: {remote_path}")
+        subprocess.run(
+            ["ssh", remote_host, f"mkdir -p '{remote_path}'"],
+            check=True
+        )
+
         # 上传到服务器
         print(f"正在上传到 {remote_host}:{remote_path}/...")
         tar_file = os.path.join(PROJECT_ROOT, "mp-weixin.tar.gz")
         scp_cmd = ["scp", tar_file, f"{remote_host}:{remote_path}/"]
         subprocess.run(scp_cmd, check=True)
-        
-        # 执行 run-mp.sh 解压代码
-        print(f"正在执行 {remote_path}/run-mp.sh...")
-        run_mp_script = f"{remote_path}/run-mp.sh"
-        ssh_cmd = ["ssh", remote_host, run_mp_script]
+
+        # 在远程解压代码（内联执行，不再依赖服务器上的 run-mp.sh 脚本）
+        # 先清掉旧的 dist，再解压，最后删除压缩包
+        print(f"正在远程解压到 {remote_path}/dist/build/mp-weixin ...")
+        remote_unpack = (
+            f"set -e; cd '{remote_path}' && "
+            f"rm -rf dist && "
+            f"tar --warning=no-unknown-keyword -xzf mp-weixin.tar.gz && "
+            f"rm -f mp-weixin.tar.gz"
+        )
+        ssh_cmd = ["ssh", remote_host, remote_unpack]
         subprocess.run(ssh_cmd, check=True)
         
         # 删除本地临时文件
@@ -393,9 +407,11 @@ def upload_key_and_publish(key_path: str, remote_host: str, remote_path: str) ->
         print(f"远程目录:    {remote_app_dir}")
         print("=" * 60)
         
-        # 使用 auto_wx_upload.sh 上传 key 文件
+        # 使用 auto_wx_upload.sh 上传 key 文件（通过环境变量传入远程主机）
         cmd = ["/bin/bash", AUTO_SCRIPT, key_path, remote_path]
-        subprocess.run(cmd, check=True)
+        env = os.environ.copy()
+        env["REMOTE_HOST"] = remote_host
+        subprocess.run(cmd, check=True, env=env)
         
         # 执行 node upload_appid.js 上传到微信
         print(f"正在执行 node {upload_js_name}...")
@@ -709,6 +725,10 @@ class WxUploaderGUI:
         tk.Button(frame_one_click, text="一键编译并发布微信小程序", width=30, height=2,
                   bg="#4CAF50", fg="white", font=("Arial", 12, "bold"),
                   command=self.build_and_publish).pack(pady=5)
+
+        tk.Button(frame_one_click, text="只打本地包（替换CDN，不上传）", width=30, height=2,
+                  bg="#2196F3", fg="white", font=("Arial", 12, "bold"),
+                  command=self.build_local_only).pack(pady=5)
     
     def _set_default_plat(self):
         """设置默认选中的 plat"""
@@ -798,7 +818,7 @@ class WxUploaderGUI:
         plats = self.config.get("plats", [])
         if plats:
             return plats[0]["remote_path"]
-        return "/home/aarif/jmcw/wx_ma"
+        return "/root/jmcw/wx_ma"
     
     def get_plat_from_env(self, build_mode: str = "production") -> dict:
         """
@@ -859,7 +879,7 @@ class WxUploaderGUI:
         build_mode = self.build_mode_var.get()
         mode_text = "生产环境" if build_mode == "production" else "测试环境"
         remote_path = self.get_remote_dir(actual_plat_name)
-        remote_host = self.config.get("remote_host", "jmcw")
+        remote_host = self.config.get("remote_host", "jermy")
         appid = parse_appid_from_key(key_path)
         
         # 读取环境配置
@@ -899,7 +919,7 @@ class WxUploaderGUI:
             f"   API地址: {base_url}\n"
             f"   平台标识: {platform_env}\n\n"
             f"{static_step}"
-            f"{step_server}. 上传代码到服务器并执行 run-mp.sh\n"
+            f"{step_server}. 上传代码到服务器并远程解压\n"
             f"   主机: {remote_host}\n"
             f"   路径: {remote_path}\n"
             f"   ({plat_info})\n\n"
@@ -935,7 +955,7 @@ class WxUploaderGUI:
                 self.root.title("微信小程序上传工具")
                 return
             
-            # 步骤 3：上传代码到服务器并执行 run-mp.sh
+            # 步骤 3：上传代码到服务器并远程解压
             self.root.title("微信小程序上传工具 - 正在上传代码...")
             self.root.update()
             
@@ -976,6 +996,92 @@ class WxUploaderGUI:
         except Exception as e:
             self.root.title("微信小程序上传工具")
             messagebox.showerror("错误", f"发布失败：\n{e}")
+
+    def build_local_only(self):
+        """只打本地包：编译 + 替换 CDN URL，不上传云服务器、不发布微信"""
+        build_mode = self.build_mode_var.get()
+        mode_text = "生产环境" if build_mode == "production" else "测试环境"
+
+        # 读取环境配置（仅用于确认信息展示）
+        env_vars = read_env_file(build_mode)
+        base_url = env_vars.get('VITE_APP_BASEURL', '未配置')
+        platform_env = env_vars.get('VITE_APP_PLATFORM', '未配置')
+
+        use_qiniu = bool(self.use_qiniu_var.get())
+        png_strict = bool(self.compress_png_strict_var.get()) if use_qiniu else False
+        png_strict_text = (
+            "开启（未安装 pngquant 将失败）"
+            if png_strict
+            else "关闭（未安装 pngquant 仅警告并继续）"
+        )
+        if use_qiniu:
+            static_step = (
+                f"2. CDN 处理\n"
+                f"   · 上传有变更的图片到 CDN（未变更不重复上传）\n"
+                f"   · 将 /static/ 替换为 CDN 地址并删除本地 static\n"
+                f"   PNG 严格模式: {png_strict_text}\n\n"
+            )
+        else:
+            static_step = (
+                f"2. CDN 处理\n"
+                f"   · 不上传 CDN（复用已有 CDN 资源）\n"
+                f"   · 仍将 /static/ 替换为 CDN 地址并删除本地 static\n\n"
+            )
+
+        # 确认操作
+        if not messagebox.askyesno("确认",
+            f"即将【只打本地包】（不上传服务器、不发布微信）：\n\n"
+            f"1. 编译微信小程序（{mode_text}）\n"
+            f"   API地址: {base_url}\n"
+            f"   平台标识: {platform_env}\n\n"
+            f"{static_step}"
+            f"产物目录: {MP_WEIXIN_DIST}\n\n"
+            f"是否继续？"):
+            return
+
+        try:
+            # 步骤 1：编译
+            self.root.title("微信小程序上传工具 - 正在编译...")
+            self.root.update()
+
+            if not build_mp_weixin(build_mode):
+                messagebox.showerror("错误", "编译失败，请检查终端输出")
+                self.root.title("微信小程序上传工具")
+                return
+
+            # 步骤 2：CDN 处理（可选上传，始终替换并删除 static）
+            self.root.title("微信小程序上传工具 - 正在处理 CDN...")
+            self.root.update()
+
+            if not process_mp_static_cdn(
+                build_mode,
+                compress_png_strict=png_strict,
+                upload_cdn=use_qiniu,
+            ):
+                messagebox.showerror(
+                    "错误",
+                    "CDN 处理失败。请检查 qiniu_config.json 与终端输出。"
+                )
+                self.root.title("微信小程序上传工具")
+                return
+
+            self.root.title("微信小程序上传工具")
+            qiniu_result = (
+                "已上传 CDN（增量）+ 替换引用 + 删除 static"
+                if use_qiniu
+                else "未上传 CDN + 替换引用 + 删除 static"
+            )
+            messagebox.showinfo("完成",
+                f"本地打包完成！（未上传服务器、未发布微信）\n\n"
+                f"编译模式: {mode_text}\n"
+                f"API地址:  {base_url}\n"
+                f"平台标识: {platform_env}\n"
+                f"静态资源: {qiniu_result}\n"
+                f"产物目录: {MP_WEIXIN_DIST}")
+
+        except Exception as e:
+            self.root.title("微信小程序上传工具")
+            messagebox.showerror("错误", f"本地打包失败：\n{e}")
 
 
 if __name__ == "__main__":
