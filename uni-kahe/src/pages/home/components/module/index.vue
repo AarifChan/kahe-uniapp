@@ -1,30 +1,17 @@
 <template>
-  <!-- <view class="newItem"> -->
-  <!-- <view class="newItem-row1">
-      <image class="newItem-item1" src="/static/kahe-202510/ka-he/home/goods1.png" @tap.stop="handleItem(HomeItemType.activity)" />
-      <image class="newItem-item2" src="/static/kahe-202510/ka-he/home/goods2.png" @tap.stop="handleItem(HomeItemType.xingyao)" />
-    </view> -->
   <view class="newItem-row2">
-    <view
-      class="goods"
-      v-for="(item, index) in goodsList"
-      :key="index"
-      @tap.stop="handleItem(item.type)"
-    >
-      <view v-if="item.tag" class="goods-tag">
-        <image class="icon" :src="item.tag" />
-        <text class="contetx">{{ item.context }}</text>
-      </view>
-      <image class="img" :src="item.src" />
-      <text
-        class="goods-texts theme-font"
-        :style="item.tag ? 'margin-top: 8rpx;' : 'margin-top: 45rpx;'"
-        >{{ item.text }}</text
+    <scroll-view class="scroll" :scroll-x="true" :show-scrollbar="false">
+      <view
+        class="goods"
+        v-for="(item, index) in goodsList"
+        :key="index"
+        @tap.stop="handleItem(item.type)"
       >
-    </view>
+        <image class="img" :src="item.src" />
+      </view>
+    </scroll-view>
   </view>
   <in-group-modal v-model:show="showModal" @show-image="showInGroupImage" />
-  <!-- </view> -->
 </template>
 
 <script lang="ts" setup>
@@ -47,38 +34,26 @@ enum HomeItemType {
 }
 
 const showModal = ref(false);
-// ✅ 把所有按钮配置放在数组中
 const goodsList = ref([
   {
-    src: "/static/kahe-202510/ka-he/home/g1.png",
+    src: "/static/kaju/home/item1.png",
     type: HomeItemType.activity,
-    tag: "/static/kahe-202510/ka-he/home/m3.png",
-    text: "抽选",
-    context: "海量福利",
   },
   {
-    src: "/static/kahe-202510/ka-he/home/g2.png",
+    src: "/static/kaju/home/item2.png",
     type: HomeItemType.xingyao,
-    text: "欧皇",
   },
   {
-    src: "/static/kahe-202510/ka-he/home/g3.png",
+    src: "/static/kaju/home/item3.png",
     type: HomeItemType.integral,
-    tag: "/static/kahe-202510/ka-he/home/m2.png",
-    text: "宝藏岛",
-    context: "免费夺宝",
   },
   {
-    src: "/static/kahe-202510/ka-he/home/g4.png",
+    src: "/static/kaju/home/item4.png",
     type: HomeItemType.dailyWelfare,
-    text: "领券",
   },
   {
-    src: "/static/kahe-202510/ka-he/home/g5.png",
+    src: "/static/kaju/home/item5.png",
     type: HomeItemType.collect,
-    tag: "/static/kahe-202510/ka-he/home/m1.png",
-    text: "卡集",
-    context: "换卡集市",
   },
 ]);
 const handleItem = (index: HomeItemType) => {
@@ -100,11 +75,8 @@ const handleItem = (index: HomeItemType) => {
       break;
     case HomeItemType.invite:
       uni.previewImage({
-        current:
-          "/static/kahe-202510/ka-he/home/13395850645540676.pn",
-        urls: [
-          "/static/kahe-202510/ka-he/home/13395850645540676.png",
-        ],
+        current: "/static/kahe-202510/ka-he/home/13395850645540676.pn",
+        urls: ["/static/kahe-202510/ka-he/home/13395850645540676.png"],
       });
       return;
     case HomeItemType.mall:
@@ -137,22 +109,21 @@ const handleItem = (index: HomeItemType) => {
 <style lang="scss" scoped>
 .newItem-row2 {
   margin-top: 10rpx;
-  padding: 0 18rpx;
+  padding: 0 0 0 18rpx;
   box-sizing: border-box;
   width: 100%;
-  position: relative;
-  // height: 192rpx;
-  display: grid;
-  gap: 20rpx;
-  grid-template-columns: repeat(5, 1fr);
+
+  .scroll {
+    width: 100%;
+    white-space: nowrap;
+  }
 
   .goods {
+    display: inline-block;
     position: relative;
-    width: 100%;
-    height: 130rpx;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: calc(166rpx * 1);
+    height: calc(188rpx * 1);
+    margin-right: 16rpx;
 
     .img {
       position: absolute;
@@ -160,105 +131,6 @@ const handleItem = (index: HomeItemType) => {
       width: 100%;
       height: 100%;
     }
-
-    &-texts {
-      margin-top: 8rpx;
-      position: relative;
-      font-family: YouSheBiaoTiHei;
-      font-weight: 400;
-      font-size: 36rpx !important;
-      color: #000000;
-      line-height: 58rpx;
-      z-index: 1;
-    }
-
-    &-tag {
-      position: relative;
-      width: 87rpx;
-      height: 40rpx;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform: translate(40rpx, -15rpx);
-
-      .icon {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-      }
-
-      .contetx {
-        position: absolute;
-        font-family: YouSheBiaoTiHei;
-        font-weight: 400;
-        font-size: 20rpx;
-        color: #000000;
-        line-height: 24rpx;
-        margin-bottom: 6rpx;
-      }
-    }
-
-    text {
-      position: relative;
-      font-family: YouSheBiaoTiHei;
-      font-weight: 400;
-      font-size: 20rpx;
-      color: #000000;
-      line-height: 24rpx;
-    }
   }
 }
-
-// .newItem {
-//     position: relative;
-//     //  width: 100%;
-//     // margin-top: -30rpx;
-
-//     &-row1 {
-//         width: 100%;
-//         position: relative;
-//         height: 204rpx;
-//     }
-
-//     &-item1 {
-//         position: absolute;
-//         left: 16rpx;
-//         top: 0;
-//         width: 378rpx;
-//         height: 204rpx;
-//     }
-
-//     &-item2 {
-//         position: absolute;
-//         right: 16rpx;
-//         top: 0;
-//         width: 318rpx;
-//         height: 203rpx;
-//     }
-
-//     &-item3 {
-//         position: absolute;
-//         left: 16rpx;
-//         bottom: 0;
-//         width: 218rpx;
-//         height: 182rpx;
-//     }
-
-//     &-item4 {
-//         position: absolute;
-//         left: 244rpx;
-//         bottom: 0;
-//         width: 238rpx;
-//         height: 192rpx;
-//     }
-
-//     &-item5 {
-//         position: absolute;
-//         right: 16rpx;
-//         bottom: 0;
-//         width: 242rpx;
-//         height: 189rpx;
-//     }
 </style>

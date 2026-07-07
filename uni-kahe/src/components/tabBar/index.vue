@@ -97,42 +97,42 @@ const tabList: TabBarItem[] = [
     text: "首页",
     title: "首页",
     selectPath: "/pages/home/index",
-    iconNormal: "/static/kahe-202510/ka-he/tab-bar/item1.png",
+    iconNormal: "/static/kaju/tabbar/icon1-normal.png",
     iconSelected:
-      "/static/kahe-202510/ka-he/tab-bar/item1-active.png",
+      "/static/kaju/tabbar/icon1-active.png",
   },
   {
     text: "商家",
     title: "商家",
     selectPath: "/pages/merchant/index",
-    iconNormal: "/static/kahe-202510/ka-he/tab-bar/item2.png",
+    iconNormal: "/static/kaju/tabbar/icon2-normal.png",
     iconSelected:
-      "/static/kahe-202510/ka-he/tab-bar/item2-active.png",
+      "/static/kaju/tabbar/icon2-active.png",
   },
   {
     text: "抽卡机",
     title: "抽卡机",
     selectPath: "/pages/machine/index",
     iconNormal:
-      "/static/kahe-202510/ka-he/tab-bar/item3-active.png",
+      "/static/kaju/tabbar/icon3-normal.png",
     iconSelected:
-      "/static/kahe-202510/ka-he/tab-bar/item3-active.png",
+      "/static/kaju/tabbar/icon3-active.png",
   },
   {
     text: "寄存柜",
     title: "寄存柜",
     selectPath: "/pages/box/index",
-    iconNormal: "/static/kahe-202510/ka-he/tab-bar/item4.png",
+    iconNormal: "/static/kaju/tabbar/icon4-normal.png",
     iconSelected:
-      "/static/kahe-202510/ka-he/tab-bar/item4-active.png",
+      "/static/kaju/tabbar/icon4-active.png",
   },
   {
     text: "我的",
     title: "我的",
     selectPath: "/pages/mine/index",
-    iconNormal: "/static/kahe-202510/ka-he/tab-bar/item5.png",
+    iconNormal: "/static/kaju/tabbar/icon5-normal.png",
     iconSelected:
-      "/static/kahe-202510/ka-he/tab-bar/item5-active.png",
+      "/static/kaju/tabbar/icon5-active.png",
   },
 ];
 

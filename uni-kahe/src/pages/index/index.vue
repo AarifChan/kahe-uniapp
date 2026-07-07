@@ -8,9 +8,7 @@
       <box v-else-if="current === 3" />
       <mine v-else />
     </view>
-    <tab-bar v-model:current="current" />
-    <info v-model:show="infoShow" />
-    <vip v-model:show="showVip" :vip="userInfo.vip" :list="vipList" />
+    <!--    <tab-bar v-model:current="current" />-->
   </view>
 </template>
 
@@ -24,8 +22,6 @@ import Mine from "@/pages/mine/index.vue";
 import TabBar from "@/components/tabBar/index.vue";
 import { computed, ref, watch } from "vue";
 import { AppModule } from "@/store/modules/app";
-import Info from "@/components/modal/info/index.vue";
-import Vip from "@/components/modal/vip/index.vue";
 import { UserModule } from "@/store/modules/user";
 import { onShareAppMessage, onShareTimeline } from "@dcloudio/uni-app";
 const current = ref(AppModule.currentTabIndex);

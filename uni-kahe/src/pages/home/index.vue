@@ -1,6 +1,6 @@
 <template>
   <!-- :opacity="navOpacity" -->
-  <!--  <NavBar title="首页" :opacity="1" position="sticky" />-->
+  <NavBar title="首页" :opacity="1" position="sticky" @search="handleSearch" />
   <scroll-view
     class="home"
     :scroll-y="true"
@@ -9,21 +9,6 @@
     @scrolltolower="handleScrollToLower"
     @scroll="handleScroll"
   >
-    <!-- 搜索 -->
-    <view class="home-search">
-      <image
-        class="logo"
-        src="/static/kahe-202510/jikaquan/jikaquan-logo.png"
-        @longpress="handleLogoLongPress"
-      />
-      <Search
-        @did-tap-search="handleSearch"
-        placeholder="请输入你想要搜索的内容"
-        style="flex: 1"
-      />
-    </view>
-    <!-- 公告 -->
-    <bulletinar />
     <view class="home-banner">
       <banner
         :list="bannerList"
@@ -32,11 +17,13 @@
       />
       <!-- <image class="home-banner-logo" src="/static/kahe-202510/ka-he/common/logo.png" /> -->
     </view>
+    <!-- 公告 -->
+    <bulletinar />
     <view class="home-bottom">
       <!-- <image class="home-bottom-bg" src="/static/kahe-202510/ka-he/home/module-bg.png" /> -->
       <view class="home-bottom-content">
         <items />
-        <recommend v-if="groupBuyList.length > 0" :group-list="groupBuyList" />
+        <recommend :group-list="groupBuyList" />
         <tab
           id="currentTab"
           v-model:current="current"
@@ -58,7 +45,9 @@
       </view>
     </view>
   </scroll-view>
-  <TabBar />
+  <!--  <TabBar />-->
+  <info v-model:show="infoShow" />
+  <vip v-model:show="showVip" :vip="userInfo.vip" :list="vipList" />
 </template>
 
 <script lang="ts" setup>
@@ -66,6 +55,8 @@ import bulletinar from "@/components/bulletinar/index.vue";
 import Search from "@/components/search/index.vue";
 import TabBar from "@/components/tabBar/index.vue";
 import Tab from "./components/tab/index.vue";
+import Info from "@/components/modal/info/index.vue";
+import Vip from "@/components/modal/vip/index.vue";
 import Items from "./components/module/index.vue";
 import Goods from "./components/goods/index.vue";
 import { useGoods } from "@/composables/goods";
@@ -73,13 +64,18 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import Banner from "./components/banner/index.vue";
 import Recommend from "@/pages/home/components/recommend/index.vue";
 import Empty from "@/components/empty/index.vue";
-import NavBar from "@/components/navBar/index.vue";
+import NavBar from "./components/navBar/index.vue";
 import { useMerchant } from "@/pages/merchant/index";
 import { AppModule } from "@/store/modules/app";
+import { useLogin } from "@/composables/login";
 import { useGroupBuy } from "@/composables/groupBuy";
 import { onShareAppMessage, onShareTimeline } from "@dcloudio/uni-app";
 import { UserModule } from "@/store/modules/user";
 import { useLog } from "@/composables/useLog";
+const { infoShow, showVip } = useLogin();
+const userInfo = computed(() => {
+  return UserModule.userInfo;
+});
 const { groupBuyList, getGroupBuyListByHot } = useGroupBuy();
 
 // 使用日志插件
@@ -195,7 +191,7 @@ onShareTimeline(() => {
 .home {
   position: relative;
   width: 100%;
-  height: calc(100vh - 132rpx - env(safe-area-inset-bottom));
+  height: 100vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;

@@ -10,7 +10,18 @@
     }"
   >
     <view class="customNav-bar" :style="{ lineHeight: `${navBarHeight}PX` }">
-      <view class="customNav-bar-title">{{ title }}</view>
+      <image class="customNav-bar-logo" src="/static/kaju/common/logo.png" />
+      <view class="customNav-bar-search">
+        <image
+          class="customNav-bar-search-icon"
+          src="/static/kaju/common/search.png"
+        />
+        <input
+          class="customNav-bar-search-input"
+          type="text"
+          placeholder="搜索"
+        />
+      </view>
     </view>
   </view>
   <view
@@ -20,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { AppModule } from "@/store/modules/app";
 
 defineProps({
@@ -45,6 +56,11 @@ defineProps({
     type: String,
   },
 });
+const emit = defineEmits<{
+  (e: "search", value: string): void;
+}>();
+
+const searchText = ref("");
 const totalNavHeight = computed(() => {
   return AppModule.statusBarHeight + AppModule.navBarHeight;
 });
@@ -54,6 +70,11 @@ const statusBarHeight = computed(() => {
 const navBarHeight = computed(() => {
   return AppModule.navBarHeight;
 });
+
+const onSearchConfirm = (e: any) => {
+  searchText.value = e.detail.value;
+  emit("search", e.detail.value);
+};
 </script>
 
 <style lang="scss" scoped>
@@ -71,10 +92,42 @@ const navBarHeight = computed(() => {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     &-title {
       font-size: 30rpx;
       color: #000000;
+    }
+    &-logo {
+      margin-left: 59rpx;
+      width: 115rpx;
+      height: 63rpx;
+    }
+    &-search {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 345rpx;
+      height: 58rpx;
+      background: #ffffff;
+      border-radius: 29rpx;
+      border: 2px solid #ffe4d0;
+      padding: 0 20rpx;
+      box-sizing: border-box;
+      &-icon {
+        width: 28rpx;
+        height: 28rpx;
+        flex-shrink: 0;
+      }
+      &-input {
+        flex: 1;
+        height: 100%;
+        margin-left: 10rpx;
+        font-size: 26rpx;
+        color: #333;
+      }
     }
   }
 }

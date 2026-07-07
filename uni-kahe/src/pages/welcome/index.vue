@@ -1,9 +1,6 @@
 <template>
   <view class="welcome">
-    <image
-      class="welcome-logo"
-      src="/static/kahe-202510/jikaquan/jikaquan-logo.png"
-    />
+    <image class="welcome-logo" src="/static/kaju/common/logo.png" />
   </view>
 </template>
 
@@ -13,7 +10,7 @@ import { onLoad } from "@dcloudio/uni-app";
 onLoad(() => {
   setTimeout(() => {
     uni.reLaunch({
-      url: "/pages/index/index",
+      url: "/pages/home/index",
       success: () => {
         // uni.hideTabBar({
         //   animation: false, // 离线打包建议先关闭动画尝试
@@ -22,7 +19,7 @@ onLoad(() => {
         // });
       },
     });
-  }, 200);
+  }, 2000);
 });
 </script>
 
@@ -34,9 +31,9 @@ onLoad(() => {
   background-color: $main-bg;
   &-logo {
     position: absolute;
-    width: 180rpx;
-    height: calc(180rpx / 750 * 267);
-    left: calc((100% - 180rpx) / 2);
+    width: 240rpx;
+    height: calc(240rpx / 132 * 72);
+    left: calc((100% - 240rpx) / 2);
     top: calc(env(safe-area-inset-top) + 340rpx);
   }
 }

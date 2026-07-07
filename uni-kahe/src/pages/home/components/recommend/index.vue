@@ -1,115 +1,62 @@
 <template>
-  <view>
-    <view class="flex flex-row justify-around w-full pt-16">
-      <view class="w-509 h-220 relative">
-        <swiper
-          v-if="groupList.length > 0"
-          class="w-509 h-220"
-          circular
-          :indicator-dots="false"
-          :autoplay="true"
+  <view class="recommend">
+    <view class="recommend-left">
+      <image
+        class="recommend-left-top"
+        src="/static/kaju/home/left.png"
+        mode="aspectFit"
+        @tap.stop="handleChallengePage"
+      />
+      <image
+        class="recommend-left-bottom"
+        src="/static/kaju/home/right.png"
+        mode="aspectFit"
+        @tap.stop="handleMatchPage"
+      />
+    </view>
+    <view class="recommend-right" :style="rightBgStyle">
+      <image
+        class="recommend-right-more"
+        src="/static/kaju/home/more.png"
+        mode="aspectFit"
+        @tap.stop="handleGroupBuyPage"
+      />
+      <view class="recommend-right-list">
+        <view
+          v-for="(item, index) in displayList"
+          :key="index"
+          class="recommend-right-item"
+          @tap.stop="handleClickItem(item)"
         >
-          <swiper-item
-            v-for="(item, index) in groupList"
-            :key="index"
-            @tap.stop="handleClickItem(item)"
-          >
-            <item :item="item" />
-          </swiper-item>
-        </swiper>
-        <view
-          class="w-94 h-33 line-height-none text-center absolute top-0 right-4 font-theme z-10"
-          :style="moreBtnStyle"
-          @tap.stop="handleGroupBuyPage"
-          >more</view
-        >
-      </view>
-      <view class="flex flex-col justify-between">
-        <view
-          @tap.stop="handleChallengePage"
-          class="w-204 h-105"
-          :style="challengeItem1Style"
-        ></view>
-        <view
-          class="w-204 h-105"
-          :style="challengeItem2Style"
-          @tap.stop="handleMatchPage"
-        ></view>
+          <item :item="item" />
+        </view>
       </view>
     </view>
-    <!--    <view class="recommend">-->
-    <!--      &lt;!&ndash; <image class="recommend-bg" src="/static/kahe-202510/ka-he/common/card-item.png" /> &ndash;&gt;-->
-
-    <!--      <view class="recommend-box">-->
-    <!--        &lt;!&ndash; <image class="recommend-box-img" src="/static/kahe-202510/ka-he/home/kami-title1.png" />-->
-    <!--              <image class="recommend-box-go" src="/static/kahe-202510/ka-he/home/kami-go1.png" @tap.stop="handleGroupBuyPage" /> &ndash;&gt;-->
-    <!--        <view class="top">-->
-    <!--          <view class="top-title theme-font">热门拼团</view>-->
-    <!--          <view class="top-hot">-->
-    <!--            <view class="line"></view>-->
-    <!--            <text>正在火热活动中!!!</text>-->
-    <!--          </view>-->
-    <!--          <view class="top-wrapper">-->
-    <!--            <view class="dot"></view>-->
-    <!--            <view class="line"></view>-->
-    <!--            <view class="dot"></view>-->
-    <!--          </view>-->
-    <!--          <view class="top-more" @tap.stop="handleGroupBuyPage">more</view>-->
-    <!--        </view>-->
-    <!--      </view>-->
-    <!--      <scroll-view class="recommend-scroll" :scroll-x="true">-->
-    <!--        <group-buy-->
-    <!--          v-for="(item, index) in groupList"-->
-    <!--          :item="item"-->
-    <!--          :id="'groupItem:' + item.id"-->
-    <!--          :key="'groupItem:' + item.id"-->
-    <!--          @tap.stop="handleClickItem(item)"-->
-    <!--        />-->
-    <!--      </scroll-view>-->
-    <!--    </view>-->
   </view>
 </template>
+
 <script lang="ts" setup>
-import type { UIRecommendModel, GroupBuyItem } from "@/model";
-import { PropType } from "vue";
-import GroupBuy from "./components/groupBuy.vue";
+import type { GroupBuyItem } from "@/model";
+import { PropType, computed } from "vue";
 import Item from "./components/item.vue";
 import { ShowToast, currentEnv } from "@/utils";
 
-/** 避免模板内 url(&quot;https://...) 编译到 WXML 时引号/斜杠导致 miniprogram-ci 报 unexpected `/` */
-const moreBtnStyle = {
-  background: "linear-gradient(0deg, #ffeec5)",
-  boxShadow: "0rpx 2rpx 0rpx 0rpx #774718",
-  borderRadius: "17rpx",
-  border: "2rpx solid #cda374",
-};
-
-const challengeItem1Style = {
-  backgroundImage:
-    "url(/static/kahe-202510/challenge/challenge-item1.png)",
-  backgroundSize: "100% 100%",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-};
-
-const challengeItem2Style = {
-  backgroundImage:
-    "url(/static/kahe-202510/challenge/challenge-item2.png)",
-  backgroundSize: "100% 100%",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-};
-
-defineProps({
-  // list: {
-  //   type: Array as PropType<UIRecommendModel[]>,
-  //   default: () => [],
-  // },
+const props = defineProps({
   groupList: {
     type: Array as PropType<GroupBuyItem[]>,
     default: () => [],
   },
 });
+
+const displayList = computed(() => props.groupList.slice(0, 2));
+
+/** 避免模板内 url(&quot;https://...) 编译到 WXML 时引号/斜杠导致 miniprogram-ci 报 unexpected `/` */
+const rightBgStyle = {
+  backgroundImage: "url(/static/kaju/home/base.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 
 const handleGroupBuyPage = () => {
   uni.navigateTo({
@@ -137,122 +84,72 @@ const handleClickItem = (item: GroupBuyItem) => {
   });
 };
 </script>
+
 <style lang="scss" scoped>
 .recommend {
-  margin: 18rpx 0 0 16rpx;
   display: flex;
-  position: relative;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   box-sizing: border-box;
-  width: calc(100% - 16rpx);
+  width: 100%;
+  height: 280rpx;
+  padding: 16rpx 16rpx 0;
+  gap: 12rpx;
 
-  &-bg {
-    width: 734rpx;
-    height: 306rpx;
-  }
-
-  &-box {
-    // position: absolute;
-    width: calc(100% - 32rpx);
-    // top: 16rpx;
-    // left: 16rpx;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 68rpx;
-
-    .top {
-      width: 100%;
-      display: flex;
-      align-items: center;
-
-      &-title {
-        margin-right: 13rpx;
-        font-weight: 400;
-        font-size: 30rpx;
-        color: #fd9d08;
-        @include text-stroke(2rpx, #000000);
-      }
-
-      &-hot {
-        position: relative;
-        z-index: 1;
-
-        .line {
-          position: absolute;
-          bottom: 10rpx;
-          width: 156rpx;
-          height: 6rpx;
-          background: #ffcc3b;
-          z-index: 0;
-        }
-
-        text {
-          position: relative;
-          font-family: Adobe Heiti Std;
-          font-weight: normal;
-          font-size: 20rpx;
-          color: #303030;
-          line-height: 37rpx;
-        }
-      }
-
-      &-wrapper {
-        display: flex;
-        align-items: center;
-        flex: 1;
-        margin: 0 14rpx;
-
-        .dot {
-          width: 8rpx;
-          height: 8rpx;
-          background-color: #e2b67c;
-          border-radius: 50%;
-          flex-shrink: 0;
-        }
-
-        .line {
-          flex: 1;
-          height: 2rpx;
-          background-color: #e2b67c;
-        }
-      }
-
-      &-more {
-        font-family: YouSheBiaoTiHei;
-        font-weight: 400;
-        font-size: 26rpx;
-        color: #000000;
-        line-height: 37rpx;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 94rpx;
-        height: 33rpx;
-        background: linear-gradient(0deg, #ffeec5);
-        box-shadow: 0rpx 2rpx 0rpx 0rpx #774718;
-        border-radius: 17rpx;
-        border: 2px solid #cda374;
-      }
-    }
-
-    &-img {
-      width: 197rpx;
-      height: 68rpx;
-    }
-
-    &-go {
-      width: 151rpx;
-      height: 37rpx;
-    }
-  }
-
-  &-scroll {
+  &-left {
     position: relative;
-    width: 100%;
-    white-space: nowrap;
+    width: 300rpx;
+    height: 280rpx;
+
+    &-top {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 158rpx;
+      height: 280rpx;
+    }
+
+    &-bottom {
+      position: absolute;
+      left: 128rpx;
+      top: 0;
+      width: 158rpx;
+      height: 280rpx;
+    }
+  }
+
+  &-right {
+    position: relative;
+    height: 280rpx;
+    width: 400rpx;
+
+    &-more {
+      position: absolute;
+      top: -8rpx;
+      right: 0rpx;
+      width: 110rpx;
+      height: 50rpx;
+      z-index: 10;
+    }
+
+    &-list {
+      position: absolute;
+      top: 52rpx;
+      left: 12rpx;
+      right: 12rpx;
+      bottom: 12rpx;
+      display: flex;
+      flex-direction: column;
+      gap: 8rpx;
+      overflow: hidden;
+    }
+
+    &-item {
+      flex: 1;
+      min-height: 0;
+      box-sizing: border-box;
+    }
   }
 }
 </style>

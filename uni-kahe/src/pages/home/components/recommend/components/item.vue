@@ -1,84 +1,37 @@
 <template>
-  <view class="relative w-509 h-220 overflow-visible" :style="cardBgStyle">
-    <view class="pt-60 px-16 flex flex-row">
-      <!-- 左侧图片区域 -->
-      <view class="relative w-126 h-126 flex-shrink-0">
-        <image
-          class="absolute left-0 top-0 w-59 h-34 z-10"
-          src="/static/kahe-202510/challenge/pingtuan-tag.png"
-          mode="aspectFit"
-        />
-        <image
-          class="w-126 h-126 rounded-16"
-          :src="item.logo"
-          mode="aspectFill"
-        />
+  <view class="item" :style="itemBgStyle">
+    <view class="item-pic">
+      <image
+        class="item-pic-tag"
+        src="/static/kahe-202510/challenge/pingtuan-tag.png"
+        mode="aspectFit"
+      />
+      <image
+        class="item-pic-logo"
+        :src="item.logo"
+        mode="aspectFill"
+      />
+    </view>
+
+    <view class="item-info">
+      <view class="item-row">
+        <view class="item-title">{{ item.title }}</view>
+        <view class="item-price">¥{{ item.price }}</view>
       </view>
 
-      <!-- 信息区域 -->
-      <view class="flex-1 ml-16 flex flex-col justify-center min-w-0">
-        <!-- 标题 -->
-        <view
-          class="text-24 text-[#333] font-bold text-ellipsis leading-34"
-        >
-          {{ item.title }}
-        </view>
+      <view class="item-countdown">
+        <text class="item-countdown-text">{{ isOver ? "已结束" : remainingTime }}</text>
+      </view>
 
-        <!-- 价格和库存 -->
-        <view class="flex items-center justify-between mt-8">
-          <view class="text-32 text-[#000000] font-price font-bold">
-            ¥{{ item.price }}
-          </view>
-          <view class="text-20 text-[#999]">
-            余{{ item.num }}/共{{ item.total }}
-          </view>
-        </view>
-
-        <!-- 进度条 -->
-        <view class="w-full h-10 mt-6 bg-[#e5e5e5] rounded-5 overflow-hidden">
+      <view class="item-row">
+        <view class="item-progress">
           <view
             v-if="item.total > 0"
-            class="h-full bg-primary rounded-5"
+            class="item-progress-value"
             :style="progressStyles"
           ></view>
         </view>
-
-        <!-- 倒计时区域 -->
-        <view class="flex items-center justify-between mt-8">
-          <view class="flex items-center">
-            <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
-              <text class="text-18 text-[#845334] font-bold">{{ day }}</text>
-            </view>
-            <text class="text-18 text-[#666] mx-4">天</text>
-            <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
-              <text class="text-18 text-[#845334] font-bold">{{
-                hour
-              }}</text>
-            </view>
-            <text class="text-18 text-[#666] mx-4">时</text>
-            <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
-              <text class="text-18 text-[#845334] font-bold">{{
-                minute
-              }}</text>
-            </view>
-            <text class="text-18 text-[#666] mx-4">分</text>
-            <view class="w-32 h-28 bg-[#FFD3A2] rounded-6 flex-center">
-              <text class="text-18 text-[#845334] font-bold">{{
-                second
-              }}</text>
-            </view>
-            <text class="text-18 text-[#845334] mx-4">秒</text>
-          </view>
-
-          <!-- 商家信息 -->
-          <view class="flex items-center">
-            <image
-              class="w-32 h-32 rounded-full"
-              :src="item.merchant?.icon ?? ''"
-              mode="aspectFill"
-            />
-          </view>
-        </view>
+        <text class="item-remain">余{{ item.num }}/共{{ item.total }}</text>
       </view>
     </view>
   </view>
@@ -90,20 +43,19 @@ import { type GroupBuyItem } from "@/model";
 
 import { divideAndTruncate } from "@/utils/tools";
 import { useTimeCount } from "@/composables/countTime";
-const { startTimeRemain, hour, day, second, minute, isTimeout } =
-  useTimeCount();
+
+const { startTimeRemain, remainingTime, isTimeout } = useTimeCount();
 
 const props = defineProps({
   item: {
     type: Object as PropType<GroupBuyItem>,
-    default: {} as GroupBuyItem,
+    default: () => ({} as GroupBuyItem),
   },
 });
 
 /** 用对象样式避免内联 url(&quot;...) 编译到 WXML 时引号/斜杠被误解析（miniprogram-ci 报 unexpected `/`） */
-const cardBgStyle = {
-  backgroundImage:
-    "url(/static/kahe-202510/challenge/recomand-bg.png)",
+const itemBgStyle = {
+  backgroundImage: "url(/static/kaju/home/good-bg.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -128,4 +80,109 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 8rpx 12rpx;
+  gap: 12rpx;
+
+  &-pic {
+    position: relative;
+    flex-shrink: 0;
+    width: 88rpx;
+    height: 88rpx;
+
+    &-tag {
+      position: absolute;
+      top: -4rpx;
+      left: -4rpx;
+      width: 50rpx;
+      height: 28rpx;
+      z-index: 10;
+    }
+
+    &-logo {
+      width: 100%;
+      height: 100%;
+      border-radius: 12rpx;
+    }
+  }
+
+  &-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    height: 88rpx;
+  }
+
+  &-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 0;
+  }
+
+  &-title {
+    flex: 1;
+    font-size: 22rpx;
+    font-weight: bold;
+    color: #333333;
+    line-height: 30rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 8rpx;
+  }
+
+  &-price {
+    flex-shrink: 0;
+    font-size: 26rpx;
+    font-weight: bold;
+    color: #ff4d4f;
+    line-height: 30rpx;
+  }
+
+  &-countdown {
+    display: flex;
+    align-items: center;
+
+    &-text {
+      font-size: 20rpx;
+      color: #666666;
+      line-height: 28rpx;
+      font-family: monospace;
+    }
+  }
+
+  &-progress {
+    flex: 1;
+    height: 8rpx;
+    background: #e5e5e5;
+    border-radius: 4rpx;
+    overflow: hidden;
+    margin-right: 8rpx;
+
+    &-value {
+      height: 100%;
+      background: #ffac5b;
+      border-radius: 4rpx;
+    }
+  }
+
+  &-remain {
+    flex-shrink: 0;
+    font-size: 18rpx;
+    color: #999999;
+    line-height: 24rpx;
+  }
+}
+</style>

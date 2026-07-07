@@ -10,26 +10,6 @@ onLaunch(() => {
   UserModule.preLogin();
   AppModule.getSystemInfo();
   UserModule.getUserInfo();
-
-  // 隐藏系统 TabBar（所有平台）
-  // #ifdef APP-PLUS
-  // APP 平台延迟隐藏，确保原生 TabBar 已加载
-  setTimeout(() => {
-    uni.hideTabBar({
-      animation: false, // 离线打包建议先关闭动画尝试
-      success: () => console.log("隐藏成功"),
-      fail: (err) => console.log("隐藏失败", err),
-    });
-  }, 300);
-  // #endif
-
-  // #ifndef APP-PLUS
-  uni.hideTabBar({
-    animation: false, // 离线打包建议先关闭动画尝试
-    success: () => console.log("隐藏成功"),
-    fail: (err) => console.log("隐藏失败", err),
-  });
-  // #endif
 });
 onShow(() => {
   console.log("App Show");
@@ -47,13 +27,13 @@ onShow(() => {
 
   // #ifdef APP-PLUS
   // APP 平台再次确保隐藏 TabBar
-  setTimeout(() => {
-    uni.hideTabBar({
-      animation: false, // 离线打包建议先关闭动画尝试
-      success: () => console.log("隐藏成功"),
-      fail: (err) => console.log("隐藏失败", err),
-    });
-  }, 100); // 延迟 100ms 左右
+  // setTimeout(() => {
+  //   uni.hideTabBar({
+  //     animation: false, // 离线打包建议先关闭动画尝试
+  //     success: () => console.log("隐藏成功"),
+  //     fail: (err) => console.log("隐藏失败", err),
+  //   });
+  // }, 100); // 延迟 100ms 左右
   // #endif
 
   PetModule.getConfig();
