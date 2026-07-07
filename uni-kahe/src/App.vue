@@ -45,6 +45,10 @@ onHide(() => {
 <style>
 @import "@tuniao/tn-style/dist/uniapp/index.css";
 
+page {
+  font-family: "AlibabaPuHuiTi", sans-serif;
+}
+
 /* #ifdef APP-PLUS */
 /* APP平台禁止H5页面滚动，只允许scroll-view内部滚动 */
 page {
@@ -61,7 +65,7 @@ scroll-view {
 
 @font-face {
   font-family: "YouSheBiaoTiHei";
-  src: url("/static/sources/YouSheBiaoTiHei.ttf");
+  src: url("https://cdn.richcw.cn/sources/YouSheBiaoTiHei.ttf");
 }
 
 @font-face {
@@ -81,6 +85,11 @@ scroll-view {
 @font-face {
   font-family: "SimHei";
   src: url("/static/font/SimHei.ttf");
+}
+
+@font-face {
+  font-family: "AlibabaPuHuiTi";
+  src: url("https://cdn.richcw.cn/sources/AlibabaPuHuiTi3.0-105-Heavy.ttf");
 }
 
 /* 全局动画定义 - 挑战游戏摇晃动画 */
