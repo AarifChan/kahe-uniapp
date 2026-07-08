@@ -40,7 +40,7 @@
       </view>
     </view>
   </scroll-view>
-  <TabBar />
+  <!--  <TabBar />-->
 </template>
 
 <script lang="ts" setup>

@@ -1,9 +1,6 @@
 <template>
   <view class="box">
-    <image
-      class="box-bg"
-      src="/static/kahe-202510/ka-he/mine/mine-bg.png"
-    />
+    <image class="box-bg" src="/static/kahe-202510/ka-he/mine/mine-bg.png" />
     <!-- logo -->
     <view class="box-logo">
       <image
@@ -96,7 +93,7 @@
       :content="modalContent"
     />
   </view>
-  <TabBar />
+  <!--  <TabBar />-->
 </template>
 
 <script lang="ts" setup>

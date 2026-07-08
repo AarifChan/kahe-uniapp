@@ -191,7 +191,7 @@ onShareTimeline(() => {
 .home {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - (env(safe-area-inset-bottom) + 100rpx));
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -212,45 +212,44 @@ onShareTimeline(() => {
     }
   }
 
-  &-bulletin {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    background: #fff;
-    height: 40rpx;
-    overflow: hidden;
-    margin-bottom: 12rpx;
-
-    .img {
-      width: 115rpx;
-      height: 40rpx;
-      object-fit: cover;
-      margin-right: 20rpx;
-      flex-shrink: 0;
-    }
-
-    .bulletin-content {
-      flex: 1;
-      overflow: hidden;
-      white-space: nowrap;
-      position: relative;
-    }
-
-    .scroll-wrapper {
-      display: inline-flex;
-      white-space: nowrap;
-      transition: transform 0.05s linear;
-    }
-
-    .scroll-item {
-      display: inline-block;
-      padding-right: 100rpx;
-      /* 每条公告之间的间距 */
-      font-size: 26rpx;
-      color: #333;
-      line-height: 40rpx;
-    }
-  }
+  //&-bulletin {
+  //  display: flex;
+  //  align-items: center;
+  //  width: 100%;
+  //  background: #fff;
+  //  height: 60rpx;
+  //  overflow: hidden;
+  //
+  //  .img {
+  //    width: 115rpx;
+  //    height: 40rpx;
+  //    object-fit: cover;
+  //    margin-right: 20rpx;
+  //    flex-shrink: 0;
+  //  }
+  //
+  //  .bulletin-content {
+  //    flex: 1;
+  //    overflow: hidden;
+  //    white-space: nowrap;
+  //    position: relative;
+  //  }
+  //
+  //  .scroll-wrapper {
+  //    display: inline-flex;
+  //    white-space: nowrap;
+  //    transition: transform 0.05s linear;
+  //  }
+  //
+  //  .scroll-item {
+  //    display: inline-block;
+  //    padding-right: 100rpx;
+  //    /* 每条公告之间的间距 */
+  //    font-size: 26rpx;
+  //    color: #333;
+  //    line-height: 40rpx;
+  //  }
+  //}
 
   &-banner {
     position: relative;

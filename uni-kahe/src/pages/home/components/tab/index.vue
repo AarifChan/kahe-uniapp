@@ -19,7 +19,7 @@
               src="/static/kaju/common/select-tab.png"
               class="tab-indicator"
             />
-            <text class="tab-text">{{ item.title }}</text>
+            <text class="tab-text alibaba-font">{{ item.title }}</text>
           </view>
         </view>
       </view>
@@ -91,6 +91,7 @@ const clickItem = (index: number) => {
         line-height: 52rpx;
         width: 140rpx;
         height: 52rpx;
+
         @include text-stroke(2rpx, #151714);
         display: flex;
         flex-direction: column;

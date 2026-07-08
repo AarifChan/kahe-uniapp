@@ -85,6 +85,10 @@ $second-bg-color: #FDEFCC;
   font-family: 'YouSheBiaoTiHei';
 }
 
+.alibaba-font{
+  font-family: "AlibabaPuHuiTi";
+}
+
 .price-font {
   font-family: 'AccidentalPresidency';
 }
@@ -201,6 +205,9 @@ image{
 .common-row{
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+
 }
 .common-col{
   display: flex;

@@ -24,7 +24,7 @@
       <empty :show="machineList.length === 0" />
     </view>
   </scroll-view>
-  <TabBar />
+  <!--  <TabBar />-->
 </template>
 <script setup lang="ts">
 import Top from "../infinite/components/top.vue";

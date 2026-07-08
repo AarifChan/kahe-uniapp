@@ -1,48 +1,51 @@
 <template>
-  <!--  <NavBar position="sticky" title="我的" :opacity="1" :top-safe="false" />-->
-  <scroll-view class="mine" :scroll-y="true">
-    <info
-      :user-info="userInfo"
-      @did-click-edit="handleClickEdit"
-      @didClickVip="handleClickVip"
-      @did-click-avatar="handleClickAvatar"
-    />
-    <coin
-      :momey="userInfo.money"
-      :coin="userInfo.coin"
-      :integral="userInfo.integral"
-      @didClickItem="handleClickOther"
-    />
-    <view class="inGroup">
-      <image
-        class="inGroupImg"
-        src="/static/kahe-202510/ka-he/mine/in-group3.png"
-        @tap.stop="showInGroupImage"
+  <view class="minePage">
+    <image class="minePage-bg" src="/static/kaju/mine/mine-bg.png" />
+    <NavBar position="absolute" :opacity="1" />
+    <scroll-view class="mine" :scroll-y="true">
+      <info
+        :user-info="userInfo"
+        @did-click-edit="handleClickEdit"
+        @didClickVip="handleClickVip"
+        @did-click-avatar="handleClickAvatar"
       />
-    </view>
-    <favorite
-      @did-click-favorite="handleClickFavorite"
-      @did-click-coupon="handleClickCoupon"
-      @did-click-contact="showInGroupImage"
-      :un-read-num="unreadNum"
-    />
-    <orders @click-orders-tap="clickOrdersTap" />
-    <view style="padding-bottom: 32rpx">
-      <options
-        @did-tap-action="showModalType"
-        @did-tap-contact="showInGroupImage"
+      <coin
+        :momey="userInfo.money"
+        :coin="userInfo.coin"
+        :integral="userInfo.integral"
+        @didClickItem="handleClickOther"
       />
-    </view>
-  </scroll-view>
-  <common-modal
-    v-model:show="modalShow"
-    :title="modalTitle"
-    :content="modalContent"
-  />
+      <view class="inGroup">
+        <image
+          class="inGroupImg"
+          src="/static/kahe-202510/ka-he/mine/in-group3.png"
+          @tap.stop="showInGroupImage"
+        />
+      </view>
+      <favorite
+        @did-click-favorite="handleClickFavorite"
+        @did-click-coupon="handleClickCoupon"
+        @did-click-contact="showInGroupImage"
+        :un-read-num="unreadNum"
+      />
+      <orders @click-orders-tap="clickOrdersTap" />
+      <view style="padding-bottom: 32rpx">
+        <options
+          @did-tap-action="showModalType"
+          @did-tap-contact="showInGroupImage"
+        />
+      </view>
+    </scroll-view>
+    <common-modal
+      v-model:show="modalShow"
+      :title="modalTitle"
+      :content="modalContent"
+    />
 
-  <recharge v-model:show="rechargeShow" :list="rechargeList" />
-  <TabBar />
-  <InfoModal v-model:show="infoShow" />
+    <recharge v-model:show="rechargeShow" :list="rechargeList" />
+    <!--  <TabBar />-->
+    <InfoModal v-model:show="infoShow" />
+  </view>
 </template>
 
 <script lang="ts" setup>
@@ -50,7 +53,7 @@ import { computed, onMounted, ref, nextTick } from "vue";
 import Item from "./components/item.vue";
 import Coin from "./components/coin.vue";
 import TabBar from "@/components/tabBar/index.vue";
-import NavBar from "@/components/navBar/index.vue";
+import NavBar from "./components/navBar/index.vue";
 import Info from "./components/info.vue";
 import { UserModule } from "@/store/modules/user";
 import CommonModal from "@/components/modal/index.vue";
@@ -206,90 +209,95 @@ const getUnReadCount = async () => {
 };
 onShow(() => {
   UserModule.getUserInfo();
-  getUnReadCount();
+  // getUnReadCount();
 });
 </script>
 
 <style lang="scss" scoped>
-.mine {
-  padding: 32rpx 0 0;
+.minePage {
   position: relative;
-  width: 100%;
-  height: calc(100vh - env(safe-area-inset-bottom) - 132rpx);
-  overflow: hidden;
-  background-image: url("https://cdn.richcw.cn/tycw-mp/kahe-202510/ka-he/mine/mine-bg.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  width: 100vw;
+  height: 100vh;
+  background-color: $main-bg;
+  display: flex;
+  flex-direction: column;
   &-bg {
-    width: 100%;
-    aspect-ratio: 750 / 1444;
-    height: 100%;
     position: fixed;
     left: 0;
     top: 0;
-  }
-
-  &-top {
-    margin-top: 60rpx;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 30rpx;
-    box-sizing: border-box;
-  }
-
-  &-center {
-    margin-top: 16rpx;
-    margin-left: 30rpx;
-    position: relative;
-    width: 695rpx;
-    height: 126rpx;
-    margin-bottom: 40rpx;
-
-    &-img {
-      width: 100%;
-      height: 100%;
-    }
-
-    &-icon {
-      position: absolute;
-      left: 5rpx;
-      top: 5rpx;
-      width: 94rpx;
-      height: 92rpx;
-    }
-
-    &-tag {
-      position: absolute;
-      bottom: 16rpx;
-      left: 40rpx;
-      font-weight: 400;
-      font-size: 23rpx;
-      color: #000000;
-    }
-
-    &-title {
-      position: absolute;
-      left: 136rpx;
-      top: 0;
-
-      line-height: 126rpx;
-      font-weight: 400;
-      font-size: 40rpx;
-      color: #000000;
-    }
-  }
-}
-
-.inGroup {
-  margin: 0 24rpx;
-  position: relative;
-  width: calc(100% - 48rpx);
-
-  &Img {
     width: 100%;
-    aspect-ratio: 699 / 167;
+    aspect-ratio: 750 / 860;
+  }
+  .mine {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    &-top {
+      //margin-top: 60rpx;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30rpx;
+      box-sizing: border-box;
+    }
+
+    &-center {
+      margin-top: 16rpx;
+      margin-left: 30rpx;
+      position: relative;
+      width: 695rpx;
+      height: 126rpx;
+      margin-bottom: 40rpx;
+
+      &-img {
+        width: 100%;
+        height: 100%;
+      }
+
+      &-icon {
+        position: absolute;
+        left: 5rpx;
+        top: 5rpx;
+        width: 94rpx;
+        height: 92rpx;
+      }
+
+      &-tag {
+        position: absolute;
+        bottom: 16rpx;
+        left: 40rpx;
+        font-weight: 400;
+        font-size: 23rpx;
+        color: #000000;
+      }
+
+      &-title {
+        position: absolute;
+        left: 136rpx;
+        top: 0;
+
+        line-height: 126rpx;
+        font-weight: 400;
+        font-size: 40rpx;
+        color: #000000;
+      }
+    }
+  }
+
+  .inGroup {
+    margin: 0 24rpx;
+    position: relative;
+    width: calc(100% - 48rpx);
+
+    &Img {
+      width: 100%;
+      aspect-ratio: 699 / 167;
+    }
   }
 }
 </style>

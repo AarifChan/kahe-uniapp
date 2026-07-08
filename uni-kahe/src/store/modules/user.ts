@@ -323,6 +323,7 @@ class User extends VuexModule {
         this.context.commit("UPDATE_USERINFO", resp.data);
         this.context.commit("UPDATE_LOGIN_STATUS", true);
         await this.getFavorite();
+        await this.getVipLevelList();
         if (resp.data.receivedVip !== 1) {
           await this.getVipReceived();
         }
@@ -460,7 +461,12 @@ class User extends VuexModule {
       // #endif
 
       // #ifdef APP
-      console.log("[APP Pay] handleWxPay start, orderId:", orderId, "pid:", pid);
+      console.log(
+        "[APP Pay] handleWxPay start, orderId:",
+        orderId,
+        "pid:",
+        pid
+      );
       console.log("[APP Pay] payType:", payType);
       payType = AppModule.payType === 1 ? "wx_app" : "ali_app";
 
@@ -491,7 +497,10 @@ class User extends VuexModule {
 
       if (orderResp.code !== 200) {
         await orderCancelRequest(orderId);
-        console.log("[APP Pay] alipay orderCancelRequest orderString:", orderResp.msg);
+        console.log(
+          "[APP Pay] alipay orderCancelRequest orderString:",
+          orderResp.msg
+        );
         resolve(orderResp.msg + "error~");
         ShowToast(orderResp.msg);
         return;
@@ -585,7 +594,10 @@ class User extends VuexModule {
             timeStamp: payParams.timeStamp,
             orderInfo: orderId,
             success: async (result) => {
-              console.log("[APP Pay] wxpay mp success:", JSON.stringify(result));
+              console.log(
+                "[APP Pay] wxpay mp success:",
+                JSON.stringify(result)
+              );
               pollPaymentStatus(orderId, 5000, 10)
                 .then((res) => {
                   resolve(res === "success" ? null : "订单查询失败");

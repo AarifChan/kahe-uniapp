@@ -45,10 +45,6 @@ onHide(() => {
 <style>
 @import "@tuniao/tn-style/dist/uniapp/index.css";
 
-page {
-  font-family: "AlibabaPuHuiTi", sans-serif;
-}
-
 /* #ifdef APP-PLUS */
 /* APP平台禁止H5页面滚动，只允许scroll-view内部滚动 */
 page {

@@ -108,8 +108,7 @@ const handleItem = (index: HomeItemType) => {
 
 <style lang="scss" scoped>
 .newItem-row2 {
-  margin-top: 10rpx;
-  padding: 0 0 0 18rpx;
+  padding-left: 18rpx;
   box-sizing: border-box;
   width: 100%;
 
@@ -123,7 +122,7 @@ const handleItem = (index: HomeItemType) => {
     position: relative;
     width: calc(166rpx * 1);
     height: calc(188rpx * 1);
-    margin-right: 16rpx;
+    margin-right: 12rpx;
 
     .img {
       position: absolute;
