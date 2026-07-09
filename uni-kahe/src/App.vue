@@ -106,6 +106,35 @@ scroll-view {
   animation: shake-box 0.5s ease-in-out;
 }
 
+/* 弹幕滚动动画 */
+.barrage {
+  animation: move 20s linear infinite;
+}
+
+@keyframes move {
+  0% {
+    transform: translateY(0rpx);
+  }
+  100% {
+    transform: translateY(-1640rpx);
+  }
+}
+
+/* 跑马灯位移动画 */
+.animate-move1 {
+  animation: move1 linear;
+  -webkit-animation: move1 linear;
+}
+
+@keyframes move1 {
+  from {
+    transform: translateX(170%);
+  }
+  to {
+    transform: translateX(-170%);
+  }
+}
+
 /* 重置小程序 button 默认边框/背景 */
 button::after {
   border: none;

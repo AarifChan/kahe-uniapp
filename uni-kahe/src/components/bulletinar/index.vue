@@ -1,11 +1,14 @@
 <template>
-  <view class="home-bulletin">
+  <view class="home-bulletin relative flex items-center w-709 h-60 mx-auto bg-white"
+  >
     <image
       src="/static/kaju/common/notice-bg.png"
-      class="img"
+      class="img w-709 h-60"
       mode="aspectFit"
     />
-    <view class="bulletin-content">
+    <view
+      class="bulletin-content absolute left-120 top-0 bottom-0 z-1 flex items-center w-[calc(100%-200rpx)] overflow-hidden"
+    >
       <TnNoticeBar
         :data="noticeData"
         :auto-play="true"
@@ -27,32 +30,4 @@ const noticeData = [
 ];
 </script>
 
-<style lang="scss" scoped>
-.home-bulletin {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 709rpx;
-  height: 60rpx;
-  margin: 0 auto;
-  background: #fff;
-
-  .img {
-    width: 709rpx;
-    height: 60rpx;
-  }
-
-  /* Position text to the right of the "公告" label on the left side of the banner. */
-  .bulletin-content {
-    position: absolute;
-    left: 120rpx;
-    top: 0;
-    bottom: 0;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    width: calc(100% - 200rpx);
-    overflow: hidden;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

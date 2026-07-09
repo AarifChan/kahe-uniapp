@@ -1,10 +1,27 @@
 <template>
-  <view class="setting-cell" :class="{ 'setting-cell-center': center }" @click="handleClick">
-    <text class="setting-cell-title">{{ title }}</text>
-    <text v-if="desc" class="setting-cell-desc" :style="descStyle">{{ desc }}</text>
+  <view
+    class="setting-cell relative w-full flex flex-row items-center px-30 py-32 min-h-90 box-border justify-between bg-white border-b border-[#f0f0f0]"
+    :class="{
+      'justify-center': center,
+      'opacity-80': disabled,
+    }"
+    @click="handleClick"
+  >
+    <text
+      class="setting-cell-title flex-shrink-0 text-30 text-[#333] leading-1.4"
+      :class="{ 'text-center w-full': center }"
+      >{{ title }}</text
+    >
+    <text
+      v-if="desc"
+      class="setting-cell-desc ml-auto mr-16 text-26 text-[#999] leading-1.4"
+      :style="descStyle"
+      >{{ desc }}</text
+    >
     <image
       v-if="showArrow"
-      class="setting-cell-arrow"
+      class="setting-cell-arrow w-32 h-32 flex-shrink-0"
+      style="transform: scaleX(-1); opacity: 0.5"
       mode="heightFix"
       src="/static/kahe-202510/ka-he/common/right-arrow.png"
     />
@@ -52,62 +69,12 @@ const handleClick = () => {
 
 <style lang="scss" scoped>
 .setting-cell {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 32rpx 30rpx;
-  min-height: 90rpx;
-  box-sizing: border-box;
-  justify-content: space-between;
-  border-bottom: 1rpx solid #f0f0f0;
-  width: 100%;
-  position: relative;
-  background: #fff;
-
   &:last-child {
     border-bottom: none;
   }
 
-  &:active {
+  &:active:not(.disabled) {
     opacity: 0.7;
-  }
-
-  &-title {
-    font-size: 30rpx;
-    color: #333;
-    line-height: 1.4;
-    flex-shrink: 0;
-  }
-
-  &-desc {
-    font-size: 26rpx;
-    color: #999;
-    line-height: 1.4;
-    margin-left: auto;
-    margin-right: 16rpx;
-  }
-
-  &-arrow {
-    width: 32rpx;
-    height: 32rpx;
-    flex-shrink: 0;
-    transform: scaleX(-1);
-    opacity: 0.5;
-  }
-
-  &-disabled {
-    opacity: 0.8;
-    &:active {
-      opacity: 0.8;
-    }
-  }
-
-  &-center {
-    justify-content: center;
-    .setting-cell-title {
-      text-align: center;
-      width: 100%;
-    }
   }
 }
 </style>

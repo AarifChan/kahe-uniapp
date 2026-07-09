@@ -1,5 +1,5 @@
 <template>
-    <view class="banner">
+    <view class="relative w-full h-800">
         <Lamp
             ref="lampRef"
             backGround="rgba(128, 128, 128, 0.6)"
@@ -8,7 +8,7 @@
             @tapLampAction="tapLampAction"
         />
         <swiper
-            class="banner-swiper"
+            class="relative w-full h-full"
             circular
             :indicator-dots="true"
             :autoplay="true"
@@ -17,10 +17,10 @@
             <swiper-item
                 v-for="(item, index) in list"
                 :key="index"
-                class="banner-swiper-item"
+                class="w-full h-full"
                 @tap.stop="emits('tapBannerAction', item)"
             >
-                <image class="banner-swiper-item-img" :src="item.image" />
+                <image class="w-full h-full" :src="item.image" />
             </swiper-item>
         </swiper>
     </view>
@@ -54,23 +54,4 @@ watch(
 )
 </script>
 
-<style lang="scss" scoped>
-.banner {
-    position: relative;
-    width: 100%;
-    height: 800rpx;
-    &-swiper {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        &-item {
-            width: 100%;
-            height: 100%;
-            &-img {
-                width: 100%;
-                height: 100%;
-            }
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

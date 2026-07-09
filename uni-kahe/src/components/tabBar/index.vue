@@ -1,59 +1,62 @@
 <template>
-  <view class="tab-bar">
+  <view
+    class="tab-bar fixed left-0 bottom-0 w-full flex flex-col z-99"
+    style="height: calc(132rpx + env(safe-area-inset-bottom))"
+  >
     <image
-      class="tab-bar-bg"
+      class="tab-bar-bg w-750 h-138"
       src="/static/kahe-202510/ka-he/tab-bar/tabBar-bg2.png"
     />
-    <view class="tab-bar-content">
+    <view class="tab-bar-content absolute left-0 top-0 w-750 h-138 flex flex-row items-center justify-evenly">
       <view
         v-for="(item, index) in tabList"
         :id="index + 'tabBarId'"
         :key="index + 'tabBarKey'"
-        class="tab-bar-content-item"
+        class="tab-bar-content-item relative flex flex-col items-center w-full"
         @tap.stop="switchTab(item.selectPath, index)"
       >
-        <view class="tab-bar-content-item-select">
+        <view class="tab-bar-content-item-select w-full h-109 flex flex-row items-center justify-center">
           <!-- <image
             v-show="index === currentIndex"
-            class="tab-bar-content-item-select-img"
+            class="tab-bar-content-item-select-img w-102 h-117"
             src="/static/kahe-202510/ka-he/tab-bar/item-active.png"
           />
 
           <image
             v-show="index !== currentIndex"
-            class="tab-bar-content-item-select-img"
+            class="tab-bar-content-item-select-img w-102 h-117"
             src="/static/kahe-202510/ka-he/tab-bar/item-normal.png"
           /> -->
         </view>
-        <view class="tab-bar-content-item-info">
+        <view class="tab-bar-content-item-info absolute left-0 top-0 w-full h-full flex flex-col items-center justify-start">
           <image
             v-show="index === currentIndex"
             :src="item.iconSelected"
             :class="[
-              'tab-bar-content-item-info-img',
-              index === 3 || index === 4 ? 'margin' : '',
+              'w-80 h-80',
             ]"
+            :style="index === 3 || index === 4 ? { transform: 'translateY(12rpx)' } : {}"
           />
           <image
             v-show="index !== currentIndex"
             :src="item.iconNormal"
             :class="[
-              'tab-bar-content-item-info-img',
-              index === 3 || index === 4 ? 'margin' : '',
+              'w-80 h-80',
             ]"
+            :style="index === 3 || index === 4 ? { transform: 'translateY(12rpx)' } : {}"
           />
           <text
             :style="{ color: index === currentIndex ? '#A86114' : '#8B8B8B' }"
             :class="[
-              'tab-bar-content-item-info-text',
-              index === 0 || index === 1 ? 'move_right' : '',
+              'font-normal text-22',
+              index === 0 || index === 1 ? 'mr-18' : '',
             ]"
             >{{ item.text }}
           </text>
         </view>
       </view>
     </view>
-    <view class="tab-bar-bottom" />
+    <view class="tab-bar-bottom w-full bg-[#fdfdf1]" style="height: env(safe-area-inset-bottom)" />
   </view>
 </template>
 
@@ -149,109 +152,4 @@ const switchTab = (path: string, index: number) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.tab-bar {
-  position: fixed;
-  left: 0;
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  height: calc(132rpx + env(safe-area-inset-bottom));
-  bottom: 0;
-  z-index: 99;
-
-  &-bg {
-    width: 750rpx;
-    height: 138rpx;
-  }
-
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 750rpx;
-    height: 138rpx;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-
-    &-item {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-
-      &-select {
-        width: 100%;
-        height: 109rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        &-img {
-          width: 102rpx;
-          height: 117rpx;
-        }
-      }
-
-      &-center {
-        position: absolute;
-        left: 0;
-        top: -40rpx;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        &-img {
-          width: 128rpx;
-          height: 133rpx;
-        }
-      }
-
-      &-info {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-
-        &-img {
-          width: 80rpx;
-          height: 80rpx;
-        }
-
-        .margin {
-          transform: translateY(12rpx);
-        }
-
-        .move_right {
-          margin-right: 18rpx;
-        }
-
-        &-text {
-          // margin-top: -8rpx;
-          font-weight: 400;
-          font-size: 22rpx;
-          // color: #8B8B8B;
-        }
-      }
-    }
-  }
-
-  &-bottom {
-    width: 100%;
-    height: env(safe-area-inset-bottom);
-    background-color: #fdfdf1;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

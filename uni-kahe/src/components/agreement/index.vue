@@ -1,16 +1,16 @@
 <template>
-  <view class="agreement">
-    <view style="display: flex; flex-direction: row; align-items: center">
-      <text class="agreement-title">{{ title }}</text>
+  <view class="relative w-full flex justify-between items-center">
+    <view class="flex flex-row items-center">
+      <text class="text-22 font-normal text-[#888888]">{{ title }}</text>
       <text
-        class="agreement-title agreement-subTitle"
+        class="text-22 font-normal text-[#a27e0b]"
         @tap.stop="emits('didTapProtocol')"
         >{{ subTitle }}</text
       >
     </view>
 
     <image
-      class="agreement-img"
+      class="w-35 h-30"
       :src="
         checked
           ? '/static/kahe/common/checked.png'
@@ -40,24 +40,4 @@ defineProps({
 const emits = defineEmits(["didTapProtocol", "update:checked"]);
 </script>
 
-<style lang="scss" scoped>
-.agreement {
-  position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  &-img {
-    width: 35rpx;
-    height: 30rpx;
-  }
-  &-title {
-    font-size: 22rpx;
-    font-weight: 400;
-    color: #888888;
-  }
-  &-subTitle {
-    color: #a27e0b;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

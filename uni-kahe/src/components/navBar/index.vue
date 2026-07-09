@@ -1,6 +1,6 @@
 <template>
   <view
-    class="customNav"
+    class="fixed left-0 top-0 w-full flex flex-col z-99"
     :style="{
       height: `${totalNavHeight}PX`,
       opacity: opacity,
@@ -9,8 +9,11 @@
       backgroundColor: `rgba(255, 248, 233, ${opacity})`,
     }"
   >
-    <view class="customNav-bar" :style="{ lineHeight: `${navBarHeight}PX` }">
-      <view class="customNav-bar-title">{{ title }}</view>
+    <view
+      class="relative w-full flex flex-row items-center justify-center"
+      :style="{ lineHeight: `${navBarHeight}PX` }"
+    >
+      <view class="text-30 text-black">{{ title }}</view>
     </view>
   </view>
   <view
@@ -56,26 +59,4 @@ const navBarHeight = computed(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.customNav {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  z-index: 99;
-  &-bar {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    &-title {
-      font-size: 30rpx;
-      color: #000000;
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

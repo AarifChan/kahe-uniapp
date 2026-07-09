@@ -1,19 +1,19 @@
 <template>
-  <view class="barrageIndex">
+  <view class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-230 h-42">
     <view
-      class="barrage anmt"
+      class="barrage relative w-230 h-42 flex items-center border-2 border-[#bdde67] bg-[#cff7ba] rounded-12 mb-10"
       v-for="(item, index) in list"
       :key="index"
       @tap.stop="emits('tapLampAction', item)"
     >
-      <view class="right">
-        <img class="avatar" :src="item.avatar" alt="" />
+      <view class="flex items-center w-full h-full">
+        <img class="w-38 h-38 object-cover rounded-full box-border ml-5" :src="item.avatar" alt="" />
         <view
           v-if="item.userName.length > 0"
-          class="userName text-flow-ellipsis-single"
+          class="ml-10 w-60 text-18 text-[#87b66e] text-flow-ellipsis-single"
           >{{ item.userName }}</view
         >
-        <view class="info text-flow-ellipsis-single">{{ item.content }}</view>
+        <view class="flex-1 text-18 text-[#87b66e] text-flow-ellipsis-single">{{ item.content }}</view>
       </view>
     </view>
   </view>
@@ -29,60 +29,4 @@ defineProps({
   },
 });
 </script>
-<style lang="scss" scoped>
-.barrageIndex {
-  position: absolute;
-  bottom: -10rpx;
-  left: 50%;
-  width: 230rpx;
-  height: 42rpx;
-  transform: translateX(-50%);
-  .barrage {
-    position: relative;
-    width: 230rpx;
-    height: 42rpx;
-    display: flex;
-    align-items: center;
-    border: 2rpx solid #bdde67;
-    background-color: #cff7ba;
-    border-radius: 12rpx;
-    margin-bottom: 10rpx;
-    .right {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      .avatar {
-        width: 38rpx;
-        height: 38rpx;
-        object-fit: cover;
-        border-radius: 50%;
-        box-sizing: border-box;
-        margin-left: 5rpx;
-      }
-      .userName {
-        margin-left: 10rpx;
-        width: 60rpx;
-        font-size: 18rpx;
-        color: #87b66e;
-      }
-      .info {
-        flex: 1;
-        font-size: 18rpx;
-        color: #87b66e;
-      }
-    }
-  }
-  .anmt {
-    animation: move 20s linear infinite;
-  }
-  @keyframes move {
-    0% {
-      transform: translateY(0rpx);
-    }
-    100% {
-      transform: translateY(-820rpx * 2);
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>
