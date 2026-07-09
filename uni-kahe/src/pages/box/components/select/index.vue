@@ -1,6 +1,7 @@
 <template>
-  <view class="custom-select">
-    <view v-if="isSelect" class="custom-select-value" />
+  <view class="relative w-32 h-32 rounded-full border-2 border-[#511818] flex flex-row items-center justify-center"
+  >
+    <view v-if="isSelect" class="m-auto w-22 h-22 bg-[#612821] rounded-full" />
   </view>
 </template>
 
@@ -21,23 +22,4 @@ defineProps({
 });
 </script>
 
-<style lang="scss" scoped>
-.custom-select {
-  position: relative;
-  width: 32rpx;
-  height: 32rpx;
-  border-radius: 50%;
-  border: 2rpx solid #511818;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  &-value {
-    margin: auto;
-    width: 22rpx;
-    height: 22rpx;
-    background: #612821;
-    border-radius: 50%;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

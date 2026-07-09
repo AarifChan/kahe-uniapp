@@ -2,26 +2,26 @@
   <!-- :opacity="navOpacity" -->
   <NavBar title="首页" :opacity="1" position="sticky" @search="handleSearch" />
   <scroll-view
-    class="home"
+    class="relative w-full flex flex-col overflow-hidden bg-main-bg"
+    style="height: calc(100vh - (env(safe-area-inset-bottom) + 100rpx));"
     :scroll-y="true"
     :scroll-with-animation="true"
     :scroll-into-view="currentVew"
     @scrolltolower="handleScrollToLower"
     @scroll="handleScroll"
   >
-    <view class="home-banner">
+    <view class="relative w-full">
       <banner
         :list="bannerList"
         @tap-lamp-action="tapLampAction"
         @tap-banner-action="tapBannerAction"
       />
-      <!-- <image class="home-banner-logo" src="/static/kahe-202510/ka-he/common/logo.png" /> -->
+      <!-- <image class="absolute left-32 w-179 h-71" style="top: calc(env(safe-area-inset-top) + 42rpx);" src="/static/kahe-202510/ka-he/common/logo.png" /> -->
     </view>
     <!-- 公告 -->
     <bulletinar />
-    <view class="home-bottom">
-      <!-- <image class="home-bottom-bg" src="/static/kahe-202510/ka-he/home/module-bg.png" /> -->
-      <view class="home-bottom-content">
+    <view class="relative w-full -mt-80">
+      <view class="absolute w-full top-100 left-0 flex flex-col">
         <items />
         <recommend :group-list="groupBuyList" />
         <tab
@@ -31,11 +31,11 @@
           :search="true"
           @did-click="handleHomeTab"
         />
-        <view class="home-bottom-padding">
+        <view class="box-border w-full px-30" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(calc((100% - 10px) / 2), 1fr)); grid-gap: 10px;"
+        >
           <view
             v-for="(item, index) in goodsList"
             :key="index"
-            class="home-padding-item"
             @tap.stop="goodsTapClick(item)"
           >
             <goods :item="item" />
@@ -187,113 +187,4 @@ onShareTimeline(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.home {
-  position: relative;
-  width: 100%;
-  height: calc(100vh - (env(safe-area-inset-bottom) + 100rpx));
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background-color: $main-bg;
-
-  &-search {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18rpx;
-    box-sizing: border-box;
-
-    .logo {
-      margin-right: 22rpx;
-      width: 149rpx;
-      height: 53rpx;
-      object-fit: cover;
-    }
-  }
-
-  //&-bulletin {
-  //  display: flex;
-  //  align-items: center;
-  //  width: 100%;
-  //  background: #fff;
-  //  height: 60rpx;
-  //  overflow: hidden;
-  //
-  //  .img {
-  //    width: 115rpx;
-  //    height: 40rpx;
-  //    object-fit: cover;
-  //    margin-right: 20rpx;
-  //    flex-shrink: 0;
-  //  }
-  //
-  //  .bulletin-content {
-  //    flex: 1;
-  //    overflow: hidden;
-  //    white-space: nowrap;
-  //    position: relative;
-  //  }
-  //
-  //  .scroll-wrapper {
-  //    display: inline-flex;
-  //    white-space: nowrap;
-  //    transition: transform 0.05s linear;
-  //  }
-  //
-  //  .scroll-item {
-  //    display: inline-block;
-  //    padding-right: 100rpx;
-  //    /* 每条公告之间的间距 */
-  //    font-size: 26rpx;
-  //    color: #333;
-  //    line-height: 40rpx;
-  //  }
-  //}
-
-  &-banner {
-    position: relative;
-    width: 100%;
-
-    &-logo {
-      position: absolute;
-      left: 32rpx;
-      top: calc(env(safe-area-inset-top) + 42rpx);
-      width: 179rpx;
-      height: 71rpx;
-    }
-  }
-
-  &-bottom {
-    margin-top: -80rpx;
-    position: relative;
-    width: 100%;
-
-    &-bg {
-      width: 750rpx;
-      height: 483rpx;
-    }
-
-    &-content {
-      position: absolute;
-      width: 100%;
-      top: 100rpx;
-      left: 0;
-      display: flex;
-      flex-direction: column;
-    }
-
-    &-padding {
-      box-sizing: border-box;
-      width: 100%;
-      padding: 0 30rpx;
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fill,
-        minmax(calc((100% - 10px) / 2), 1fr)
-      ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-      grid-gap: 10px; // 这是网格间的间隙，根据需要调整
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

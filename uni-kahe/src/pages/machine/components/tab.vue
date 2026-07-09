@@ -1,14 +1,14 @@
 <template>
-  <view class="machineTab">
-    <view class="machineTab-list">
+  <view class="relative mx-32">
+    <view class="relative flex flex-row items-center justify-between">
       <view
-        class="machineTab-list-item"
+        class="relative flex flex-col items-center justify-center"
         v-for="(item, index) in list"
         :key="index"
         @tap.stop="clickItem(index)"
       >
-        <image class="machineTab-list-item-img" :src="item.icon" />
-        <view class="machineTab-list-item-title text-flow-ellipsis-single">{{
+        <image class="w-93 h-93" :src="item.icon" />
+        <view class="w-93 text-center mt-12 text-20 text-[#763a1c] text-flow-ellipsis-single">{{
           item.title
         }}</view>
       </view>
@@ -47,36 +47,4 @@ const clickItem = (index: number) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.machineTab {
-  position: relative;
-  margin: 0 32rpx;
-
-  &-list {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    //gap: 28rpx;
-    &-item {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      &-img {
-        width: 93rpx;
-        height: 93rpx;
-      }
-      &-title {
-        width: 93rpx;
-        text-align: center;
-        margin-top: 12rpx;
-        font-size: 20rpx;
-        color: #763a1c;
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

@@ -339,6 +339,81 @@ export default defineConfig({
 
     // 行内块
     ["inline-block", { display: "inline-block" }],
+
+    // 字体
+    ["font-mono", { "font-family": "monospace" }],
+
+    // border-none
+    ["border-none", { "border-width": "0" }],
+
+    // whitespace-pre-wrap
+    ["whitespace-pre-wrap", { "white-space": "pre-wrap" }],
+
+    // object-fit
+    [/^object-(cover|contain|fill|none|scale-down)$/, ([_, value]) => ({ "object-fit": value })],
+
+    // transition
+    ["transition", { transition: "all 0.3s ease" }],
+    [/^transition-(\d+)$/, ([_, num]) => ({ transition: `all ${num}ms ease` })],
+
+    // word-break
+    [/^word-break-(normal|break-all|keep-all)$/, ([_, value]) => ({ "word-break": value })],
+
+    // cursor
+    [/^cursor-(pointer|not-allowed|default)$/, ([_, value]) => ({ cursor: value })],
+
+    // inset
+    ["inset-0", { top: "0", right: "0", bottom: "0", left: "0" }],
+    [/^inset-(\d+)$/, ([_, num]) => ({ top: rpx(Number(num)), right: rpx(Number(num)), bottom: rpx(Number(num)), left: rpx(Number(num)) })],
+
+    // min/max height
+    [/^min-h-(\d+)$/, ([_, num]) => ({ "min-height": rpx(Number(num)) })],
+    [/^max-h-(\d+)$/, ([_, num]) => ({ "max-height": rpx(Number(num)) })],
+    ["max-h-full", { "max-height": "100%" }],
+    ["max-h-none", { "max-height": "none" }],
+    ["max-h-screen", { "max-height": "100vh" }],
+
+    // max width
+    [/^max-w-(\d+)$/, ([_, num]) => ({ "max-width": rpx(Number(num)) })],
+
+    // 百分比宽度
+    ["w-1/2", { width: "50%" }],
+    ["w-1/3", { width: "33.333333%" }],
+    ["w-2/3", { width: "66.666667%" }],
+    ["w-1/4", { width: "25%" }],
+    ["w-3/4", { width: "75%" }],
+    ["w-1/5", { width: "20%" }],
+    ["w-2/5", { width: "40%" }],
+    ["w-3/5", { width: "60%" }],
+    ["w-4/5", { width: "80%" }],
+
+    // 百分比高度
+    ["h-1/2", { height: "50%" }],
+    ["h-1/3", { height: "33.333333%" }],
+    ["h-2/3", { height: "66.666667%" }],
+    ["h-1/4", { height: "25%" }],
+    ["h-3/4", { height: "75%" }],
+
+    // 百分比定位
+    ["top-1/2", { top: "50%" }],
+    ["right-1/2", { right: "50%" }],
+    ["bottom-1/2", { bottom: "50%" }],
+    ["left-1/2", { left: "50%" }],
+
+    // translate
+    ["-translate-x-1/2", { "--un-translate-x": "-50%", transform: "translateX(-50%)" }],
+    ["-translate-y-1/2", { "--un-translate-y": "-50%", transform: "translateY(-50%)" }],
+    ["translate-x-1/2", { "--un-translate-x": "50%", transform: "translateX(50%)" }],
+    ["translate-y-1/2", { "--un-translate-y": "50%", transform: "translateY(50%)" }],
+
+    // text-shadow 任意值
+    [/^text-shadow-\[(.+)\]$/, ([_, value]) => ({ "text-shadow": value.replace(/_/g, " ") })],
+
+    // 背景渐变
+    [/^bg-gradient-\[(.+)\]$/, ([_, value]) => ({ background: value.replace(/_/g, " ") })],
+
+    // 任意背景图片
+    [/^bg-\[(url\([^\]]+\))\]$/, ([_, value]) => ({ "background-image": value })],
   ],
 
   // 快捷方式 - 组合常用类名

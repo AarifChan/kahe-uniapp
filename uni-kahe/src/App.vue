@@ -105,4 +105,10 @@ scroll-view {
 .box-shake {
   animation: shake-box 0.5s ease-in-out;
 }
+
+/* 重置小程序 button 默认边框/背景 */
+button::after {
+  border: none;
+  background-color: transparent;
+}
 </style>

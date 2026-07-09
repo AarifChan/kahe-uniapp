@@ -1,15 +1,16 @@
 <template>
-  <view class="infinite">
-    <image class="infinite-bg" src="/static/kahe-202510/images/rank-bg.png" />
+  <view class="relative h-full">
+    <image class="absolute left-0 top-0 w-full" style="height: calc(100vh - env(safe-area-inset-bottom));" src="/static/kahe-202510/images/rank-bg.png" />
     <scroll-view
-      class="infinite-container"
+      class="relative w-full flex flex-col"
+      style="height: calc(100vh - 88rpx - env(safe-area-inset-bottom));"
       :scroll-y="true"
       @scrolltolower="infiniteScrollToLower"
     >
       <Top :goods="barrageList" />
-      <view class="infinite-padding">
+      <view class="mt-30 px-30" style="width: calc(100% - 60rpx); display: grid; grid-template-columns: repeat(auto-fill, minmax(40%, 1fr)); grid-gap: 10px;"
+      >
         <view
-          class="infinite-padding-item"
           v-for="(item, index) in goodsList"
           :key="index"
           @tap.stop="goodsTapClick(item)"
@@ -43,34 +44,4 @@ onMounted(() => {
   getGoodsList(1);
 });
 </script>
-<style lang="scss" scoped>
-.infinite {
-  position: relative;
-  height: 100%;
-  &-bg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: calc(100vh - env(safe-area-inset-bottom));
-  }
-  &-container {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 88rpx - env(safe-area-inset-bottom));
-    display: flex;
-    flex-direction: column;
-  }
-  &-padding {
-    margin-top: 30rpx;
-    width: calc(100% - 60rpx);
-    padding: 0 30rpx;
-    display: grid;
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax(40%, 1fr)
-    ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-    grid-gap: 10px; // 这是网格间的间隙，根据需要调整
-  }
-}
-</style>
+<style lang="scss" scoped></style>

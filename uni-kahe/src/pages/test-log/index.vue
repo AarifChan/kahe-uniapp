@@ -1,72 +1,72 @@
 <template>
-  <view class="log-test-page">
-    <view class="header">
-      <text class="title">日志插件测试</text>
+  <view class="min-h-screen bg-[#f5f5f5] pb-40">
+    <view class="p-60 px-40 mb-30 bg-gradient-[linear-gradient(135deg,#667eea_0%,#764ba2_100%)]">
+      <text class="block text-48 font-bold text-white text-center">日志插件测试</text>
     </view>
 
     <!-- 基础日志测试 -->
-    <view class="section">
-      <view class="section-title">基础日志测试</view>
-      <view class="button-group">
-        <button class="btn btn-debug" @click="testDebug">测试 DEBUG</button>
-        <button class="btn btn-info" @click="testInfo">测试 INFO</button>
-        <button class="btn btn-warn" @click="testWarn">测试 WARN</button>
-        <button class="btn btn-error" @click="testError">测试 ERROR</button>
+    <view class="bg-white m-20 mx-30 rounded-16 p-30 shadow-[0_2rpx_12rpx_rgba(0,0,0,0.1)]">
+      <view class="text-32 font-bold text-[#333] mb-20 pb-15 border-b-2 border-[#f0f0f0]">基础日志测试</view>
+      <view class="flex flex-wrap gap-20">
+        <button class="min-w-180 p-20 px-30 rounded-12 text-28 text-white border-none bg-[#9ca3af]" @click="testDebug">测试 DEBUG</button>
+        <button class="min-w-180 p-20 px-30 rounded-12 text-28 text-white border-none bg-[#3b82f6]" @click="testInfo">测试 INFO</button>
+        <button class="min-w-180 p-20 px-30 rounded-12 text-28 text-white border-none bg-[#f59e0b]" @click="testWarn">测试 WARN</button>
+        <button class="min-w-180 p-20 px-30 rounded-12 text-28 text-white border-none bg-[#ef4444]" @click="testError">测试 ERROR</button>
       </view>
     </view>
 
     <!-- 对象日志测试 -->
-    <view class="section">
-      <view class="section-title">对象日志测试</view>
-      <view class="button-group">
-        <button class="btn btn-primary" @click="testObjectLog">记录对象数据</button>
+    <view class="bg-white m-20 mx-30 rounded-16 p-30 shadow-[0_2rpx_12rpx_rgba(0,0,0,0.1)]">
+      <view class="text-32 font-bold text-[#333] mb-20 pb-15 border-b-2 border-[#f0f0f0]">对象日志测试</view>
+      <view class="flex flex-wrap gap-20">
+        <button class="min-w-180 p-20 px-30 rounded-12 text-28 text-white border-none bg-[#667eea]" @click="testObjectLog">记录对象数据</button>
       </view>
     </view>
 
     <!-- 性能测试 -->
-    <view class="section">
-      <view class="section-title">性能监控</view>
-      <view class="button-group">
-        <button class="btn btn-primary" @click="testPerformance">测试性能监控</button>
+    <view class="bg-white m-20 mx-30 rounded-16 p-30 shadow-[0_2rpx_12rpx_rgba(0,0,0,0.1)]">
+      <view class="text-32 font-bold text-[#333] mb-20 pb-15 border-b-2 border-[#f0f0f0]">性能监控</view>
+      <view class="flex flex-wrap gap-20">
+        <button class="min-w-180 p-20 px-30 rounded-12 text-28 text-white border-none bg-[#667eea]" @click="testPerformance">测试性能监控</button>
       </view>
-      <view v-if="perfResult" class="result">
+      <view v-if="perfResult" class="mt-20 p-20 bg-[#f3f4f6] rounded-8 text-28 text-[#374151]">
         <text>性能结果: {{ perfResult }}</text>
       </view>
     </view>
 
     <!-- API 日志 -->
-    <view class="section">
-      <view class="section-title">API 请求日志</view>
-      <view class="button-group">
-        <button class="btn btn-primary" @click="testApiLog">模拟 API 请求</button>
+    <view class="bg-white m-20 mx-30 rounded-16 p-30 shadow-[0_2rpx_12rpx_rgba(0,0,0,0.1)]">
+      <view class="text-32 font-bold text-[#333] mb-20 pb-15 border-b-2 border-[#f0f0f0]">API 请求日志</view>
+      <view class="flex flex-wrap gap-20">
+        <button class="min-w-180 p-20 px-30 rounded-12 text-28 text-white border-none bg-[#667eea]" @click="testApiLog">模拟 API 请求</button>
       </view>
     </view>
 
     <!-- 日志管理 -->
-    <view class="section">
-      <view class="section-title">日志管理</view>
-      <view class="button-group">
-        <button class="btn btn-secondary" @click="getTodayLog">获取今日日志</button>
-        <button class="btn btn-secondary" @click="getLogStats">获取日志统计</button>
-        <button class="btn btn-success" @click="exportLogs">导出日志</button>
-        <button class="btn btn-danger" @click="clearLogs">清空日志</button>
+    <view class="bg-white m-20 mx-30 rounded-16 p-30 shadow-[0_2rpx_12rpx_rgba(0,0,0,0.1)]">
+      <view class="text-32 font-bold text-[#333] mb-20 pb-15 border-b-2 border-[#f0f0f0]">日志管理</view>
+      <view class="flex flex-wrap gap-20">
+        <button class="min-w-180 p-20 px-30 rounded-12 text-28 text-white border-none bg-[#6b7280]" @click="getTodayLog">获取今日日志</button>
+        <button class="min-w-180 p-20 px-30 rounded-12 text-28 text-white border-none bg-[#6b7280]" @click="getLogStats">获取日志统计</button>
+        <button class="min-w-180 p-20 px-30 rounded-12 text-28 text-white border-none bg-[#10b981]" @click="exportLogs">导出日志</button>
+        <button class="min-w-180 p-20 px-30 rounded-12 text-28 text-white border-none bg-[#dc2626]" @click="clearLogs">清空日志</button>
       </view>
     </view>
 
     <!-- 结果显示 -->
-    <view v-if="logContent" class="section">
-      <view class="section-title">日志内容</view>
-      <scroll-view class="log-content" scroll-y>
-        <text class="log-text">{{ logContent }}</text>
+    <view v-if="logContent" class="bg-white m-20 mx-30 rounded-16 p-30 shadow-[0_2rpx_12rpx_rgba(0,0,0,0.1)]">
+      <view class="text-32 font-bold text-[#333] mb-20 pb-15 border-b-2 border-[#f0f0f0]">日志内容</view>
+      <scroll-view class="max-h-400 bg-[#1f2937] rounded-8 p-20" scroll-y>
+        <text class="font-mono text-24 text-[#e5e7eb] whitespace-pre-wrap word-break-break-all">{{ logContent }}</text>
       </scroll-view>
     </view>
 
-    <view v-if="statsInfo" class="section">
-      <view class="section-title">统计信息</view>
-      <view class="stats-box">
-        <text class="stats-item">文件数: {{ statsInfo.totalFiles }}</text>
-        <text class="stats-item">总大小: {{ statsInfo.totalSizeReadable }}</text>
-        <text class="stats-item">目录: {{ statsInfo.logDirectory }}</text>
+    <view v-if="statsInfo" class="bg-white m-20 mx-30 rounded-16 p-30 shadow-[0_2rpx_12rpx_rgba(0,0,0,0.1)]">
+      <view class="text-32 font-bold text-[#333] mb-20 pb-15 border-b-2 border-[#f0f0f0]">统计信息</view>
+      <view class="bg-[#f3f4f6] rounded-8 p-20">
+        <text class="block text-28 text-[#4b5563] mb-10">文件数: {{ statsInfo.totalFiles }}</text>
+        <text class="block text-28 text-[#4b5563] mb-10">总大小: {{ statsInfo.totalSizeReadable }}</text>
+        <text class="block text-28 text-[#4b5563] mb-10">目录: {{ statsInfo.logDirectory }}</text>
       </view>
     </view>
   </view>
@@ -214,125 +214,4 @@ const clearLogs = () => {
 };
 </script>
 
-<style lang="scss" scoped>
-.log-test-page {
-  min-height: 100vh;
-  background-color: #f5f5f5;
-  padding-bottom: 40rpx;
-}
-
-.header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 60rpx 40rpx;
-  margin-bottom: 30rpx;
-
-  .title {
-    display: block;
-    font-size: 48rpx;
-    font-weight: bold;
-    color: #fff;
-    text-align: center;
-  }
-}
-
-.section {
-  background: #fff;
-  margin: 20rpx 30rpx;
-  border-radius: 16rpx;
-  padding: 30rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
-
-  .section-title {
-    font-size: 32rpx;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20rpx;
-    padding-bottom: 15rpx;
-    border-bottom: 2rpx solid #f0f0f0;
-  }
-}
-
-.button-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20rpx;
-
-  .btn {
-    min-width: 180rpx;
-    padding: 20rpx 30rpx;
-    border-radius: 12rpx;
-    font-size: 28rpx;
-    color: #fff;
-    border: none;
-
-    &-debug {
-      background: #9ca3af;
-    }
-
-    &-info {
-      background: #3b82f6;
-    }
-
-    &-warn {
-      background: #f59e0b;
-    }
-
-    &-error {
-      background: #ef4444;
-    }
-
-    &-primary {
-      background: #667eea;
-    }
-
-    &-secondary {
-      background: #6b7280;
-    }
-
-    &-success {
-      background: #10b981;
-    }
-
-    &-danger {
-      background: #dc2626;
-    }
-  }
-}
-
-.result {
-  margin-top: 20rpx;
-  padding: 20rpx;
-  background: #f3f4f6;
-  border-radius: 8rpx;
-  font-size: 28rpx;
-  color: #374151;
-}
-
-.log-content {
-  max-height: 400rpx;
-  background: #1f2937;
-  border-radius: 8rpx;
-  padding: 20rpx;
-
-  .log-text {
-    font-family: monospace;
-    font-size: 24rpx;
-    color: #e5e7eb;
-    white-space: pre-wrap;
-    word-break: break-all;
-  }
-}
-
-.stats-box {
-  background: #f3f4f6;
-  border-radius: 8rpx;
-  padding: 20rpx;
-
-  .stats-item {
-    display: block;
-    font-size: 28rpx;
-    color: #4b5563;
-    margin-bottom: 10rpx;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

@@ -1,16 +1,18 @@
 <template>
   <scroll-view
+    class="relative w-full flex flex-col bg-main-bg"
+    style="height: calc(100vh - env(safe-area-inset-bottom) - 132rpx);"
     :scroll-y="true"
-    class="machine-container"
     @scrolltolower="machineScroll"
   >
     <image
-      class="machine-bg"
+      class="w-full aspect-ratio-[721/362]"
       src="/static/kahe-202510/ka-he/merchant/bg-top.png"
     />
-    <view class="machine-content">
+    <view class="absolute left-0 top-0 w-full">
       <image
-        class="machine-logo"
+        class="ml-32"
+        style="width: calc(149rpx * 1.3); height: calc(53rpx * 1.3);"
         src="/static/kahe-202510/jikaquan/jikaquan-logo.png"
       />
       <Top :types="false" :goods="barrageList" />
@@ -68,35 +70,4 @@ onShareTimeline(() => {
   };
 });
 </script>
-<style lang="scss" scoped>
-.machine {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-
-  overflow: hidden;
-  &-bg {
-    width: 100%;
-    aspect-ratio: 721 / 362;
-  }
-  &-logo {
-    margin-left: 32rpx;
-    width: calc(149rpx * 1.3);
-    height: calc(53rpx * 1.3);
-  }
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-  }
-  &-container {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - env(safe-area-inset-bottom) - 132rpx);
-    display: flex;
-    background-color: $main-bg;
-    flex-direction: column;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

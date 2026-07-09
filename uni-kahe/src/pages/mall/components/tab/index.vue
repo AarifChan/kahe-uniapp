@@ -1,29 +1,34 @@
 <template>
-    <view class="container">
-        <image class="mallLogo" src="/static/kahe-202510/mall/mall-tab-title.png" />
-        <view class="mallTab">
+    <view class="relative flex flex-row items-center justify-between w-full box-border p-8 px-16">
+        <image class="w-256 h-71" src="/static/kahe-202510/mall/mall-tab-title.png" />
+        <view class="relative flex flex-row items-center justify-start"
+        >
             <text
-                class="mallTab-item price-font"
-                :class="current === 0 ? 'mallTab-active' : ''"
+                class="text-36 font-normal text-[#727272] px-10 price-font"
+                :class="current === 0 ? 'text-white' : ''"
                 @tap.stop="didClick(0)"
                 >综合</text
             >
             <text
-                class="mallTab-item price-font"
-                :class="current === 1 ? 'mallTab-active' : ''"
+                class="text-36 font-normal text-[#727272] px-10 price-font"
+                :class="current === 1 ? 'text-white' : ''"
                 @tap.stop="didClick(1)"
                 >新品</text
             >
-            <view class="mallTab-price" @tap.stop="didClick(2)">
-                <text class="mallTab-item price-font">价格</text>
-                <view class="mallTab-sort">
+            <view class="flex flex-row items-center" @tap.stop="didClick(2)"
+            >
+                <text class="text-36 font-normal text-[#727272] px-10 price-font">价格</text>
+                <view class="flex flex-col items-center"
+                >
                     <view
-                        class="mallTab-sort-up"
-                        :class="isAscending ? 'mallTab-sort-up-active' : ''"
+                        class="w-0 h-0 mb-4"
+                        style="border-left: 14rpx solid transparent; border-right: 14rpx solid transparent; border-bottom: 14rpx solid #727272;"
+                        :style="isAscending ? { borderBottomColor: '#ffffff' } : {}"
                     />
                     <view
-                        class="mallTab-sort-down"
-                        :class="!isAscending ? 'mallTab-sort-down-active' : ''"
+                        class="w-0 h-0"
+                        style="border-left: 14rpx solid transparent; border-right: 14rpx solid transparent; border-top: 14rpx solid #727272;"
+                        :style="!isAscending ? { borderTopColor: '#ffffff' } : {}"
                     />
                 </view>
             </view>
@@ -56,69 +61,4 @@ const didClick = (type: number) => {
 }
 </script>
 
-<style lang="scss" scoped>
-.container {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 8px 16px;
-}
-.mallLogo {
-    width: 256rpx;
-    height: 71rpx;
-}
-.mallTab {
-    position: relative;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-
-    &-price {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-
-    &-sort {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        &-up {
-            width: 0;
-            height: 0;
-            border-left: 14rpx solid transparent;
-            border-right: 14rpx solid transparent;
-            border-bottom: 14rpx solid #727272;
-            margin-bottom: 4rpx;
-        }
-        &-up-active {
-            border-bottom: 14rpx solid #ffffff;
-        }
-        &-down {
-            width: 0;
-            height: 0;
-            border-left: 14rpx solid transparent;
-            border-right: 14rpx solid transparent;
-            border-top: 14rpx solid #727272;
-        }
-        &-down-active {
-            border-top: 14rpx solid #ffffff;
-        }
-    }
-    &-item {
-        font-size: 36rpx;
-        font-weight: 400;
-        color: #727272;
-        padding: 0 10rpx;
-    }
-    &-active {
-        color: #ffffff;
-    }
-}
-</style>
+<style lang="scss" scoped></style>

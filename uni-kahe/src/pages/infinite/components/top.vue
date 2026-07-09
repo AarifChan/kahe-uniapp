@@ -1,23 +1,23 @@
 <template>
-  <view class="top">
-    <image class="top-bg" src="/static/kahe-202510/ka-he/machine/top-bg.png" />
+  <view class="relative w-full aspect-ratio-[788/379]">
+    <image class="w-full aspect-ratio-[788/379]" src="/static/kahe-202510/ka-he/machine/top-bg.png" />
     <image
       v-if="types"
-      class="top-center"
+      class="absolute left-1/2 -top-20 -translate-x-1/2 h-360 w-340"
       src="/static/kahe-202510/images/infinite-girl.gif"
     />
-    <image v-else class="top-center" src="/static/kahe-202510/images/card-girl.gif" />
-    <view class="top-left">
-      <image class="top-left-bg" src="/static/kahe-202510/ka-he/machine/card-item-bg.png" />
-      <view class="top-left-tips">vip客服-可可</view>
-      <view v-if="types" class="top-left-title">
+    <image v-else class="absolute left-1/2 -top-20 -translate-x-1/2 h-360 w-340" src="/static/kahe-202510/images/card-girl.gif" />
+    <view class="absolute top-181 left-40 w-436 h-104">
+      <image class="w-full h-full" src="/static/kahe-202510/ka-he/machine/card-item-bg.png" />
+      <view class="absolute left-6 top-0 font-normal text-18 text-black">vip客服-可可</view>
+      <view v-if="types" class="absolute left-32 top-36 mr-8 text-20 text-white">
         主人，请选择心仪的抽卡机，海量卡牌任您挑选。
       </view>
-      <view v-else class="top-left-title">
+      <view v-else class="absolute left-32 top-36 mr-8 text-20 text-white">
         主人，请选择心仪的抽卡机，海量卡牌任您挑选。
       </view>
     </view>
-    <view class="top-right">
+    <view class="absolute top-142 right-48 w-242 h-154 flex justify-center overflow-hidden">
       <Barrage :list="goods" />
     </view>
   </view>
@@ -37,59 +37,4 @@ defineProps({
   },
 });
 </script>
-<style lang="scss" scoped>
-.top {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 788 / 379;
-  &-center {
-    position: absolute;
-    left: 50%;
-    top: -20rpx;
-    transform: translateX(-50%);
-    height: 360rpx;
-    width: 340rpx;
-  }
-  &-bg {
-    width: 100%;
-    aspect-ratio: 788 / 379;
-  }
-  &-left {
-    position: absolute;
-    top: 181rpx;
-    left: 40rpx;
-    width: 436rpx;
-    height: 104rpx;
-    &-tips {
-      position: absolute;
-      left: 6rpx;
-      top: 0;
-      font-weight: normal;
-      font-size: 18rpx;
-      color: #000000;
-    }
-    &-bg {
-      width: 100%;
-      height: 100%;
-    }
-    &-title {
-      position: absolute;
-      left: 32rpx;
-      top: 36rpx;
-      margin-right: 8rpx;
-      font-size: 20rpx;
-      color: #ffffff;
-    }
-  }
-  &-right {
-    top: 142rpx;
-    right: 48rpx;
-    position: absolute;
-    width: 242rpx;
-    height: 154rpx;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

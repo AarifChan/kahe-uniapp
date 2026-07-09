@@ -1,19 +1,20 @@
 <template>
-    <view class="mallC">
+    <view class="relative h-122 p-20 px-30" style="width: calc(100% - 30rpx);"
+    >
         <scroll-view
-            class="mallC-category"
+            class="mt-8 flex whitespace-nowrap relative h-full"
             :enable-flex="true"
             :scroll-x="true"
             scroll-with-animation
         >
             <view
-                class="mallC-category-item"
+                class="relative flex flex-col items-center mr-32"
                 v-for="(item, index) in mallCategory"
                 :key="'id' + index"
                 @tap.stop="handleClickCategory(item)"
             >
-                <image class="mallC-category-item-icon" :src="item.image" />
-                <text class="mallC-category-item-title">{{ item.name }}</text>
+                <image class="w-92 h-92" :src="item.image" />
+                <text class="text-22 font-normal text-black">{{ item.name }}</text>
             </view>
         </scroll-view>
     </view>
@@ -30,34 +31,4 @@ onMounted(async () => {
 })
 </script>
 
-<style lang="scss" scoped>
-.mallC {
-    position: relative;
-    height: 122rpx;
-    padding: 20rpx 30rpx;
-    width: calc(100% - 30rpx);
-    &-category {
-        margin-top: 8rpx;
-        display: flex;
-        white-space: nowrap;
-        position: relative;
-        height: 100%;
-        &-item {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-right: 32rpx;
-            &-icon {
-                width: 92rpx;
-                height: 92rpx;
-            }
-            &-title {
-                font-size: 22rpx;
-                font-weight: 400;
-                color: #000000;
-            }
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

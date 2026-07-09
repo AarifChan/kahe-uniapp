@@ -1,52 +1,56 @@
 <template>
-  <view class="pageLogin">
-    <image class="pageLogin-bg" src="/static/kahe-202510/new-login/bg.png" />
-    <view class="pageLogin-content">
-      <view class="pageLogin-content-top">
-        <view class="pageLogin-content-top-title theme-font">欢迎登录</view>
+  <view class="relative w-full h-screen flex flex-col">
+    <image class="w-full h-full" src="/static/kahe-202510/new-login/bg.png" />
+    <view class="absolute left-0 top-0 w-full h-full flex flex-col justify-center items-center">
+      <view class="flex flex-row items-center justify-center w-screen">
+        <view class="text-center text-[#83e3ff] font-normal text-82" style="text-shadow: 0 0 2rpx #2b2b2b, 0 0 2rpx #2b2b2b, 0 0 2rpx #2b2b2b, 0 0 2rpx #2b2b2b;"
+          >欢迎登录</view
+        >
         <image
-          class="pageLogin-content-top-subTitle"
+          class="w-97 h-66 mb-80"
           src="/static/kahe-202510/new-login/item.png"
         />
       </view>
 
-      <view class="pageLogin-content-actions">
+      <view class="mt-120 w-full flex flex-col items-center justify-center">
         <!-- #ifdef MP-WEIXIN -->
         <button
           v-if="checked"
-          class="pageLogin-content-actions-btn"
+          class="login-btn relative my-10 w-494 h-68 p-0 border-none rounded-34 bg-transparent"
           open-type="getPhoneNumber"
           @getphonenumber="getPhoneNumber"
         >
           <image
-            class="pageLogin-content-actions-btn-img"
+            class="w-full h-full"
             src="/static/kahe-202510/new-login/btn1.png"
           />
-          <view class="pageLogin-content-actions-btn-title"
+          <view class="absolute left-0 top-0 w-full leading-67 text-center text-27 text-white"
             >手机号授权登录</view
           >
         </button>
         <button
           v-else
-          class="pageLogin-content-actions-btn"
+          class="login-btn relative my-10 w-494 h-68 p-0 border-none rounded-34 bg-transparent"
           @tap.stop="handleAgreement"
         >
           <image
-            class="pageLogin-content-actions-btn-img"
+            class="w-full h-full"
             src="/static/kahe-202510/new-login/btn1.png"
           />
-          <view class="pageLogin-content-actions-btn-title"
+          <view class="absolute left-0 top-0 w-full leading-67 text-center text-27 text-white"
             >手机号授权登录</view
           >
         </button>
         <!-- #endif -->
 
         <!-- #ifdef H5 || APP-PLUS -->
-        <view class="pageLogin-content-actions-form">
-          <view class="pageLogin-content-actions-form-field">
+        <view class="w-560 mb-10 flex flex-col items-center"
+        >
+          <view class="w-full h-78 px-22 box-border bg-[rgba(255,255,255,0.85)] rounded-16 flex items-center mb-18"
+          >
             <input
               v-model="form.phone"
-              class="pageLogin-content-actions-form-input"
+              class="flex-1 h-78 leading-78 text-28 text-black"
               type="number"
               maxlength="11"
               placeholder="请输入手机号"
@@ -55,41 +59,43 @@
 
           <view
             v-if="loginMode === 'password'"
-            class="pageLogin-content-actions-form-field"
+            class="w-full h-78 px-22 box-border bg-[rgba(255,255,255,0.85)] rounded-16 flex items-center mb-18"
           >
             <input
               v-model="form.password"
-              class="pageLogin-content-actions-form-input"
+              class="flex-1 h-78 leading-78 text-28 text-black"
               password
               placeholder="请输入密码"
             />
           </view>
 
-          <view v-else class="pageLogin-content-actions-form-field sms">
+          <view v-else class="w-full h-78 px-22 box-border bg-[rgba(255,255,255,0.85)] rounded-16 flex items-center justify-between mb-18"
+          >
             <input
               v-model="form.smsCode"
-              class="pageLogin-content-actions-form-input"
+              class="flex-1 h-78 leading-78 text-28 text-black"
               type="number"
               maxlength="6"
               placeholder="请输入验证码"
             />
             <view
-              class="pageLogin-content-actions-form-smsBtn"
-              :class="{ disabled: smsSending || smsCountdown > 0 }"
+              class="ml-16 py-10 px-16 text-24 text-[#1a5fb6] border border-[#1a5fb6] rounded-12 bg-[rgba(255,255,255,0.9)] whitespace-nowrap"
+              :class="{ 'opacity-60': smsSending || smsCountdown > 0 }"
               @tap.stop="handleSendSms"
             >
               {{ smsCountdown > 0 ? `${smsCountdown}s` : "获取验证码" }}
             </view>
           </view>
-          <view class="pageLogin-content-actions-form-switchRow">
+          <view class="w-full flex flex-row items-center justify-between mb-24"
+          >
             <view
-              class="pageLogin-content-actions-form-switchRow-left"
+              class="text-26 text-[#1a5fb6] py-6 px-0"
               @tap.stop="toggleLoginMode"
             >
               {{ loginMode === "password" ? "验证码登录" : "密码登录" }}
             </view>
             <view
-              class="pageLogin-content-actions-form-switchRow-right"
+              class="text-26 text-[#666666] py-6 px-0"
               @tap.stop="handleForgotPassword"
             >
               忘记密码
@@ -97,29 +103,31 @@
           </view>
 
           <button
-            class="pageLogin-content-actions-btn"
+            class="login-btn relative my-10 w-494 h-68 p-0 border-none rounded-34 bg-transparent"
             @tap.stop="handleSubmit"
           >
             <image
-              class="pageLogin-content-actions-btn-img"
+              class="w-full h-full"
               src="/static/kahe-202510/new-login/btn1.png"
             />
-            <view class="pageLogin-content-actions-btn-title">登录</view>
+            <view class="absolute left-0 top-0 w-full leading-67 text-center text-27 text-white"
+              >登录</view
+            >
           </button>
 
           <!-- #ifdef APP-PLUS -->
           <button
             v-if="isWechatInstalled"
-            class="pageLogin-content-actions-btn wx"
+            class="login-btn relative my-10 w-494 h-68 p-0 border-none rounded-34 bg-transparent"
             @tap.stop="handleWechatOneClick"
           >
             <image
-              class="pageLogin-content-actions-btn-img"
+              class="w-full h-full"
               src="/static/kahe-202510/new-login/btn2.png"
             />
             <view
-              class="pageLogin-content-actions-btn-title"
-              style="color: black"
+              class="absolute left-0 top-0 w-full leading-67 text-center text-27"
+              style="color: black;"
               >微信一键登录</view
             >
           </button>
@@ -128,34 +136,35 @@
         <!-- #endif -->
 
         <button
-          class="pageLogin-content-actions-btn"
+          class="login-btn relative my-10 w-494 h-68 p-0 border-none rounded-34 bg-transparent"
           style="border: 1rpx solid black"
           @tap.stop="handleUnLogin"
         >
-          <view class="pageLogin-content-actions-btn-title" style="color: black"
+          <view class="absolute left-0 top-0 w-full leading-67 text-center text-27" style="color: black;"
             >暂不登录</view
           >
         </button>
       </view>
-      <view class="pageLogin-content-bottom">
-        <view class="check" @tap.stop="checked = !checked">
-          <view class="pageLogin-content-bottom-check">
+      <view class="flex flex-row items-center w-full justify-center">
+        <view class="p-16" @tap.stop="checked = !checked">
+          <view class="relative m-0 mx-12 p-2 border border-[#999999] flex flex-row items-center justify-center rounded-full"
+          >
             <view
-              class="pageLogin-content-bottom-check-value"
+              class="w-26 h-26 rounded-26"
               :style="{ background: checked ? '#4a8edb' : 'transparent' }"
             />
           </view>
         </view>
-        <view class="pageLogin-content-bottom-tips">
+        <view class="text-24 text-black leading-58"
+        >
           我已阅读并同意<text
-            class="other"
+            class="text-[#52a6ff]"
             @tap.stop="showModalType(ModalType.UserProtocol)"
-            >《用户协议》</text
-          >与<text
-            class="other"
+            >《用户协议》</text>
+          与<text
+            class="text-[#52a6ff]"
             @tap.stop="showModalType(ModalType.UserProtocol)"
-            >《隐私政策》</text
-          >
+            >《隐私政策》</text>
         </view>
       </view>
     </view>
@@ -439,188 +448,4 @@ const handleAgreement = () => {
 };
 </script>
 
-<style lang="scss" scoped>
-.pageLogin {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  &-bg {
-    width: 100%;
-    height: 100%;
-  }
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    &-top {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      width: 100vw;
-      &-title {
-        text-align: center;
-        color: #83e3ff;
-        font-weight: 400;
-        font-size: 82rpx;
-        @include text-stroke-color(#2b2b2b);
-      }
-      &-subTitle {
-        width: 97rpx;
-        height: 66rpx;
-        margin-bottom: 80rpx;
-      }
-    }
-
-    &-actions {
-      //position: absolute;
-      //bottom: calc(env(safe-area-inset-bottom) + 300rpx);
-      //left: 0;
-      margin-top: 120rpx;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      &-form {
-        width: 560rpx;
-        margin-bottom: 10rpx;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        &-switchRow {
-          width: 100%;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 24rpx;
-
-          &-left {
-            font-size: 26rpx;
-            color: #1a5fb6;
-            padding: 6rpx 0;
-          }
-
-          &-right {
-            font-size: 26rpx;
-            color: #666;
-            padding: 6rpx 0;
-          }
-        }
-
-        &-field {
-          width: 100%;
-          height: 78rpx;
-          padding: 0 22rpx;
-          box-sizing: border-box;
-          background: rgba(255, 255, 255, 0.85);
-          border-radius: 16rpx;
-          display: flex;
-          align-items: center;
-          margin-bottom: 18rpx;
-        }
-        &-field.sms {
-          justify-content: space-between;
-        }
-        &-input {
-          flex: 1;
-          height: 78rpx;
-          line-height: 78rpx;
-          font-size: 28rpx;
-          color: #000;
-        }
-        &-smsBtn {
-          margin-left: 16rpx;
-          padding: 10rpx 16rpx;
-          font-size: 24rpx;
-          color: #1a5fb6;
-          border: 1rpx solid #1a5fb6;
-          border-radius: 12rpx;
-          background: rgba(255, 255, 255, 0.9);
-          white-space: nowrap;
-        }
-        &-smsBtn.disabled {
-          opacity: 0.6;
-        }
-      }
-      &-btn {
-        position: relative;
-        margin: 10rpx 0;
-        width: 494rpx;
-        height: 68rpx;
-        padding: 0;
-        border: none;
-        border-radius: 34rpx;
-        background-color: transparent;
-        &-img {
-          width: 100%;
-          height: 100%;
-        }
-        &-title {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          line-height: 67rpx;
-          text-align: center;
-          font-size: 27rpx;
-          color: #ffffff;
-        }
-      }
-      &-btn::after {
-        padding: 0;
-        border: none;
-
-        background-color: transparent;
-      }
-    }
-
-    &-bottom {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      width: 100%;
-      justify-content: center;
-      &-check {
-        position: relative;
-        margin: 0 12rpx;
-        padding: 2rpx;
-        border: 1rpx solid #999999;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        //aspect-ratio: 1;
-        &-value {
-          width: 26rpx;
-          height: 26rpx;
-          border-radius: 26rpx;
-          background-color: #4a8edb;
-        }
-      }
-      &-tips {
-        font-size: 24rpx;
-        color: #000000;
-        line-height: 58rpx;
-      }
-    }
-  }
-}
-.other {
-  color: #52a6ff;
-}
-.check {
-  padding: 16rpx;
-}
-</style>
+<style lang="scss" scoped></style>

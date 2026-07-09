@@ -1,7 +1,7 @@
 <template>
-  <view class="index">
+  <view class="relative w-full h-screen bg-main-bg">
     <!--    <NavBar />-->
-    <view class="index-scroll">
+    <view class="relative w-full" style="height: calc(100vh - (env(safe-area-inset-bottom) + 100rpx));">
       <Home Merchant v-if="current === 0" />
       <Merchant v-else-if="current === 1" />
       <Machine v-else-if="current === 2" />
@@ -55,16 +55,4 @@ onShareTimeline(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.index {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background-color: $main-bg;
-  &-scroll {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - (env(safe-area-inset-bottom) + 100rpx));
-  }
-}
-</style>
+<style lang="scss" scoped></style>

@@ -1,30 +1,33 @@
 <template>
   <NavBar :opacity="1" position="sticky" :top-safe="false" title="福利" />
-  <view class="welfare">
+  <view class="relative w-full h-screen bg-main-bg overflow-hidden">
     <image
-      class="welfare-bg"
+      class="relative w-750 h-1433"
       src="/static/kahe-202510/ka-he/welfare/welfare-bg.png"
     />
-    <view class="welfare-content">
-      <view class="welfare-content-top" />
-      <view class="welfare-content-padding">
+    <view class="absolute top-0 left-0 w-full flex flex-col">
+      <view class="w-full h-463" />
+      <view class="box-border w-full px-30" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(calc((100% - 32rpx) / 2), 1fr)); grid-gap: 32rpx;"
+      >
         <view
-          class="welfare-content-padding-item"
+          class="relative w-full aspect-ratio-[339/116]"
           v-for="(item, index) in itemList"
           :key="'card' + index"
           @tap.stop="clickItem(item)"
         >
           <image
-            class="welfare-content-padding-item-img"
+            class="w-full h-full"
             src="/static/kahe-202510/ka-he/welfare/card-bg.png"
           />
-          <view class="welfare-content-padding-item-content">
+          <view class="absolute left-0 top-0 w-full h-full"
+          >
             <view
-              class="welfare-content-padding-item-content-title other-font"
+              class="absolute top-24 left-50 font-normal text-39 text-[#a26e4e] mb-8 other-font"
+              style="text-shadow: 0 0 2rpx #ffffff, 0 0 2rpx #ffffff, 0 0 2rpx #ffffff, 0 0 2rpx #ffffff;"
               >{{ item.title }}</view
             >
             <image
-              class="welfare-content-padding-item-content-icon"
+              class="absolute right-0 top-0 w-120 h-120"
               :src="item.image"
             />
           </view>
@@ -180,73 +183,4 @@ onShareTimeline(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.welfare {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background-color: $main-bg;
-  overflow: hidden;
-  &-bg {
-    position: relative;
-    width: 750rpx;
-    height: 1433rpx;
-  }
-  &-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    &-top {
-      width: 100%;
-      height: 463rpx;
-    }
-    &-padding {
-      box-sizing: border-box;
-      width: 100%;
-      padding: 0 30rpx;
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fill,
-        minmax(calc((100% - 32rpx) / 2), 1fr)
-      ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-      grid-gap: 32rpx; // 这是网格间的间隙，根据需要调整
-      &-item {
-        position: relative;
-        width: 100%;
-        aspect-ratio: 339 / 116;
-        &-img {
-          width: 100%;
-          height: 100%;
-        }
-        &-content {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          &-title {
-            position: absolute;
-            top: 24rpx;
-            left: 50rpx;
-            font-weight: 400;
-            font-size: 39rpx;
-            color: #a26e4e;
-            @include text-stroke-color(#ffffff);
-            margin-bottom: 8rpx;
-          }
-          &-icon {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 120rpx;
-            height: 120rpx;
-          }
-        }
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>
