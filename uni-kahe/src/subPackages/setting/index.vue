@@ -1,11 +1,11 @@
 <template>
-  <view class="setting">
+  <view class="relative w-full">
     <image
-      class="setting-bg"
+      class="w-full h-screen"
       src="/static/kahe-202510/images/mine-bg.png"
     />
-    <view class="setting-content">
-      <view class="setting-content-row">
+    <view class="absolute left-0 top-0 w-full" style="padding: 16px">
+      <view style="border-radius: 8px; overflow: hidden; margin-bottom: 16px">
         <!-- 未绑定手机号时显示绑定入口 -->
         <SettingCell
           v-if="!hasPhone"
@@ -45,7 +45,7 @@
       </view>
 
       <!-- 退出登录 -->
-      <view class="setting-content-row">
+      <view style="border-radius: 8px; overflow: hidden">
         <SettingCell
           title="退出登录"
           :show-arrow="false"
@@ -224,31 +224,7 @@ const handleWriteOffRequest = async () => {
       uni.redirectTo({ url: "/pages/welcome/index" });
     }, 1000);
   }
-};
+}
 </script>
 
-<style lang="scss" scoped>
-.setting {
-  position: relative;
-  width: 100%;
-
-  &-bg {
-    width: 100%;
-    height: 100vh;
-  }
-
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    padding: 16px;
-
-    &-row {
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 16px;
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

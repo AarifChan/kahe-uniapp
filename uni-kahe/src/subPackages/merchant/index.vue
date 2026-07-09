@@ -1,10 +1,10 @@
 <template>
   <scroll-view
-    class="merchantInfo"
+    class="merchantInfo relative w-full h-screen bg-gradient-[linear-gradient(180deg,#fee5c4,#fff6ea)]"
     :scroll-y="true"
     @scrolltolower="handleScrollToLower"
   >
-    <image class="merchantInfo-top" :src="detail.logo" />
+    <image class="merchantInfo-top relative w-750 h-642" :src="detail.logo" />
     <!--        <view class="merchantInfo-contact" @tap.stop="handleClickQrCode"-->
     <!--            ><image-->
     <!--                class="merchantInfo-contact-img"-->
@@ -12,71 +12,71 @@
     <!--            />联系商家</view-->
     <!--        >-->
     <!-- #ifdef MP-WEIXIN -->
-    <button class="merchantInfo-share merchantInfo-share-btn" open-type="share">
+    <button class="merchantInfo-share merchantInfo-share-btn absolute right-0 top-156 flex flex-row items-center px-8 py-2 rounded-l-22 bg-[rgba(0,0,0,0.5)] text-white text-24 leading-40 border-0" open-type="share">
       <image
-        class="merchantInfo-contact-img"
+        class="merchantInfo-contact-img w-24 h-24"
         src="/static/share.png"
       />分享商家
     </button>
     <!-- #endif -->
     <!-- #ifndef MP-WEIXIN -->
-    <view class="merchantInfo-share" @tap.stop="handleClickShare">
+    <view class="merchantInfo-share absolute right-0 top-156 flex flex-row items-center px-8 py-2 rounded-l-22 bg-[rgba(0,0,0,0.5)] text-white text-24 leading-40 border-2 border-white" @tap.stop="handleClickShare">
       <image
-        class="merchantInfo-contact-img"
+        class="merchantInfo-contact-img w-24 h-24"
         src="/static/share.png"
       />分享商家
     </view>
     <!-- #endif -->
-    <view class="merchantInfo-complain" @tap.stop="handleClickComplain">
+    <view class="merchantInfo-complain absolute right-0 top-218 flex flex-row items-center px-8 py-2 rounded-l-22 bg-[rgba(0,0,0,0.5)] text-white text-24 leading-40 border-2 border-white" @tap.stop="handleClickComplain">
       <image
-        class="merchantInfo-contact-img"
+        class="merchantInfo-contact-img w-24 h-24"
         src="/static/kahe-202510/merchant/complaint.png"
       />投诉商家
     </view>
-    <view class="merchantInfo-content">
-      <view class="welfare">
+    <view class="merchantInfo-content absolute top-314 left-0 w-750" style="height: calc(100vh - 314rpx)">
+      <view class="welfare relative w-full">
         <img
           src="/static/kahe-202510/ka-he/merchant/card-bg.png"
           alt=""
-          class="welfare-bg"
+          class="welfare-bg absolute w-full h-full inset-0"
         />
-        <view class="merchantInfo-content-top">
-          <image class="merchantInfo-content-top-avatar" :src="detail.icon" />
-          <view class="merchantInfo-content-top-info">
-            <view style="display: flex; flex-direction: row">
+        <view class="merchantInfo-content-top relative px-34 pt-32 box-border flex flex-row">
+          <image class="merchantInfo-content-top-avatar relative w-140 h-140 bg-white shadow-[0rpx_2rpx_0rpx_0rpx_rgba(0,0,0,0.71)] rounded-full" :src="detail.icon" />
+          <view class="merchantInfo-content-top-info relative ml-68 flex flex-col">
+            <view class="flex flex-row">
               <view
-                class="merchantInfo-content-top-info-title theme-font text-flow-ellipsis-single"
+                class="merchantInfo-content-top-info-title theme-font text-flow-ellipsis-single font-normal text-36 text-[#621b08] leading-36"
                 >{{ detail?.name }}</view
               >
             </view>
             <view
-              class="merchantInfo-content-top-info-bar"
+              class="merchantInfo-content-top-info-bar relative mt-24 mb-12 ml-12 w-115 h-27 rounded-14 bg-[#ff7276]"
               :style="{
                 backgroundColor: getTagBgColor(detail?.tag),
               }"
             >
               <image
-                class="merchantInfo-content-top-info-bar-tag"
+                class="merchantInfo-content-top-info-bar-tag absolute -left-22 top-1/2 -translate-y-1/2 w-44 h-35"
                 :src="getTagIcon(detail.tag)"
               />
-              <text class="merchantInfo-content-top-info-bar-title">{{
+              <text class="merchantInfo-content-top-info-bar-title absolute left-26 top-0 font-normal text-20 text-white leading-27">{{
                 getLevelName(detail.tag)
               }}</text>
             </view>
             <view
-              class="merchantInfo-content-top-info-desc text-flow-ellipsis-multiple"
+              class="merchantInfo-content-top-info-desc w-460 font-normal text-24 text-[#ff730d] leading-36 text-flow-ellipsis-multiple"
               >{{ detail?.desc }}
             </view>
           </view>
           <view
-            class="merchantInfo-content-top-inGroup theme-font"
+            class="merchantInfo-content-top-inGroup theme-font absolute top-60 right-20 text-center leading-44 text-black text-26"
             @tap.stop="handleClickQrCode"
           >
             <image
               src="/static/kahe-202510/ka-he/merchant/btn.png"
-              class="imgBg"
+              class="imgBg relative w-193 h-73"
             />
-            <text>进群豪礼</text>
+            <text class="absolute left-1/2 top-[30%] -translate-x-1/2 -translate-y-[40%] font-normal text-24 text-[#582610] leading-28 other-font">进群豪礼</text>
           </view>
         </view>
         <cards @did-click-item="handleClickItem" />
@@ -88,16 +88,15 @@
       <!--        />-->
       <!--      </view>-->
 
-      <view class="bottom">
+      <view class="bottom mt-8 rounded-t-20 border-t-2 border-[#9d7a47]">
         <tab
           v-model:current="current"
           :list="merchantTabList"
           :search="true"
           @did-click="didClickTab(merchantTabList[current].value)"
         />
-        <view class="merchantInfo-content-padding">
+        <view class="merchantInfo-content-padding box-border py-8 px-30 grid gap-10" style="grid-template-columns: repeat(auto-fill, minmax(calc((100% - 10px) / 2), 1fr))">
           <view
-            class="merchantInfo-content-padding-item"
             v-for="(item, index) in goodsList"
             :key="index"
             @tap.stop="goodsTapClick(item)"
@@ -246,252 +245,4 @@ const merchantTabList = [
 ];
 </script>
 
-<style lang="scss" scoped>
-.merchantInfo {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background: linear-gradient(180deg, #fee5c4, #fff6ea);
-
-  &-top {
-    position: relative;
-    width: 750rpx;
-    height: 642rpx;
-  }
-
-  &-contact {
-    position: absolute;
-    right: -4rpx;
-    top: 95rpx;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 22rpx 0 0 22rpx;
-    border: 2px solid #ffffff;
-    font-weight: normal;
-    font-size: 24rpx;
-    color: #ffffff;
-    text-align: center;
-    line-height: 40rpx;
-    padding: 2rpx 8rpx;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    &-img {
-      width: 24rpx;
-      height: 24rpx;
-    }
-  }
-
-  &-complain,
-  &-complain:after,
-  &-complain:before {
-    position: absolute;
-    right: -4rpx;
-    top: 218rpx;
-
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 22rpx 0 0 22rpx;
-    border: 2px solid #ffffff;
-    font-weight: normal;
-    font-size: 24rpx;
-    color: #ffffff;
-    text-align: center;
-    line-height: 40rpx;
-    padding: 2rpx 8rpx;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    &-img {
-      width: 24rpx;
-      height: 24rpx;
-    }
-  }
-
-  &-share,
-  &-share:after,
-  &-share:before {
-    position: absolute;
-    right: -4rpx;
-    top: 156rpx;
-
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 22rpx 0 0 22rpx;
-    border: 2px solid #ffffff;
-    font-weight: normal;
-    font-size: 24rpx;
-    color: #ffffff;
-    text-align: center;
-    line-height: 40rpx;
-    padding: 2rpx 8rpx;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  &-share-btn {
-    padding: 2rpx 8rpx;
-    border: 0;
-    background: rgba(0, 0, 0, 0.5);
-    line-height: 40rpx;
-  }
-
-  &-share-btn::after {
-    border: 0;
-  }
-
-  &-content {
-    position: absolute;
-    top: 314rpx;
-    left: 0;
-    width: 750rpx;
-    height: calc(100vh - 314rpx);
-
-    // background: rgba(255, 255, 255, 0.7);
-    // box-shadow: 0rpx 2rpx 5rpx 1rpx #ffffff;
-    // border-radius: 30rpx 30rpx 0 0;
-    .welfare {
-      position: relative;
-      width: 100%;
-
-      &-bg {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        inset: 0;
-      }
-    }
-
-    .bottom {
-      margin-top: 8rpx;
-      // background: linear-gradient(180deg, #fee5c4, #fff6ea);
-      border-radius: 20rpx 20rpx 0rpx 0;
-      border-top: 2rpx solid #9d7a47;
-    }
-
-    &-top {
-      position: relative;
-      padding: 32rpx 34rpx 0;
-      box-sizing: border-box;
-
-      display: flex;
-      flex-direction: row;
-
-      &-avatar {
-        position: relative;
-        width: 140rpx;
-        height: 140rpx;
-        background: #ffffff;
-        box-shadow: 0rpx 2rpx 0rpx 0rpx rgba(0, 0, 0, 0.71);
-        border-radius: 50%;
-      }
-
-      &-info {
-        position: relative;
-        margin-left: 68rpx;
-        display: flex;
-        flex-direction: column;
-
-        &-title {
-          font-family: YouSheBiaoTiHei;
-          font-weight: 400;
-          font-size: 36rpx;
-          color: #621b08;
-          line-height: 36rpx;
-        }
-
-        &-desc {
-          width: 460rpx;
-          font-family: Adobe Heiti Std;
-          font-weight: normal;
-          font-size: 24rpx;
-          color: #ff730d;
-          line-height: 36rpx;
-        }
-
-        &-bar {
-          margin-top: 24rpx;
-          margin-left: 12rpx;
-          margin-bottom: 12rpx;
-          position: relative;
-          width: 115rpx;
-          height: 27rpx;
-          background: #ff7276;
-          border-radius: 14rpx;
-
-          &-tag {
-            position: absolute;
-            left: -22rpx;
-            top: calc((27rpx - 35rpx) / 2);
-            width: 44rpx;
-            height: 35rpx;
-          }
-
-          &-title {
-            position: absolute;
-            left: 26rpx;
-            top: 0;
-            font-weight: normal;
-            font-size: 20rpx;
-            color: #ffffff;
-            line-height: 27rpx;
-          }
-        }
-      }
-
-      &-inGroup {
-        position: absolute;
-        top: 60rpx;
-        right: 20rpx;
-        text-align: center;
-        line-height: 44rpx;
-        color: #000000;
-        font-size: 26rpx;
-
-        .imgBg {
-          position: relative;
-          width: 193rpx;
-          height: 73rpx;
-        }
-
-        text {
-          position: absolute;
-          left: 50%;
-          top: 30%;
-          transform: translate(-50%, -40%);
-          font-family: zihunyuwanti;
-          font-weight: 400;
-          font-size: 24rpx;
-          color: #582610;
-          line-height: 28rpx;
-        }
-      }
-    }
-
-    &-score {
-      padding: 0 30rpx;
-      box-sizing: border-box;
-      width: 100%;
-
-      &-img {
-        width: 100%;
-        aspect-ratio: 698 / 129;
-      }
-    }
-
-    &-padding {
-      box-sizing: border-box;
-      padding: 8rpx 30rpx;
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fill,
-        minmax(calc((100% - 10px) / 2), 1fr)
-      ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-      grid-gap: 10px; // 这是网格间的间隙，根据需要调整
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

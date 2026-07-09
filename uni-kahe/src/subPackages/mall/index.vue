@@ -1,15 +1,15 @@
 <template>
   <scroll-view
-    class="mall"
+    class="mall relative w-full h-screen overflow-hidden pt-16"
     :scroll-y="true"
     @scrolltolower="handleMallScrollToLower"
   >
-    <image class="mall-bg" src="/static/kahe-202510/box/box-bg.png" />
+    <image class="mall-bg fixed w-full h-full left-0 top-0" src="/static/kahe-202510/box/box-bg.png" />
     <search @did-tap-search="didTapSearch" />
     <category />
     <tab @did-change="sortDidChange" />
-    <scroll-view :scroll-y="true" class="mall-list">
-      <view class="mall-list-padding">
+    <scroll-view :scroll-y="true" class="w-full" style="height: calc(100vh - env(safe-area-inset-bottom) - 365rpx)">
+      <view class="box-border w-full px-30 pb-30 grid gap-10" style="grid-template-columns: repeat(auto-fill, minmax(calc((100% - 10px) / 2), 1fr))">
         <view
           class="mall-list-padding-item"
           v-for="(item, index) in mallList"
@@ -63,41 +63,4 @@ const sortDidChange = (val: { sort: number; sType: string }) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.mall {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  padding-top: 16px;
-  &-bg {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-  }
-  &-logo {
-    margin-left: 46rpx;
-    margin-top: 24rpx;
-    position: relative;
-    width: 150rpx;
-    height: 150rpx;
-  }
-  &-list {
-    width: 100%;
-    height: calc(100vh - env(safe-area-inset-bottom) - 365rpx);
-    &-padding {
-      box-sizing: border-box;
-      width: 100%;
-      padding: 0 30rpx 30rpx 30rpx;
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fill,
-        minmax(calc((100% - 10px) / 2), 1fr)
-      ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-      grid-gap: 10px; // 这是网格间的间隙，根据需要调整
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

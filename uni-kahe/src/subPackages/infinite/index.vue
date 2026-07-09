@@ -1,22 +1,19 @@
 <template>
-  <view class="integral">
-    <view class="integral-top">
-      <image class="integral-top-img" src="/static/kahe-202510/ka-he/integral/top-bg.png" />
-      <view class="integral-top-tips">
+  <view class="integral relative w-full h-screen bg-gradient-[linear-gradient(180deg,#f7daa1,#fff3dc)]">
+    <view class="relative w-full h-334">
+      <image class="w-full h-full" src="/static/kahe-202510/ka-he/integral/top-bg.png" />
+      <view class="absolute right-92 bottom-85 flex flex-col items-center justify-center text-22 text-black">
         <view>线上or到店消费</view>
         <view
-          >均可获赠<text style="color: #ff3b1b">积分</text>兑海量<text
-            style="color: #ff3b1b"
-            >好礼</text
-          ></view
+          >均可获赠<text style="color: #ff3b1b">积分</text>兑海量<text style="color: #ff3b1b">好礼</text></view
         >
       </view>
     </view>
 
-    <view class="integral-container">
+    <view class="w-full flex flex-col" style="height: calc(100vh - env(safe-area-inset-bottom) - 334rpx)">
       <Tab :lamp-list="barrageList" @did-change="handleTabDidChange" />
-      <scroll-view class="integral-content" :scroll-y="true">
-        <view class="integral-padding">
+      <scroll-view class="relative w-full pt-16" style="height: calc(100vh - 44rpx - env(safe-area-inset-bottom) - 334rpx)" :scroll-y="true">
+        <view class="mt-16 box-border w-full px-30 grid gap-10" style="grid-template-columns: repeat(auto-fill, minmax(calc((100% - 10px) / 2), 1fr))">
           <view
             class="integral-padding-item"
             v-for="(item, index) in goodsList"
@@ -60,55 +57,4 @@ onMounted(() => {
   handleTabDidChange(true);
 });
 </script>
-<style lang="scss" scoped>
-.integral {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background: linear-gradient(180deg, #f7daa1, #fff3dc);
-  &-top {
-    position: relative;
-    width: 100%;
-    height: 334rpx;
-    &-img {
-      width: 100%;
-      height: 100%;
-    }
-    &-tips {
-      position: absolute;
-      right: 92rpx;
-      bottom: 85rpx;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 22rpx;
-      color: #000000;
-    }
-  }
-  &-container {
-    width: 100%;
-    height: calc(100vh - env(safe-area-inset-bottom) - 334rpx);
-    display: flex;
-    flex-direction: column;
-  }
-  &-content {
-    padding-top: 16rpx;
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 44rpx - env(safe-area-inset-bottom) - 334rpx);
-  }
-  &-padding {
-    margin-top: 16rpx;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 0 30rpx;
-    display: grid;
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax(calc((100% - 10px) / 2), 1fr)
-    ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-    grid-gap: 10px; // 这是网格间的间隙，根据需要调整
-  }
-}
-</style>
+<style lang="scss" scoped></style>

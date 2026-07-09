@@ -1,14 +1,14 @@
 <template>
-  <view class="activity">
+  <view class="relative w-full h-screen">
     <image
-      class="activity-bg"
+      class="w-full h-full"
       mode="widthFix"
       src="/static/kahe-202510/ka-he/welfare/bg.png"
     />
 
-    <view class="activity-content">
-      <view class="activity-topBg" />
-      <view class="activity-content-tab">
+    <view class="absolute left-0 top-0 w-full h-full flex flex-col">
+      <view class="absolute left-0 top-0 w-full h-446 bg-[rgba(255,255,255,0.24)] shadow-[0rpx_10rpx_24rpx_0rpx_#ffffff] rounded-30" />
+      <view class="mt-350">
         <tab
           v-model:current="current"
           :tab-list="tabList"
@@ -16,11 +16,12 @@
         />
       </view>
       <scroll-view
-        class="activity-content-list"
+        class="relative w-full mt-32 box-border pt-30 px-0 pb-[env(safe-area-inset-bottom)]"
+        style="height: calc(100% - 350rpx - 92rpx)"
         :scroll-y="true"
         @scrolltolower="handleScrollToLower"
       >
-        <view class="activity-content-list-grid">
+        <view class="box-border w-full px-30 grid gap-10" style="grid-template-columns: repeat(auto-fill, minmax(calc((100% - 20px - 60rpx) / 3), 1fr))">
           <item
             v-for="(item, index) in dataList"
             :key="'key' + index"
@@ -66,54 +67,4 @@ const handleClick = (index: number) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.activity {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  &-bg {
-    width: 100%;
-    height: 100%;
-  }
-  &-topBg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 446rpx;
-    background: rgba(255, 255, 255, 0.24);
-    box-shadow: 0rpx 10rpx 24rpx 0rpx #ffffff;
-    border-radius: 30rpx;
-  }
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    &-tab {
-      margin-top: 350rpx;
-    }
-    &-list {
-      margin-top: 32rpx;
-      position: relative;
-      width: 100%;
-      height: calc(100% - 350rpx - 92rpx);
-      padding: 30rpx 0 env(safe-area-inset-bottom);
-      box-sizing: border-box;
-
-      &-grid {
-        box-sizing: border-box;
-        width: 100%;
-        padding: 0 30rpx;
-        display: grid;
-        grid-template-columns: repeat(
-          auto-fill,
-          minmax(calc((100% - 20px - 60rpx) / 3), 1fr)
-        ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-        grid-gap: 10px; // 这是网格间的间隙，根据需要调整
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

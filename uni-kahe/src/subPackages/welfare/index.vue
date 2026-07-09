@@ -1,11 +1,11 @@
 <template>
-  <view class="welfare">
-    <image class="welfare-bg" src="/static/kahe-202510/ka-he/welfare/bg.png" />
-    <view class="welfare-content">
-      <image class="welfare-content-top" src="/static/kahe-202510/welfare/top-bg.png" /> <!-- 缺失图片: top-bg.png -->
-      <view class="welfare-content-padding">
+  <view class="relative w-full h-full overflow-hidden">
+    <image class="relative w-full h-screen" src="/static/kahe-202510/ka-he/welfare/bg.png" />
+    <view class="absolute top-0 left-0 w-full h-full flex flex-col">
+      <image class="w-full h-463" src="/static/kahe-202510/welfare/top-bg.png" />
+      <view class="box-border w-full px-30 grid gap-32" style="grid-template-columns: repeat(auto-fill, minmax(calc((100% - 32rpx) / 2), 1fr))">
         <image
-          class="welfare-content-padding-item"
+          class="w-full aspect-ratio-[338/181]"
           v-for="(item, index) in itemList"
           :key="'card' + index"
           :src="'/static/kahe-202510/welfare/card' + (index + 1) + '.png'"
@@ -79,69 +79,30 @@ const clickItem = (item: WelfareItem) => {
 
 const itemList = ref([
   {
-    image: "/static/kahe-202510/welfare/card1.png", // 缺失图片: card1.png
+    image: "/static/kahe-202510/welfare/card1.png",
     itemType: WelfareItemType.vip,
   },
   {
-    image: "/static/kahe-202510/welfare/card2.png", // 缺失图片: card2.png
+    image: "/static/kahe-202510/welfare/card2.png",
     itemType: WelfareItemType.activity,
   },
   {
-    image: "/static/kahe-202510/welfare/card3.png", // 缺失图片: card3.png
+    image: "/static/kahe-202510/welfare/card3.png",
     itemType: WelfareItemType.integral,
   },
   {
-    image: "/static/kahe-202510/welfare/card4.png", // 缺失图片: card4.png
+    image: "/static/kahe-202510/welfare/card4.png",
     itemType: WelfareItemType.redBag,
   },
   {
-    image: "/static/kahe-202510/welfare/card5.png", // 缺失图片: card5.png
+    image: "/static/kahe-202510/welfare/card5.png",
     itemType: WelfareItemType.chest,
   },
   {
-    image: "/static/kahe-202510/welfare/card6.png", // 缺失图片: card6.png
+    image: "/static/kahe-202510/welfare/card6.png",
     itemType: WelfareItemType.discount,
   },
 ]);
 </script>
 
-<style lang="scss" scoped>
-.welfare {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  &-bg {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-  }
-  &-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    &-top {
-      width: 100%;
-      height: 463rpx;
-    }
-    &-padding {
-      box-sizing: border-box;
-      width: 100%;
-      padding: 0 30rpx;
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fill,
-        minmax(calc((100% - 32rpx) / 2), 1fr)
-      ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-      grid-gap: 32rpx; // 这是网格间的间隙，根据需要调整
-      &-item {
-        width: 100%;
-        aspect-ratio: 338 / 181;
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

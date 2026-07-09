@@ -1,22 +1,23 @@
 <template>
-    <view class="daily">
-        <image class="daily-bg" src="/static/kahe-202510/home-upgrade/daily-bg.png" />
-        <view class="daily-content">
-            <view class="daily-content-top">
+    <view class="daily relative w-full h-screen">
+        <image class="daily-bg w-full h-full" src="/static/kahe-202510/home-upgrade/daily-bg.png" />
+        <view class="daily-content absolute left-0 top-0 w-full h-full flex flex-col">
+            <view class="daily-content-top relative w-full h-480">
                 <image
-                    class="daily-content-top-img"
+                    class="daily-content-top-img absolute left-120 top-60 w-589 h-263"
                     src="/static/kahe-202510/home-upgrade/top.png"
                 />
             </view>
             <!--            <tab v-model:is-all="isAll" @did-update-tab="tabDidChange" />-->
             <scroll-view
-                class="daily-content-list"
+                class="daily-content-list relative w-full box-border pt-30 px-0 pb-[env(safe-area-inset-bottom)]"
+                style="height: calc(100% - 480rpx - 60rpx)"
                 :enable-flex="true"
                 :scroll-y="true"
                 scroll-with-animation
                 @scrolltolower="handleScrollToLower"
             >
-                <view class="daily-content-list-grid">
+                <view class="daily-content-list-grid box-border w-full px-30 grid gap-10" style="grid-template-columns: repeat(auto-fill, minmax(calc((100% - 10px - 60rpx) / 2), 1fr))">
                     <item
                         v-for="(item, index) in dataList"
                         :key="index"
@@ -72,52 +73,4 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" scoped>
-.daily {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    &-bg {
-        width: 100%;
-        height: 100%;
-    }
-    &-content {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        &-top {
-            position: relative;
-            width: 100%;
-            height: 480rpx;
-            &-img {
-                position: absolute;
-                left: 120rpx;
-                top: 60rpx;
-                width: 589rpx;
-                height: 263rpx;
-            }
-        }
-
-        &-list {
-            position: relative;
-            width: 100%;
-            padding: 30rpx 0 env(safe-area-inset-bottom);
-            height: calc(100% - 480rpx - 60rpx);
-            box-sizing: border-box;
-            &-grid {
-                box-sizing: border-box;
-                width: 100%;
-                padding: 0 30rpx;
-                display: grid;
-                grid-template-columns: repeat(
-                    auto-fill,
-                    minmax(calc((100% - 10px - 60rpx) / 2), 1fr)
-                ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-                grid-gap: 10px; // 这是网格间的间隙，根据需要调整
-            }
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

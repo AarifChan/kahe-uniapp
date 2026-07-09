@@ -1,20 +1,23 @@
 <template>
-  <view class="boxDetail">
-    <view class="boxDetail-top">
+  <view class="boxDetail relative w-full h-screen overflow-hidden bg-gradient-[linear-gradient(180deg,#f7daa1,#fff3dc)]">
+    <view class="absolute left-15 right-15 top-0 flex flex-row justify-between items-center z-10"
+    >
       <view>
-        <view class="boxDetail-top-title theme-font">{{ title }}</view>
-        <view class="boxDetail-top-subTitle theme-font">{{
+        <view class="boxDetail-top-title theme-font text-40 font-normal text-white text-stroke-3 text-stroke-[#775435]">{{ title }}</view>
+        <view class="boxDetail-top-subTitle theme-font text-40 font-normal text-black">{{
           selectNum ? `已选${selectNum}个` : `共${total}个`
         }}</view>
       </view>
-      <view class="boxDetail-top-btn">
+      <view class="boxDetail-top-btn flex flex-row items-center gap-8">
         <view
-          class="boxDetail-top-btn-item style1 theme-font"
+          class="boxDetail-top-btn-item text-28 text-center px-6 py-4 rounded-8 mr-16 text-white"
+          :class="btnStyle(0)"
           @tap.stop="tapShowModel(0)"
           >发货须知</view
         >
         <view
-          class="boxDetail-top-btn-item style3 theme-font"
+          class="boxDetail-top-btn-item text-28 text-center px-6 py-4 rounded-8 mr-16 text-white"
+          :class="btnStyle(2)"
           @tap.stop="tapShowModel(2)"
           >品相定义</view
         >
@@ -22,15 +25,16 @@
     </view>
 
     <scroll-view
-      class="boxDetail-content"
+      class="absolute left-0 top-80 w-full box-border px-15"
+      style="height: calc(100% - env(safe-area-inset-bottom) - 260rpx)"
       :scroll-y="true"
       :scroll-x="false"
       :enable-flex="true"
       @scrolltolower="handleScrollToLower"
     >
-      <view class="boxDetail-content-list">
+      <view class="w-full box-border grid gap-15" style="grid-template-columns: repeat(auto-fill, minmax(calc((100% - 30px) / 3), 1fr))">
         <view
-          class="boxDetail-content-list-item"
+          class="inline-block"
           v-for="(item, index) in goodsList"
           :key="index"
         >
@@ -111,6 +115,17 @@ const total = computed(() => {
   });
   return total;
 });
+
+const btnStyle = (type: number) => {
+  if (type === 0) {
+    return 'bg-[#7fff85] border-2 border-[#29984b] text-[#237927]';
+  }
+  if (type === 2) {
+    return 'bg-[#7cd2f0] border-2 border-[#785e30] text-[#237927]';
+  }
+  return '';
+};
+
 onMounted(() => {
   const boxId = getPageOptions().boxId;
   title.value = getPageOptions().title ?? 0;
@@ -130,106 +145,4 @@ const tapShowModel = (val: number) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.boxDetail {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  background: linear-gradient(180deg, #f7daa1, #fff3dc);
-
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  &-top {
-    position: absolute;
-    left: 15px;
-    top: 0;
-    width: calc(100% - 30px);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    &-left {
-      display: flex;
-      flex-direction: row;
-      &-title {
-        font-size: 40rpx;
-        font-weight: 400;
-        color: #ffffff;
-        @include text-stroke(3rpx, #775435);
-      }
-      &-subTitle {
-        font-size: 40rpx;
-        font-weight: 400;
-        color: #000000;
-      }
-    }
-
-    &-btn {
-      //position: absolute;
-      //right: 40rpx;
-      //top: 18rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 8rpx;
-      //z-index: 99;
-
-      &-item {
-        font-size: 28rpx;
-        text-align: center;
-        padding: 4rpx 6rpx;
-        border-radius: 8rpx;
-        margin-right: 16rpx;
-        color: #ffffff;
-      }
-      .style1 {
-        background: #7fff85;
-        //border-radius: 4rpx;
-        border: 2rpx solid #29984b;
-        color: #237927;
-      }
-      .style2 {
-        background: #fffa70;
-        //border-radius: 4rpx;
-        border: 2rpx solid #785e30;
-        color: #85733a;
-      }
-      .style3 {
-        background: #7cd2f0;
-        //border-radius: 4rpx;
-        border: 2rpx solid #785e30;
-        color: #237927;
-      }
-    }
-  }
-
-  &-content {
-    position: absolute;
-    top: 80rpx;
-    left: 0;
-    width: 100%;
-    height: calc(100% - env(safe-area-inset-bottom) - 260rpx);
-    &-list {
-      padding: 0 15px;
-      width: 100%;
-      box-sizing: border-box;
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fill,
-        minmax(calc((100% - 30px) / 3), 1fr)
-      ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-      grid-gap: 15px; // 这是网格间的间隙，根据需要调整
-      &-item {
-        display: inline-block;
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

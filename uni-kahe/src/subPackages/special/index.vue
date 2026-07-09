@@ -1,5 +1,5 @@
 <template>
-    <view class="special">
+    <view>
         <search @did-tap-search="didClickSearch" />
         <tab
             v-model:current="current"
@@ -7,9 +7,8 @@
             :search="true"
             @did-click="didClickTab"
         />
-        <view class="special-padding">
+        <view class="mx-30" style="width: calc(100% - 60rpx); display: grid; grid-template-columns: repeat(auto-fill, minmax(40%, 1fr)); gap: 10px;">
             <view
-                class="special-padding-item"
                 v-for="(item, index) in goodsList"
                 :key="index"
                 @tap.stop="goodsTapClick(item)"
@@ -43,25 +42,4 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" scoped>
-.special {
-    &-category {
-        position: relative;
-        padding: 20rpx 30rpx;
-        width: calc(100% - 30rpx);
-    }
-    &-padding {
-        width: calc(100% - 60rpx);
-        padding: 0 30rpx;
-        display: grid;
-        grid-template-columns: repeat(
-            auto-fill,
-            minmax(40%, 1fr)
-        ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-        grid-gap: 10px; // 这是网格间的间隙，根据需要调整
-
-        &-item {
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

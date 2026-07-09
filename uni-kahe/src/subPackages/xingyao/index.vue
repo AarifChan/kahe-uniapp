@@ -1,15 +1,15 @@
 <template>
-  <view class="shine">
+  <view class="shine relative w-screen h-screen flex flex-col overflow-hidden">
     <image
       src="/static/kahe-202510/shine/bg.png"
       mode="scaleToFill"
-      class="bg"
+      class="w-full h-full"
     />
-    <view class="shine-container">
+    <view class="absolute left-0 top-0 w-full h-full flex flex-col justify-between pb-130">
       <image
         src="/static/kahe-202510/shine/title.png"
         mode="scaleToFill"
-        class="title"
+        class="relative w-465 h-264 mx-auto"
       />
       <CustomNav @tap-nav="tapNav" :info="pageInfo" />
       <CustomItem :info="pageInfo" />
@@ -131,38 +131,4 @@ const tapNav = (value: any) => {
 };
 </script>
 
-<style lang="scss">
-.shine {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-
-  .bg {
-    width: 100%;
-    height: 100%;
-  }
-
-  &-container {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-bottom: 130rpx;
-    flex: 1;
-
-    .title {
-      position: relative;
-      width: 465rpx;
-      height: 264rpx;
-      margin: 0 auto;
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

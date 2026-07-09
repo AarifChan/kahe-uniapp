@@ -1,5 +1,5 @@
 <template>
-  <view class="webview-container">
+  <view class="h-screen w-full">
     <web-view
       :src="url"
       @message="onMessage"
@@ -38,8 +38,4 @@ const onPostMessage = (event) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.webview-container {
-  height: 100vh;
-}
-</style>
+<style lang="scss" scoped></style>
