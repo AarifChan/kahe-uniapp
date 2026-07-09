@@ -1,27 +1,18 @@
 <template>
-  <view class="merchant-tab">
-    <view class="merchant-tab-list">
+  <view class="relative w-full">
+    <view
+      class="relative flex flex-row w-full items-center justify-center gap-60"
+    >
       <view
-        class="merchant-tab-list-item"
+        class="relative w-170 h-110"
         v-for="(item, index) in tabList"
         :key="index"
         @tap.stop="clickItem(index)"
       >
         <image
-          class="merchant-tab-list-item-img"
-          v-if="current === index"
-          :src="item.selectIcon"
+          class="relative w-full h-full"
+          :src="current === index ? item.selectIcon : item.normalIcon"
         />
-        <image
-          class="merchant-tab-list-item-img"
-          v-else
-          :src="item.normalIcon"
-        />
-        <view
-          class="merchant-tab-list-item-title theme-font"
-          :style="{ color: current === index ? '#000000' : '#6A656C' }"
-          >{{ item.title }}</view
-        >
       </view>
     </view>
   </view>
@@ -39,20 +30,20 @@ const tabList = [
   {
     value: 1,
     title: "卡牌",
-    normalIcon: "/static/kahe-202510/ka-he/merchant/item1-normal.png",
-    selectIcon: "/static/kahe-202510/ka-he/merchant/item1-selected.png",
+    normalIcon: "/static/kaju/merchant/tab-item4.png",
+    selectIcon: "/static/kaju/merchant/tab-item1.png",
   },
   {
     value: 2,
     title: "潮玩",
-    normalIcon: "/static/kahe-202510/ka-he/merchant/item2-normal.png",
-    selectIcon: "/static/kahe-202510/ka-he/merchant/item2-selected.png",
+    normalIcon: "/static/kaju/merchant/tab-item5.png",
+    selectIcon: "/static/kaju/merchant/tab-item2.png",
   },
   {
     value: 3,
     title: "谷子",
-    normalIcon: "/static/kahe-202510/ka-he/merchant/item3-normal.png",
-    selectIcon: "/static/kahe-202510/ka-he/merchant/item3-selected.png",
+    normalIcon: "/static/kaju/merchant/tab-item6.png",
+    selectIcon: "/static/kaju/merchant/tab-item3.png",
   },
 ];
 
@@ -78,36 +69,4 @@ const clickItem = (index: number) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.merchant-tab {
-  position: relative;
-  margin: 0 32rpx;
-  &-list {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 80rpx;
-    &-item {
-      position: relative;
-      width: 138rpx;
-      height: 119rpx;
-      &-img {
-        position: relative;
-        width: 100%;
-        height: 100%;
-      }
-      &-title {
-        position: absolute;
-        bottom: 12rpx;
-        left: 0;
-        width: 100%;
-        font-size: 28rpx;
-        color: #000000;
-        text-align: center;
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

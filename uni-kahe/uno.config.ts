@@ -307,6 +307,38 @@ export default defineConfig({
         }
       },
     ],
+
+    // 宽高比
+    [/^aspect-ratio-\[(\d+)\/(\d+)\]$/, ([_, w, h]) => ({ "aspect-ratio": `${w}/${h}` })],
+
+    // 盒模型
+    ["box-border", { "box-sizing": "border-box" }],
+
+    // 文本换行
+    ["whitespace-nowrap", { "white-space": "nowrap" }],
+
+    // 阴影
+    [/^shadow-\[(.+)\]$/, ([_, value]) => ({ "box-shadow": value.replace(/_/g, " ") })],
+
+    // 百分比定位
+    ["left-1/2", { left: "50%" }],
+
+    // px 单位边框宽度
+    [
+      /^border-(\d+)px$/,
+      ([_, num]) => ({
+        "border-width": `${num}px`,
+        "border-style": "solid",
+      }),
+    ],
+
+    // 项目字体工具类
+    ["theme-font", { "font-family": "YouSheBiaoTiHei" }],
+    ["price-font", { "font-family": "AccidentalPresidency" }],
+    ["other-font", { "font-family": "ZiHunYuWanTi" }],
+
+    // 行内块
+    ["inline-block", { display: "inline-block" }],
   ],
 
   // 快捷方式 - 组合常用类名
@@ -379,9 +411,6 @@ export default defineConfig({
   blocklist: [
     // TuNiao UI 组件类名前缀
     /^tn-/,
-    // 项目已有工具类
-    "theme-font",
-    "price-font",
   ],
 
   // 安全列表 - 确保这些类始终生成

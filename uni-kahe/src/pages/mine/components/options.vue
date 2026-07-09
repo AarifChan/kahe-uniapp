@@ -146,7 +146,7 @@ const handleClick = (item: ItemModel) => {
   <view class="relative flex flex-row items-center justify-center">
     <image class="w-704 h-578" src="/static/kaju/mine/more-service.png" />
     <view
-      class="absolute leading-0 w-full top-40 px-80 pt-40 grid grid-cols-3 gap-0"
+      class="absolute leading-0 w-full top-40 px-54 pt-40 grid grid-cols-3 gap-0"
     >
       <view
         class="py-28 text-center"

@@ -1,30 +1,29 @@
 <template>
-    <view class="merchantGoods">
-        <image class="merchantGoods-bg" src="/static/kahe-202510/ka-he/merchant/item-bg.png" />
-        <view class="merchantGoods-empty" v-if="item.productNum === 0">
-            <image style="width: 120rpx; height: 100rpx" src="/static/kahe-202510/ka-he/common/Sellingout.png" />
+    <view class="relative w-153 h-203 rounded-10 overflow-hidden">
+        <image class="w-full h-full" src="/static/kahe-202510/ka-he/merchant/item-bg.png" />
+        <view class="absolute left-0 top-0 w-full h-full bg-[rgba(0,0,0,0.8)] z-3 flex flex-row justify-center items-center" v-if="item.productNum === 0">
+            <image class="w-120 h-100" src="/static/kahe-202510/ka-he/common/Sellingout.png" />
         </view>
-        <view class="merchantGoods-cover">
-            <image class="merchantGoods-cover-img" :src="item.logo" />
-            <view class="merchantGoods-cover-pattern">
+        <view class="absolute top-4 left-8 overflow-hidden rounded-4 flex flex-row items-center justify-center aspect-ratio-[1/1]" style="width: calc(100% - 16rpx);">
+            <image class="w-full h-full" :src="item.logo" />
+            <view class="absolute right-2 bottom-4 z-2 flex flex-col">
                 <image v-for="(label, index) in item.labels" :key="'labels:' + index" :src="formatLabelImage(label)"
-                    class="merchantGoods-cover-pattern-img" />
+                    class="mt-4" style="width: calc(65rpx * 0.4); height: calc(34rpx * 0.4);" />
             </view>
         </view>
-        <view class="merchantGoods-info">
-            <view class="merchantGoods-info-content">
-                <view class="merchantGoods-info-content-bottom">
-                    <view class="merchantGoods-info-content-bottom-title text-flow-ellipsis-single">{{ item.title }}
-                    </view>
-                    <view class="merchantGoods-info-content-bottom-row1">
-                        <image class="merchantGoods-info-content-bottom-row1-bg"
+        <view class="absolute bottom-0 left-0 w-full">
+            <view class="relative w-full">
+                <view class="relative px-12 pb-12 w-full box-border flex flex-col">
+                    <view class="font-normal text-16 text-black w-full leading-18 mb-4 text-flow-ellipsis-single">{{ item.title }}</view>
+                    <view class="relative" style="width: calc(97rpx * 0.6); height: calc(46rpx * 0.6);">
+                        <image class="w-full h-full"
                             src="/static/kahe-202510/ka-he/home/price-bg.png" />
-                        <text class="merchantGoods-info-content-bottom-row1-title price-font">{{ item.price }}</text>
+                        <text class="absolute right-8 min-w-32 bottom-0 text-center text-black text-16 price-font">{{ item.price }}</text>
                     </view>
                 </view>
             </view>
         </view>
-        <image class="merchantGoods-tags" v-if="showTag" :src="getMainTagImagePath(Number(item.mainTag))" />
+        <image class="absolute -left-4 -top-2" v-if="showTag" :src="getMainTagImagePath(Number(item.mainTag))" style="width: calc(180rpx * 0.4); height: calc(54rpx * 0.4);" />
     </view>
 </template>
 
@@ -49,129 +48,7 @@ defineProps({
 
 const formatLabelImage = (index: number) => {
     return "/static/kahe-202510/ka-he/tag/tag" + index + ".png";
-};
+}
 </script>
 
-<style lang="scss" scoped>
-.merchantGoods {
-    position: relative;
-    width: 153rpx;
-    height: 203rpx;
-    border-radius: 10rpx;
-    overflow: hidden;
-
-    &-bg {
-        width: 100%;
-        height: 100%;
-    }
-
-    &-empty {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        z-index: 3;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
-
-    &-tags {
-        position: absolute;
-        left: -4rpx;
-        top: -2rpx;
-        width: calc(180rpx * 0.4);
-        height: calc(54rpx * 0.4);
-    }
-
-    &-cover {
-        position: absolute;
-        top: 4rpx;
-        left: 8rpx;
-        width: calc(100% - 16rpx);
-        box-sizing: border-box;
-        aspect-ratio: 1;
-        height: fit-content;
-        overflow: hidden;
-        border-radius: 4rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        &-img {
-            width: 100%;
-            height: 100%;
-        }
-
-        &-pattern {
-            position: absolute;
-            right: 2rpx;
-            bottom: 4rpx;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-
-            &-img {
-                margin-top: 4rpx;
-                width: calc(65rpx * 0.4);
-                height: calc(34rpx * 0.4);
-            }
-        }
-    }
-
-    &-info {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-
-        &-content {
-            position: relative;
-            width: 100%;
-
-            &-bottom {
-                position: relative;
-                padding: 0 12rpx 12rpx;
-                width: 100%;
-                box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
-
-                &-title {
-                    font-weight: 400;
-                    font-size: 16rpx;
-                    color: #000000;
-                    width: 100%;
-                    line-height: 18rpx;
-                    margin-bottom: 4rpx;
-                }
-
-                &-row1 {
-                    position: relative;
-                    width: calc(97rpx * 0.6);
-                    height: calc(46rpx * 0.6);
-
-                    &-bg {
-                        width: 100%;
-                        height: 100%;
-                    }
-
-                    &-title {
-                        position: absolute;
-                        right: 8rpx;
-                        min-width: 32rpx;
-                        bottom: 0;
-                        text-align: center;
-                        color: #000000;
-                        font-size: 16rpx;
-                    }
-                }
-            }
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>
