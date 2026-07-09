@@ -1,13 +1,16 @@
 <template>
-    <view class="customSelector">
-        <image class="customSelector-bg" src="/static/kahe-202510/pet/btn-bg.png" />
-        <text class="customSelector-title theme-font" @tap.stop="dropDown=!dropDown">{{currentTitle}}</text>
+    <view class="relative w-142 h-60">
+        <image class="w-full h-full" src="/static/kahe-202510/pet/btn-bg.png" />
+        <text class="absolute left-0 top-0 w-full leading-60 font-normal text-32 text-[#FFFFFF] text-center theme-font" @tap.stop="dropDown=!dropDown">{{currentTitle}}</text>
         <!--        <view class="customSelector-sort" @tap.stop="sorted=!sorted">-->
         <!--            <image class="customSelector-sort-up" :src="sorted ? '/static/kahe-202510/pet/up-active.png': '/static/kahe-202510/pet/up.png' "  />-->
         <!--            <image class="customSelector-sort-down" :src="sorted ? '/static/kahe-202510/pet/down.png': '/static/kahe-202510/pet/down-active.png' "  />-->
         <!--        </view>-->
-        <view class="customSelector-dropdown" v-if="dropDown">
-            <view v-for="option in options" :key="option.value" class="customSelector-dropdown-item theme-font" @click="clickOption(option)">
+        <view class="absolute top-full left-0 w-full bg-[#3A3A3A] rounded-10 text-center font-normal text-24 text-white z-1000 overflow-hidden shadow-[2rpx_3rpx_3rpx_0rpx_#448483,0rpx_-1rpx_1rpx_0rpx_rgba(0,0,0,0.45),0rpx_1rpx_1rpx_0rpx_rgba(179,197,219,0.45)]"
+               v-if="dropDown">
+            <view v-for="option in options" :key="option.value"
+                  class="py-[5px] px-[4px] cursor-pointer border-b border-[#202020] shadow-[0rpx_1rpx_0rpx_0rpx_rgba(255,255,255,0.14)] last:border-b-0 last:shadow-none hover:bg-[#f0f0f0] hover:text-[#3A3A3A] theme-font"
+                  @click="clickOption(option)">
                 <text>{{ option.label }}</text>
             </view>
         </view>
@@ -64,70 +67,4 @@ const sorted = ref(false)
 </script>
 
 <style lang="scss" scoped>
-.customSelector{
-    position: relative;
-    width: 142rpx;
-    height: 60rpx;
-    &-bg{
-        width: 100%;
-        height: 100%;
-    }
-    &-title{
-        position: absolute;
-        left: 0;
-        top:0;
-        width: 100%;
-        line-height: 60rpx;
-        font-weight: 400;
-        font-size: 32rpx;
-        color: #FFFFFF;
-        text-align: center;
-    }
-    &-sort{
-        position: absolute;
-        top: 15rpx;
-        right: 24rpx;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        &-up{
-            width: 23rpx;
-            height: 13rpx;
-        }
-        &-down{
-            margin-top: 4rpx;
-            width: 23rpx;
-            height: 13rpx;
-        }
-    }
-    &-dropdown{
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: #3A3A3A;
-        box-shadow: 2rpx 3rpx 3rpx 0rpx #448483, 0rpx -1rpx 1rpx 0rpx rgba(0,0,0,0.45), 0rpx 1rpx 1rpx 0rpx rgba(179,197,219,0.45);
-        border-radius: 10rpx;
-        text-align: center;
-        font-weight: 400;
-        font-size: 24rpx;
-        color: white;
-        z-index: 1000;
-        overflow: hidden;
-        &-item{
-            padding: 5px 4px;
-            cursor: pointer;
-            border-bottom: 1px solid  #202020;
-            box-shadow: 0rpx 1rpx 0rpx 0rpx rgba(255,255,255,0.14);
-        }
-        &-item:last-child{
-            border-bottom: none;
-            box-shadow: none;
-        }
-        &-item:hover{
-            background-color: #f0f0f0;
-            color:  #3A3A3A;
-        }
-    }
-}
 </style>

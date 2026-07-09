@@ -1,7 +1,7 @@
 <template>
-    <view class="petBtn">
-        <image class="petBtn-img" :src="icon" />
-        <text class="petBtn-text">{{title}}</text>
+    <view class="relative flex flex-col items-center justify-center mb-21">
+        <image class="w-100 h-100" :src="icon" />
+        <text class="-mt-40 w-80 h-28 bg-[rgba(0,0,0,0.7)] rounded-14 font-normal text-20 text-[#FFFFFF] text-center leading-28">{{title}}</text>
     </view>
 </template>
 
@@ -19,28 +19,4 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-.petBtn{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 21rpx;
-    &-img{
-        width: 100rpx;
-        height: 100rpx;
-    }
-    &-text{
-        margin-top: -40rpx;
-        width: 80rpx;
-        height: 28rpx;
-        background: rgba(0,0,0, 0.7);
-        border-radius: 14rpx;
-        font-weight: normal;
-        font-size: 20rpx;
-        color: #FFFFFF;
-        text-align: center;
-        line-height: 28rpx;
-    }
-}
 </style>

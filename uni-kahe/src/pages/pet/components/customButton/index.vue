@@ -1,13 +1,13 @@
 <template>
-    <view class="petButton" :style="{ width: width}">
-        <image class="petButton-bg" src="/static/kahe-202510/pet/btn-bg.png" />
-        <view class="petButton-content">
-            <text class="petButton-content-title theme-font">{{title}}</text>
+    <view class="relative w-142 h-60" :style="{ width: width}">
+        <image class="w-full h-full" src="/static/kahe-202510/pet/btn-bg.png" />
+        <view class="absolute left-0 top-0 w-full h-full flex flex-row items-center justify-center">
+            <text class="font-normal text-32 text-[#FFFFFF] theme-font" style="line-height: 100%">{{title}}</text>
         </view>
 
-        <view class="petButton-sort" v-if="sorted">
-            <image class="petButton-sort-up" :src="sorted ? '/static/kahe-202510/pet/up-active.png': '/static/kahe-202510/pet/up.png' "  />
-            <image class="petButton-sort-down" :src="sorted ? '/static/kahe-202510/pet/down.png': '/static/kahe-202510/pet/down-active.png' "  />
+        <view class="absolute top-15 right-15 flex flex-col items-center" v-if="sorted">
+            <image class="w-23 h-13" :src="sorted ? '/static/kahe-202510/pet/up-active.png': '/static/kahe-202510/pet/up.png' "  />
+            <image class="mt-4 w-23 h-13" :src="sorted ? '/static/kahe-202510/pet/down.png': '/static/kahe-202510/pet/down-active.png' "  />
         </view>
     </view>
 </template>
@@ -30,49 +30,4 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-.petButton{
-    position: relative;
-    width: 142rpx;
-    height: 60rpx;
-    &-bg{
-        width: 100%;
-        height: 100%;
-    }
-    &-content{
-        position: absolute;
-        left: 0;
-        top:0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        &-title{
-            line-height: 100%;
-            font-weight: 400;
-            font-size: 32rpx;
-            color: #FFFFFF;
-
-        }
-    }
-
-    &-sort{
-        position: absolute;
-        top: 15rpx;
-        right: 15rpx;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        &-up{
-            width: 23rpx;
-            height: 13rpx;
-        }
-        &-down{
-            margin-top: 4rpx;
-            width: 23rpx;
-            height: 13rpx;
-        }
-    }
-}
 </style>

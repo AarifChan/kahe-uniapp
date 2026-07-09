@@ -1,15 +1,15 @@
 <template>
     <tn-popup v-model="vShow" open-direction="center" bg-color="transparent" @close="emits('update:show', false)">
 
-        <view class="petModal">
-            <image class="petModal-bg" src="/static/kahe-202510/pet/pet-modal.png" />
-            <text class="petModal-title theme-font">是否放生
+        <view class="relative">
+            <image class="w-519 h-697" src="/static/kahe-202510/pet/pet-modal.png" />
+            <text class="absolute left-0 top-66 w-full text-center text-white theme-font">是否放生
                 <text class="text-stroke" style="color: #73B2FF">{{item?.name}}</text>
             </text>
-            <view class="petModal-content">
-                <image class="petModal-content-image" :src="item?.icon" />
+            <view class="absolute top-153 left-0 w-full h-472 flex flex-row items-center justify-center">
+                <image class="w-350 h-350" :src="item?.icon" />
             </view>
-            <view class="petModal-bottom">
+            <view class="mt-30 w-full h-70 flex flex-row items-center justify-center">
                 <custom-button title="确认放生" @tap.stop="handleConfirm" />
             </view>
 
@@ -45,45 +45,4 @@ const handleConfirm = () => {
 </script>
 
 <style lang="scss" scoped>
-.petModal{
-    position: relative;
-
-    &-bg{
-        width: 519rpx;
-        height: 697rpx;
-    }
-    &-bottom{
-        margin-top: 30rpx;
-        width: 100%;
-        height: 70rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-    }
-
-    &-title{
-        position: absolute;
-        left: 0;
-        top: 66rpx;
-        width: 100%;
-        text-align: center;
-        color: white;
-    }
-    &-content{
-        position: absolute;
-        top: 153rpx;
-        left: 0;
-        width: 100%;
-        height: 472rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        &-image{
-            width: 350rpx;
-            height: 350rpx;
-        }
-    }
-}
 </style>

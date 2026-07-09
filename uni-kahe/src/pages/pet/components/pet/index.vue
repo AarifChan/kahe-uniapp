@@ -1,11 +1,11 @@
 <template>
-    <view class="petCard">
-        <view class="petCard-bg" />
-        <image class="petCard-bg" :src="item.icon" />
-        <image class="petCard-decorate" src="/static/kahe-202510/pet/card-bottom.png" />
-        <text class="petCard-name theme-font text-stroke">{{item.name}}</text>
-        <image class="petCard-level" :src="'/static/kahe-202510/pet/level' + item.level + '.png' " />
-        <image v-if="selected" class="petCard-select" src="/static/kahe-202510/pet/select.png" />
+    <view class="relative w-full flex flex-row items-center justify-center aspect-ratio-[152/176]">
+        <view class="absolute top-10 left-10 bg-[#3C3C3C]" :style="{ width: 'calc(100% - 20rpx)', height: 'calc(100% - 20rpx)' }" />
+        <image class="absolute top-10 left-10" :src="item.icon" :style="{ width: 'calc(100% - 20rpx)', height: 'calc(100% - 20rpx)' }" />
+        <image class="absolute bottom-0 left-10 aspect-ratio-[132/41]" src="/static/kahe-202510/pet/card-bottom.png" :style="{ width: 'calc(100% - 20rpx)' }" />
+        <text class="absolute left-16 w-[calc(100%-32rpx)] font-normal text-24 text-[#FFFFFF] text-center theme-font text-stroke" :style="{ bottom: '8px' }">{{item.name}}</text>
+        <image class="absolute left-0 top-0 w-full h-full" :src="'/static/kahe-202510/pet/level' + item.level + '.png' " />
+        <image v-if="selected" class="absolute -left-8 -top-8 w-47 h-46" src="/static/kahe-202510/pet/select.png" />
     </view>
 </template>
 
@@ -31,61 +31,4 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-.petCard{
-    position: relative;
-    width: 100%;
-    aspect-ratio:  152 / 176.0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    &-bg{
-        position: absolute;
-        top: 10rpx;
-        left: 10rpx;
-        width: calc(100% - 20rpx);
-        height: calc(100% - 20rpx);
-        background-color: #3C3C3C;
-    }
-    &-icon{
-        position: absolute;
-        top: 8px;
-        left: 0;
-        width: 100%;
-        aspect-ratio:  1;
-    }
-    &-select{
-        position: absolute;
-        left: -8rpx;
-        top: -8rpx;
-        width: 47rpx;
-        height: 46rpx;
-    }
-
-    &-level{
-        position: absolute;
-        left: 0;
-        top:0;
-        width: 100%;
-        height: 100%;
-    }
-
-    &-decorate{
-        position: absolute;
-        bottom: 0;
-        left: 10rpx;
-        width: calc(100% - 20rpx);
-        aspect-ratio:  132 / 41.0;
-    }
-    &-name{
-        position: absolute;
-        bottom: 8rpx;
-        left: 16rpx;
-        width: calc(100% - 32rpx);
-        font-weight: 400;
-        font-size: 24rpx;
-        color: #FFFFFF;
-        text-align: center;
-    }
-}
 </style>

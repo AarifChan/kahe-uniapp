@@ -1,12 +1,12 @@
 <template>
-    <view class="wish">
-        <image class="wish-bg" src="/static/kahe-202510/pet/wish-bg.png" />
-        <scroll-view class="wish-content" :scroll-y="true" :scroll-x="false">
-            <text class="wish-content-title theme-font">今日心愿(满足心愿可获得神秘奖励)</text>
+    <view class="relative w-445 h-164">
+        <image class="w-full h-full" src="/static/kahe-202510/pet/wish-bg.png" />
+        <scroll-view class="absolute top-0 flex flex-col" :scroll-y="true" :scroll-x="false" :style="{ left: '8px', width: 'calc(100% - 8px)', height: 'calc(100% - 16px)' }">
+            <text class="inline-block font-normal text-28 text-black theme-font">今日心愿(满足心愿可获得神秘奖励)</text>
             <text
                 v-for="(item, index) in taskList"
                 :key="index"
-                class="wish-content-subTitle"
+                class="inline-block font-normal text-24 text-black"
             >{{ index + 1 }}.今天达到{{ item.total }}流水即可获得神秘奖励（{{ item.score }}/{{
                 item.total
             }}）</text>
@@ -26,35 +26,4 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-.wish{
-    position: relative;
-    width: 445rpx;
-    height: 164rpx;
-    &-bg{
-        width: 100%;
-        height: 100%;
-    }
-    &-content{
-        position: absolute;
-        left: 8px;
-        top: 0;
-        width: calc(100% - 8px);
-        height: calc(100% - 16px);
-        display: flex;
-        flex-direction: column;
-
-        &-title{
-            display: inline-block;
-            font-weight: 400;
-            font-size: 28rpx;
-            color: #000000;
-        }
-        &-subTitle{
-            display: inline-block;
-            font-weight: 400;
-            font-size: 24rpx;
-            color: #000000;
-        }
-    }
-}
 </style>

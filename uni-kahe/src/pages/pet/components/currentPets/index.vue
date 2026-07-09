@@ -1,23 +1,23 @@
 <template>
-    <view class="currentPet">
-        <view class="currentPet-row2">
+    <view class="relative w-full flex flex-col justify-end">
+        <view class="flex flex-row items-end justify-start ml-60 -mb-60">
             <view
                 v-for="(item, index) in secondRow"
                 :key="index"
-                class="currentPet-row2-item"
+                class="w-140 h-140 -ml-30 first:ml-0"
                 @tap.stop="emits('didTapPet', item.id)"
             >
-                <image class="currentPet-row2-item-img" :scale="0.88" :src="item.icon" />
+                <image class="w-full h-full" :scale="0.88" :src="item.icon" />
             </view>
         </view>
-        <view class="currentPet-row1">
+        <view class="ml-80 flex flex-row items-end -mb-20 justify-start">
             <view
                 v-for="(item, index) in firstRow"
                 :key="index"
-                class="currentPet-row1-item"
+                class="w-140 h-140 -ml-30 first:ml-0"
                 @tap.stop="emits('didTapPet', item.id)"
             >
-                <image class="currentPet-row1-item-img"  :scale="secondRow.length > 0 ? 0.95 : 1.0" :src="item.icon" />
+                <image class="w-full h-full"  :scale="secondRow.length > 0 ? 0.95 : 1.0" :src="item.icon" />
             </view>
         </view>
     </view>
@@ -52,52 +52,4 @@ const emits = defineEmits(['didTapPet'])
 </script>
 
 <style lang="scss" scoped>
-.currentPet{
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    &-row2 {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-end;
-        justify-content: flex-start;
-        margin-left: 60rpx;
-        margin-bottom: -60rpx;
-        &-item {
-            width: 140rpx;
-            height: 140rpx;
-            margin-left: -30rpx;
-            &-img{
-                width: 100%;
-                height: 100%;
-            }
-        }
-        &-item:first-child {
-            margin-left: 0;
-        }
-    }
-    &-row1 {
-        margin-left: 80rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: flex-end;
-        margin-bottom: -20rpx;
-        justify-content: flex-start;
-
-        &-item {
-            width: 140rpx;
-            height: 140rpx;
-            margin-left: -30rpx;
-            &-img{
-                width: 100%;
-                height: 100%;
-            }
-        }
-        &-item:first-child {
-            margin-left: 0;
-        }
-    }
-}
 </style>
