@@ -5,57 +5,65 @@
     bg-color="transparent"
     @close="emits('update:show', false)"
   >
-    <view class="smash">
+    <view class="relative w-720 h-734 box-border">
       <image
-        class="smash-bg"
+        class="relative w-full h-full"
         src="/static/kahe-202510/ka-he/common/smash-bg.png"
       />
-      <view class="smash-content">
-        <view class="smash-content-top">
-          <text class="smash-content-top-title">退货</text>
-          <text class="smash-content-top-value">{{ total }}</text>
-          <text class="smash-content-top-title">件商品，预计获得</text>
-          <text class="smash-content-top-value">{{
+      <view
+        class="absolute left-30 top-0 w-[calc(100%-60rpx)] h-full flex flex-col"
+      >
+        <view class="mt-98 flex flex-row items-center justify-start">
+          <text class="text-32 font-normal text-black">退货</text>
+          <text class="text-32 font-normal text-[#4b71ff]">{{ total }}</text>
+          <text class="text-32 font-normal text-black">件商品，预计获得</text>
+          <text class="text-32 font-normal text-[#4b71ff]">{{
             totalPrice.toFixed(2)
           }}</text>
-          <text class="smash-content-top-title">无门槛券</text>
+          <text class="text-32 font-normal text-black">无门槛券</text>
         </view>
         <scroll-view
-          class="smash-content-list"
+          class="mt-18 relative w-full h-260"
           :enable-flex="true"
           :scroll-y="true"
           scroll-with-animation
         >
-          <view class="smash-content-list-content">
+          <view
+            class="w-full flex flex-row items-center"
+            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(30%, 1fr)); gap: 24rpx;"
+          >
             <view
-              class="smash-content-list-content-item"
+              class="w-full flex flex-row items-center"
               v-for="(item, index) in recycleGoods"
               :key="'recycleGoods' + index"
             >
               <image
-                class="smash-content-list-content-item-level"
+                class="w-80 h-80"
                 mode="heightFix"
                 :src="getLevelImageByLevel(item.level)"
               />
-              <text class="smash-content-list-content-item-num">
+              <text class="text-38 font-normal text-[#4b71ff]"
+              >
                 X{{ item.num }}</text
               >
             </view>
           </view>
         </scroll-view>
-        <view class="smash-content-forbidden">
-          <view class="smash-content-forbidden-side">
-            <text class="smash-content-forbidden-side-title">赏品退货声明</text>
+        <view
+          class="box-border w-full h-[calc(150rpx-20rpx)] bg-white shadow-[0_0_5rpx_0_#d4dee9] rounded-6 py-24 px-18 flex flex-row items-center justify-between"
+        >
+          <view class="flex flex-col">
+            <text class="text-26 font-normal text-black">赏品退货声明</text>
             <text
-              class="smash-content-forbidden-side-subTitle text-flow-ellipsis-multiple"
+              class="text-18 font-normal w-360 text-black text-flow-ellipsis-multiple"
               >注：退货不可逆转。</text
             >
-            <text class="smash-content-forbidden-side-danger"
+            <text class="text-22 font-normal text-[#ba0000]"
               >未成年人请在监护人陪同下操作</text
             >
           </view>
           <image
-            class="smash-content-forbidden-img"
+            class="w-120 h-130"
             src="/static/kahe/product/18age.png"
           />
         </view>
@@ -70,14 +78,17 @@
           "
         >
           <agreement v-model:checked="agree" />
-          <view class="confirm-btn theme-font" @tap.stop="didTapConfirm">
+          <view
+            class="w-146 h-56 leading-56 text-center mt-28 bg-[#53d6ac] shadow-[0_4rpx_0_0_#43a17f] rounded-8 mb-64 text-36 text-white theme-font"
+            @tap.stop="didTapConfirm"
+          >
             确 定
           </view>
         </view>
       </view>
 
       <image
-        class="smash-close"
+        class="absolute right-0 top-0 w-74 h-74"
         src="/static/kahe-202510/ka-he/common/close.png"
         @tap.stop="emits('update:show', false)"
       />
@@ -136,131 +147,4 @@ const totalPrice = computed(() => {
 const emits = defineEmits(["update:show", "didTapSmash"]);
 </script>
 
-<style lang="scss" scoped>
-.smash {
-  position: relative;
-
-  width: 720rpx;
-  height: 734rpx;
-  box-sizing: border-box;
-  &-bg {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  &-content {
-    position: absolute;
-    left: 30rpx;
-    top: 0;
-    width: calc(100% - 60rpx);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    &-top {
-      margin-top: 98rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      &-title {
-        font-size: 32rpx;
-        font-weight: 400;
-        color: #000000;
-      }
-      &-value {
-        font-size: 32rpx;
-        font-weight: 400;
-        color: #4b71ff;
-      }
-    }
-    &-list {
-      margin-top: 18rpx;
-      position: relative;
-      width: 100%;
-      height: 260rpx;
-      &-content {
-        display: grid;
-        grid-template-columns: repeat(
-          auto-fill,
-          minmax(30%, 1fr)
-        ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-        grid-gap: 24rpx; // 这是网格间的间隙，根据需要调整
-
-        &-item {
-          width: 100%;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          &-level {
-            width: 80rpx;
-            height: 80rpx;
-          }
-          &-num {
-            font-size: 38rpx;
-            font-weight: 400;
-            color: #4b71ff;
-          }
-        }
-      }
-    }
-    &-forbidden {
-      box-sizing: border-box;
-      width: 100%;
-      height: calc(150rpx - 20rpx);
-      background: #ffffff;
-      box-shadow: 0rpx 0rpx 5rpx 0rpx #d4dee9;
-      border-radius: 6rpx;
-      padding: 24rpx 18rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      &-side {
-        display: flex;
-        flex-direction: column;
-        &-title {
-          font-size: 26rpx;
-          font-weight: 400;
-          color: #000000;
-        }
-        &-subTitle {
-          font-size: 18rpx;
-          font-weight: 400;
-          width: 360rpx;
-          color: #000000;
-        }
-        &-danger {
-          font-size: 22rpx;
-          font-weight: 400;
-          color: #ba0000;
-        }
-      }
-      &-img {
-        width: 120rpx;
-        height: 130rpx;
-      }
-    }
-  }
-
-  &-close {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 74rpx;
-    height: 74rpx;
-  }
-}
-.confirm-btn {
-  width: 146rpx;
-  height: 56rpx;
-  line-height: 56rpx;
-  text-align: center;
-  margin-top: 28rpx;
-  background: #53d6ac;
-  box-shadow: 0rpx 4rpx 0rpx 0rpx #43a17f;
-  border-radius: 8rpx;
-  margin-bottom: 64rpx;
-  font-size: 36rpx;
-  color: white;
-}
-</style>
+<style lang="scss" scoped></style>

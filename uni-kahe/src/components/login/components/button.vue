@@ -1,19 +1,15 @@
 <template>
   <view>
-    <button
-      class="custom-btn"
-      open-type="getPhoneNumber"
-      @getphonenumber="getPhoneNumber"
-      v-if="buttonType === 1"
+    <button class="custom-btn relative w-199 h-114 p-0 m-0 bg-transparent border-none" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber" v-if="buttonType === 1"
     >
-      <image class="custom-btn-bg" src="/static/kahe-202510/login/btn1.png" /> <!-- 缺失图片: btn1.png -->
+      <image class="custom-btn-bg w-full h-full" src="/static/kahe-202510/login/btn1.png" /> <!-- 缺失图片: btn1.png -->
       <!--      <view class="custom-btn-title theme-font">{{ title }}</view>-->
       <!--      <view class="custom-btn-other">-->
       <!--        <slot />-->
       <!--      </view>-->
     </button>
-    <view class="custom-btn" v-else>
-      <image class="custom-btn-bg" src="/static/kahe-202510/login/btn2.png" /> <!-- 缺失图片: btn2.png -->
+    <view class="custom-btn relative w-199 h-114" v-else>
+      <image class="custom-btn-bg w-full h-full" src="/static/kahe-202510/login/btn2.png" /> <!-- 缺失图片: btn2.png -->
       <!--            <view class="custom-btn-title theme-font">{{ title }}</view>-->
       <!--      <view class="custom-btn-other">-->
       <!--        <slot />-->
@@ -61,42 +57,4 @@ const getPhoneNumber = (e: {
 };
 </script>
 
-<style lang="scss" scoped>
-.custom-btn {
-  position: relative;
-  width: 199rpx;
-  height: 114rpx;
-  &-bg {
-    width: 100%;
-    height: 100%;
-  }
-  &-other {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60rpx;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
-  &-title {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    line-height: 60rpx;
-    text-align: center;
-    height: 60rpx;
-    font-size: 18px;
-    color: white;
-  }
-}
-.custom-btn,
-.custom-btn::after {
-  padding: 0;
-  margin: 0;
-  background-color: transparent;
-}
-</style>
+<style lang="scss" scoped></style>

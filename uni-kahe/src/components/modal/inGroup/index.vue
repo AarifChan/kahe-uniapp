@@ -5,18 +5,18 @@
         bg-color="transparent"
         @close="emits('update:show', false)"
     >
-        <view class="inGroupModal">
+        <view class="relative bg-transparent w-717 h-1035">
             <image
-                class="inGroupModal-bg"
+                class="w-full h-full"
                 src="/static/kahe-202510/home-upgrade/inGroup-bg.png"
             />
             <image
-                class="inGroupModal-qrcode"
+                class="absolute top-260 left-180 w-314 h-314"
                 src="/static/kahe-202510/home-upgrade/inGroup.png"
                 @longpress="emits('showImage')"
             />
             <image
-                class="inGroupModal-close"
+                class="absolute bottom-30 left-315 w-63 h-63"
                 src="/static/kahe-202510/home-upgrade/inGroup-close.png"
                 @click="emits('update:show', false)"
             />
@@ -42,29 +42,4 @@ watch(
 const emits = defineEmits(['update:show', 'showImage'])
 </script>
 
-<style lang="scss" scoped>
-.inGroupModal {
-    position: relative;
-    background-color: transparent;
-    width: 717rpx;
-    height: 1035rpx;
-    &-bg {
-        width: 100%;
-        height: 100%;
-    }
-    &-close {
-        position: absolute;
-        bottom: 30rpx;
-        left: 315rpx;
-        width: 63rpx;
-        height: 63rpx;
-    }
-    &-qrcode {
-        position: absolute;
-        top: 260rpx;
-        left: 180rpx;
-        width: 314rpx;
-        height: 314rpx;
-    }
-}
-</style>
+<style lang="scss" scoped></style>

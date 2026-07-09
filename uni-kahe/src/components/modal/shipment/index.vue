@@ -1,58 +1,59 @@
 <template>
     <tn-popup v-model="vShow" open-direction="center" bg-color="transparent" @close="emits('update:show', false)">
-        <view class="shipment">
-            <view class="shipment-content">
-                <view class="shipment-content-top">
-                    <view class="shipment-content-top-title theme-font text-stroke-main">发货确认</view>
-                    <view class="shipment-content-top-closeBg">
-                        <image class="shipment-content-top-closeBg-close" @tap.stop="emits('update:show', false)" src="/static/kahe/common/close-white.png" />
+        <view class="relative bg-transparent w-626 h-761">
+            <view class="absolute left-0 top-0 w-full h-full bg-[#F3F6FE] rounded-10 overflow-hidden">
+                <view class="relative w-full h-73 bg-gradient-[linear-gradient(-90deg,_#C8E0FC,_#88BDFF)]">
+                    <view class="text-40 leading-73 font-normal text-white ml-34 theme-font text-stroke-main">发货确认</view>
+                    <view class="absolute right-35 -top-8 w-108 h-56 bg-[#FF7878] rounded-10 flex-center border-1px border-[#BC4646]">
+                        <image class="w-38 h-39" @tap.stop="emits('update:show', false)" src="/static/kahe/common/close-white.png" />
                     </view>
                 </view>
-                <view class="shipment-content-info" v-if="address?.price ?? false">
-                    <text class="shipment-content-info-title">需支付</text>
-                    <text class="shipment-content-info-value">¥{{address.price}}</text>
-                    <text class="shipment-content-info-title">邮费</text>
+                <view class="flex flex-row mt-16 ml-38" v-if="address?.price ?? false">
+                    <text class="text-26 font-normal text-black">需支付</text>
+                    <text class="text-26 font-normal text-[#4B71FF]">¥{{address.price}}</text>
+                    <text class="text-26 font-normal text-black">邮费</text>
                 </view>
-                <view class="shipment-content-center">
-                    <scroll-view class="shipment-content-center-scroll" :scroll-x="true" :enable-flex="true" scroll-with-animation>
-                        <view class="shipment-content-center-scroll-content">
-                            <view class="shipment-content-center-scroll-content-item" v-for="(item, index) in list" :key="index">
-                                <view class="shipment-content-center-scroll-content-item-goods">
+                <view class="mt-12 px-28 box-border w-full h-239">
+                    <scroll-view class="relative w-full h-full bg-white shadow-[0_0_6rpx_0_#D4DEE9] rounded-4 flex flex-row" :scroll-x="true" :enable-flex="true" scroll-with-animation>
+                        <view class="py-40 px-20 whitespace-nowrap flex flex-row">
+                            <view class="relative inline-block flex flex-col mr-24 w-152 overflow-hidden" v-for="(item, index) in list" :key="index">
+                                <view class="relative w-152 h-152">
 
-                                    <image :src="item.image" class="shipment-content-center-scroll-content-item-goods-img" />
-                                    <view class="shipment-content-center-scroll-content-item-goods-levelBg">
+                                    <image :src="item.image" class="rounded-2 w-[calc(100%-4rpx)] h-[calc(100%-4rpx)] border-2 border-[#3B7CFF] absolute left-0 top-0" />
+                                    <view class="absolute -left-15 -bottom-2 w-70 h-35 bg-[#95C3F7] flex items-center justify-center" style="border-radius: 0rpx 8rpx 0rpx 8rpx;">
                                         <image
                                             mode="heightFix"
-                                            class="shipment-content-center-scroll-content-item-goods-levelBg-level"
+                                            class="h-full"
+                                            style="transform: translateX(20rpx);"
                                             :src="item.levelImage"
                                         />
                                     </view>
-                                    <text class="shipment-content-center-scroll-content-item-goods-num">x{{ item.num }}</text>
+                                    <text class="absolute right-15 bottom-5 z-2 text-24 font-normal text-black">x{{ item.num }}</text>
                                 </view>
-                                <text class="shipment-content-center-scroll-content-item-title text-flow-ellipsis-single">{{ item.name??'' }}</text>
+                                <text class="relative w-80 h-21 text-left text-20 font-normal text-[#1a385b] text-flow-ellipsis-single">{{ item.name??'' }}</text>
                             </view>
                         </view>
 
-                        <view class="shipment-content-center-scroll-num">
-                            <image class="shipment-content-center-scroll-num-bg" src="/static/kahe-202510/images/num-bg.png" />
-                            <text class="shipment-content-center-scroll-num-title theme-font">共{{ total }}件</text>
+                        <view class="absolute right-0 top-0 w-141 h-40">
+                            <image class="absolute right-0 top-0 w-full h-full" src="/static/kahe-202510/images/num-bg.png" />
+                            <text class="absolute right-20 top-0 leading-40 text-24 font-normal text-black text-right theme-font">共{{ total }}件</text>
                         </view>
                     </scroll-view>
                 </view>
 
-                <view class="shipment-content-option" @tap.stop="emits('didTapAddress')">
+                <view class="py-20 px-32 box-border w-full" @tap.stop="emits('didTapAddress')">
                     <pay-option title="收货信息" color="black" />
                 </view>
 
-                <view class="shipment-content-address">
-                    <text class="shipment-content-address-title">收货人：{{address?.realName ?? ""}}</text>
-                    <text class="shipment-content-address-title">联系电话：{{address?.phone ?? ""}}</text>
-                    <text class="shipment-content-address-title">收货地址：{{address?.detail ?? ""}}</text>
+                <view class="px-40 box-border w-full flex flex-col">
+                    <text class="mb-24 w-620 h-26 text-24 font-normal text-black">收货人：{{address?.realName ?? ""}}</text>
+                    <text class="mb-24 w-620 h-26 text-24 font-normal text-black">联系电话：{{address?.phone ?? ""}}</text>
+                    <text class="mb-24 w-620 h-26 text-24 font-normal text-black">收货地址：{{address?.detail ?? ""}}</text>
                 </view>
 
                 <agreement v-model:checked="agree" @did-tap-protocol="emits('didTapProtocol')" />
 
-                <view class="shipment-content-bottom" @tap.stop="didTapConfirm">
+                <view class="absolute bottom-22 left-0 w-full flex flex-row items-center justify-center" @tap.stop="didTapConfirm">
                     <custom-button title="确定" />
                 </view>
             </view>
@@ -109,211 +110,4 @@ const totalPrice = computed(() => {
 const emits = defineEmits(['update:show', 'didTapProtocol', 'didTapAddress', 'didClickConfirm'])
 </script>
 
-<style lang="scss" scoped>
-.shipment {
-    position: relative;
-    background-color: transparent;
-    width: 626rpx;
-    height: 761rpx;
-    &-content {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #F3F6FE;
-        border-radius: 10rpx;
-        overflow: hidden;
-        &-top {
-            position: relative;
-            width: 100%;
-            background: linear-gradient(-90deg, #C8E0FC, #88BDFF);
-            height: 73rpx;
-            &-title {
-                font-size: 40rpx;
-                line-height: 73rpx;
-                font-weight: 400;
-                color: #FFFFFF;
-                margin-left: 34rpx;
-            }
-            &-closeBg {
-                position: absolute;
-                right: 35rpx;
-                top: -8rpx;
-                width: 108rpx;
-                height: 56rpx;
-                background-color: #FF7878;
-                border-radius: 10rpx;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border: 1px solid #BC4646;
-                &-close{
-                width: 38rpx;
-                height: 39rpx;
-            }
-            }
-
-        }
-
-        &-info{
-            display: flex;
-            flex-direction: row;
-            margin-top: 16rpx;
-            margin-left: 38rpx;
-            &-title{
-                font-size: 26rpx;
-                font-weight: 400;
-                color: #000000;
-            }
-            &-value{
-                font-size: 26rpx;
-                font-weight: 400;
-                color: #4B71FF;
-            }
-        }
-        &-center{
-            margin-top: 12rpx;
-            padding: 0 28rpx;
-            box-sizing: border-box;
-            width: 100%;
-            height: 239rpx;
-
-            &-scroll{
-                position: relative;
-                width: 100%;
-                height: 100%;
-                background: #FFFFFF;
-                box-shadow: 0rpx 0rpx 6rpx 0rpx #D4DEE9;
-                border-radius: 4rpx;
-
-                display: flex;
-                flex-direction: row;
-                &-content{
-                    padding: 40rpx 20rpx 0 20rpx;
-                    white-space: nowrap;
-                    display: flex;
-                    flex-direction: row;
-
-                    &-item {
-                        position: relative;
-                        display: inline-block;
-                        flex-direction: column;
-                        margin-right: 24rpx;
-                        width: 152rpx;
-                        overflow: hidden;
-                        &-goods {
-                            position: relative;
-                            width: 152rpx;
-                            height: 152rpx;
-
-                            &-img {
-                                border-radius: 2rpx;
-                                width: calc(100% - 4rpx);
-                                height:calc(100% - 4rpx);
-                                border: 2rpx solid #3B7CFF;
-                                position: absolute;
-                                left: 0;
-                                top: 0;
-                            }
-                            &-levelBg {
-                                position: absolute;
-                                // @include flex-xy-center(row);
-                                left: -15rpx;
-                                bottom: -2rpx;
-                                width: 70rpx;
-                                height: 35rpx;
-                                background: #95C3F7;
-                                border-radius: 0rpx 8rpx 0rpx 8rpx;
-                                &-level {
-                                    transform: translateX(20rpx);
-                                height: 100%;
-                            }
-                            }
-
-                            &-num {
-                                position: absolute;
-                                right: 15rpx;
-                                bottom: 5rpx;
-                                z-index: 2;
-                                font-size: 24rpx;
-                                font-weight: normal;
-                                color: #000000;
-                            }
-                        }
-                        &-title {
-                            position: relative;;
-                            width: 80rpx;
-                            height: 21rpx;
-                            text-align: left;
-                            font-size: 20rpx;
-                            font-weight: 400;
-                            color: #1a385b;
-                        }
-                    }
-                }
-
-                &-num {
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                    width: 141rpx;
-                    height: 40rpx;
-                    &-bg{
-                        position: absolute;
-                        right: 0;
-                        top: 0;
-                        width: 100%;
-                        height: 100%;
-                    }
-
-                    &-title{
-                        position: absolute;
-                        right: 20rpx;
-                        top: 0;
-                        line-height: 40rpx;
-                        font-size: 24rpx;
-                        font-weight: 400;
-                        color: #000000;
-                        text-align: right;
-                    }
-                }
-            }
-
-        }
-
-        &-option{
-            padding: 20rpx 32rpx;
-            box-sizing: border-box;
-            width: 100%;
-
-        }
-        &-address{
-            padding: 0 40rpx;
-            box-sizing: border-box;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            &-title{
-                margin-bottom: 24rpx;
-                width: 620rpx;
-                height: 26rpx;
-                font-size: 24rpx;
-                font-weight: 400;
-                color: #000000;
-            }
-        }
-
-        &-bottom {
-            position: absolute;
-            bottom: 22rpx;
-            left: 0;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

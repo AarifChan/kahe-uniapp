@@ -5,23 +5,26 @@
     @close="emits('update:show', false)"
     bg-color="transparent"
   >
-    <view class="swap">
-      <image class="swap-bg" src="/static/kahe-202510/ka-he/product/swap-bg.png" />
-      <view class="swap-content">
-        <view class="swap-sort">
+    <view class="relative w-680 h-914">
+      <image
+        class="relative w-full h-full"
+        src="/static/kahe-202510/ka-he/product/swap-bg.png"
+      />
+      <view class="absolute left-0 top-0 w-full h-full flex flex-col">
+        <view class="mt-67 ml-67 flex flex-row items-center justify-start">
           <view
-            class="swap-sort-item"
+            class="mr-36 flex flex-row items-center"
             v-for="(item, index) in sortList"
             :key="'sorted-item' + index"
             @tap.stop="didTapSort(index)"
           >
             <text
-              class="swap-sort-item-title"
-              :class="sortIndex === index ? 's_active' : ''"
+              class="text-32 font-normal text-[#ba936c]"
+              :class="sortIndex === index ? 'text-[#562516]' : ''"
               >#{{ item.title }}</text
             >
             <image
-              class="swap-sort-item-img"
+              class="w-24 h-27"
               :src="
                 index === sortIndex
                   ? '/static/kahe-202510/ka-he/product/sort.png'
@@ -31,23 +34,33 @@
           </view>
         </view>
 
-        <scroll-view class="swap-option" :enable-flex="true" :scroll-x="true">
+        <scroll-view
+          class="flex-nowrap mt-24 ml-54 h-64 whitespace-nowrap"
+          style="width: calc(100% - 90rpx)"
+          :enable-flex="true"
+          :scroll-x="true"
+        >
           <view
-            class="swap-option-item"
+            class="mr-24 inline-block text-center w-195 h-60 text-[#3c3c3c] leading-60 rounded-2 border-2 border-[#ba936c] bg-transparent"
             v-for="(item, index) in boxRangeList"
             :key="index"
-            :class="tabIndex === index ? 't_active' : ''"
+            :class="tabIndex === index ? 'text-[#562516] font-bold' : ''"
             @tap.stop="tabTapAction(index)"
             >{{ item.title }}</view
           >
         </scroll-view>
 
-        <scroll-view class="swap-level" :enable-flex="true" :scroll-x="true">
+        <scroll-view
+          class="ml-68 relative flex-nowrap mt-24 h-50 whitespace-nowrap"
+          style="width: calc(100% - 68rpx - 16rpx)"
+          :enable-flex="true"
+          :scroll-x="true"
+        >
           <view
-            class="swap-level-item"
+            class="inline-block mr-27 leading-50 text-28 font-normal text-[rgba(124,63,44,0.55)]"
             v-for="(item, index) in levelList"
             :key="'swap-enum-item' + index"
-            :class="levelIndex === index ? 's_active' : ''"
+            :class="levelIndex === index ? 'text-[#562516]' : ''"
             @tap.stop="tabLevelOption(index)"
             >{{ getNormalLevelNameByLevel(item.level) }}</view
           >
@@ -57,36 +70,44 @@
           :enable-flex="true"
           :scroll-y="true"
           scroll-with-animation
-          class="swap-box"
+          class="py-24 px-48 relative w-full h-628"
         >
           <view
-            class="swap-box-item"
+            class="relative inline-block w-full aspect-ratio-[618/199] mb-24"
             v-for="(item, index) in boxList"
             :key="'boxList-item' + index"
             @tap.stop="didSelectBox(index)"
           >
             <image
-              class="swap-box-item-bg"
+              class="w-full h-full"
               src="/static/kahe-202510/ka-he/product/swap-item.png"
             />
-            <view class="swap-box-item-content">
-              <view class="swap-box-item-content-top">
-                <view class="swap-box-item-content-top-left"
+            <view
+              class="absolute right-0 top-0 w-full h-full flex flex-col items-center justify-between"
+            >
+              <view
+                class="py-18 px-30 box-border w-full flex flex-row items-center justify-between"
+              >
+                <view class="font-normal text-25 text-[#562516]"
                   >#{{ item.boxSeqNo }}</view
                 >
-                <view class="swap-box-item-content-top-right"
+                <view class="font-normal text-22 text-[#ff6600]"
                   >余{{ item.num }}抽</view
                 >
               </view>
               <scroll-view
-                class="swap-box-item-content-right"
+                class="relative w-full py-8 px-40 box-border"
+                style="height: calc(100% - 100rpx)"
                 :enable-flex="true"
                 :scroll-y="true"
                 scroll-with-animation
               >
-                <view class="swap-box-item-content-right-content">
+                <view
+                  class="grid"
+                  style="grid-template-columns: repeat(auto-fill, minmax(30%, 1fr)); gap: 0"
+                >
                   <text
-                    class="swap-box-item-content-right-content-item"
+                    class="inline-block w-full h-30 mb-20 text-24 font-normal text-[#562516] text-left"
                     v-for="(lItem, lIndex) in item.list"
                     :key="index + 'lIndex' + lIndex"
                     >{{ lItem.title }}:{{ lItem.num }}/{{ lItem.total }}</text
@@ -94,7 +115,9 @@
                 </view>
               </scroll-view>
             </view>
-            <view class="swap-box-item-current" v-if="item.isCurrent"
+            <view
+              class="absolute bottom-4 right-4 w-54 h-24 bg-[#562516] text-18 font-normal text-white text-center"
+              v-if="item.isCurrent"
               >当前</view
             >
           </view>
@@ -102,7 +125,7 @@
       </view>
 
       <image
-        class="swap-close"
+        class="absolute top-0 right-0 w-74 h-74"
         src="/static/kahe-202510/ka-he/product/close.png"
         @tap.stop="emits('update:show', false)"
       />
@@ -193,186 +216,4 @@ const didSelectBox = (index: number) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.swap {
-  position: relative;
-  width: 680rpx;
-  height: 914rpx;
-  &-bg {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  &-option {
-    flex-wrap: nowrap;
-    margin-top: 24rpx;
-    margin-left: 54rpx;
-    width: calc(100% - 90rpx);
-    height: 64rpx;
-    white-space: nowrap;
-    &-item {
-      margin-right: 24rpx;
-      display: inline-block;
-      text-align: center;
-      width: 195rpx;
-      height: 60rpx;
-      color: #3c3c3c;
-      line-height: 60rpx;
-      border-radius: 2rpx;
-      border: 2rpx solid #ba936c;
-      background: rgba(0, 0, 0, 0);
-    }
-  }
-  &-level {
-    margin-left: 68rpx;
-    position: relative;
-    flex-wrap: nowrap;
-    margin-top: 24rpx;
-    width: calc(100% - 68rpx - 16rpx);
-    height: 50rpx;
-    white-space: nowrap;
-    &-item {
-      display: inline-block;
-      margin-right: 27rpx;
-      line-height: 50rpx;
-      font-size: 28rpx;
-      font-weight: 400;
-      color: rgba($color: #7c3f2c, $alpha: 0.55);
-    }
-  }
-  &-sort {
-    margin-top: 67rpx;
-    margin-left: 67rpx;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    &-item {
-      margin-right: 36rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      &-title {
-        font-size: 32rpx;
-        font-weight: 400;
-        color: #ba936c;
-      }
-      &-img {
-        width: 24rpx;
-        height: 27rpx;
-      }
-    }
-  }
-  &-close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 74rpx;
-    height: 74rpx;
-  }
-
-  &-box {
-    padding: 24rpx 48rpx;
-    position: relative;
-    width: 100%;
-    height: 628rpx;
-    &-item {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-      aspect-ratio: 618 / 199;
-      margin-bottom: 24rpx;
-      &-bg {
-        width: 100%;
-        height: 100%;
-      }
-      &-current {
-        position: absolute;
-        bottom: 4rpx;
-        right: 4rpx;
-        width: 54rpx;
-        height: 24rpx;
-        background: #562516;
-        //clip-path: polygon(0 0, 100% 0, 100% 100%, 8px 100%);
-        font-size: 18rpx;
-        font-weight: 400;
-        color: #ffffff;
-        text-align: center;
-      }
-      &-content {
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        &-top {
-          padding: 18rpx 30rpx;
-          box-sizing: border-box;
-          width: 100%;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          &-left {
-            font-weight: 400;
-            font-size: 25rpx;
-            color: #562516;
-          }
-
-          &-right {
-            font-weight: 400;
-            font-size: 22rpx;
-            color: #ff6600;
-          }
-        }
-        &-right {
-          position: relative;
-          width: 100%;
-          padding: 8rpx 40rpx;
-          box-sizing: border-box;
-          height: calc(100% - 100rpx);
-          &-content {
-            display: grid;
-            grid-template-columns: repeat(
-              auto-fill,
-              minmax(30%, 1fr)
-            ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-            grid-gap: 0; // 这是网格间的间隙，根据需要调整
-            &-item {
-              display: inline-block;
-              width: 100%;
-              height: 30rpx;
-              margin-bottom: 20rpx;
-              font-size: 24rpx;
-              font-weight: 400;
-              color: #562516;
-              text-align: left;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-.t_active {
-  color: #562516;
-  font-weight: bold;
-}
-.s_active {
-  color: #562516;
-}
-</style>
+<style lang="scss" scoped></style>

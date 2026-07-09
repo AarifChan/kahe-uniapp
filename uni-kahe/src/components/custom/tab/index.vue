@@ -1,10 +1,11 @@
 <template>
-    <view class="common-tab">
-        <view class="common-tab-list">
-            <view class="common-tab-list-item" v-for="(item, index) in list" :key="index" @tap.stop="clickItem(index)">
-                <view :class="index === current ? 'common-tab-list-item-select' : 'common-tab-list-item-content'">
-                    <image class="common-tab-list-item-content-select" v-if="current===index" src="/static/kahe-202510/home/home-tab.png" />
-                    <text class="common-tab-list-item-content-title theme-font" :class="current===index ? 'common-tab-list-item-content-title-select': ''">{{
+    <view class="common-tab relative py-24 px-0 items-center">
+        <view class="common-tab-list relative flex flex-row items-center justify-start bg-[rgba(255,255,255,0.45)] rounded-25">
+            <view class="common-tab-list-item relative" v-for="(item, index) in list" :key="index" @tap.stop="clickItem(index)">
+                <view class="relative" :class="index === current ? 'w-160 h-50' : 'w-120 h-50'"
+                >
+                    <image class="absolute -left-8 -top-10 w-160 h-65" v-if="current===index" src="/static/kahe-202510/home/home-tab.png" />
+                    <text class="absolute top-0 left-0 w-full h-full leading-50 text-center font-normal text-34 theme-font" :class="current===index ? 'text-[#245070]': 'text-[#51B3F9]'">{{
                         item.title
                     }}</text>
                 </view>
@@ -44,55 +45,4 @@ const clickItem = (index: number) => {
 }
 </script>
 
-<style lang="scss" scoped>
-.common-tab {
-    position: relative;
-    padding: 24rpx 0 24rpx 0;
-    align-items: center;
-    &-list {
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        background: rgba(255,255,255, 0.45);
-        border-radius: 25rpx;
-        &-item {
-            position: relative;
-            &-content{
-                position: relative;
-                width: 120rpx;
-                height: 50rpx;
-                &-title {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    line-height: 50rpx;
-                    height: 100%;
-                    font-weight: 400;
-                    font-size: 34rpx;
-                    color: #51B3F9;
-                    text-align: center;
-                    &-select{
-                        font-weight: 400;
-                        font-size: 34rpx;
-                        color: #245070;
-                    }
-                }
-                &-select{
-                    position: absolute;
-                    left: -8rpx;
-                    top: -10rpx;
-                    width: 160rpx;
-                    height: 65rpx;
-                }
-            }
-            &-select{
-                width: 160rpx;
-                height: 50rpx;
-            }
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

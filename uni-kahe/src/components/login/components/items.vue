@@ -1,13 +1,13 @@
 <template>
-    <view class="login-item">
-        <image class="login-item-bg" src="/static/kahe/login/item-bg.png" />
-        <view class="login-item-content">
-            <view class="login-item-content-left">
-                <text class="login-item-content-left-title theme-font">{{item.title}}</text>
-                <text class="login-item-content-left-subTitle theme-font">{{item.subTitle}}</text>
+    <view class="login-item relative w-477 h-134 mb-8">
+        <image class="login-item-bg w-full h-full" src="/static/kahe/login/item-bg.png" />
+        <view class="login-item-content absolute left-40 top-0 h-full flex flex-row items-center justify-between" style="width: calc(100% - 80rpx)">
+            <view class="login-item-content-left flex flex-col">
+                <text class="login-item-content-left-title theme-font text-40 text-white font-normal">{{item.title}}</text>
+                <text class="login-item-content-left-subTitle theme-font text-30 font-normal text-[#BCD2FF]">{{item.subTitle}}</text>
             </view>
-            <view class="login-item-content-icon">
-                <image class="login-item-content-icon-img" :src="item.icon" />
+            <view class="login-item-content-icon flex flex-row items-center justify-center w-100 h-100">
+                <image class="login-item-content-icon-img w-full h-full" :src="item.icon" />
             </view>
         </view>
     </view>
@@ -35,52 +35,4 @@ defineProps({
 
 </script>
 
-<style lang="scss" scoped>
-.login-item{
-    position: relative;
-    width: 477rpx;
-    height: 134rpx;
-    margin-bottom: 8px;
-    &-bg{
-        width: 100%;
-        height: 100%;
-    }
-    &-content{
-        position: absolute;
-        left: 40rpx;
-        top: 0;
-        width: calc(100% - 80rpx);
-        height: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        &-left{
-            display: flex;
-            flex-direction: column;
-            &-title{
-                font-size: 40rpx;
-                color: white;
-                font-weight: 400;
-            }
-            &-subTitle{
-                font-size: 30rpx;
-                font-weight: 400;
-                color: #BCD2FF;
-            }
-        }
-        &-icon{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            width: 100rpx;
-            height: 100rpx;
-            &-img{
-                width: 100%;
-                height: 100%;
-            }
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

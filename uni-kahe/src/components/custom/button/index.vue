@@ -1,18 +1,18 @@
 <template>
   <view
-    class="customButton"
+    class="customButton relative flex flex-row items-center justify-center bg-[#53d6ac] shadow-[0_4rpx_4rpx_rgba(0,0,0,0.1)]"
     :style="{ width: width, height: height, borderRadius }"
     v-if="size === 'small'"
   >
-   
-    <view class="customButton-content">
+
+    <view class="absolute left-0 top-0 w-full h-full flex flex-row items-center justify-center">
       <image
         v-if="icon === 'wechat'"
         style="width: 25px; height: 25px"
         src="/static/kahe-202510/images/weixin.png"
       />
       <text
-        class="customButton-content-title"
+        class="text-center font-normal text-40 text-white"
         :class="[
           themeFont ? 'theme-font' : '',
           textStroke ? 'text-stroke-main' : '',
@@ -26,12 +26,12 @@
       >
     </view>
   </view>
-  <view class="bottom-Button" v-else :style="{ position: position }">
+  <view class="bottom-Button fixed left-60 flex flex-row items-center justify-center rounded-10" style="bottom: calc(env(safe-area-inset-bottom) + 48rpx); width: calc(100% - 120rpx); height: 67rpx;" v-else :style="{ position: position }">
     <image
-      class="customButton-button"
+      class="w-full h-full"
       src="/static/kahe-202510/ka-he/common/long-btn-bg.png"
     />
-    <text class="big-title theme-font">{{ title }}</text>
+    <text class="absolute left-0 top-0 w-full h-full leading-67 text-center font-normal text-40 text-white theme-font">{{ title }}</text>
   </view>
 </template>
 
@@ -84,65 +84,4 @@ defineProps({
 });
 </script>
 
-<style lang="scss" scoped>
-.customButton {
-  position: relative;
-  height: 67rpx;
-  width: 230rpx;
-  background: #53d6ac;
-  box-shadow: 0 4rpx 4rpx rgba(0, 0, 0, 0.1);
-  &-button {
-    width: 100%;
-    height: 100%;
-  }
-  &-title {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-  }
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    &-title {
-      font-size: 40rpx;
-      text-align: center;
-      font-weight: 400;
-      color: #ffffff;
-    }
-  }
-}
-.bottom-Button {
-  position: fixed;
-  left: 60rpx;
-  bottom: calc(env(safe-area-inset-bottom) + 48rpx);
-  width: calc(100% - 120rpx);
-  height: 67rpx;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10rpx;
-  
-}
-.big-title {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  line-height: 67rpx;
-  font-weight: 400;
-  font-size: 40rpx;
-  color: #ffffff;
-  text-align: center;
-}
-</style>
+<style lang="scss" scoped></style>

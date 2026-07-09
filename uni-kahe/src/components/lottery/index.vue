@@ -1,36 +1,32 @@
 <template>
-  <view v-if="show" class="lottery-container">
-    <view class="lottery-bg" v-if="!isSkip">
+  <view v-if="show" class="lottery-container fixed left-0 top-0 w-full h-screen bg-[rgba(0,0,0,0.7)] z-999">
+    <view class="lottery-bg fixed left-0 top-0 flex flex-row items-center justify-evenly flex-wrap p-30 h-screen z-999 box-border w-full bg-[rgba(0,0,0,0.8)]" v-if="!isSkip">
       <lottery-card
         v-for="(item, index) in list"
         :key="'lottery-card' + index"
-        :class="
-          list.length <= 3
-            ? 'lottery-simple' + (index + 1)
-            : 'lottery-card' + (index + 1)
-        "
+        class="absolute"
+        :style="getCardStyle(index)"
         :item="item"
         :is-animating="isCurrent(index)"
-        :style="{ transform: `scale(${getScale()})` }"
         :is-open="isCurrent(index) && openList[index] !== -1"
         @tap.stop="tapAction(index)"
       />
-      <view class="lottery-bottom">
+      <view class="lottery-bottom fixed flex flex-row items-center justify-between" style="bottom: 5%; left: 100rpx; width: calc(100% - 200rpx)">
         <view
-          class="lottery-close theme-font"
-          :class="list.length <= 5 ? 'lottery-near' : ''"
+          class="lottery-close theme-font w-248 h-78 bg-[url(/static/hhs/lottery/btn-bg.png)] bg-no-repeat bg-[length:100%_100%] text-white text-40 text-center leading-78"
+          :style="list.length <= 5 ? { bottom: '25%' } : {}"
           @tap.stop="close"
           >继续抽赏
         </view>
         <view
-          class="lottery-all theme-font"
-          :class="list.length <= 5 ? 'lottery-near' : ''"
+          class="lottery-all theme-font w-248 h-78 bg-[url(/static/hhs/lottery/btn-bg.png)] bg-no-repeat bg-[length:100%_100%] text-white text-40 text-center leading-78"
+          :style="list.length <= 5 ? { bottom: '25%' } : {}"
           @tap.stop="openAll"
           >一键翻牌
         </view>
       </view>
     </view>
-    <image v-if="gifShow && isReady" class="gifImage" :src="gifPath" />
+    <image v-if="gifShow && isReady" class="gifImage fixed left-0 top-0 w-750 z-999" style="height: calc(750rpx / 415 * 905)" :src="gifPath" />
   </view>
 </template>
 
@@ -94,6 +90,60 @@ export default {
         } else {
           return 1.6;
         }
+      },
+      getCardStyle: (index: number) => {
+        const isSimple = (props.list?.length || 0) <= 3;
+        let position: Record<string, string> = {};
+        if (isSimple) {
+          switch (index) {
+            case 0:
+              position = { left: "calc(-78rpx + 274rpx * 1.1)", top: "calc(410rpx * 1.1 - 120rpx)" };
+              break;
+            case 1:
+              position = { left: "-20rpx", top: "calc(410rpx * 1.1 - 120rpx)" };
+              break;
+            case 2:
+              position = { right: "-20rpx", top: "calc(410rpx * 1.1 - 120rpx)" };
+              break;
+          }
+        } else {
+          switch (index) {
+            case 0:
+              position = { left: "calc(-78rpx + 274rpx * 1.1)", top: "calc(410rpx * 1.1 - 160rpx)" };
+              break;
+            case 1:
+              position = { left: "-20rpx", top: "calc(410rpx * 1.1 - 60rpx)" };
+              break;
+            case 2:
+              position = { right: "-20rpx", top: "calc(410rpx * 1.1 - 60rpx)" };
+              break;
+            case 3:
+              position = { left: "-20rpx", top: "80rpx" };
+              break;
+            case 4:
+              position = { right: "-20rpx", top: "80rpx" };
+              break;
+            case 5:
+              position = { left: "-20rpx", top: "calc(410rpx * 1.1 * 2 - 200rpx)" };
+              break;
+            case 6:
+              position = { left: "calc(-78rpx + 274rpx * 1.1)", top: "calc(410rpx * 1.1 * 2 - 300rpx)" };
+              break;
+            case 7:
+              position = { left: "calc(-78rpx + 274rpx * 1.1)", top: "calc(410rpx * 1.1 * 3 - 440rpx)" };
+              break;
+            case 8:
+              position = { right: "-20rpx", top: "calc(410rpx * 1.1 * 2 - 200rpx)" };
+              break;
+            case 9:
+              position = { left: "calc(-78rpx + 274rpx * 1.1)", top: "-20rpx" };
+              break;
+          }
+        }
+        return {
+          ...position,
+          transform: `scale(${dataMap.getScale()})`,
+        };
       },
       isCurrent: (num: number) => {
         let isOpen = false;
@@ -237,160 +287,4 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-.lottery-container {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 999;
-}
-
-.gifImage {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 750rpx;
-  z-index: 999;
-  height: calc(750rpx / 415 * 905);
-}
-
-.lottery-bg {
-  position: fixed;
-  left: 0;
-  top: 0;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  padding: 30rpx;
-  height: 100vh;
-  z-index: 999;
-  box-sizing: border-box;
-  width: 100%;
-  background-color: rgb(0, 0, 0, 0.8);
-}
-
-.lottery {
-  &-simple2 {
-    position: absolute;
-    left: -20rpx;
-    top: calc(410rpx * 1.1 - 120rpx);
-  }
-
-  &-simple1 {
-    position: absolute;
-    left: calc(-78rpx + 274rpx * 1.1);
-    top: calc(410rpx * 1.1 - 120rpx);
-  }
-
-  &-simple3 {
-    position: absolute;
-    right: -20rpx;
-    top: calc(410rpx * 1.1 - 120rpx);
-  }
-
-  &-card4 {
-    position: absolute;
-    left: -20rpx;
-    top: 80rpx;
-  }
-
-  &-card2 {
-    position: absolute;
-    left: -20rpx;
-    top: calc(410rpx * 1.1 - 60rpx);
-  }
-
-  &-card6 {
-    position: absolute;
-    left: -20rpx;
-    top: calc(410rpx * 1.1 * 2 - 200rpx);
-  }
-
-  &-card10 {
-    position: absolute;
-    left: calc(-78rpx + 274rpx * 1.1);
-    top: -20rpx;
-  }
-
-  &-card1 {
-    position: absolute;
-    left: calc(-78rpx + 274rpx * 1.1);
-    top: calc(410rpx * 1.1 - 160rpx);
-  }
-
-  &-card7 {
-    position: absolute;
-    left: calc(-78rpx + 274rpx * 1.1);
-    top: calc(410rpx * 1.1 * 2 - 300rpx);
-  }
-
-  &-card8 {
-    position: absolute;
-    left: calc(-78rpx + 274rpx * 1.1);
-    top: calc(410rpx * 1.1 * 3 - 440rpx);
-  }
-
-  &-card5 {
-    position: absolute;
-    right: -20rpx;
-    top: 80rpx;
-  }
-
-  &-card3 {
-    position: absolute;
-    right: -20rpx;
-    top: calc(410rpx * 1.1 - 60rpx);
-  }
-
-  &-card9 {
-    position: absolute;
-    right: -20rpx;
-    top: calc(410rpx * 1.1 * 2 - 200rpx);
-  }
-
-  &-bottom {
-    position: fixed;
-    bottom: 5%;
-    left: 100rpx;
-    width: calc(100% - 200rpx);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &-all {
-    width: 248rpx;
-    height: 78rpx;
-    background-image: url("/static/hhs/lottery/btn-bg.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    color: white;
-    font-size: 40rpx;
-    text-align: center;
-    line-height: 78rpx;
-  }
-
-  &-close {
-    width: 248rpx;
-    height: 78rpx;
-    background-image: url("/static/hhs/lottery/btn-bg.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    color: white;
-    font-size: 40rpx;
-    text-align: center;
-    line-height: 78rpx;
-  }
-
-  &-near {
-    bottom: 25%;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

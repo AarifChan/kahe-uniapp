@@ -1,33 +1,12 @@
 <template>
-    <view class="bottom-bg">
-        <view class="bottom-bg-context">
+    <view class="fixed left-0 bottom-0 w-full">
+        <view class="relative w-full">
 
-            <view class="bottom-bg-context-placeholder"></view>
+            <view class="-mt-10 bg-white w-full" style="height: calc(env(safe-area-inset-bottom) + 10px)"></view>
         </view>
     </view>
 </template>
 
 <script lang="ts" setup></script>
 
-<style lang="scss" scoped>
-  .bottom-bg {
-    position: fixed;
-    left: 0;
-    width: 100%;
-    bottom: 0;
-    &-context {
-      position: relative;
-      width: 100%;
-      &-bg {
-        position: relative;
-        width: 100%;
-      }
-      &-placeholder {
-        margin-top: -10px;
-        background-color: #FFFFFF;
-        width: 100%;
-        height: calc(env(safe-area-inset-bottom) + 10px);
-      }
-    }
-  }
-</style>
+<style lang="scss" scoped></style>

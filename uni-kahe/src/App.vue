@@ -140,4 +140,158 @@ button::after {
   border: none;
   background-color: transparent;
 }
+
+/* 抽卡翻牌动画 */
+.turnCard {
+  animation: turnCardAnimate 1.5s;
+}
+
+@keyframes turnCardAnimate {
+  0% {
+    transform: perspective(150px) rotateY(180deg);
+  }
+}
+
+/* 抽卡结果弹窗布局 */
+.lottery-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+}
+
+.gifImage {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 750rpx;
+  z-index: 999;
+  height: calc(750rpx / 415 * 905);
+}
+
+.lottery-bg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 30rpx;
+  height: 100vh;
+  z-index: 999;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: rgb(0, 0, 0, 0.8);
+}
+
+.lottery-simple2 {
+  position: absolute;
+  left: -20rpx;
+  top: calc(410rpx * 1.1 - 120rpx);
+}
+
+.lottery-simple1 {
+  position: absolute;
+  left: calc(-78rpx + 274rpx * 1.1);
+  top: calc(410rpx * 1.1 - 120rpx);
+}
+
+.lottery-simple3 {
+  position: absolute;
+  right: -20rpx;
+  top: calc(410rpx * 1.1 - 120rpx);
+}
+
+.lottery-card4 {
+  position: absolute;
+  left: -20rpx;
+  top: 80rpx;
+}
+
+.lottery-card2 {
+  position: absolute;
+  left: -20rpx;
+  top: calc(410rpx * 1.1 - 60rpx);
+}
+
+.lottery-card6 {
+  position: absolute;
+  left: -20rpx;
+  top: calc(410rpx * 1.1 * 2 - 200rpx);
+}
+
+.lottery-card10 {
+  position: absolute;
+  left: calc(-78rpx + 274rpx * 1.1);
+  top: -20rpx;
+}
+
+.lottery-card1 {
+  position: absolute;
+  left: calc(-78rpx + 274rpx * 1.1);
+  top: calc(410rpx * 1.1 - 160rpx);
+}
+
+.lottery-card7 {
+  position: absolute;
+  left: calc(-78rpx + 274rpx * 1.1);
+  top: calc(410rpx * 1.1 * 2 - 300rpx);
+}
+
+.lottery-card8 {
+  position: absolute;
+  left: calc(-78rpx + 274rpx * 1.1);
+  top: calc(410rpx * 1.1 * 3 - 440rpx);
+}
+
+.lottery-card5 {
+  position: absolute;
+  right: -20rpx;
+  top: 80rpx;
+}
+
+.lottery-card3 {
+  position: absolute;
+  right: -20rpx;
+  top: calc(410rpx * 1.1 - 60rpx);
+}
+
+.lottery-card9 {
+  position: absolute;
+  right: -20rpx;
+  top: calc(410rpx * 1.1 * 2 - 200rpx);
+}
+
+.lottery-bottom {
+  position: fixed;
+  bottom: 5%;
+  left: 100rpx;
+  width: calc(100% - 200rpx);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lottery-all,
+.lottery-close {
+  width: 248rpx;
+  height: 78rpx;
+  background-image: url("/static/hhs/lottery/btn-bg.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  color: white;
+  font-size: 40rpx;
+  text-align: center;
+  line-height: 78rpx;
+}
+
+.lottery-near {
+  bottom: 25%;
+}
 </style>

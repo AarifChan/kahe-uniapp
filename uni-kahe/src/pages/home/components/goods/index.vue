@@ -1,5 +1,5 @@
 <template>
-  <view class="homeGoods">
+  <view class="homeGoods w-full relative overflow-hidden mb-20 flex flex-col">
     <!--    <image-->
     <!--      class="homeGoods-bg"-->
     <!--      mode="widthFix"-->
@@ -12,50 +12,52 @@
     <!--            />-->
     <!--        </view>-->
 
-    <view class="homeGoods-cover">
+    <view class="homeGoods-cover relative w-full aspect-ratio-[1/1] overflow-hidden flex flex-row items-center justify-center">
       <image
-        class="homeGoods-cover-bg"
+        class="homeGoods-cover-bg w-full h-full aspect-ratio-[1/1]"
         mode="widthFix"
         src="/static/kaju/common/good-bg.png"
       />
-      <view class="homeGoods-cover-top">
+      <view class="homeGoods-cover-top absolute left-4 top-4 flex flex-row items-center justify-center" style="width: calc(100% - 8rpx); height: calc(100% - 8rpx)">
         <image
-          class="homeGoods-cover-top-img"
+          class="homeGoods-cover-top-img h-full"
           :src="item.image"
           mode="heightFix"
         />
       </view>
 
-      <view class="homeGoods-cover-pattern">
+      <view class="homeGoods-cover-pattern absolute right-8 top-8 z-2 flex flex-row items-center">
         <image
           v-for="(label, index) in item.labels"
           :key="'labels:' + index"
           :src="formatLabelImage(label)"
-          class="homeGoods-cover-pattern-img"
+          class="homeGoods-cover-pattern-img mr-8 w-65 h-34 rounded-4"
         />
       </view>
     </view>
-    <view class="homeGoods-info">
-      <view class="homeGoods-info-bottom">
-        <view class="homeGoods-info-bottom-title text-flow-ellipsis-single">{{
-          item.name
-        }}</view>
-        <view class="homeGoods-info-bottom-row1">
-          <view class="homeGoods-info-bottom-row1-price">
-            <text class="homeGoods-info-bottom-row1-price-title price-font"
-              >{{ isFromMall ? "" : "" }}{{ item.price
-              }}{{ isFromMall ? "/点券" : "" }}</text
-            >
-          </view>
-          <view class="homeGoods-info-merchant" v-if="!hideMerchant">
-            <image
-              class="homeGoods-info-merchant-logo"
-              :src="item.merchant?.icon"
-            />
-            <view
-              class="homeGoods-info-merchant-name text-flow-ellipsis-single"
-              >{{ item.merchant?.name }}</view
-            >
+    <view class="homeGoods-info mt-8 relative w-full flex flex-col justify-between">
+      <view class="homeGoods-info-content relative w-full h-full">
+        <view class="homeGoods-info-bottom px-12 box-border w-full">
+          <view class="homeGoods-info-bottom-title font-normal text-24 text-black leading-30 text-flow-ellipsis-single">{{
+            item.name
+          }}</view>
+          <view class="homeGoods-info-bottom-row1 box-border flex flex-row items-center justify-between">
+            <view class="homeGoods-info-bottom-row1-price relative">
+              <text class="homeGoods-info-bottom-row1-price-title price-font text-[#fe452c] text-24 leading-42"
+                >{{ isFromMall ? "" : "" }}{{ item.price
+                }}{{ isFromMall ? "/点券" : "" }}</text
+              >
+            </view>
+            <view class="homeGoods-info-merchant flex flex-row items-center" v-if="!hideMerchant">
+              <image
+                class="homeGoods-info-merchant-logo w-36 h-36 rounded-full"
+                :src="item.merchant?.icon"
+              />
+              <view
+                class="homeGoods-info-merchant-name max-w-120 ml-5 font-normal text-18 text-black text-flow-ellipsis-single"
+                >{{ item.merchant?.name }}</view
+              >
+            </view>
           </view>
         </view>
       </view>
@@ -108,144 +110,4 @@ const formatLabelName = (index: number) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.homeGoods {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 20rpx;
-  display: flex;
-  flex-direction: column;
-  &-empty {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 3;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &-tags {
-    position: absolute;
-    left: 12rpx;
-    top: 0;
-    width: 84rpx;
-    height: 30rpx;
-    background: #8bb7ff;
-    border-radius: 0rpx 0rpx 8rpx 8rpx;
-    opacity: 0.8;
-  }
-
-  &-cover {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-
-    &-bg {
-      width: 100%;
-      height: 100%;
-      aspect-ratio: 1 / 1;
-    }
-
-    &-top {
-      position: absolute;
-      left: 4rpx;
-      top: 4rpx;
-      width: calc(100% - 8rpx);
-      height: calc(100% - 8rpx);
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-
-      &-img {
-        height: 100%;
-      }
-    }
-
-    &-pattern {
-      position: absolute;
-      right: 8rpx;
-      top: 8rpx;
-      z-index: 2;
-      display: flex;
-      //   flex-direction: column;
-      align-items: center;
-
-      &-img {
-        margin-right: 8rpx;
-        width: 65rpx;
-        height: 34rpx;
-        border-radius: 4rpx;
-      }
-    }
-  }
-
-  &-info {
-    margin-top: 8rpx;
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    &-bottom {
-      width: 100%;
-      &-title {
-        font-weight: 400;
-        font-size: 24rpx;
-        color: #000000;
-        line-height: 30rpx;
-      }
-
-      &-row1 {
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-
-        &-price {
-          position: relative;
-
-          &-title {
-            line-height: 42rpx;
-            color: #fe452c;
-            font-size: 24rpx;
-          }
-        }
-
-        &-title {
-          color: #000000;
-          font-size: 40rpx;
-        }
-      }
-    }
-
-    &-merchant {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-
-      &-name {
-        max-width: 120rpx;
-        margin-left: 5rpx;
-        font-weight: normal;
-        font-size: 18rpx;
-        color: #000000;
-      }
-
-      &-logo {
-        width: 36rpx;
-        height: 36rpx;
-        border-radius: 50%;
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

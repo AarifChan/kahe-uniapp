@@ -5,16 +5,16 @@
         bg-color="transparent"
         @close="emits('update:show', false)"
     >
-        <view class="vipModal">
-            <image class="vipModal-bg" src="/static/kahe-202510/images/vip-bg.png" />
-            <view class="vipModal-content">
-                <view class="vipModal-content-top">
-                    <text class="vipModal-content-top-title"
+        <view class="relative w-675 h-547 overflow-hidden">
+            <image class="absolute left-0 top-0 w-full h-full" src="/static/kahe-202510/images/vip-bg.png" />
+            <view class="absolute left-0 top-0 w-full h-full rounded-10 overflow-hidden">
+                <view class="w-full h-73">
+                    <text class="ml-36 text-26 font-normal text-black"
                         >尊贵的vip{{ vip }}，今日奖励给您奉上！</text
                     >
                 </view>
                 <scroll-view
-                    class="vipModal-content-list"
+                    class="relative whitespace-nowrap mt-[15px] h-248 ml-[15px] w-[calc(100%-30px)]"
                     :enable-flex="true"
                     :scroll-x="true"
                     scroll-with-animation
@@ -26,7 +26,7 @@
                         :item="item"
                     />
                 </scroll-view>
-                <view class="vipModal-content-bottom">
+                <view class="absolute left-0 bottom-18 w-full flex flex-row items-center justify-center">
                     <custom-button
                         title="收下奖励"
                         :theme-font="true"
@@ -67,58 +67,4 @@ watch(() => props.show, value => {
 const emits = defineEmits(['update:show'])
 </script>
 
-<style lang="scss" scoped>
-.vipModal {
-    position: relative;
-    width: 675rpx;
-    height: 547rpx;
-    overflow: hidden;
-    &-bg {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-    }
-    &-content {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 10rpx;
-        overflow: hidden;
-
-        &-top {
-            width: 100%;
-            // background: linear-gradient(-90deg, #3AE5FD, #7C7FF5);
-            height: 73rpx;
-            &-title {
-                margin-left: 36rpx;
-                font-size: 26rpx;
-                font-weight: 400;
-                color: #000000;
-            }
-        }
-
-        &-list {
-            position: relative;
-            white-space: nowrap;
-            margin-top: 15px;
-            height: 248rpx;
-            margin-left: 15px;
-            width: calc(100% - 30px);
-        }
-        &-bottom {
-            position: absolute;
-            left: 0;
-            bottom: 18rpx;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-content: center;
-            justify-content: center;
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

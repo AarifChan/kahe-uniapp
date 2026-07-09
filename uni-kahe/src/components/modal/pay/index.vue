@@ -5,34 +5,44 @@
     bg-color="#fafafa"
     @close="emits('update:show', false)"
   >
-    <view class="pay">
-      <view class="pay-head">
+    <view
+      class="relative w-full flex flex-col rounded-t-20 box-border"
+      :style="{
+        height: `calc(990rpx + env(safe-area-inset-bottom))`,
+        paddingBottom: `calc(env(safe-area-inset-bottom) + 18rpx)`,
+        background: '#fafafa',
+      }"
+    >
+      <view class="relative h-72 w-full flex flex-row items-center justify-center bg-white">
         <image
-          class="pay-head-arrow"
+          class="absolute left-28 top-17 w-20 h-32"
           src="/static/kahe-202510/ka-he/common/right-arrow.png"
           @tap.stop="emits('update:show', false)"
         />
-        <view class="pay-head-title">确认购买</view>
+        <view class="font-normal text-28 text-black">确认购买</view>
       </view>
       <scroll-view
-        class="pay-scroll"
+        class="relative w-full flex flex-col p-16 box-border"
         :scroll-y="true"
         :enable-flex="true"
         scroll-with-animation
         :style="{ height: `calc(990rpx - 80rpx - ${payTypeHeight}rpx)` }"
       >
-        <view class="pay-scroll-info">
+        <view class="p-26 w-full box-border bg-white rounded-20">
           <!-- 第一行：接入的 purchaseGoodsItem -->
-          <view class="pay-scroll-info-top" v-if="goods.purchaseGoodsItem">
+          <view
+            class="flex flex-row items-center pb-26 border-b-1 border-[#e8e8e8]"
+            v-if="goods.purchaseGoodsItem"
+          >
             <image
-              class="pay-scroll-info-top-logo"
+              class="w-115 h-115 bg-white shadow-[0_0_5rpx_0_#d4dee9] rounded-4"
               :src="goods.purchaseGoodsItem.image"
             />
-            <view class="pay-scroll-info-top-center">
-              <text class="pay-scroll-info-top-center-title">{{
+            <view class="ml-42 flex flex-col flex-1 justify-between h-115">
+              <text class="text-28 font-normal text-black leading-40">{{
                 goods.purchaseGoodsItem.name
               }}</text>
-              <view class="pay-scroll-info-top-center-price">
+              <view class="flex flex-row items-center">
                 <text class="theme-font" style="font-size: 28rpx; color: #000"
                   >单价¥{{ goods.purchaseGoodsItem.salePrice }}</text
                 >
@@ -47,51 +57,51 @@
                 >
               </view>
             </view>
-            <view class="pay-scroll-info-top-right">
-              <view class="merchant-tag">
+            <view class="ml-42 flex flex-col items-end justify-between h-115">
+              <view class="inline-flex flex-row items-center py-4 px-12 border-1 border-[#247fbc] rounded-8 text-20 text-[#247fbc] mb-8">
                 <image
-                  class="merchant-tag-icon"
+                  class="w-24 h-24 mr-6"
                   src="/static/kahe-202510/jikaquan/safe.png"
                   mode="aspectFit"
                 />
                 <text>产品由商家寄售</text>
               </view>
-              <text class="pay-scroll-info-top-right-count">数量×1</text>
+              <text class="text-24 text-black">数量×1</text>
             </view>
           </view>
           <!-- 赠送抽赏次数标签 -->
-          <view class="gift-label" v-if="goods.purchaseGoodsItem">
-            <text class="gift-label-text">赠送抽赏次数</text>
+          <view class="py-12 px-0" v-if="goods.purchaseGoodsItem">
+            <text class="text-24 text-black font-normal">赠送抽赏次数</text>
           </view>
           <!-- 第二行：原来的盲盒信息 -->
           <view
-            class="pay-scroll-info-top"
+            class="flex flex-row items-center pb-26 border-b-1 border-[#e8e8e8]"
             :style="
               goods.purchaseGoodsItem
                 ? 'border-top: 1rpx solid #e8e8e8; padding-top: 20rpx;'
                 : ''
             "
           >
-            <image class="pay-scroll-info-top-logo" :src="goods.image" />
-            <view class="pay-scroll-info-top-center">
-              <text class="pay-scroll-info-top-center-title">{{
+            <image class="w-115 h-115 bg-white shadow-[0_0_5rpx_0_#d4dee9] rounded-4" :src="goods.image" />
+            <view class="ml-42 flex flex-col flex-1 justify-between h-115">
+              <text class="text-28 font-normal text-black leading-40">{{
                 goods.title
               }}</text>
             </view>
-            <view class="pay-scroll-info-top-right">
-              <text class="pay-scroll-info-top-right-count"
+            <view class="ml-42 flex flex-col items-end justify-between h-115">
+              <text class="text-24 text-black"
                 >次数×{{ goods.num }}</text
               >
             </view>
           </view>
-          <view class="pay-scroll-info-bottom">
-            <view class="pay-scroll-info-bottom-row">
-              <view class="pay-scroll-info-bottom-row-title">优惠券</view>
+          <view class="relative w-full pt-26 flex flex-col">
+            <view class="relative w-full flex flex-row items-center justify-between mb-18">
+              <view class="font-normal text-24 text-[#888888]">优惠券</view>
               <view
-                class="pay-scroll-info-bottom-row-right"
+                class="font-normal text-24 text-[#888888]"
                 @tap.stop="emits('didTapCoupon')"
               >
-                <view class="pay-scroll-info-bottom-row-value">{{
+                <view class="font-normal text-24 text-[#888888]">{{
                   goods.coupon
                     ? goods.coupon.title
                     : hasValidCoupon
@@ -100,71 +110,71 @@
                 }}</view>
               </view>
             </view>
-            <view class="pay-scroll-info-bottom-row">
-              <view class="pay-scroll-info-bottom-row-title">无门槛抵扣券</view>
-              <view class="pay-scroll-info-bottom-row-value"
+            <view class="relative w-full flex flex-row items-center justify-between mb-18">
+              <view class="font-normal text-24 text-[#888888]">无门槛抵扣券</view>
+              <view class="font-normal text-24 text-[#888888]"
                 >{{ userInfo.money }}(抵扣{{ goods.usedMoney }})</view
               >
             </view>
             <!--            <view class="pay-scroll-info-bottom-row">-->
             <!--              <view class="pay-scroll-info-bottom-row-title">绑定点券</view>-->
             <!--              <view class="pay-scroll-info-bottom-row-value"-->
-            <!--                >{{ userInfo.coin }}(抵扣{{ goods.usedCoin }})</view-->
+            <!--                >{{ userInfo.coin }}(抵扣{{ goods.usedCoin }})</view\-->
             <!--              >-->
             <!--            </view>-->
-            <view class="pay-scroll-info-bottom-row">
-              <view class="pay-scroll-info-bottom-row-title">积分</view>
-              <view class="pay-scroll-info-bottom-row-value"
+            <view class="relative w-full flex flex-row items-center justify-between mb-18">
+              <view class="font-normal text-24 text-[#888888]">积分</view>
+              <view class="font-normal text-24 text-[#888888]"
                 >{{ userInfo.integral }}(抵扣{{ goods.usedIntegral }})</view
               >
             </view>
-            <view class="pay-scroll-info-bottom-row">
-              <view class="pay-scroll-info-bottom-row-title">共计</view>
+            <view class="relative w-full flex flex-row items-center justify-between mb-18">
+              <view class="font-normal text-24 text-[#888888]">共计</view>
               <view
-                class="pay-scroll-info-bottom-row-value"
+                class="font-normal text-24 text-[#888888]"
                 style="color: #ff0000"
                 >{{ goods.usedPrice }}</view
               >
             </view>
           </view>
         </view>
-        <view class="pay-scroll-save">
-          <view class="pay-scroll-save-title">购买后存至</view>
-          <view class="pay-scroll-save-right">
-            <view class="row">
+        <view class="mt-26 p-26 w-full box-border bg-white rounded-20 flex flex-row">
+          <view class="font-normal text-22 text-[#888888] w-120">购买后存至</view>
+          <view class="ml-12 flex flex-col gap-x-22" style="width: calc(100% - 120rpx)">
+            <view class="flex flex-row items-center">
               <image
                 :src="merchant?.icon"
                 style="width: 32rpx; height: 32rpx; border-radius: 50%"
               />
-              <view class="black-text">{{ merchant?.name }}寄存柜</view>
+              <view class="font-normal text-22 text-black">{{ merchant?.name }}寄存柜</view>
             </view>
 
-            <view class="row" style="margin-top: 16rpx">
-              <view class="row" style="margin-right: 8rpx">
-                <view class="black-text">极速发货 </view>
+            <view class="flex flex-row items-center" style="margin-top: 16rpx">
+              <view class="flex flex-row items-center" style="margin-right: 8rpx">
+                <view class="font-normal text-22 text-black">极速发货 </view>
                 <image
-                  class="ok-icon"
+                  class="w-18 h-18"
                   src="/static/kahe-202510/ka-he/common/ok.png"
                 />
               </view>
-              <view class="row" style="margin-right: 8rpx">
-                <view class="black-text">品质保证 </view>
+              <view class="flex flex-row items-center" style="margin-right: 8rpx">
+                <view class="font-normal text-22 text-black">品质保证 </view>
                 <image
-                  class="ok-icon"
+                  class="w-18 h-18"
                   src="/static/kahe-202510/ka-he/common/ok.png"
                 />
               </view>
-              <view class="row">
-                <view class="black-text">售后无忧 </view>
+              <view class="flex flex-row items-center">
+                <view class="font-normal text-22 text-black">售后无忧 </view>
                 <image
-                  class="ok-icon"
+                  class="w-18 h-18"
                   src="/static/kahe-202510/ka-he/common/ok.png"
                 />
               </view>
             </view>
           </view>
         </view>
-        <view class="pay-scroll-save">
+        <view class="mt-26 p-26 w-full box-border bg-white rounded-20 flex flex-row">
           <view
             style="
               width: 100%;
@@ -182,31 +192,43 @@
             />
           </view>
         </view>
-        <view class="pay-scroll-save">
-          <view class="pay-scroll-save-title">购买需知</view>
-          <view class="pay-scroll-save-right">
-            <view class="gray-text">我已知悉未成年人禁止购买 </view>
-            <view class="gray-text group-text"
+        <view class="mt-26 p-26 w-full box-border bg-white rounded-20 flex flex-row">
+          <view class="font-normal text-22 text-[#888888] w-120">购买需知</view>
+          <view class="ml-12 flex flex-col gap-x-22" style="width: calc(100% - 120rpx)">
+            <view class="font-normal text-22 text-[#888888]">我已知悉未成年人禁止购买 </view>
+            <view
+              class="font-normal text-22 text-[#888888] mt-8 px-4 py-8 rounded-10 mb-32"
+              style="background: #f6f6f6"
               >严禁未满8周岁未成年人购买，8周岁及以上未成年人的一
               切消费行为必须由监护人同意并在其陪同下进行。
             </view>
-            <view class="gray-text">
+            <view class="font-normal text-22 text-[#888888]">
               我已知悉该商品不适用"七天无理由退换货"
             </view>
-            <view class="gray-text group-text">
+            <view
+              class="font-normal text-22 text-[#888888] mt-8 px-4 py-8 rounded-10 mb-32"
+              style="background: #f6f6f6"
+              >
               抽卡机、一番赏、盲盒类商品会在付款后完成结果获取，
               不适用于7天无理由退货。若存在质量问题或错发、漏发
               等售后问题，可联系客服提供商品开箱视频进行售后处理。
             </view>
-            <view class="gray-text"> 我已知悉该商品发货规则及自动收货规则</view>
-            <view class="gray-text group-text">
+            <view class="font-normal text-22 text-[#888888]"> 我已知悉该商品发货规则及自动收货规则</view>
+
+            <view
+              class="font-normal text-22 text-[#888888] mt-8 px-4 py-8 rounded-10 mb-32"
+              style="background: #f6f6f6"
+              >
               所有商品均需自行申请发货，您可在“寄存柜-待处理”查
               看并申请发货，发货邮费为12元，仅支持发货到中国大陆
               区域(港、澳、台、及海外地区暂不支持)。</view
             >
-            <view class="gray-text"> 我已知悉该商品概率详情</view>
+            <view class="font-normal text-22 text-[#888888]"> 我已知悉该商品概率详情</view>
 
-            <view class="gray-text group-text">
+            <view
+              class="font-normal text-22 text-[#888888] mt-8 px-4 py-8 rounded-10 mb-32"
+              style="background: #f6f6f6"
+              >
               抽卡机、一番赏、盲盒类商品抽取存在概率性，付款请谨
               慎查看各系列商品的获取概率不同。</view
             >
@@ -216,86 +238,95 @@
 
       <!-- 支付方式选择 -->
 
-      <view class="pay-bottom">
-        <view class="pay-bottom-check">
+      <view
+        class="fixed bottom-0 left-0 w-full bg-white flex flex-col px-32 box-border"
+        style="padding-bottom: env(safe-area-inset-bottom)"
+      >
+        <view class="py-16 px-32 w-full box-border">
           <agreement
             v-model:checked="agree"
             @did-tap-protocol="didTapProtocol"
           />
         </view>
 
-        <view class="pay-type" v-if="showPayType">
-          <view class="pay-type-title">选择支付方式</view>
-          <view class="pay-type-list">
+        <view class="w-full bg-white py-20 px-32 box-border border-t-1 border-[#f0f0f0]" v-if="showPayType">
+          <view class="text-26 text-[#333] font-medium mb-16">选择支付方式</view>
+          <view class="flex flex-col">
             <!-- #ifdef APP-PLUS || H5 -->
             <!-- 微信支付 -->
             <view
-              class="pay-type-item"
+              class="flex flex-row items-center justify-between py-16 px-0"
               :class="{ active: payType === 1 }"
               @tap.stop="selectPayType(1)"
             >
-              <view class="pay-type-item-left">
-                <view class="pay-type-icon wechat-icon">
+              <view class="flex flex-row items-center">
+                <view
+                  class="w-56 h-56 rounded-12 flex-center mr-20 overflow-hidden"
+                  style="background-color: #09bb07"
+                >
                   <image
-                    class="pay-type-icon-img"
+                    class="w-40 h-40"
                     src="/static/kahe-202510/wechat-pay.svg"
                     mode="aspectFit"
                   />
                 </view>
-                <view class="pay-type-info">
-                  <view class="pay-type-name">微信支付</view>
-                  <view class="pay-type-desc">{{
+                <view class="flex flex-col">
+                  <view class="text-28 text-[#333] font-medium" style="line-height: 1.4">微信支付</view>
+                  <view class="text-22 text-[#999] mt-4">{{
                     isApp ? "微信APP支付" : "微信H5支付"
                   }}</view>
                 </view>
               </view>
-              <view class="pay-type-check">
-                <view class="pay-type-check-circle" v-if="payType === 1">
-                  <view class="pay-type-check-dot"></view>
-                </view>
-                <view class="pay-type-check-empty" v-else></view>
+              <view class="w-36 h-36 rounded-full border-2 border-[#efd56f] flex-center">
+                <view class="w-20 h-20 rounded-full" style="background-color: #efd56f" v-if="payType === 1"></view>
+                <view class="w-36 h-36 rounded-full border-2 border-[#ddd]" v-else></view>
               </view>
             </view>
 
             <!-- 支付宝支付 -->
             <view
-              class="pay-type-item"
+              class="flex flex-row items-center justify-between py-16 px-0"
               :class="{ active: payType === 0 }"
               @tap.stop="selectPayType(0)"
             >
-              <view class="pay-type-item-left">
-                <view class="pay-type-icon alipay-icon">
+              <view class="flex flex-row items-center">
+                <view
+                  class="w-56 h-56 rounded-12 flex-center mr-20 overflow-hidden"
+                  style="background-color: #1677ff"
+                >
                   <image
-                    class="pay-type-icon-img"
+                    class="w-40 h-40"
                     src="/static/kahe-202510/alipay.svg"
                     mode="aspectFit"
                   />
                 </view>
-                <view class="pay-type-info">
-                  <view class="pay-type-name">支付宝支付</view>
-                  <view class="pay-type-desc">{{
+                <view class="flex flex-col">
+                  <view class="text-28 text-[#333] font-medium" style="line-height: 1.4">支付宝支付</view>
+                  <view class="text-22 text-[#999] mt-4">{{
                     isApp ? "支付宝APP支付" : "支付宝H5支付"
                   }}</view>
                 </view>
               </view>
-              <view class="pay-type-check">
-                <view class="pay-type-check-circle" v-if="payType === 0">
-                  <view class="pay-type-check-dot"></view>
-                </view>
-                <view class="pay-type-check-empty" v-else></view>
+              <view class="w-36 h-36 rounded-full border-2 border-[#efd56f] flex-center">
+                <view class="w-20 h-20 rounded-full" style="background-color: #efd56f" v-if="payType === 0"></view>
+                <view class="w-36 h-36 rounded-full border-2 border-[#ddd]" v-else></view>
               </view>
             </view>
             <!-- #endif -->
           </view>
         </view>
-        <div class="pay-bottom-pay">
-          <view class="pay-bottom-info">
-            <view class="pay-bottom-info-price">¥{{ goods.payPrice }}</view>
-            <view class="pay-bottom-info-title">订单合计</view>
+        <div class="flex flex-row items-center justify-between px-32 w-full box-border">
+          <view class="flex flex-col">
+            <view class="text-30 text-[#ff0000] leading-26">¥{{ goods.payPrice }}</view>
+            <view class="mt-28 text-30 text-black leading-26">订单合计</view>
           </view>
-          <view class="pay-bottom-btn" @tap.stop="didTapConfirm">
-            <view class="pay-bottom-btn-title">立即付款</view>
-            <view class="pay-bottom-btn-subTitle"
+          <view
+            class="relative w-336 h-60 rounded-30 flex flex-row items-center justify-center"
+            style="background-color: #efd56f"
+            @tap.stop="didTapConfirm"
+          >
+            <view class="text-center leading-61 text-24 text-[#5b1409]">立即付款</view>
+            <view class="text-14 text-[#888888] leading-26"
               >已抵扣{{ goods.usedPrice }}</view
             >
           </view>
@@ -305,7 +336,7 @@
       <!--        <view class="settle-top">-->
       <!--          <view class="settle-top-info">-->
       <!--            <text class="settle-top-info-subTitle"-->
-      <!--              >购买明信片附赠礼品 未成年禁止下单</text-->
+      <!--              >购买明信片附赠礼品 未成年禁止下单</text\-->
       <!--            >-->
       <!--          </view>-->
       <!--        </view>-->
@@ -342,10 +373,10 @@
       <!--        <view-->
       <!--          class="settle-userMoney"-->
       <!--          style="margin: 0 auto; font-size: 20rpx; color: #000"-->
-      <!--          >当前拥有<text style="color: #4b71ff">{{ userInfo.integral }}</text-->
-      <!--          >积分，<text style="color: #4b71ff">{{ userInfo.money }}</text-->
-      <!--          >点券，<text style="color: #4b71ff">{{ userInfo.coin }}</text-->
-      <!--          >绑定点券</view-->
+      <!--          >当前拥有<text style="color: #4b71ff">{{ userInfo.integral }}</text\-->
+      <!--          >积分，<text style="color: #4b71ff">{{ userInfo.money }}</text\-->
+      <!--          >点券，<text style="color: #4b71ff">{{ userInfo.coin }}</text\-->
+      <!--          >绑定点券</view\-->
       <!--        >-->
 
       <!--        <settle-button-->
@@ -493,429 +524,4 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.pay {
-  position: relative;
-  width: 100%;
-  height: calc(990rpx + env(safe-area-inset-bottom));
-  padding: 0 0 calc(env(safe-area-inset-bottom) + 18rpx) 0;
-  background: #fafafa;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  border-radius: 20rpx 20rpx 0 0;
-  &-head {
-    position: relative;
-    height: 72rpx;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    &-title {
-      font-weight: 400;
-      font-size: 28rpx;
-      color: #000000;
-    }
-    &-arrow {
-      position: absolute;
-      left: 28rpx;
-      top: 17rpx;
-      width: 20rpx;
-      height: 32rpx;
-    }
-  }
-  &-scroll {
-    position: relative;
-    width: 100%;
-    height: calc(990rpx - 80rpx);
-    box-sizing: border-box;
-    padding: 16rpx;
-    display: flex;
-    flex-direction: column;
-    &-info {
-      padding: 26rpx;
-      width: 100%;
-      box-sizing: border-box;
-      background: #ffffff;
-      border-radius: 20rpx;
-
-      &-top {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding-bottom: 26rpx;
-        border-bottom: 1rpx solid #e8e8e8;
-        &-logo {
-          width: 115rpx;
-          height: 115rpx;
-          background: #ffffff;
-          box-shadow: 0rpx 0rpx 5rpx 0rpx #d4dee9;
-          border-radius: 4rpx;
-        }
-        &-center {
-          margin-left: 42rpx;
-          display: flex;
-          flex-direction: column;
-          flex: 1;
-          justify-content: space-between;
-          height: 115rpx;
-          &-title {
-            font-size: 28rpx;
-            font-weight: 400;
-            color: #000000;
-            line-height: 40rpx;
-          }
-          &-price {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-          }
-        }
-        &-right {
-          margin-left: 42rpx;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          justify-content: space-between;
-          height: 115rpx;
-          &-title {
-            font-size: 32rpx;
-            font-weight: 400;
-            color: #000000;
-          }
-          &-price {
-            font-size: 32rpx;
-            font-weight: 400;
-            color: #000000;
-          }
-          &-count {
-            font-size: 24rpx;
-            color: #000000;
-          }
-        }
-      }
-      &-bottom {
-        position: relative;
-        width: 100%;
-        padding-top: 26rpx;
-        display: flex;
-        flex-direction: column;
-        &-row {
-          position: relative;
-          width: 100%;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 18rpx;
-          &-title {
-            font-weight: 400;
-            font-size: 24rpx;
-            color: #888888;
-          }
-          &-value {
-            font-weight: 400;
-            font-size: 24rpx;
-            color: #888888;
-          }
-        }
-      }
-    }
-
-    &-save {
-      margin-top: 26rpx;
-      padding: 26rpx;
-      width: 100%;
-      box-sizing: border-box;
-      background: #ffffff;
-      border-radius: 20rpx;
-      display: flex;
-      flex-direction: row;
-      &-title {
-        font-weight: 400;
-        font-size: 22rpx;
-        color: #888888;
-        width: 120rpx;
-      }
-      &-right {
-        width: calc(100% - 120rpx);
-        margin-left: 12rpx;
-        display: flex;
-        flex-direction: column;
-        column-gap: 22rpx;
-      }
-    }
-  }
-
-  &-top {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    &-img {
-      width: 182rpx;
-      height: 182rpx;
-      box-shadow: 0rpx 0rpx 6rpx 0rpx #d4dee9;
-      border-radius: 4rpx;
-    }
-    &-info {
-      margin-left: 22rpx;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
-  &-options {
-    padding: 46rpx 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-.pay-bottom {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: white;
-  //height: calc(141rpx);
-  display: flex;
-  padding: 0 32rpx env(safe-area-inset-bottom);
-  box-sizing: border-box;
-  flex-direction: column;
-  &-check {
-    padding: 16rpx 32rpx;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  &-pay {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 32rpx;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  &-info {
-    display: flex;
-    flex-direction: column;
-    &-price {
-      font-size: 30rpx;
-      color: #ff0000;
-      line-height: 26rpx;
-    }
-    &-title {
-      margin-top: 28rpx;
-      font-size: 30rpx;
-      color: #000000;
-      line-height: 26rpx;
-    }
-  }
-  &-btn {
-    position: relative;
-    width: 336rpx;
-    height: 60rpx;
-    background-color: #efd56f;
-    border-radius: 30rpx;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    &-img {
-      width: 100%;
-      height: 100%;
-    }
-    &-title {
-      text-align: center;
-      line-height: 61rpx;
-      font-size: 24rpx;
-      color: #5b1409;
-    }
-    &-subTitle {
-      font-size: 14rpx;
-      color: #888888;
-      line-height: 26rpx;
-    }
-  }
-}
-
-.gray-text {
-  font-weight: 400;
-  font-size: 22rpx;
-  color: #888888;
-}
-.black-text {
-  font-weight: 400;
-  font-size: 22rpx;
-  color: #000000;
-}
-.row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.column {
-  display: flex;
-  flex-direction: column;
-}
-.ok-icon {
-  width: 18rpx;
-  height: 18rpx;
-}
-.group-text {
-  margin-top: 8rpx;
-  padding: 8rpx 4rpx;
-  background: #f6f6f6;
-  border-radius: 10rpx;
-  margin-bottom: 32rpx;
-}
-
-.merchant-tag {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 4rpx 12rpx;
-  border: 1rpx solid #247fbc;
-  border-radius: 8rpx;
-  font-size: 20rpx;
-  color: #247fbc;
-  margin-bottom: 8rpx;
-  &-icon {
-    width: 24rpx;
-    height: 24rpx;
-    margin-right: 6rpx;
-  }
-}
-
-.gift-label {
-  padding: 12rpx 0;
-  &-text {
-    font-size: 24rpx;
-    color: #000;
-    font-weight: 400;
-  }
-}
-
-/* 支付方式选择样式 */
-.pay-type {
-  width: 100%;
-  background-color: #fff;
-  padding: 20rpx 32rpx;
-  box-sizing: border-box;
-  border-top: 1rpx solid #f0f0f0;
-
-  &-title {
-    font-size: 26rpx;
-    color: #333;
-    font-weight: 500;
-    margin-bottom: 16rpx;
-  }
-
-  &-list {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16rpx 0;
-
-    &.active {
-      .pay-type-name {
-        color: #333;
-      }
-    }
-
-    &-left {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
-  }
-
-  &-icon {
-    width: 56rpx;
-    height: 56rpx;
-    border-radius: 12rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 20rpx;
-    overflow: hidden;
-
-    &.balance-icon {
-      background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
-    }
-
-    &.wechat-icon {
-      background-color: #09bb07;
-    }
-
-    &.alipay-icon {
-      background-color: #1677ff;
-    }
-
-    &-text {
-      font-size: 24rpx;
-      color: #fff;
-      font-weight: bold;
-    }
-
-    &-img {
-      width: 40rpx;
-      height: 40rpx;
-    }
-  }
-
-  &-info {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &-name {
-    font-size: 28rpx;
-    color: #333;
-    font-weight: 500;
-    line-height: 1.4;
-  }
-
-  &-desc {
-    font-size: 22rpx;
-    color: #999;
-    margin-top: 4rpx;
-  }
-
-  &-check {
-    &-circle {
-      width: 36rpx;
-      height: 36rpx;
-      border-radius: 50%;
-      border: 2rpx solid #efd56f;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    &-dot {
-      width: 20rpx;
-      height: 20rpx;
-      border-radius: 50%;
-      background-color: #efd56f;
-    }
-
-    &-empty {
-      width: 36rpx;
-      height: 36rpx;
-      border-radius: 50%;
-      border: 2rpx solid #ddd;
-    }
-  }
-}
 </style>

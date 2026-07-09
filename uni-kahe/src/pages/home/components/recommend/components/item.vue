@@ -1,37 +1,33 @@
 <template>
-  <view class="item" :style="itemBgStyle">
-    <view class="item-pic">
+  <view class="item flex flex-row items-center box-border w-full h-full py-8 px-12 gap-12" :style="itemBgStyle">
+    <view class="item-pic relative flex-shrink-0 w-88 h-88">
       <image
-        class="item-pic-tag"
+        class="item-pic-tag absolute -top-4 -left-4 w-50 h-28 z-10"
         src="/static/kahe-202510/challenge/pingtuan-tag.png"
         mode="aspectFit"
       />
       <image
-        class="item-pic-logo"
+        class="item-pic-logo w-full h-full rounded-12"
         :src="item.logo"
         mode="aspectFill"
       />
     </view>
 
-    <view class="item-info">
-      <view class="item-row">
-        <view class="item-title">{{ item.title }}</view>
-        <view class="item-price">¥{{ item.price }}</view>
+    <view class="item-info flex-1 flex flex-col justify-between min-w-0 h-88">
+      <view class="item-row flex flex-row items-center justify-between w-full min-w-0">
+        <view class="item-title flex-1 font-bold text-22 text-[#333] leading-30 overflow-hidden text-ellipsis whitespace-nowrap mr-8">{{ item.title }}</view>
+        <view class="item-price flex-shrink-0 font-bold text-26 text-[#ff4d4f] leading-30">¥{{ item.price }}</view>
       </view>
 
-      <view class="item-countdown">
-        <text class="item-countdown-text">{{ isOver ? "已结束" : remainingTime }}</text>
+      <view class="item-countdown flex items-center">
+        <text class="item-countdown-text text-20 text-[#666] leading-28 font-mono">{{ isOver ? "已结束" : remainingTime }}</text>
       </view>
 
-      <view class="item-row">
-        <view class="item-progress">
-          <view
-            v-if="item.total > 0"
-            class="item-progress-value"
-            :style="progressStyles"
-          ></view>
+      <view class="item-row flex flex-row items-center justify-between w-full min-w-0">
+        <view class="item-progress flex-1 h-8 bg-[#e5e5e5] rounded-4 overflow-hidden mr-8">
+          <view v-if="item.total > 0" class="item-progress-value h-full bg-[#ffac5b] rounded-4" :style="progressStyles"></view>
         </view>
-        <text class="item-remain">余{{ item.num }}/共{{ item.total }}</text>
+        <text class="item-remain flex-shrink-0 text-18 text-[#999] leading-24">余{{ item.num }}/共{{ item.total }}</text>
       </view>
     </view>
   </view>
@@ -80,109 +76,4 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  padding: 8rpx 12rpx;
-  gap: 12rpx;
-
-  &-pic {
-    position: relative;
-    flex-shrink: 0;
-    width: 88rpx;
-    height: 88rpx;
-
-    &-tag {
-      position: absolute;
-      top: -4rpx;
-      left: -4rpx;
-      width: 50rpx;
-      height: 28rpx;
-      z-index: 10;
-    }
-
-    &-logo {
-      width: 100%;
-      height: 100%;
-      border-radius: 12rpx;
-    }
-  }
-
-  &-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-width: 0;
-    height: 88rpx;
-  }
-
-  &-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    min-width: 0;
-  }
-
-  &-title {
-    flex: 1;
-    font-size: 22rpx;
-    font-weight: bold;
-    color: #333333;
-    line-height: 30rpx;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-right: 8rpx;
-  }
-
-  &-price {
-    flex-shrink: 0;
-    font-size: 26rpx;
-    font-weight: bold;
-    color: #ff4d4f;
-    line-height: 30rpx;
-  }
-
-  &-countdown {
-    display: flex;
-    align-items: center;
-
-    &-text {
-      font-size: 20rpx;
-      color: #666666;
-      line-height: 28rpx;
-      font-family: monospace;
-    }
-  }
-
-  &-progress {
-    flex: 1;
-    height: 8rpx;
-    background: #e5e5e5;
-    border-radius: 4rpx;
-    overflow: hidden;
-    margin-right: 8rpx;
-
-    &-value {
-      height: 100%;
-      background: #ffac5b;
-      border-radius: 4rpx;
-    }
-  }
-
-  &-remain {
-    flex-shrink: 0;
-    font-size: 18rpx;
-    color: #999999;
-    line-height: 24rpx;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

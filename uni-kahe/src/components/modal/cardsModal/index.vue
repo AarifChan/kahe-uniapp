@@ -6,20 +6,21 @@
         bg-color="transparent"
         @close="emits('update:show', false)"
     >
-        <view class="cardShow">
+        <view class="relative w-749 h-1157 bg-gradient-[linear-gradient(180deg,_#90c0fa,_#d8e9fd)] rounded-t-20 flex items-center justify-center flex-col">
             <image
-                class="cardShow-close"
+                class="absolute right-25 top-0 w-110 h-50"
                 src="/static/kahe-202510/images/close.png"
                 @tap.stop="emits('update:show', false)"
             />
-            <view class="cardShow-title theme-font">{{ title }}</view>
+            <view class="mt-32 text-40 text-black theme-font">{{ title }}</view>
             <scroll-view
-                class="cardShow-center"
+                class="mt-32 w-681 box-border bg-white rounded-t-20 pb-20"
                 :scroll-y="true"
+                style="height: calc(100% - 120rpx)"
                 @scrolltolower="scrollToLower"
             >
                 <!-- 规则 -->
-                <view class="cardShow-center-context" v-if="current === 1">
+                <view class="text-28 text-black" v-if="current === 1">
                     <rich-text :nodes="modalContent(2)" />
                 </view>
                 <!--  概率-->
@@ -99,41 +100,4 @@ const scrollToLower = () => {
     emits('scrollToLower')
 }
 </script>
-<style lang="scss" scoped>
-.cardShow {
-    position: relative;
-    width: 749rpx;
-    height: 1157rpx;
-    background: linear-gradient(180deg, #90c0fa, #d8e9fd);
-    border-radius: 20rpx 20rpx 0rpx 0rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    &-close {
-        position: absolute;
-        right: 25rpx;
-        top: 0;
-        width: 110rpx;
-        height: 50rpx;
-    }
-    &-title {
-        margin-top: 32rpx;
-        font-size: 40rpx;
-        color: #000000;
-    }
-    &-center {
-        margin-top: 32rpx;
-        width: 681rpx;
-        height: calc(100% - 120rpx);
-        box-sizing: border-box;
-        background: #ffffff;
-        border-radius: 20rpx 20rpx 0rpx 0rpx;
-        padding-bottom: 20rpx;
-        &-context {
-            font-size: 28rpx;
-            color: #000000;
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

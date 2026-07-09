@@ -4,46 +4,52 @@
     open-direction="bottom"
     @close="emits('update:show', false)"
   >
-    <view class="mallPay">
+    <view
+      class="mt-8 relative px-16 w-715 box-border flex flex-col items-center justify-between h-711 bg-[#f3f6fe] rounded-6"
+    >
       <image
-        class="mallPay-close"
+        class="absolute right-38 top-0 w-114 h-54"
         src="/static/kahe-202510/images/close.png"
         @tap.stop="emits('update:show', false)"
       />
-      <view class="mallPay-top">
-        <image class="mallPay-top-img" :src="goods.image" />
-        <view class="mallPay-top-info">
+      <view class="mt-24 ml-24 w-full flex">
+        <image class="w-178 h-178" :src="goods.image" />
+        <view class="ml-28 flex flex-col justify-center">
           <text
-            class="mallPay-top-info-name theme-font text-flow-ellipsis-multiple"
+            class="text-40 font-normal text-black w-400 theme-font text-flow-ellipsis-multiple"
             >{{ goods.title }}</text
           >
-          <view class="mallPay-top-info-sub">
-            <text class="mallPay-top-info-sub-title">需支付</text>
-            <text class="mallPay-top-info-sub-value theme-font">{{
-              goods.price
-            }}</text>
-            <text class="mallPay-top-info-sub-title"
+          <view class="mt-36 flex flex-row items-center">
+            <text class="text-26 font-normal text-[#1a385b]">需支付</text>
+            <text
+              class="text-40 font-normal text-[#4b71ff] leading-36 theme-font"
+              >{{ goods.price }}</text
+            >
+            <text class="text-26 font-normal text-[#1a385b]"
               >{{ isTicket ? "无门槛抵扣券" : "点券" }}
             </text>
           </view>
         </view>
       </view>
       <view style="flex: 1"></view>
-      <view class="mallPay-forbidden" style="transform: translateY(-50rpx)">
-        <view class="mallPay-forbidden-side">
-          <text class="mallPay-forbidden-side-title">商品兑换声明</text>
+      <view
+        class="box-border w-full flex flex-row items-center justify-between bg-white shadow-[0_0_6rpx_0_#d4dee9] rounded-6 py-10 px-18"
+        style="transform: translateY(-50rpx); height: calc(150rpx - 20rpx)"
+      >
+        <view class="flex flex-col">
+          <text class="text-26 font-normal text-black">商品兑换声明</text>
           <text
-            class="mallPay-forbidden-side-subTitle text-flow-ellipsis-multiple"
+            class="text-18 font-normal w-360 text-black text-flow-ellipsis-multiple"
             >注：商品兑换，需消耗相应{{
               isTicket ? "无门槛抵扣券" : "点券"
             }}，一经兑换无法撤回</text
           >
-          <text class="mallPay-forbidden-side-danger"
+          <text class="text-22 font-normal text-[#ba0000]"
             >未成年人请在监护人陪同下操作</text
           >
         </view>
         <image
-          class="mallPay-forbidden-img"
+          class="w-120 h-130"
           src="/static/kahe/product/18age.png"
         />
       </view>
@@ -53,15 +59,16 @@
         @did-tap-protocol="didTapProtocol"
       />
       <view
-        class="mallPay-button"
+        class="relative w-270 h-65 flex items-center justify-center"
         style="margin-bottom: 20rpx"
         @tap.stop="didTapConfirm"
       >
         <image
-          class="mallPay-button-img"
+          class="w-full h-full absolute left-0 top-0"
           src="/static/kahe-202510/images/reward-btn1.png"
         />
-        <text class="mallPay-button-title theme-font text-stroke-main"
+        <text
+          class="relative text-30 text-white theme-font text-stroke-main"
           >确定兑换</text
         >
       </view>
@@ -123,122 +130,4 @@ const didTapConfirm = () => {
 };
 </script>
 
-<style lang="scss" scoped>
-.mallPay {
-  margin-top: 8rpx;
-  position: relative;
-  padding: 0 16rpx;
-  width: 715rpx;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 711rpx;
-  background: #f3f6fe;
-  border-radius: 6rpx;
-  &-close {
-    position: absolute;
-    right: 38rpx;
-    top: 0;
-    width: 114rpx;
-    height: 54rpx;
-  }
-  &-forbidden {
-    box-sizing: border-box;
-    width: 100%;
-    height: calc(150rpx - 20rpx);
-    background: #ffffff;
-    box-shadow: 0rpx 0rpx 6rpx 0rpx #d4dee9;
-    border-radius: 6rpx;
-    padding: 10rpx 18rpx;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    &-side {
-      display: flex;
-      flex-direction: column;
-      &-title {
-        font-size: 26rpx;
-        font-weight: 400;
-        color: #000000;
-      }
-      &-subTitle {
-        font-size: 18rpx;
-        font-weight: 400;
-        width: 360rpx;
-        color: #000000;
-      }
-      &-danger {
-        font-size: 22rpx;
-        font-weight: 400;
-        color: #ba0000;
-      }
-    }
-    &-img {
-      width: 120rpx;
-      height: 130rpx;
-    }
-  }
-  &-top {
-    margin-top: 24rpx;
-    width: 100%;
-    display: flex;
-    margin-left: 24rpx;
-    &-img {
-      width: 178rpx;
-      height: 178rpx;
-    }
-    &-info {
-      margin-left: 28rpx;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      &-name {
-        font-size: 40rpx;
-        font-weight: 400;
-        color: #000000;
-        width: 400rpx;
-      }
-      &-sub {
-        margin-top: 36rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        &-title {
-          font-size: 26rpx;
-          font-weight: 400;
-          color: #1a385b;
-        }
-        &-value {
-          font-size: 40rpx;
-          font-weight: 400;
-          color: #4b71ff;
-          line-height: 36rpx;
-        }
-      }
-    }
-  }
-  &-button {
-    position: relative;
-    width: 270rpx;
-    height: 65rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    &-img {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-    &-title {
-      position: relative;
-      font-size: 30rpx;
-      color: #ffffff;
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

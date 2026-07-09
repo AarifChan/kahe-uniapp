@@ -1,6 +1,6 @@
 <template>
   <view
-    class="customNav"
+    class="fixed left-0 top-0 w-full flex flex-col z-99"
     :style="{
       height: `${totalNavHeight}PX`,
       opacity: opacity,
@@ -9,15 +9,15 @@
       backgroundColor: `rgba(255, 248, 233, ${opacity})`,
     }"
   >
-    <view class="customNav-bar" :style="{ lineHeight: `${navBarHeight}PX` }">
-      <image class="customNav-bar-logo" src="/static/kaju/common/logo.png" />
-      <view class="customNav-bar-search">
+    <view class="relative w-full flex flex-row items-center justify-start" :style="{ lineHeight: `${navBarHeight}PX` }">
+      <image class="ml-59 w-115 h-63" src="/static/kaju/common/logo.png" />
+      <view class="absolute left-1/2 -translate-x-1/2 flex flex-row items-center w-345 h-58 bg-white rounded-29 border-2px border-[#ffe4d0] px-20 box-border">
         <image
-          class="customNav-bar-search-icon"
+          class="w-28 h-28 flex-shrink-0"
           src="/static/kaju/common/search.png"
         />
         <input
-          class="customNav-bar-search-input"
+          class="flex-1 h-full ml-10 text-26 text-[#333]"
           type="text"
           placeholder="搜索"
         />
@@ -77,58 +77,4 @@ const onSearchConfirm = (e: any) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.customNav {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  z-index: 99;
-  &-bar {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    &-title {
-      font-size: 30rpx;
-      color: #000000;
-    }
-    &-logo {
-      margin-left: 59rpx;
-      width: 115rpx;
-      height: 63rpx;
-    }
-    &-search {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      width: 345rpx;
-      height: 58rpx;
-      background: #ffffff;
-      border-radius: 29rpx;
-      border: 2px solid #ffe4d0;
-      padding: 0 20rpx;
-      box-sizing: border-box;
-      &-icon {
-        width: 28rpx;
-        height: 28rpx;
-        flex-shrink: 0;
-      }
-      &-input {
-        flex: 1;
-        height: 100%;
-        margin-left: 10rpx;
-        font-size: 26rpx;
-        color: #333;
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

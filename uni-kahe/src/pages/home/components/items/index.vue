@@ -1,13 +1,13 @@
 <template>
-    <view class="home-buttons">
-        <view class="home-buttons-left" @tap.stop="handleItem(HomeItemType.invite)">
-            <image class="home-buttons-left-img" src="/static/kahe-202510/home/card1.png" /> <!-- 缺失图片: card1.png -->
+    <view class="home-buttons relative px-8 flex flex-row" style="width: calc(100% - 16rpx)">
+        <view class="home-buttons-left w-265 h-222" @tap.stop="handleItem(HomeItemType.invite)">
+            <image class="home-buttons-left-img w-full h-full" src="/static/kahe-202510/home/card1.png" /> <!-- 缺失图片: card1.png -->
         </view>
-        <view class="home-buttons-center" @tap.stop="handleItem(HomeItemType.mall)">
-            <image class="home-buttons-left-img" src="/static/kahe-202510/home/card2.png" /> <!-- 缺失图片: card2.png -->
+        <view class="home-buttons-center -ml-28 w-292 h-222" @tap.stop="handleItem(HomeItemType.mall)">
+            <image class="home-buttons-left-img w-full h-full" src="/static/kahe-202510/home/card2.png" /> <!-- 缺失图片: card2.png -->
         </view>
-        <view class="home-buttons-right" @tap.stop="handleItem(HomeItemType.welfare)">
-            <image class="home-buttons-right-img" src="/static/kahe-202510/home/card3.png" /> <!-- 缺失图片: card3.png -->
+        <view class="home-buttons-right -ml-28 w-258 h-222" @tap.stop="handleItem(HomeItemType.welfare)">
+            <image class="home-buttons-right-img w-full h-full" src="/static/kahe-202510/home/card3.png" /> <!-- 缺失图片: card3.png -->
         </view>
     </view>
 </template>
@@ -42,38 +42,4 @@ const handleItem = (index: HomeItemType) => {
 }
 </script>
 
-<style lang="scss" scoped>
-.home-buttons {
-    position: relative;
-    padding: 0 8rpx;
-    display: flex;
-    flex-direction: row;
-    width: calc(100% - 16rpx);
-    &-left{
-        width: 265rpx;
-        height: 222rpx;
-        &-img{
-            width: 100%;
-            height: 100%;
-        }
-    }
-    &-center{
-        margin-left: -28rpx;
-        width: 292rpx;
-        height: 222rpx;
-        &-img{
-            width: 100%;
-            height: 100%;
-        }
-    }
-    &-right{
-        margin-left: -28rpx;
-        width: 258rpx;
-        height: 222rpx;
-        &-img{
-            width: 100%;
-            height: 100%;
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

@@ -5,64 +5,64 @@
     bg-color="transparent"
     @close="emits('update:show', false)"
   >
-    <view class="modal-detail">
+    <view class="modal-detail relative w-634 h-850">
       <image
-        class="modal-detail-bg"
+        class="modal-detail-bg w-634 h-850"
         src="/static/kahe-202510/common/detail-bg.png"
       />
-      <view class="modal-detail-content">
-        <view class="modal-detail-content-center">
+      <view class="modal-detail-content absolute left-0 top-0 w-full h-full flex flex-col items-center">
+        <view class="modal-detail-content-center mt-200 w-400 h-400 flex flex-col items-center justify-center">
           <image
             v-if="item.image"
-            class="modal-detail-content-center-img"
+            class="modal-detail-content-center-img w-full h-383"
             :src="item?.image"
             mode="heightFix"
           />
           <image
             v-else
-            class="modal-detail-content-center-img"
+            class="modal-detail-content-center-img w-full h-383"
             :src="item?.goods?.image"
             mode="heightFix"
           />
         </view>
-        <view class="modal-detail-content-info">
+        <view class="modal-detail-content-info mt-60 w-full flex flex-col items-center">
           <text
-            class="modal-detail-content-info-title theme-font"
+            class="modal-detail-content-info-title font-normal text-50 text-black text-center theme-font"
             v-if="item?.title"
             >{{ item.title }}</text
           >
-          <text class="modal-detail-content-info-title theme-font" v-else>{{
+          <text class="modal-detail-content-info-title font-normal text-50 text-black text-center theme-font" v-else>{{
             item?.goods?.name
           }}</text>
-          <view class="modal-detail-content-info-row">
-            <view class="modal-detail-content-info-row-item">
+          <view class="modal-detail-content-info-row gap-16 w-full flex flex-row justify-center items-center">
+            <view class="modal-detail-content-info-row-item flex flex-row items-center">
               <text
-                class="modal-detail-content-info-row-item-title theme-font"
+                class="modal-detail-content-info-row-item-title font-normal text-30 text-black leading-30 theme-font"
                 v-if="item?.salePrice"
                 >参考价：</text
               >
               <text
-                class="modal-detail-content-info-row-item-value price-font"
+                class="modal-detail-content-info-row-item-value font-normal text-30 leading-30 text-black price-font"
                 v-if="item?.salePrice"
                 >{{ item?.salePrice }}</text
               >
-              <text class="modal-detail-content-info-row-item-value" v-else>{{
+              <text class="modal-detail-content-info-row-item-value font-normal text-30 leading-30 text-black" v-else>{{
                 item?.goods?.salePrice
               }}</text>
             </view>
-            <view class="modal-detail-content-info-row-item">
+            <view class="modal-detail-content-info-row-item flex flex-row items-center">
               <text
-                class="modal-detail-content-info-row-item-title theme-font"
+                class="modal-detail-content-info-row-item-title font-normal text-30 text-black leading-30 theme-font"
                 v-if="item?.salePrice"
                 >入库编码：</text
               >
               <text
-                class="modal-detail-content-info-row-item-value price-font"
+                class="modal-detail-content-info-row-item-value font-normal text-30 leading-30 text-black price-font"
                 v-if="item?.salePrice"
                 >KH{{ item?.price }}</text
               >
               <text
-                class="modal-detail-content-info-row-item-value price-font"
+                class="modal-detail-content-info-row-item-value font-normal text-30 leading-30 text-black price-font"
                 v-else
                 >KH{{ item?.goods?.price }}</text
               >
@@ -99,79 +99,4 @@ watch(
 const emits = defineEmits(["update:show"]);
 </script>
 
-<style lang="scss" scoped>
-.modal-detail {
-  position: relative;
-  width: 634rpx;
-  height: 850rpx;
-  &-bg {
-    width: 634rpx;
-    height: 850rpx;
-  }
-
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    &-center {
-      margin-top: 200rpx;
-      width: 400rpx;
-      height: 400rpx;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      &-img {
-        width: 100%;
-        height: 383rpx;
-      }
-    }
-    &-info {
-      margin-top: 60rpx;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      &-title {
-        font-weight: 400;
-        font-size: 50rpx;
-        color: #000000;
-        text-align: center;
-      }
-      &-row {
-        gap: 16rpx;
-        //width: 300rpx;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        &-item {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          &-title {
-            font-weight: 400;
-            font-size: 30rpx;
-            color: #000000;
-            line-height: 30rpx;
-          }
-          &-value {
-            font-weight: 400;
-            font-size: 30rpx;
-            line-height: 30rpx;
-            color: #000000;
-          }
-        }
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

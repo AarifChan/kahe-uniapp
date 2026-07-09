@@ -2,13 +2,13 @@
     <tn-popup v-model="vShow" open-direction="center" bg-color="transparent" @close="emits('update:show', false)">
 
         <slot name="content"></slot>
-        <view class="common">
-            <view class="common-content">
-                <view class="common-content-top">
-                    <view class="common-content-top-title theme-font">{{ title }}</view>
+        <view class="common relative bg-transparent w-626 h-756">
+            <view class="common-content absolute left-0 top-0 w-full h-full bg-white rounded-10 overflow-hidden">
+                <view class="common-content-top w-full h-73 bg-gradient-[linear-gradient(-90deg,#3AE5FD,#7C7FF5)]">
+                    <view class="common-content-top-title text-40 leading-73 font-normal text-white text-center theme-font">{{ title }}</view>
                 </view>
                 <slot />
-                <view class="common-content-bottom" @tap.stop="emits('update:show', false)">
+                <view class="common-content-bottom absolute bottom-22 left-0 w-full flex-center" @tap.stop="emits('update:show', false)">
                     <custom-button title="确定" />
                 </view>
             </view>
@@ -40,54 +40,4 @@ watch(() => props.show, value => {
 const emits = defineEmits(['update:show'])
 </script>
 
-<style lang="scss" scoped>
-.common {
-    position: relative;
-    background-color: transparent;
-    width: 626rpx;
-    height: 756rpx;
-    &-content {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: white;
-        border-radius: 10rpx;
-        overflow: hidden;
-        &-top {
-            width: 100%;
-            background: linear-gradient(-90deg, #3AE5FD, #7C7FF5);
-            height: 73rpx;
-            &-title {
-                font-size: 40rpx;
-                line-height: 73rpx;
-                font-weight: 400;
-                color: #FFFFFF;
-                text-align: center;
-            }
-        }
-
-        &-text {
-            padding: 8px 50rpx;
-            position: relative;
-            box-sizing: border-box;
-            width: 100%;
-            height: calc(100% - 200rpx);
-            color: #000000;
-            font-size: 13px;
-            line-height: 25px;
-        }
-        &-bottom {
-            position: absolute;
-            bottom: 22rpx;
-            left: 0;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

@@ -1,13 +1,14 @@
 <template>
-  <view class="newItem-row2">
-    <scroll-view class="scroll" :scroll-x="true" :show-scrollbar="false">
+  <view class="newItem-row2 pl-18 box-border w-full">
+    <scroll-view class="w-full whitespace-nowrap" :scroll-x="true" :show-scrollbar="false">
       <view
-        class="goods"
+        class="goods inline-block relative mr-12"
+        style="width: calc(166rpx * 1); height: calc(188rpx * 1)"
         v-for="(item, index) in goodsList"
         :key="index"
         @tap.stop="handleItem(item.type)"
       >
-        <image class="img" :src="item.src" />
+        <image class="img absolute inset-0 w-full h-full" :src="item.src" />
       </view>
     </scroll-view>
   </view>
@@ -106,30 +107,4 @@ const handleItem = (index: HomeItemType) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.newItem-row2 {
-  padding-left: 18rpx;
-  box-sizing: border-box;
-  width: 100%;
-
-  .scroll {
-    width: 100%;
-    white-space: nowrap;
-  }
-
-  .goods {
-    display: inline-block;
-    position: relative;
-    width: calc(166rpx * 1);
-    height: calc(188rpx * 1);
-    margin-right: 12rpx;
-
-    .img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

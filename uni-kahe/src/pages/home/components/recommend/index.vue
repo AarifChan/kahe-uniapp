@@ -1,31 +1,31 @@
 <template>
-  <view class="recommend">
-    <view class="recommend-left">
+  <view class="recommend flex flex-row items-center justify-center box-border w-full h-280 py-16 px-16 pt-16 pb-0 gap-12">
+    <view class="recommend-left relative w-300 h-280">
       <image
-        class="recommend-left-top"
+        class="recommend-left-top absolute left-0 top-0 w-158 h-280"
         src="/static/kaju/home/left.png"
         mode="aspectFit"
         @tap.stop="handleChallengePage"
       />
       <image
-        class="recommend-left-bottom"
+        class="recommend-left-bottom absolute left-128 top-0 w-158 h-280"
         src="/static/kaju/home/right.png"
         mode="aspectFit"
         @tap.stop="handleMatchPage"
       />
     </view>
-    <view class="recommend-right" :style="rightBgStyle">
+    <view class="recommend-right relative h-280 w-400" :style="rightBgStyle">
       <image
-        class="recommend-right-more"
+        class="recommend-right-more absolute -top-8 right-0 w-110 h-50 z-10"
         src="/static/kaju/home/more.png"
         mode="aspectFit"
         @tap.stop="handleGroupBuyPage"
       />
-      <view class="recommend-right-list">
+      <view class="recommend-right-list absolute top-52 left-12 right-12 bottom-12 flex flex-col gap-8 overflow-hidden">
         <view
           v-for="(item, index) in displayList"
           :key="index"
-          class="recommend-right-item"
+          class="recommend-right-item flex-1 min-h-0 box-border"
           @tap.stop="handleClickItem(item)"
         >
           <item :item="item" />
@@ -85,71 +85,4 @@ const handleClickItem = (item: GroupBuyItem) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.recommend {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  width: 100%;
-  height: 280rpx;
-  padding: 16rpx 16rpx 0;
-  gap: 12rpx;
-
-  &-left {
-    position: relative;
-    width: 300rpx;
-    height: 280rpx;
-
-    &-top {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 158rpx;
-      height: 280rpx;
-    }
-
-    &-bottom {
-      position: absolute;
-      left: 128rpx;
-      top: 0;
-      width: 158rpx;
-      height: 280rpx;
-    }
-  }
-
-  &-right {
-    position: relative;
-    height: 280rpx;
-    width: 400rpx;
-
-    &-more {
-      position: absolute;
-      top: -8rpx;
-      right: 0rpx;
-      width: 110rpx;
-      height: 50rpx;
-      z-index: 10;
-    }
-
-    &-list {
-      position: absolute;
-      top: 52rpx;
-      left: 12rpx;
-      right: 12rpx;
-      bottom: 12rpx;
-      display: flex;
-      flex-direction: column;
-      gap: 8rpx;
-      overflow: hidden;
-    }
-
-    &-item {
-      flex: 1;
-      min-height: 0;
-      box-sizing: border-box;
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

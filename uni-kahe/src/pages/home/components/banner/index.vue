@@ -1,5 +1,5 @@
 <template>
-  <view class="banner">
+  <view class="banner relative w-full h-316">
     <!-- <Lamp
       ref="lampRef"
       backGround="rgba(128, 128, 128, 0.6)"
@@ -8,7 +8,7 @@
       @tapLampAction="tapLampAction"
     /> -->
     <swiper
-      class="banner-swiper"
+      class="banner-swiper relative w-full h-full"
       circular
       :indicator-dots="false"
       :autoplay="true"
@@ -17,18 +17,18 @@
       <swiper-item
         v-for="(item, index) in list"
         :key="index"
-        class="banner-swiper-item"
+        class="w-full h-full"
         @tap.stop="emits('tapBannerAction', item)"
       >
-        <image class="banner-swiper-item-img" :src="item.image" />
+        <image class="w-full h-full" :src="item.image" />
       </swiper-item>
     </swiper>
     <!-- 自定义指示器 -->
-    <view class="banner-indicator">
+    <view class="banner-indicator absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-12">
       <image
         v-for="(item, index) in list"
         :key="index"
-        class="indicator-dot"
+        class="indicator-dot w-20 h-20"
         :src="
           current === index
             ? '/static/kahe-202510/ka-he/home/indicator-active.png'
@@ -74,41 +74,4 @@ const onChange = (e: any) => {
 // );
 </script>
 
-<style lang="scss" scoped>
-.banner {
-  position: relative;
-  width: 100%;
-  height: 316rpx;
-
-  /* 指示器样式 */
-  &-indicator {
-    position: absolute;
-    bottom: 20rpx;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 12rpx;
-
-    .indicator-dot {
-      width: 20rpx;
-      height: 20rpx;
-    }
-  }
-
-  &-swiper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-
-    &-item {
-      width: 100%;
-      height: 100%;
-
-      &-img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

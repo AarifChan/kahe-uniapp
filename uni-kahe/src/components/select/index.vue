@@ -5,13 +5,13 @@
     bg-color="transparent"
     @close="emits('update:show', false)"
   >
-    <view class="boxSelect">
-      <image class="boxSelect-img" src="/static/kahe-202510/images/selectBg.png" />
-      <view class="boxSelect-wrapper">
-        <view class="boxSelect-wrapper-content">
-          <text class="boxSelect-wrapper-content-title">{{ title }}</text>
-          <view class="boxSelect-wrapper-content-center">
-            <view class="boxSelect-wrapper-content-center-input">
+    <view class="boxSelect relative w-716 h-386">
+      <image class="boxSelect-img w-full h-full absolute left-0 top-0" src="/static/kahe-202510/images/selectBg.png" />
+      <view class="boxSelect-wrapper absolute left-0 top-0 w-full h-full">
+        <view class="boxSelect-wrapper-content relative flex flex-col">
+          <text class="mt-14 ml-30 text-26 font-normal text-white">{{ title }}</text>
+          <view class="mt-96 w-full flex flex-row items-center justify-center">
+            <view class="boxSelect-wrapper-content-center-input w-538 h-56 bg-white border-2px border-[#96c5fe] rounded-4 flex flex-row items-center" style="--cell-background-color: transparent; --field-input-text-color: #96c5fe">
               <tn-input
                 v-model="input"
                 type="digit"
@@ -23,11 +23,11 @@
                 label-class="boxSelect-wrapper-content-center-input"
               />
             </view>
-            <text class="boxSelect-wrapper-content-center-title theme-font"
+            <text class="ml-16 text-48 font-normal text-[#96c5fe] theme-font"
               >个</text
             >
           </view>
-          <view class="boxSelect-wrapper-content-bottom">
+          <view class="p-50 w-[calc(100%-100rpx)] flex flex-row items-center justify-between">
             <custom-button
               title="取消"
               @tap.stop="emits('update:show', false)"
@@ -130,76 +130,4 @@ watch(
 );
 </script>
 
-<style lang="scss" scoped>
-.boxSelect {
-  width: 716rpx;
-  height: 386rpx;
-  position: relative;
-  &-img {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-  &-wrapper {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    &-content {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      &-title {
-        margin: 14rpx 0 0 30rpx;
-        font-size: 26rpx;
-        font-weight: 400;
-        color: #ffffff;
-      }
-      &-center {
-        margin-top: 96rpx;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        &-input {
-          width: 538rpx;
-          height: 56rpx;
-          background: #fff;
-          border: 2px solid #96c5fe;
-          border-radius: 4rpx;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          --cell-background-color: transparent;
-          --field-input-text-color: #96c5fe;
-          &-title {
-            font-size: 36rpx;
-            font-weight: 400;
-            color: #000;
-          }
-        }
-        &-title {
-          margin-left: 16rpx;
-          font-size: 48rpx;
-          font-weight: 400;
-          color: #96c5fe;
-        }
-      }
-
-      &-bottom {
-        padding: 50rpx;
-        width: calc(100% - 100rpx);
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

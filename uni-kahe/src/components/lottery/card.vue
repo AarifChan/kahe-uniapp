@@ -1,32 +1,30 @@
 <template>
-  <view class="lotteryCard" :class="[isAnimating ? 'turnCard' : '']">
-    <!--    <view class="lotteryCard-card" v-if="!isOpen">-->
-    <!--      <image class="lotteryCard-card-bg" :src="cardCoverImage"></image>-->
-    <!--    </view>-->
+  <view class="w-300 h-420" :style="{ animation: isAnimating ? 'turnCardAnimate 1.5s' : '' }">
     <view
-      class="lotteryCard-card"
+      class="relative w-full h-full bg-no-repeat bg-[length:100%_100%]"
       :style="{ backgroundImage: `url(${bgImage})` }"
     >
-      <image v-if="isOpen" class="lotteryCard-card-img" :src="item.image" />
+      <image v-if="isOpen" class="absolute left-60 top-86 w-176 h-246 rounded-4" :src="item.image" />
 
-      <image v-if="isOpen" class="lotteryCard-card-bg" :src="cardInfoImage" />
-      <image v-if="!isOpen" class="lotteryCard-card-bg" :src="cardCoverImage" />
-      <view v-if="isOpen" class="lotteryCard-card-level">
-        <view class="lotteryCard-card-level-content">
+      <image v-if="isOpen" class="absolute left-58 top-82 w-180 h-258" :src="cardInfoImage" />
+      <image v-if="!isOpen" class="absolute left-58 top-82 w-180 h-258" :src="cardCoverImage" />
+      <view v-if="isOpen" class="absolute left-28 top-64 w-60 h-60">
+        <view class="relative w-full h-full flex flex-row items-center justify-center">
           <image
-            class="lotteryCard-card-level-content-bg"
+            class="w-full h-full"
             :src="levelBgImage"
           />
           <image
-            class="lotteryCard-card-level-content-item"
+            class="absolute -left-20 -top-10 w-100 h-80"
+            style="transform: scale(0.6)"
             :src="getLevelImageByLevel(item?.level)"
             mode="widthFix"
           />
         </view>
       </view>
-      <view v-if="isOpen" class="lotteryCard-card-info">
+      <view v-if="isOpen" class="absolute left-58 top-292 w-168 flex flex-col">
         <text
-          class="lotteryCard-card-info-title theme-font text-flow-ellipsis-multiple"
+          class="mt-8 text-20 font-normal text-black leading-20 w-full h-40 text-center theme-font text-flow-ellipsis-multiple"
           >{{ item.title }}</text
         >
       </view>
@@ -100,112 +98,12 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-.turnCard {
-  animation: turnCardAnimate 1.5s;
-}
+<style lang="scss" scoped></style>
 
+<style lang="scss">
 @keyframes turnCardAnimate {
   0% {
     transform: perspective(150px) rotateY(180deg);
-  }
-}
-
-.lotteryCard {
-  width: 300rpx;
-  height: 420rpx;
-
-  &-card {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-
-    &-lottery {
-      position: absolute;
-      left: -20rpx;
-      top: 0;
-      width: 274rpx;
-      height: 410rpx;
-    }
-
-    &-bg {
-      position: absolute;
-      left: 58rpx;
-      top: 82rpx;
-      width: 180rpx;
-      height: 258rpx;
-    }
-
-    &-img {
-      position: absolute;
-      left: 60rpx;
-      top: 86rpx;
-      width: 176rpx;
-      height: 246rpx;
-      border-radius: 4rpx;
-    }
-
-    &-level {
-      position: absolute;
-      left: 28rpx;
-      top: 64rpx;
-      width: 60rpx;
-      height: 60rpx;
-      &-content {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        &-bg {
-          width: 100%;
-          height: 100%;
-        }
-        &-item {
-          position: absolute;
-          left: -20rpx;
-          top: -10rpx;
-          width: 100rpx;
-          height: 80rpx;
-          scale: 60%;
-        }
-      }
-    }
-
-    &-info {
-      position: absolute;
-      left: 58rpx;
-      top: 292rpx;
-      width: 168rpx;
-      //height: 60rpx;
-      display: flex;
-      flex-direction: column;
-
-      &-title {
-        margin-top: 8rpx;
-        font-size: 20rpx;
-        font-weight: 400;
-        color: #000000;
-        line-height: 20rpx;
-        width: 100%;
-        height: 40rpx;
-        text-align: center;
-      }
-
-      &-subTitle {
-        margin-top: 2rpx;
-        font-size: 8rpx;
-        font-weight: 400;
-        color: #000000;
-        line-height: 10rpx;
-        width: 100%;
-        height: 20rpx;
-      }
-    }
   }
 }
 </style>

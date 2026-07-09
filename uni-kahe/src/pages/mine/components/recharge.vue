@@ -1,24 +1,25 @@
 <template>
     <tn-popup v-model="vShow" open-direction="bottom" @close="emits('update:show', false)" bg-color="#DFEFFF">
-        <view class="recharge">
-            <view class="recharge-top">
-                <image class="recharge-top-bg" src="/static/kahe-202510/images/recharge-title.png" />
-                <view class="recharge-top-title theme-font">充值余额</view>
-                <image class="recharge-top-close" src="/static/kahe-202510/images/recharge-close.png" @tap.stop="emits('update:show', false)"  />
+        <view class="recharge relative w-full box-border bg-[#DFEEFF] rounded-t-16 z-999">
+            <view class="recharge-top relative w-750 h-75">
+                <image class="recharge-top-bg absolute top-0 left-0 w-full h-full" src="/static/kahe-202510/images/recharge-title.png" />
+                <view class="recharge-top-title absolute left-0 top-12 w-750 h-75 font-normal text-46 text-white text-center text-stroke-[#3861E5] theme-font">充值余额</view>
+                <image class="recharge-top-close absolute right-20 top-20 w-60 h-32" src="/static/kahe-202510/images/recharge-close.png" @tap.stop="emits('update:show', false)"  />
             </view>
-            <view class="recharge-content">
-                <view class="recharge-content-option">
-                    <view class="recharge-content-option-content">
-                        <text class="recharge-content-option-content-title">选择充值金额</text>
+            <view class="recharge-content w-full h-530 flex flex-col items-center bg-[#DFEEFF]">
+                <view class="recharge-content-option relative m-40 w-full box-border">
+                    <view class="recharge-content-option-content absolute left-0 top-0 p-28 w-full box-border flex flex-col" style="height: calc(100% - 56rpx)">
+                        <text class="recharge-content-option-content-title relative font-normal text-26 text-black">选择充值金额</text>
                         <scroll-view
-                            class="recharge-content-option-content-list"
+                            class="recharge-content-option-content-list relative mt-8 w-full box-border h-200"
                             :enable-flex="true"
                             :scroll-y="true"
                             scroll-with-animation
                         >
-                            <view class="recharge-content-option-content-list-content">
+                            <view class="recharge-content-option-content-list-content grid gap-12" style="grid-template-columns: repeat(auto-fill, minmax(calc((100% - 24px) / 3), 1fr))">
                                 <view
-                                    :class="index===current ? 'recharge-content-option-content-list-itemSelect' :'recharge-content-option-content-list-item'"
+                                    :class="index===current ? 'bg-[#76B3FF] text-black border-transparent' : 'bg-transparent text-[#3690FF] border-2 border-[#3690FF]'"
+                                    class="relative w-[calc(100%-4rpx)] h-50 rounded-4 text-30 font-normal text-center leading-50"
                                     v-for="(item, index) in list"
                                     :key="index"
                                     @tap.stop="didClickItem(index)"
@@ -28,7 +29,7 @@
                             </view>
 
                         </scroll-view>
-                        <view class="recharge-content-option-content-bottom">
+                        <view class="recharge-content-option-content-bottom mt-12 relative w-full flex flex-row items-center justify-center">
                             <custom-button title="确定充值" @tap.stop="didClickRecharge" />
                         </view>
                     </view>
@@ -88,148 +89,4 @@ const didClickRecharge = async () => {
 
 </script>
 
-<style lang="scss" scoped>
-.recharge {
-    position: relative;
-    width: 100%;
-    box-sizing: border-box;
-    background: #DFEEFF;
-    border-radius: 16rpx 16rpx 0 0;
-    z-index: 999;
-    &-top{
-        position: relative;
-        width: 750rpx;
-        height: 75rpx;
-        &-bg{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        &-title{
-            position: absolute;
-            left: 0;
-            top: 12rpx;
-            width: 750rpx;
-            height: 75rpx;
-            font-weight: 400;
-            font-size: 46rpx;
-            color: #FFFFFF;
-            @include text-stroke-color(#3861E5);
-
-            text-align: center;
-        }
-        &-close{
-            position: absolute;
-            right: 20rpx;
-            top: 20rpx;
-            width: 60rpx;
-            height: 32rpx;
-        }
-    }
-
-    &-content {
-        width: 100%;
-        height: 530rpx;
-        display: flex;
-        background: #DFEEFF;
-        flex-direction: column;
-        align-items: center;
-        &-title {
-            position: relative;
-            margin-top: 16rpx;
-            width: 100%;
-            text-align: center;
-            font-size: 48rpx;
-            font-weight: 400;
-            color: #1a385b;
-        }
-        &-option {
-            margin: 40rpx;
-            width: 100%;
-            box-sizing: border-box;
-            position: relative;
-            &-bg {
-                width: 100%;
-            }
-            &-content {
-                position: absolute;
-                left: 0;
-                top: 0;
-                padding: 28rpx;
-                width: 100%;
-                box-sizing: border-box;
-                height: calc(100% - 56rpx);
-                display: flex;
-                flex-direction: column;
-                &-title {
-                    position: relative;
-                    font-weight: normal;
-                    font-size: 26rpx;
-                    color: #000000;
-                }
-                &-list {
-                    margin-top: 8rpx;
-                    position: relative;
-                    width: 100%;
-
-                    box-sizing: border-box;
-                    height: 200rpx;
-
-                    &-content {
-                        display: grid;
-                        grid-template-columns: repeat(
-                    auto-fill,
-                                minmax(calc((100% - 24px) / 3), 1fr)
-              ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-                        grid-gap: 12px; // 这是网格间的间隙，根据需要调整
-                    }
-
-                    &-item {
-                        position: relative;
-                        width: calc(100% - 4rpx);
-                        height: 50rpx;
-                        background: rgba(0,0,0,0);
-                        border-radius: 4rpx;
-                        border: 2rpx solid #3690FF;
-                        font-weight: 400;
-                        font-size: 30rpx;
-                        color: #3690FF;
-                        text-align: center;
-                        line-height: 50rpx;
-
-                    }
-                    &-itemSelect{
-                        display: inline-block;
-                        position: relative;
-                        width: 100%;
-                        height: 50rpx;
-                        border-radius: 4rpx;
-                        font-weight: 400;
-                        font-size: 30rpx;;
-                        color: #000000;
-                        background: #76B3FF;
-                        text-align: center;
-                        line-height: 50rpx;
-                    }
-                }
-                &-bottom {
-                    margin-top: 12rpx;
-                    position: relative;
-                    width: 100%;
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: center;
-                }
-            }
-        }
-    }
-    &-close {
-        position: absolute;
-        right: 24rpx;
-        top: 24rpx;
-    }
-}
-</style>
+<style lang="scss" scoped></style>

@@ -5,27 +5,27 @@
     bg-color="transparent"
     @close="emits('update:show', false)"
   >
-    <view class="modal-edit">
-      <image class="modal-edit-bg" src="/static/kahe-202510/ka-he/mine/info-bg.png" />
-      <view class="modal-edit-content">
-        <view class="modal-edit-content-info">
+    <view class="modal-edit relative bg-transparent w-750 h-772">
+      <image class="modal-edit-bg w-full h-full" src="/static/kahe-202510/ka-he/mine/info-bg.png" />
+      <view class="modal-edit-content absolute left-0 top-0 w-full h-full">
+        <view class="modal-edit-content-info pt-104 box-border w-full flex flex-col items-center justify-center">
           <form @submit="formSubmit">
             <!-- #ifdef MP-WEIXIN -->
             <button
-              class="modal-edit-content-info-head"
+              class="modal-edit-content-info-head mt-80 relative flex w-full flex-row items-center justify-center bg-transparent"
               open-type="chooseAvatar"
               @chooseavatar="onChooseAvatar"
             >
               <image
-                class="modal-edit-content-info-head-img"
+                class="modal-edit-content-info-head-img w-280 h-280 rounded-full"
                 :src="avatarUrl"
               ></image>
             </button>
             <!-- #endif -->
             <!-- #ifndef MP-WEIXIN -->
-            <button class="modal-edit-content-info-head" @click="chooseImage">
+            <button class="modal-edit-content-info-head mt-80 relative flex w-full flex-row items-center justify-center bg-transparent" @click="chooseImage">
               <image
-                class="modal-edit-content-info-head-img"
+                class="modal-edit-content-info-head-img w-280 h-280 rounded-full"
                 :src="avatarUrl"
               ></image>
             </button>
@@ -33,7 +33,7 @@
 
             <!-- #ifdef MP-WEIXIN -->
             <button
-              class="modal-edit-content-info-btn theme-font"
+              class="modal-edit-content-info-btn mt-20 mb-16 relative text-black font-normal text-[18px] leading-[18px] text-center bg-transparent theme-font"
               open-type="chooseAvatar"
               @chooseavatar="onChooseAvatar"
             >
@@ -42,21 +42,22 @@
             <!-- #endif -->
             <!-- #ifndef MP-WEIXIN -->
             <button
-              class="modal-edit-content-info-btn theme-font"
+              class="modal-edit-content-info-btn mt-20 mb-16 relative text-black font-normal text-[18px] leading-[18px] text-center bg-transparent theme-font"
               @click="chooseImage"
             >
               点击上传
             </button>
             <!-- #endif -->
-            <view class="modal-edit-content-info-name">
-              <view class="modal-edit-content-info-name-title theme-font"
+            <view class="modal-edit-content-info-name mt-24 relative flex flex-row items-center justify-center w-580 h-86 rounded-10 bg-[rgba(255,255,255,0.72)]">
+              <view class="modal-edit-content-info-name-title theme-font text-black w-200 text-[17px] px-8 text-right"
                 >用户昵称：</view
               >
               <!-- #ifdef MP-WEIXIN -->
               <input
                 type="nickname"
                 name="nickname"
-                class="modal-edit-content-info-name-input theme-font"
+                class="modal-edit-content-info-name-input text-black text-28"
+                style="width: calc(100% - 300rpx)"
                 placeholder="请输入用户昵称"
                 :placeholderStyle="placeholderStyle"
                 :value="nickName"
@@ -67,7 +68,8 @@
               <input
                 type="text"
                 name="nickname"
-                class="modal-edit-content-info-name-input theme-font"
+                class="modal-edit-content-info-name-input text-black text-28"
+                style="width: calc(100% - 300rpx)"
                 placeholder="请输入用户昵称"
                 :placeholderStyle="placeholderStyle"
                 :value="nickName"
@@ -75,18 +77,18 @@
               />
               <!-- #endif -->
             </view>
-            <view class="modal-edit-content-bottom">
-              <button formType="submit" class="modal-edit-content-bottom-item">
+            <view class="modal-edit-content-bottom mt-40 w-580 flex flex-row items-center gap-13 justify-around">
+              <button formType="submit" class="modal-edit-content-bottom-item w-full h-67 p-0 m-0 rounded-0">
                 <!--                <custom-button type="red" form-type="submit" title="" />-->
-                <view class="modal-edit-content-bottom-item-confirm theme-font"
+                <view class="modal-edit-content-bottom-item-confirm theme-font bg-[#ff7276] shadow-[0_4rpx_0_0_#ff7276] rounded-8 text-white"
                   >确认上传</view
                 >
               </button>
               <button
-                class="modal-edit-content-bottom-item"
+                class="modal-edit-content-bottom-item w-full h-67 p-0 m-0 rounded-0"
                 @tap.stop="closeAction"
               >
-                <view class="modal-edit-content-bottom-item-cancel theme-font"
+                <view class="modal-edit-content-bottom-item-cancel theme-font bg-[#53d6ac] shadow-[0_4rpx_0_0_#43a17f] rounded-8 text-white"
                   >暂不更新</view
                 >
                 <!--                <custom-button title="暂不更新" />-->
@@ -222,126 +224,4 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.modal-edit {
-  position: relative;
-  background-color: transparent;
-  width: 750rpx;
-  height: 772rpx;
-  &-bg {
-    width: 100%;
-    height: 100%;
-  }
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    &-info {
-      padding-top: 104rpx;
-      box-sizing: border-box;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      &-head {
-        margin-top: 80rpx;
-        position: relative;
-        display: flex;
-        width: 100%;
-        flex-direction: row;
-        align-content: center;
-        justify-content: center;
-        background-color: transparent;
-        &-img {
-          width: 280rpx;
-          height: 280rpx;
-          border-radius: 140rpx;
-        }
-      }
-      &-head:after {
-        border: none;
-      }
-      &-btn {
-        margin-top: 20rpx;
-        margin-bottom: 16rpx;
-        position: relative;
-        color: #000000;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 18px;
-        text-align: center;
-        background-color: transparent;
-      }
-      &-btn:after {
-        border: none;
-      }
-
-      &-name {
-        margin-top: 24rpx;
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        width: 580rpx;
-        height: 86rpx;
-        border-radius: 10rpx;
-        background-color: rgba($color: #ffffff, $alpha: 0.72);
-
-        &-title {
-          color: #000000;
-          width: 200rpx;
-          font-size: 17px;
-          padding: 0 8rpx;
-          text-align: right;
-        }
-        &-input {
-          width: calc(100% - 300rpx);
-          font-size: 28rpx;
-          color: #000000;
-        }
-      }
-    }
-
-    &-bottom {
-      margin-top: 40rpx;
-      width: 580rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 13rpx;
-      justify-content: space-around;
-
-      &-item {
-        width: 100%;
-        height: 67rpx;
-        padding: 0;
-        margin: 0;
-        border-radius: 0;
-        &-confirm {
-          background: #ff7276;
-          box-shadow: 0rpx 4rpx 0rpx 0rpx #ff7276;
-          border-radius: 8rpx;
-          color: white;
-        }
-
-        &-cancel {
-          background: #53d6ac;
-          box-shadow: 0rpx 4rpx 0rpx 0rpx #43a17f;
-          border-radius: 8rpx;
-          color: white;
-        }
-      }
-      &-item:after {
-        padding: 0;
-        margin: 0;
-        border: none;
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

@@ -6,33 +6,34 @@
     bg-color="transparent"
     @close="emits('update:show', false)"
   >
-    <view class="reward">
-      <view class="reward-top">
+    <view class="relative flex flex-col items-center w-732">
+      <view class="relative w-612 h-194">
         <image
-          class="reward-top-img"
+          class="w-full h-full"
           src="/static/kahe-202510/reward/reward-title.png"
         />
       </view>
-      <view class="reward-content">
+      <view class="-mt-92 relative w-732 items-center flex flex-col">
         <image
-          class="reward-content-bg"
+          class="w-732 h-792"
           src="/static/kahe-202510/reward/reward-bg.png"
         />
-        <text class="reward-content-title"
+        <text class="absolute top-60 left-0 w-full text-24 font-normal text-white text-center"
           >恭喜您,获得以下物品,可在赏袋查看。</text
         >
         <scroll-view
           :enable-flex="true"
           :scroll-y="true"
           scroll-with-animation
-          class="reward-content-list"
+          class="absolute left-0 top-120 w-full px-50 h-600"
         >
           <view
-            class="reward-content-list-single"
+            class="w-full h-full flex flex-row items-center justify-center"
             v-if="goodsList.length === 1"
           >
             <view
-              class="reward-content-list-single-item"
+              class="inline-block"
+              style="width: 45%;"
               v-for="(item, index) in goodsList"
               :key="'goodsList' + index"
             >
@@ -46,11 +47,12 @@
             </view>
           </view>
           <view
-            class="reward-content-list-two"
+            class="w-full h-full px-30 flex flex-row items-center justify-between"
             v-else-if="goodsList.length === 2"
           >
             <view
-              class="reward-content-list-two-item"
+              class="inline-block"
+              style="width: calc((100% - 80rpx) / 2);"
               v-for="(item, index) in goodsList"
               :key="'goodsList' + index"
             >
@@ -64,11 +66,11 @@
             </view>
           </view>
           <view
-            class="reward-content-list-three"
+            class="w-full flex flex-col"
             v-else-if="goodsList.length === 3"
           >
-            <view class="reward-content-list-three-row1">
-              <view class="reward-content-list-three-row1-item">
+            <view class="mt-24 w-full flex flex-row items-center justify-center">
+              <view class="w-1/4">
                 <goods-box
                   :item="goodsList[0]"
                   :info="false"
@@ -78,8 +80,8 @@
                 />
               </view>
             </view>
-            <view class="reward-content-list-three-row2">
-              <view class="reward-content-list-three-row2-item">
+            <view class="mt-24 w-full flex flex-row items-center justify-between">
+              <view class="w-[45%] px-60">
                 <goods-box
                   :item="goodsList[1]"
                   :info="false"
@@ -88,7 +90,7 @@
                   :nums="nums"
                 />
               </view>
-              <view class="reward-content-list-three-row2-item">
+              <view class="w-[45%] px-60">
                 <goods-box
                   :item="goodsList[2]"
                   :info="false"
@@ -99,9 +101,9 @@
               </view>
             </view>
           </view>
-          <view class="reward-content-list-content" v-else>
+          <view class="p-24 pt-24 mt-24 gap-40 box-border overflow-auto" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(calc((100% - 80rpx) / 3), 1fr));" v-else>
             <view
-              class="reward-content-list-content-item"
+              class="inline-block w-full"
               v-for="(item, index) in goodsList"
               :key="'goodsList' + index"
             >
@@ -116,69 +118,49 @@
           </view>
         </scroll-view>
         <image
-          class="reward-content-integral"
+          class="my-32 mx-auto w-608 h-73"
           src="/static/kahe-202510/ka-he/product/show-integral.png"
         />
-        <view class="reward-content-bottom">
+        <view class="w-[calc(100%-120rpx)] h-100 flex flex-row items-center justify-between">
           <view
-            class="reward-content-bottom-item"
+            class="relative"
             @tap.stop="emits('update:show', false)"
           >
             <image
-              class="reward-content-bottom-item-img"
+              class="w-270 h-68"
               src="/static/kahe-202510/images/reward-btn1.png"
             />
             <text
-              class="reward-content-bottom-item-title text-stroke-main theme-font"
+              class="absolute left-0 w-full top-15 text-center text-32 font-normal text-white text-stroke-main theme-font"
               >再次购买</text
             >
           </view>
-          <!--          <view-->
-          <!--            v-if="featureSmashRefundEnabled"-->
-          <!--            class="reward-content-bottom-item"-->
-          <!--            @tap.stop="emits('didClickSmash')"-->
-          <!--          >-->
-          <!--            <image-->
-          <!--              class="reward-content-bottom-item-img"-->
-          <!--              src="/static/kahe-202510/images/reward-btn2.png"-->
-          <!--            />-->
-          <!--            <text-->
-          <!--              class="reward-content-bottom-item-title text-stroke-main theme-font"-->
-          <!--              >一键退货</text-->
-          <!--            >-->
-          <!--          </view>-->
-          <!--          <view class="reward-content-bottom-item">-->
-          <!--            <image-->
-          <!--              class="reward-content-bottom-item-img"-->
-          <!--              src="/static/kahe-202510/images/reward-btn2.png"-->
-          <!--            />-->
-          <!--            <text-->
-          <!--              class="reward-content-bottom-item-title text-stroke-main theme-font"-->
-          <!--              >申请发货</text-->
-          <!--            >-->
-          <!--          </view>-->
-
-          <view class="reward-content-bottom-item" @tap.stop="navToCollectPage">
+          <view
+            class="relative"
+            @tap.stop="navToCollectPage"
+          >
             <image
-              class="reward-content-bottom-item-img"
+              class="w-270 h-68"
               src="/static/kahe-202510/images/reward-btn2.png"
             />
             <text
-              class="reward-content-bottom-item-title text-stroke-main theme-font"
+              class="absolute left-0 w-full top-15 text-center text-32 font-normal text-white text-stroke-main theme-font"
               >换卡集市</text
             >
           </view>
         </view>
         <view
-          class="reward-content-redBag"
+          class="relative w-276 h-71"
           @tap.stop="emits('didClickRedBag')"
           v-if="hasRedBag"
         >
           <image
-            class="reward-content-redBag-bg"
+            class="w-276 h-71"
             src="/static/kahe-202510/redEnvelope/btn-style3.png"
           />
-          <text class="reward-content-redBag-title theme-font text-stroke"
+          <text
+            class="absolute left-0 top-0 w-full h-71 leading-71 text-center font-normal text-30 text-white theme-font text-stroke"
+            style="-webkit-text-stroke-color: #a94f23; text-stroke-color: #a94f23;"
             >去发红包</text
           >
         </view>
@@ -270,196 +252,4 @@ const emits = defineEmits([
 ]);
 </script>
 
-<style lang="scss" scoped>
-.reward {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 732rpx;
-  &-top {
-    position: relative;
-    width: 612rpx;
-    height: 194rpx;
-    &-img {
-      width: 100%;
-      height: 100%;
-    }
-    &-gif {
-      position: absolute;
-      height: 183rpx;
-      top: 40rpx;
-      left: calc((570rpx - 183rpx) / 2);
-      width: 183rpx;
-    }
-    &-title {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      line-height: 84rpx;
-      text-align: center;
-      font-size: 84rpx;
-      font-weight: 400;
-      color: #ffffff;
-    }
-  }
-  &-content {
-    margin-top: -92rpx;
-    position: relative;
-    width: 732rpx;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    &-bg {
-      width: 732rpx;
-      height: 792rpx;
-    }
-    &-title {
-      position: absolute;
-      top: 60rpx;
-      left: 0;
-      width: 100%;
-      font-size: 24rpx;
-      font-weight: 400;
-      color: white;
-      text-align: center;
-    }
-    &-list {
-      position: absolute;
-      left: 0;
-      top: 120rpx;
-      width: 100%;
-      padding: 0 50rpx;
-      height: 600rpx;
-      &-content {
-        padding: 24rpx 24rpx 0 24rpx;
-        margin-top: 24rpx;
-        display: grid;
-        grid-template-columns: repeat(
-          auto-fill,
-          minmax(calc((100% - 80rpx) / 3), 1fr)
-        ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-        grid-gap: 40rpx; // 这是网格间的间隙，根据需要调整
-        box-sizing: border-box;
-        overflow: auto;
-        &-item {
-          display: inline-block;
-          width: 100%;
-        }
-      }
-
-      &-single {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        &-item {
-          display: inline-block;
-          width: 45%;
-        }
-      }
-      &-two {
-        width: 100%;
-        height: 100%;
-        padding: 0 30rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        &-item {
-          display: inline-block;
-          width: calc((100% - 80rpx) / 2);
-        }
-      }
-      &-three {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        &-row1 {
-          margin-top: 24rpx;
-          width: 100%;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-          &-item {
-            width: 25%;
-          }
-        }
-        &-row2 {
-          margin-top: 24rpx;
-          width: 100%;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          &-item {
-            width: 45%;
-            padding: 0 60rpx;
-          }
-        }
-      }
-    }
-
-    &-redBag {
-      position: relative;
-      width: 276rpx;
-      height: 71rpx;
-      &-bg {
-        width: 276rpx;
-        height: 71rpx;
-      }
-      &-title {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 71rpx;
-        line-height: 71rpx;
-        text-align: center;
-        font-weight: 400;
-        font-size: 30rpx;
-        color: #ffffff;
-        @include text-stroke-color(#a94f23);
-      }
-    }
-
-    &-integral {
-      margin: 32rpx auto;
-      width: 608rpx;
-      height: 73rpx;
-    }
-
-    &-bottom {
-      width: calc(100% - 120rpx);
-      height: 100rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      &-item {
-        position: relative;
-        &-img {
-          width: 270rpx;
-          height: 68rpx;
-        }
-        &-title {
-          position: absolute;
-          left: 0;
-          width: 100%;
-          top: 15rpx;
-          text-align: center;
-          font-size: 32rpx;
-          font-weight: 400;
-          color: #ffffff;
-          //-webkit-text-stroke: 2rpx #000000;
-          //text-stroke: 2rpx #000000;
-        }
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

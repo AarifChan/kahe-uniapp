@@ -1,15 +1,15 @@
 <template>
-    <view class="mine-data">
-        <image class="mine-data-moneyBg" src="/static/kahe-202510/images/money-bg.png">
+    <view class="mine-data relative flex items-center justify-center w-300 h-120">
+        <image class="mine-data-moneyBg absolute left-0 top-0 w-full h-full" src="/static/kahe-202510/images/money-bg.png">
         </image>
         <image
-            class="mine-data-icon"
+            class="mine-data-icon absolute"
             :style="{ width: width, height: height, left: left, top: top }"
             :src="icon"
         />
-        <view class="mine-data-info">
-            <text class="mine-data-info-title theme-font">{{ title }}</text>
-            <text class="mine-data-info-subTitle theme-font">{{ value }}</text>
+        <view class="mine-data-info relative flex flex-col items-center ml-20">
+            <text class="mine-data-info-title theme-font text-28 font-normal text-black">{{ title }}</text>
+            <text class="mine-data-info-subTitle theme-font text-26 font-normal text-black" style="transform: translateY(10rpx)">{{ value }}</text>
         </view>
     </view>
 </template>
@@ -47,44 +47,4 @@ defineProps({
 })
 </script>
 
-<style lang="scss" scoped>
-.mine-data {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 300rpx;
-    height: 120rpx;
-    &-moneyBg {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-    }
-    &-icon {
-        position: absolute;
-        left: 8rpx;
-        top: 8rpx;
-    }
-
-    &-info {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-left: 20rpx;
-        &-title {
-            font-size: 28rpx;
-            font-weight: 400;
-            color: #000000;
-        }
-        &-subTitle {
-            transform: translateY(10rpx);
-            font-size: 26rpx;
-            font-weight: 400;
-            color: #000000;
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

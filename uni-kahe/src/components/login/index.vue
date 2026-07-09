@@ -1,11 +1,19 @@
 <template>
-  <view v-if="show" class="loginModal">
-    <view class="login">
-      <image class="login-bg" src="/static/kahe-202510/login/login-bg.png" />
-      <view class="login-content">
-        <view class="login-content-title" />
+  <view
+    v-if="show"
+    class="fixed left-0 top-0 z-999 flex h-screen w-full flex-row items-center justify-center bg-[rgba(0,0,0,0.8)]"
+  >
+    <view class="relative flex flex-col items-center justify-start">
+      <image
+        class="h-1144 w-750"
+        src="/static/kahe-202510/login/login-bg.png"
+      />
+      <view
+        class="absolute left-0 top-260 flex w-full flex-col items-center justify-center"
+      >
+        <view class="mb-20 h-69 w-373" />
         <image
-          class="login-content-title"
+          class="mb-20 h-69 w-373"
           src="/static/kahe-202510/login/login-title1.png"
         />
         <login-item
@@ -44,14 +52,14 @@
           :buttonType="0"
         >
           <image
-            class="login-content-title-img"
+            class="absolute h-34 w-137"
             src="/static/kahe-202510/login/login-btn-title.png"
           />
         </custom-button>
         // #endif
       </view>
       <image
-        class="login-close"
+        class="h-54 w-54"
         src="/static/kahe-202510/login/close.png"
         @tap.stop="emits('update:show', false)"
       />
@@ -127,54 +135,4 @@ const items = ref([
 ]);
 </script>
 
-<style lang="scss" scoped>
-.loginModal {
-  display: flex;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8);
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-.login {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  &-bg {
-    width: 750rpx;
-    height: 1144rpx;
-  }
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 260rpx;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    &-title {
-      width: 373rpx;
-      height: 69rpx;
-      margin-bottom: 20rpx;
-      &-img {
-        position: absolute;
-
-        width: 137rpx;
-        height: 34rpx;
-      }
-    }
-  }
-  &-close {
-    width: 54rpx;
-    height: 54rpx;
-  }
-}
-</style>
+<style lang="scss" scoped></style>
