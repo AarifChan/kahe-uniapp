@@ -29,58 +29,46 @@ interface ItemModel {
 }
 const itemList = ref([
   {
-    icon: "/static/kahe-202510/mine/service1.png",
+    icon: "/static/kaju/mine/option1.png",
     title: "用户协议",
     type: ItemType.protocol,
   },
 
   {
-    icon: "/static/kahe-202510/mine/service2.png",
+    icon: "/static/kaju/mine/option2.png",
     title: "投诉渠道",
     type: ItemType.contact,
   },
-  // {
-  //   icon: "/static/kahe-202510/ka-he/mine/item1.png",
-  //   title: "福利群",
-  //   type: ItemType.inGroup,
-  // },
   {
-    icon: "/static/kahe-202510/mine/service3.png",
+    icon: "/static/kaju/mine/option3.png",
     title: "地址管理",
     type: ItemType.address,
   },
   {
-    icon: "/static/kahe-202510/mine/service4.png",
+    icon: "/static/kaju/mine/option4.png",
     title: "特惠礼包",
     type: ItemType.giftPack,
   },
 
   {
-    icon: "/static/kahe-202510/mine/service5.png",
+    icon: "/static/kaju/mine/option5.png",
     title: "排行奖励",
     type: ItemType.rank,
   },
 
-  // {
-  //   icon: "/static/kahe-202510/mine/service6.png",
-  //   title: "联盟收益",
-  //   type: ItemType.income,
-  // },
   {
-    icon: "/static/kahe-202510/mine/service7.png",
-    // title: "商城",
-    // type: ItemType.store,
+    icon: "/static/kaju/mine/option6.png",
     title: "未成年投诉",
     type: ItemType.under18,
   },
 
   {
-    icon: "/static/kahe-202510/mine/service8.png",
+    icon: "/static/kaju/mine/option7.png",
     title: "宝箱",
     type: ItemType.chest,
   },
   {
-    icon: "/static/kahe-202510/mine/service9.png",
+    icon: "/static/kaju/mine/option8.png",
     title: "入驻了解",
     type: ItemType.rollIn,
   },
@@ -108,7 +96,6 @@ const handleClick = (item: ItemModel) => {
       });
       break;
     case ItemType.protocol:
-      // showModalType(1);
       emits("didTapAction", 1);
       break;
     case ItemType.rank:
@@ -140,10 +127,6 @@ const handleClick = (item: ItemModel) => {
       uni.navigateTo({
         url: "/subPackages/mine/invite/index",
       });
-      // uni.previewImage({
-      //     current: "/static/kahe-202510/ka-he/home/13395850645540676.png",
-      //     urls: ["/static/kahe-202510/ka-he/home/13395850645540676.png"],
-      // });
       break;
     case ItemType.store:
       uni.navigateTo({
@@ -155,127 +138,32 @@ const handleClick = (item: ItemModel) => {
       break;
     case ItemType.chest:
       uni.navigateTo({ url: "/subPackages/box/box/index?tab=3" });
-    default:
-      break;
   }
 };
 </script>
 
 <template>
-  <view class="optionList">
-    <view class="optionList-top">
-      <image
-        class="optionList-top-bg"
-        src="/static/kahe-202510/ka-he/mine/flowerBg.png"
-      />
-      <text class="optionList-top-title other-font">更多服务</text>
-    </view>
-    <view class="grid-container">
+  <view class="relative flex flex-row items-center justify-center">
+    <image class="w-704 h-578" src="/static/kaju/mine/more-service.png" />
+    <view
+      class="absolute leading-0 w-full top-40 px-80 pt-40 grid grid-cols-3 gap-0"
+    >
       <view
-        class="grid-item"
+        class="py-28 text-center"
         v-for="(item, index) in itemList"
         :key="index"
         :id="item.title"
         @click="handleClick(item)"
       >
-        <!--        <button-->
-        <!--          class="optionList-item"-->
-        <!--          openType="contact"-->
-        <!--          v-if="item.type === ItemType.contact"-->
-        <!--        >-->
-        <!--          <image class="optionList-item-icon" :src="item.icon" />-->
-        <!--          <text class="optionList-item-title">{{ item.title }}</text>-->
-        <!--        </button>-->
-        <view class="optionList-item">
-          <image class="optionList-item-icon" :src="item.icon" />
-          <text class="optionList-item-title">{{ item.title }}</text>
+        <view
+          class="flex flex-col items-center justify-center bg-transparent leading-26"
+        >
+          <image class="w-60 h-62" :src="item.icon" />
+          <text class="mt-4 text-24 text-black">{{ item.title }}</text>
         </view>
       </view>
     </view>
   </view>
 </template>
 
-<style scoped lang="scss">
-.optionList {
-  margin: 0 32rpx;
-  box-sizing: border-box;
-  border-radius: 30rpx;
-  background-color: white;
-  position: relative;
-
-  &-top {
-    position: absolute;
-    left: -30rpx;
-    top: -20rpx;
-    width: 316rpx;
-    height: 73rpx;
-
-    &-bg {
-      width: 100%;
-      height: 100%;
-    }
-
-    &-title {
-      position: absolute;
-      left: 40%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      font-weight: 400;
-      font-size: 30rpx;
-      color: #fbffaf;
-      //font-family: zihunyuwanti;
-      @include text-stroke(3rpx, #ff7b57);
-      //text-stroke: 3rpx #ff7b57;
-      //-webkit-text-stroke: 3rpx #ff7b57;
-      //-webkit-background-clip: text;
-      //-webkit-text-fill-color: transparent;
-    }
-  }
-
-  &-item {
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-    border-radius: 0;
-    line-height: 26rpx;
-
-    &-icon {
-      width: 60rpx;
-      height: 60rpx;
-    }
-
-    &-title {
-      margin-top: 8rpx;
-      font-size: 26rpx;
-      font-weight: 400;
-      color: #000000;
-    }
-  }
-
-  &-item::after {
-    border-radius: 0;
-    border: none;
-    padding: 0;
-    margin: 0;
-    background-color: transparent;
-  }
-}
-
-.grid-container {
-  padding-top: 40rpx;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 0;
-  border: 2px solid #cda374;
-  border-radius: 30rpx;
-
-  .grid-item {
-    padding: 16px 0;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

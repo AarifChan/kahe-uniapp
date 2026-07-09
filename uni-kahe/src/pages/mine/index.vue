@@ -1,8 +1,14 @@
 <template>
-  <view class="minePage">
-    <image class="minePage-bg" src="/static/kaju/mine/mine-bg.png" />
+  <view class="relative w-screen h-screen bg-[#FFF8E9] flex flex-col">
+    <image
+      class="fixed left-0 top-0 w-750 h-860"
+      src="/static/kaju/mine/mine-bg.png"
+    />
     <NavBar position="absolute" :opacity="1" />
-    <scroll-view class="mine" :scroll-y="true">
+    <scroll-view
+      class="relative w-full h-full flex flex-col overflow-hidden"
+      :scroll-y="true"
+    >
       <info
         :user-info="userInfo"
         @did-click-edit="handleClickEdit"
@@ -15,21 +21,14 @@
         :integral="userInfo.integral"
         @didClickItem="handleClickOther"
       />
-      <view class="inGroup">
-        <image
-          class="inGroupImg"
-          src="/static/kahe-202510/ka-he/mine/in-group3.png"
-          @tap.stop="showInGroupImage"
-        />
-      </view>
+
       <favorite
         @did-click-favorite="handleClickFavorite"
         @did-click-coupon="handleClickCoupon"
         @did-click-contact="showInGroupImage"
-        :un-read-num="unreadNum"
       />
       <orders @click-orders-tap="clickOrdersTap" />
-      <view style="padding-bottom: 32rpx">
+      <view class="pb-32">
         <options
           @did-tap-action="showModalType"
           @did-tap-contact="showInGroupImage"
@@ -43,7 +42,6 @@
     />
 
     <recharge v-model:show="rechargeShow" :list="rechargeList" />
-    <!--  <TabBar />-->
     <InfoModal v-model:show="infoShow" />
   </view>
 </template>
@@ -125,7 +123,6 @@ const handleClickEdit = () => {
     ShowToast("请先登录");
     return;
   }
-  // AppModule.showUserModal();
   infoShow.value = true;
 };
 
@@ -188,13 +185,11 @@ const handleClickOther = async (sType: string) => {
     case "coin":
       AppModule.changeProductTabIndex(2);
       AppModule.changeCurrentTabIndex(0);
-      // eventBus.emit('reloadProductTab', 2)
       break;
     case "integral":
       uni.navigateTo({
         url: "/subPackages/infinite/index",
       });
-      // eventBus.emit('reloadProductTab', 3)
       break;
     default:
       break;
@@ -209,95 +204,7 @@ const getUnReadCount = async () => {
 };
 onShow(() => {
   UserModule.getUserInfo();
-  // getUnReadCount();
 });
 </script>
 
-<style lang="scss" scoped>
-.minePage {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  background-color: $main-bg;
-  display: flex;
-  flex-direction: column;
-  &-bg {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    aspect-ratio: 750 / 860;
-  }
-  .mine {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-
-    &-top {
-      //margin-top: 60rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 30rpx;
-      box-sizing: border-box;
-    }
-
-    &-center {
-      margin-top: 16rpx;
-      margin-left: 30rpx;
-      position: relative;
-      width: 695rpx;
-      height: 126rpx;
-      margin-bottom: 40rpx;
-
-      &-img {
-        width: 100%;
-        height: 100%;
-      }
-
-      &-icon {
-        position: absolute;
-        left: 5rpx;
-        top: 5rpx;
-        width: 94rpx;
-        height: 92rpx;
-      }
-
-      &-tag {
-        position: absolute;
-        bottom: 16rpx;
-        left: 40rpx;
-        font-weight: 400;
-        font-size: 23rpx;
-        color: #000000;
-      }
-
-      &-title {
-        position: absolute;
-        left: 136rpx;
-        top: 0;
-
-        line-height: 126rpx;
-        font-weight: 400;
-        font-size: 40rpx;
-        color: #000000;
-      }
-    }
-  }
-
-  .inGroup {
-    margin: 0 24rpx;
-    position: relative;
-    width: calc(100% - 48rpx);
-
-    &Img {
-      width: 100%;
-      aspect-ratio: 699 / 167;
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

@@ -18,109 +18,29 @@ const emits = defineEmits(["didClickItem"]);
 </script>
 
 <template>
-  <view class="coinList">
-    <view class="coinListItem">
-      <image
-        class="bg"
-        src="/static/kahe-202510/mine/coin-bg1.png"
-      />
-      <image
-        class="decorate"
-        src="/static/kahe-202510/mine/coin1.png"
-      />
-      <view class="value" style="color: #3b1900">{{ momey }}</view>
-      <view class="unit" style="color: #3b1900">无门槛抵扣券</view>
-    </view>
-    <!--    <view class="coinListItem">-->
-    <!--      <image-->
-    <!--        class="bg"-->
-    <!--        src="/static/kahe-202510/mine/coin-bg2.png"-->
-    <!--      />-->
-    <!--      <image-->
-    <!--        class="decorate"-->
-    <!--        src="/static/kahe-202510/mine/coin2.png"-->
-    <!--      />-->
-    <!--      <view class="value" style="color: #785020">{{ coin }}</view>-->
-    <!--      <view class="unit" style="color: #785020">今日怒气值</view>-->
-    <!--    </view>-->
-    <view class="coinListItem" @tap.stop="emits('didClickItem', 'integral')">
-      <image
-        class="bg"
-        src="/static/kahe-202510/mine/coin-bg3.png"
-      />
-      <image
-        class="decorate"
-        src="/static/kahe-202510/mine/coin3.png"
-      />
-      <view class="value" style="color: #226b05">{{ integral }}</view>
-      <view class="unit" style="color: #226b05">积分</view>
-      <image
-        class="action"
-        src="/static/kahe-new-mp/ka-he/mine/nav.png"
-      />
+  <view class="relative flex flex-row items-center justify-center">
+    <image class="w-692 h-184 mt-50rpx" src="/static/kaju/mine/coin-bg.png" />
+    <view
+      class="absolute left-0 top-0 w-full flex flex-row items-center justify-center gap-200"
+    >
+      <view
+        class="flex flex-col items-center"
+        @tap.stop="emits('didClickItem', 'money')"
+      >
+        <image class="w-106 h-106" src="/static/kaju/mine/icon-coupon.png" />
+        <view class="text-40 text-[#3b1900] font-other">{{ momey }}</view>
+        <view class="text-22 text-[#3b1900]">无门槛抵扣券</view>
+      </view>
+      <view
+        class="flex flex-col items-center"
+        @tap.stop="emits('didClickItem', 'integral')"
+      >
+        <image class="w-106 h-106" src="/static/kaju/mine/icon-star.png" />
+        <view class="text-40 text-[#3b1900] font-other">{{ integral }}</view>
+        <view class="text-22 text-[#3b1900]">积分</view>
+      </view>
     </view>
   </view>
 </template>
 
-<style scoped lang="scss">
-.coinList {
-  position: relative;
-  padding: 48rpx 24rpx 0;
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.coinListItem {
-  position: relative;
-  flex: 1;
-  min-width: 0;
-  height: 156rpx; /* APP 部分 WebView 不稳定支持 aspect-ratio，改用固定高度 */
-  overflow: visible;
-  &:not(:last-child) {
-    margin-right: 24rpx; /* 代替 gap，提升 APP 兼容性 */
-  }
-  .bg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .decorate {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: -32rpx;
-    width: 75rpx;
-    height: 75rpx;
-  }
-  .unit {
-    position: absolute;
-    bottom: 30rpx;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-weight: 400;
-    font-size: 22rpx;
-  }
-  .value {
-    position: absolute;
-    top: 58rpx;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-weight: 400;
-    font-size: 30rpx;
-    font-family: "ZiHunYuWanTi";
-  }
-  .action {
-    position: absolute;
-    bottom: 30rpx;
-    right: 56rpx;
-    width: 24rpx;
-    height: 24rpx;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

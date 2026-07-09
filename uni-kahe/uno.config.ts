@@ -130,6 +130,26 @@ export default defineConfig({
     [/^bottom-(\d+)$/, ([_, num]) => ({ bottom: rpx(Number(num)) })],
     [/^left-(\d+)$/, ([_, num]) => ({ left: rpx(Number(num)) })],
 
+    // 负定位
+    [/^-top-(\d+)$/, ([_, num]) => ({ top: `-${rpx(Number(num))}` })],
+    [/^-right-(\d+)$/, ([_, num]) => ({ right: `-${rpx(Number(num))}` })],
+    [/^-bottom-(\d+)$/, ([_, num]) => ({ bottom: `-${rpx(Number(num))}` })],
+    [/^-left-(\d+)$/, ([_, num]) => ({ left: `-${rpx(Number(num))}` })],
+
+    // min/max width
+    [/^min-w-(\d+)$/, ([_, num]) => ({ "min-width": rpx(Number(num)) })],
+    ["min-w-0", { "min-width": "0px" }],
+    ["max-w-full", { "max-width": "100%" }],
+    ["max-w-none", { "max-width": "none" }],
+
+    // font-weight
+    [/^font-(\d+)$/, ([_, num]) => ({ "font-weight": Number(num) })],
+    ["font-light", { "font-weight": 300 }],
+    ["font-normal", { "font-weight": 400 }],
+    ["font-medium", { "font-weight": 500 }],
+    ["font-semibold", { "font-weight": 600 }],
+    ["font-bold", { "font-weight": 700 }],
+
     // 负 margin
     [/^-ml-(\d+)$/, ([_, num]) => ({ "margin-left": `-${rpx(Number(num))}` })],
     [/^-mt-(\d+)$/, ([_, num]) => ({ "margin-top": `-${rpx(Number(num))}` })],

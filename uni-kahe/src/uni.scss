@@ -106,12 +106,6 @@ $second-bg-color: #FDEFCC;
   font-family: 'SimHei';
 }
 
-image{
-  height: auto;
-}
-
-
-
 @mixin text-stroke-color($color) {
   text-shadow: -1px -1px 0 $color, 1px -1px 0 $color, -1px 1px 0 $color, 1px 1px 0 $color;
 }

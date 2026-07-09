@@ -1,6 +1,8 @@
 import { createSSRApp } from "vue";
 import App from "./App.vue";
 import $log, { LogLevel } from "./JSModules/kh-log-plugin";
+// 引入 UnoCSS 样式入口，使原子类样式能注入到构建产物
+import "uno.css";
 
 export function createApp() {
   const app = createSSRApp(App);
