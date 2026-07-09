@@ -1,30 +1,31 @@
 <template>
-    <view class="pet">
-        <image class="pet-bg" src="/static/kahe-202510/pet/pet-bg.png" />
-        <view class="pet-top">
+    <view class="pet relative w-full h-full">
+        <image class="pet-bg w-full h-full" src="/static/kahe-202510/pet/pet-bg.png" />
+        <view class="pet-top absolute left-0 top-0 w-full">
             <top @did-click-item="handleClickItem" />
         </view>
-        <view class="pet-wish" v-if="taskList.length > 0">
+        <view class="pet-wish absolute left-16 top-32 w-400" v-if="taskList.length > 0">
             <wish :task-list="taskList" />
         </view>
-        <view class="pet-online">
+        <view class="pet-online absolute left-0 top-352 h-300" style="width: calc(100% - 200rpx)">
             <current-pets :list="onlinePetList" @did-tap-pet="handleOfflinePet" />
         </view>
-        <view class="pet-bottom">
-            <view class="pet-bottom-handle">
+        <view class="pet-bottom absolute left-0 top-600 w-full flex flex-col" style="height: calc(100vh - 600rpx - env(safe-area-inset-bottom) - 100rpx)">
+            <view class="pet-bottom-handle pt-8 px-16 pb-0" style="width: calc(100% - 32px)">
                 <handle
                     @did-change-filter="handlePetFilter"
                     @did-click="clickHandle"
                 />
             </view>
-            <scroll-view class="pet-bottom-scroll"
+            <scroll-view class="pet-bottom-scroll relative w-full"
+                         style="height: calc(100% - 100rpx)"
                          :scroll-y="true"
                          :enable-flex="true"
                          currentPetscroll-with-animation
                          @scrolltolower="scrollToLower"
                          @tap.stop="currentPet=null"
             >
-                <view class="pet-bottom-scroll-content">
+                <view class="pet-bottom-scroll-content relative pt-8 pb-24 px-16 grid gap-10" style="width: calc(100% - 32px); grid-template-columns: repeat(auto-fill, minmax(calc((100% - 30px) / 4), 1fr))">
                     <pet
                         v-for="(item, index) in minePetList"
                         :key="'pet'+index"
@@ -119,63 +120,4 @@ const scrollToLower = () => {
 
 </script>
 
-<style lang="scss" scoped>
-.pet{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    &-bg{
-        width: 100%;
-        height: 100%;
-    }
-    &-top{
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-    }
-    &-wish{
-        position: absolute;
-        left: 16rpx;
-        top: 32rpx;
-        width: 400rpx;
-    }
-
-    &-online{
-        position: absolute;
-        left: 0;
-        top: 352rpx;
-        width: calc(100% - 200rpx);
-        height: 300rpx;
-    }
-
-    &-bottom{
-        position: absolute;
-        left: 0;
-        top: 600rpx;
-        width: 100%;
-        height: calc(100vh - 600rpx - env(safe-area-inset-bottom) - 100rpx);
-        display: flex;
-        flex-direction: column;
-        &-handle{
-            padding: 8px 16px 0 16px;
-            width: calc(100% - 32px) ;
-        }
-        &-scroll{
-            position: relative;
-            width: 100%;
-            height: calc(100% - 100rpx);
-            &-content{
-                position: relative;
-                padding: 8px 16px 24px 16px;
-                width: calc(100% - 32px);
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(calc( (100% - 30px) / 4), 1fr)); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-                grid-gap: 10px; // 这是网格间的间隙，根据需要调整
-
-            }
-        }
-
-    }
-}
-</style>
+<style lang="scss" scoped></style>
