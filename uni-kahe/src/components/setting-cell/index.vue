@@ -1,6 +1,6 @@
 <template>
   <view
-    class="setting-cell relative w-full flex flex-row items-center px-30 py-32 min-h-90 box-border justify-between bg-white border-b border-[#f0f0f0]"
+    class="relative w-full flex flex-row items-center px-30 py-32 min-h-90 box-border justify-between bg-white border-b border-[#f0f0f0] last:border-b-0 active:opacity-70"
     :class="{
       'justify-center': center,
       'opacity-80': disabled,
@@ -68,13 +68,4 @@ const handleClick = () => {
 </script>
 
 <style lang="scss" scoped>
-.setting-cell {
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &:active:not(.disabled) {
-    opacity: 0.7;
-  }
-}
 </style>

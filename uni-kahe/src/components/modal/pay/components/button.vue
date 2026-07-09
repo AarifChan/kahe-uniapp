@@ -1,17 +1,17 @@
 <template>
-    <view class="pay-button">
-        <image class="pay-button-payBtn" src="/static/kahe-202510/images/pay-button.png" />
-        <text class="pay-button-title theme-font text-stroke-main">去支付</text>
-        <text class="pay-button-value theme-font text-stroke-main"
+    <view class="relative rounded-4 h-82 w-full flex flex-row items-center justify-center overflow-hidden">
+        <image class="absolute w-full h-full left-0 top-0" src="/static/kahe-202510/images/pay-button.png" />
+        <text class="relative text-44 font-normal text-white theme-font text-stroke-main">去支付</text>
+        <text class="relative text-44 font-normal text-white theme-font text-stroke-main"
             >{{ isMall ? '¥' : '' }}{{ price }}</text
         >
-        <view class="pay-button-tips">
-            <view class="pay-button-tips-content" v-if="discountPrice > 0">
+        <view class="absolute top-0 right-0">
+            <view class="relative" v-if="discountPrice > 0">
                 <image
-                    class="pay-button-tips-content-img"
+                    class="absolute top-0 right-0 w-169 h-25"
                     src="/static/kahe/common/pay-price-count.png"
                 />
-                <text class="pay-button-tips-content-title"
+                <text class="absolute -top-[2rpx] right-[6rpx] w-150 text-right text-20 font-normal text-white"
                     >已抵扣¥{{ discountPrice }}</text
                 >
             </view>
@@ -37,60 +37,4 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-.pay-button {
-    position: relative;
-    border-radius: 4rpx;
-    height: 82rpx;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    &-payBtn {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        top: 0;
-    }
-    &-title {
-        position: relative;
-        font-size: 44rpx;
-        font-weight: 400;
-        color: #ffffff;
-    }
-    &-value {
-        position: relative;
-        font-size: 44rpx;
-        font-weight: 400;
-        color: #ffffff;
-    }
-    &-tips {
-        position: absolute;
-        top: 0;
-        right: 0;
-
-        &-content {
-            position: relative;
-            &-img {
-                position: absolute;
-                top: 0;
-                right: 0;
-                width: 169rpx;
-                height: 25rpx;
-            }
-            &-title {
-                position: absolute;
-                top: -2rpx;
-                right: 6rpx;
-                width: 150rpx;
-                text-align: right;
-                font-size: 20rpx;
-                font-weight: 400;
-                color: #ffffff;
-            }
-        }
-    }
-}
 </style>

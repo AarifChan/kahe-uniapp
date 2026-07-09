@@ -4,18 +4,19 @@
     open-direction="center"
     @close="emits('update:show', false)"
   >
-    <view class="common">
+    <view class="relative bg-transparent w-[626rpx] h-[756rpx] z-9999">
       <image
         src="/static/kahe-202510/ka-he/common/common-title.png"
-        class="common-commonBg"
+        class="absolute inset-0 w-full h-full"
       />
-      <view class="common-content">
-        <view class="common-content-top">
-          <view class="common-content-top-title theme-font text-stroke-main">{{
+      <view class="absolute left-0 top-0 w-full h-full rounded-10 overflow-hidden">
+        <view class="w-full h-73">
+          <view class="text-40 leading-73 font-normal text-white text-center theme-font text-stroke-main">{{
             title}}</view>
         </view>
         <scroll-view
-          class="common-content-text"
+          class="relative box-border w-full text-black text-[13px] leading-[25px]"
+          :style="{ height: 'calc(100% - 200rpx)', padding: '8px 50rpx' }"
           :scroll-y="true"
           :enable-flex="true"
           scroll-with-animation
@@ -23,7 +24,7 @@
           <rich-text :nodes="content"></rich-text>
         </scroll-view>
         <view
-          class="common-content-bottom"
+          class="absolute bottom-48 left-0 w-full flex flex-row items-center justify-center"
           @tap.stop="emits('update:show', false)"
         >
           <custom-button title="确定" />
@@ -65,60 +66,4 @@ const emits = defineEmits(["update:show"]);
 </script>
 
 <style lang="scss" scoped>
-.common {
-  position: relative;
-  background-color: transparent;
-  width: 626rpx;
-  height: 756rpx;
-  z-index: 9999;
-  &-commonBg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    // background-color: white;
-    border-radius: 10rpx;
-    overflow: hidden;
-    &-top {
-      width: 100%;
-      // background: linear-gradient(-90deg, #f4feff, #9bc6fa);
-      height: 73rpx;
-      &-title {
-        font-size: 40rpx;
-        line-height: 73rpx;
-        font-weight: 400;
-        color: #ffffff;
-        text-align: center;
-      }
-    }
-
-    &-text {
-      padding: 8px 50rpx;
-      position: relative;
-      box-sizing: border-box;
-      width: 100%;
-      height: calc(100% - 200rpx);
-      color: #000000;
-      font-size: 13px;
-      line-height: 25px;
-    }
-    &-bottom {
-      position: absolute;
-      bottom: 48rpx;
-      left: 0;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-}
 </style>

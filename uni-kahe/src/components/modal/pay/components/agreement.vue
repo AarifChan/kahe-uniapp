@@ -1,8 +1,8 @@
 <template>
-    <view class="agreement">
-        <image class="agreement-img" :src="checked ? '/static/kahe/common/checked.png' : '/static/kahe/common/unchecked.png' " />
-        <text class="agreement-title">已阅读并同意</text>
-        <text class="agreement-title agreement-subTitle">《心跳潮玩服务协议》</text>
+    <view class="relative w-full flex justify-center items-center">
+        <image class="w-35 h-30" :src="checked ? '/static/kahe/common/checked.png' : '/static/kahe/common/unchecked.png' " />
+        <text class="ml-10 text-24 font-normal text-black">已阅读并同意</text>
+        <text class="ml-10 text-24 font-normal text-[#4B71FF]">《心跳潮玩服务协议》</text>
     </view>
 </template>
 
@@ -18,24 +18,4 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-.agreement{
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &-img{
-        width: 35rpx;
-        height: 30rpx;
-    }
-    &-title{
-        margin-left: 10rpx;
-        font-size: 24rpx;
-        font-weight: 400;
-        color: #000000;
-    }
-    &-subTitle{
-        color: #4B71FF
-    }
-}
 </style>
