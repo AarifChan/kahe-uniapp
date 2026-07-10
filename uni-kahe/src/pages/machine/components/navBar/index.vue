@@ -1,8 +1,9 @@
 <template>
   <view
-    class="fixed left-0 top-0 w-full flex flex-col"
+    class="fixed left-0 top-0 w-full flex flex-col z-99"
     :style="{
       height: `${totalNavHeight}PX`,
+      opacity: opacity,
       position: `${position}`,
       paddingTop: `${statusBarHeight}PX`,
       backgroundColor: `rgba(255, 248, 233, ${opacity})`,

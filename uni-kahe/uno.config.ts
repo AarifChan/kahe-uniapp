@@ -256,6 +256,16 @@ export default defineConfig({
         "text-stroke-color": color,
       }),
     ],
+    // text-shadow 形式描边：text-stroke-2-[#151714]
+    [
+      /^text-stroke-(\d+)-\[([^\]]+)\]$/,
+      ([_, width, color]) => {
+        const w = `${width}rpx`;
+        return {
+          "text-shadow": `-${w} -${w} 0 ${color}, ${w} -${w} 0 ${color}, -${w} ${w} 0 ${color}, ${w} ${w} 0 ${color}`,
+        };
+      },
+    ],
 
     // ========== text-shadow 文字描边 ==========
     // 描边宽度: text-outline-2, text-outline-3
