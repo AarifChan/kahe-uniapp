@@ -1,5 +1,7 @@
 <template>
-    <view class="boxTab relative w-full box-border flex flex-row justify-between py-8px px-15px">
+    <view class="boxTab relative w-full box-border flex flex-row justify-between"
+        :style="{ padding: '8px 15px 0 15px' }"
+    >
         <view class="boxTab-list flex flex-row">
             <view
                 class="boxTab-list-item font-normal text-44 text-white mr-24 theme-font"

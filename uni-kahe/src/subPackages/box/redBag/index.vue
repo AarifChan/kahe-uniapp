@@ -141,6 +141,7 @@
                 <button
                     v-if="redBagState === RedBagState.share"
                     open-type="share"
+                    plain
                     class="redEnvelope-content-bottom-btn relative w-248 h-78 bg-transparent p-0 m-0 border-none"
                     style="border: none; background: transparent;"
                 >

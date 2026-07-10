@@ -21,13 +21,17 @@
             </view>
             <view class="luckDraw-TreasureChest-context w-full relative flex flex-col justify-center items-center"
             >
-                <view class="luckDraw-TreasureChest-context-text w-full text-center text-25 theme-font font-normal text-white"
-                    :style="{ textShadow: '1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }"
-                >{{
-                    chestlist.title
-                }}</view>
-                <view class="luckDraw-TreasureChest-context-num mt-10 w-full text-center h-38 leading-38 text-20 font-normal text-white"
-                    :style="{ textShadow: '1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }"
+                <view class="luckDraw-TreasureChest-context-text w-full text-center theme-font font-normal text-white"
+                    :style="{
+                        fontSize: '25px',
+                        textShadow: '1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000'
+                    }"
+                >{{ chestlist.title }}</view>
+                <view class="luckDraw-TreasureChest-context-num mt-10 w-full text-center h-38 leading-38 font-normal text-white"
+                    :style="{
+                        fontSize: '20px',
+                        textShadow: '1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000'
+                    }"
                 >剩余{{ chestlist.num }}个</view>
             </view>
             <view
@@ -39,14 +43,19 @@
                     class="luckDraw-TreasureChest-TreasureChestBtn-btnBg absolute left-0 top-0 w-full h-full"
                 />
                 <view
-                    class="luckDraw-TreasureChest-TreasureChestBtn-btn relative text-black text-22 theme-font"
+                    class="luckDraw-TreasureChest-TreasureChestBtn-btn relative text-black theme-font"
+                    :style="{ fontSize: '22px' }"
                 >开 启
                 </view>
             </view>
-            <view class="luckDraw-TreasureChest-goods fixed left-0 bottom-[calc(10rpx+env(safe-area-inset-bottom))] mt-80 w-full h-307 flex justify-center"
+            <view class="luckDraw-TreasureChest-goods fixed left-0 mt-80 w-full h-307 flex justify-center"
+                :style="{ bottom: 'calc(10rpx + env(safe-area-inset-bottom))' }"
             >
-                <view class="luckDraw-TreasureChest-goods-text absolute left-1/2 top-15 -translate-x-1/2 z-1 text-white text-13"
-                    :style="{ textShadow: '1px 0px 0 #000, 1px -1px 0 #000, 0 1px 0 #000, 1px 1px 0 #000' }"
+                <view class="luckDraw-TreasureChest-goods-text absolute left-1/2 top-15 -translate-x-1/2 z-1 text-white"
+                    :style="{
+                        fontSize: '13px',
+                        textShadow: '1px 0px 0 #000, 1px -1px 0 #000, 0 1px 0 #000, 1px 1px 0 #000'
+                    }"
                 >开启宝箱有机会获得以下物品</view>
                 <image
                     src="/static/kahe-202510/images/luckDraw-bg.png"
@@ -77,7 +86,11 @@
                             ></image>
 
                             <view
-                                class="luckDraw-TreasureChest-goods-list-goods-top-level absolute bottom-0 left-0 w-87.7 h-45 bg-[#95c3f7] z-2 rounded-bl-10 rounded-tr-10"
+                                class="luckDraw-TreasureChest-goods-list-goods-top-level absolute bottom-0 left-0 h-45 bg-[#95c3f7] z-2 rounded-tr-10"
+                                :style="{
+                                    width: '87.7rpx',
+                                    borderBottomLeftRadius: '10rpx'
+                                }"
                             >
                                 <image
                                     :src="getLevelFullImagePath(item.level)"

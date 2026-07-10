@@ -28,7 +28,9 @@
             </text>
             <view class="goodsContent-list-goods-info-content-row flex flex-row items-center"
             >
-              <image class="goodsContent-list-goods-info-content-row-img w-19 h-11.5 mr-4" />
+              <image class="goodsContent-list-goods-info-content-row-img mr-4"
+                :style="{ width: '19px', height: '11.5px' }"
+              />
               <text
                 class="goodsContent-list-goods-info-content-row-title text-20 font-normal text-[#2356a9]"
               ></text>
