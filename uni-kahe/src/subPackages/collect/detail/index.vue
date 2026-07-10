@@ -1,81 +1,104 @@
 <template>
-  <view class="collectDetail">
+  <view class="collectDetail relative w-full h-screen bg-[#6ec0fb]">
     <image
-      class="collectDetail-bg"
+      class="collectDetail-bg w-full aspect-ratio-[750/1344]"
       src="/static/kahe-202510/collect/detail-bg.png"
     />
     <scroll-view
-      class="collectDetail-content"
+      class="collectDetail-content absolute left-0 top-0 w-full h-[calc(100vh-env(safe-area-inset-bottom))]"
       scroll-y
       @scrolltolower="handleScrollToLower"
     >
-      <view class="collectDetail-content-top">
-        <view class="collectDetail-content-top-item" @tap.stop="navToHome">
+      <view class="collectDetail-content-top flex flex-col w-full">
+        <view
+          class="collectDetail-content-top-item mt-24 ml-24 flex flex-row items-center"
+          @tap.stop="navToHome"
+        >
           <image
-            class="collectDetail-content-top-item-icon"
+            class="collectDetail-content-top-item-icon w-32 h-30"
             src="/static/kahe-202510/collect/item1.png"
           />
-          <view class="collectDetail-content-top-item-title text-stroke-main"
+          <view
+            class="collectDetail-content-top-item-title ml-4 font-normal text-20 text-white leading-16 text-stroke-main"
             >首页</view
           >
         </view>
-        <view class="collectDetail-content-top-info">
+        <view class="collectDetail-content-top-info mt-31 w-full flex flex-col items-center">
           <image
-            class="collectDetail-content-top-info-logo"
+            class="collectDetail-content-top-info-logo w-408 h-408"
             mode="heightFix"
             :src="collectDetail?.product.logo"
+            :style="{ animation: 'floatAnimation 2s ease-in-out infinite' }"
           />
-          <view class="collectDetail-content-top-info-title">{{
-            collectDetail?.product.name
-          }}</view>
-          <view class="collectDetail-content-top-info-subTitle"
+          <view class="collectDetail-content-top-info-title mt-46 font-normal text-30 text-white"
+            >{{ collectDetail?.product.name }}</view
+          >
+          <view
+            class="collectDetail-content-top-info-subTitle mt-15 font-normal text-24 text-white"
             >{{ collectDetail?.product.sales }}人集成，余{{
               collectDetail?.product.total ??
               0 - (collectDetail?.product.sales ?? 0)
             }}件｜参考价：{{ collectDetail?.product.price }}</view
           >
-          <view class="collectDetail-content-top-info-progress">
+          <view
+            class="collectDetail-content-top-info-progress mt-31 flex flex-row items-center"
+          >
             <image
-              class="collectDetail-content-top-info-progress-title"
+              class="collectDetail-content-top-info-progress-title w-117 h-30"
               src="/static/kahe-202510/collect/title.png"
             />
-            <view class="collectDetail-content-top-info-progress-bar">
+            <view
+              class="collectDetail-content-top-info-progress-bar mx-10 relative w-520 h-17 bg-[rgba(7,7,7,0.19)] rounded-9 overflow-hidden"
+            >
               <view
-                class="collectDetail-content-top-info-progress-bar-value"
+                class="collectDetail-content-top-info-progress-bar-value absolute left-0 top-0 w-full h-full bg-gradient-[linear-gradient(90deg,#ffd8a8,#fea34f)]"
                 :style="progressStyle"
               />
             </view>
-            <view class="collectDetail-content-top-info-progress-subTitle">{{
-              progress
-            }}</view>
+            <view
+              class="collectDetail-content-top-info-progress-subTitle font-normal text-24 text-white"
+              >{{ progress }}</view
+            >
           </view>
         </view>
       </view>
-      <view class="collectDetail-content-bottom">
-        <view class="collectDetail-content-bottom-top">
+      <view class="collectDetail-content-bottom mt-20 relative w-full">
+        <view
+          class="collectDetail-content-bottom-top relative w-full aspect-ratio-[687/100]"
+        >
           <image
-            class="collectDetail-content-bottom-top-bg"
+            class="collectDetail-content-bottom-top-bg w-full h-full"
             src="/static/kahe-202510/collect/decorate.png"
           />
-          <view class="collectDetail-content-bottom-top-info">
+          <view
+            class="collectDetail-content-bottom-top-info absolute left-0 top-0 w-full h-full flex flex-row items-center justify-center"
+          >
             <image
-              class="collectDetail-content-bottom-top-info-label"
+              class="collectDetail-content-bottom-top-info-label absolute left-198 top-20 w-85 h-52"
               src="/static/kahe-202510/collect/label1.png"
             />
             <image
-              class="collectDetail-content-bottom-top-info-avatar text-flow-ellipsis-single"
+              class="collectDetail-content-bottom-top-info-avatar w-44 h-44 rounded-22 mr-8 text-flow-ellipsis-single"
               :src="collectDetail?.user.avatar"
             />
-            <view class="collectDetail-content-bottom-top-info-name">{{
-              collectDetail?.user.nickname
-            }}</view>
+            <view
+              class="collectDetail-content-bottom-top-info-name font-normal text-26 w-120 text-white text-center mb-4"
+              >{{ collectDetail?.user.nickname }}</view
+            >
           </view>
         </view>
-        <view class="collectDetail-content-bottom-tips"
+        <view
+          class="collectDetail-content-bottom-tips -mt-16 w-full font-normal text-22 text-[#362e80] text-center"
           >一次性达100%进度才能完成集赏</view
         >
         <tab @did-change="handleTabChange" />
-        <view class="collectDetail-content-bottom-list">
+        <view
+          class="collectDetail-content-bottom-list relative box-border w-full px-30 pb-100 grid"
+          :style="{
+            gridTemplateColumns: 'repeat(auto-fill, minmax(calc((100% - 32px) / 3), 1fr))',
+            gap: '16px',
+          }"
+        >
           <goods
             v-for="(item, index) in goodsList"
             :key="'goodsList' + index"
@@ -85,16 +108,22 @@
         </view>
       </view>
     </scroll-view>
-    <view class="collectDetail-bottom">
-      <view class="collectDetail-bottom-item" @tap.stop="handleCollect">
+    <view
+      class="collectDetail-bottom fixed left-32 w-[calc(100%-64rpx)] flex flex-row items-center justify-center z-10"
+      :style="{ bottom: 'calc(env(safe-area-inset-bottom) + 24rpx)' }"
+    >
+      <view
+        class="collectDetail-bottom-item bg-transparent w-310 h-74 p-0 m-0 border-none"
+        @tap.stop="handleCollect"
+      >
         <image
-          class="collectDetail-bottom-item-img"
+          class="collectDetail-bottom-item-img w-full h-full"
           :src="`/static/kahe-202510/collect/finish-${collectProgress === 1 ? 'enable' : 'disable'}.png`"
         />
       </view>
-      <!--      <button openType="share" class="collectDetail-bottom-item">-->
+      <!--      <button openType="share" class="collectDetail-bottom-item bg-transparent w-310 h-74 p-0 m-0 border-none">-->
       <!--        <image-->
-      <!--          class="collectDetail-bottom-item-img"-->
+      <!--          class="collectDetail-bottom-item-img w-full h-full"-->
       <!--          src="/static/kahe-202510/collect/invite-btn.png"-->
       <!--        />-->
       <!--      </button>-->
@@ -207,199 +236,4 @@ onShareTimeline(() => {
 </script>
 
 <style lang="scss" scoped>
-.collectDetail {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background-color: #6ec0fb;
-  &-bg {
-    width: 100%;
-    aspect-ratio: 750 / 1344;
-  }
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: calc(100vh - env(safe-area-inset-bottom));
-    &-top {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      &-item {
-        margin-top: 24rpx;
-        margin-left: 24rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        &-icon {
-          width: 32rpx;
-          height: 30rpx;
-        }
-        &-title {
-          margin-left: 4rpx;
-          font-weight: 400;
-          font-size: 20rpx;
-          color: #ffffff;
-          line-height: 16rpx;
-        }
-      }
-
-      &-info {
-        margin-top: 31rpx;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        &-logo {
-          width: 408rpx;
-          height: 408rpx;
-          animation: floatAnimation 2s ease-in-out infinite;
-        }
-        &-title {
-          margin-top: 46rpx;
-          font-weight: normal;
-          font-size: 30rpx;
-          color: #ffffff;
-        }
-        &-subTitle {
-          margin-top: 15rpx;
-          font-weight: normal;
-          font-size: 24rpx;
-          color: #ffffff;
-        }
-        &-progress {
-          margin-top: 31rpx;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          &-title {
-            width: 117rpx;
-            height: 30rpx;
-          }
-          &-bar {
-            margin: 0 10rpx;
-            position: relative;
-            width: 520rpx;
-            height: 17rpx;
-            background: rgba($color: #070707, $alpha: 0.19);
-            border-radius: 9rpx;
-            overflow: hidden;
-            &-value {
-              position: absolute;
-              left: 0;
-              top: 0;
-              width: 100%;
-              height: 100%;
-              background: linear-gradient(90deg, #ffd8a8, #fea34f);
-            }
-          }
-          &-subTitle {
-            font-weight: normal;
-            font-size: 24rpx;
-            color: #ffffff;
-          }
-        }
-      }
-    }
-
-    &-bottom {
-      margin-top: 20rpx;
-      position: relative;
-      width: 100%;
-      &-top {
-        position: relative;
-        width: 100%;
-        aspect-ratio: 687 / 100;
-        &-bg {
-          width: 100%;
-          height: 100%;
-        }
-        &-info {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-          &-label {
-            position: absolute;
-            left: 198rpx;
-            top: 20rpx;
-            width: 85rpx;
-            height: 52rpx;
-          }
-          &-avatar {
-            width: 44rpx;
-            height: 44rpx;
-            border-radius: 22rpx;
-            margin-right: 8rpx;
-          }
-          &-name {
-            font-weight: normal;
-            font-size: 26rpx;
-            width: 120rpx;
-            color: #ffffff;
-            text-align: center;
-            margin-bottom: 4rpx;
-          }
-        }
-      }
-      &-tips {
-        margin-top: -16rpx;
-        width: 100%;
-        font-weight: 400;
-        font-size: 22rpx;
-        color: #362e80;
-        text-align: center;
-      }
-      &-list {
-        position: relative;
-        box-sizing: border-box;
-        width: 100%;
-        padding: 0 30rpx 100rpx;
-        display: grid;
-        grid-template-columns: repeat(
-          auto-fill,
-          minmax(calc((100% - 32px) / 3), 1fr)
-        ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-        grid-gap: 16px; // 这是网格间的间隙，根据需要调整
-      }
-    }
-  }
-
-  &-bottom {
-    position: fixed;
-    bottom: calc(env(safe-area-inset-bottom) + 24rpx);
-    left: 32rpx;
-    width: calc(100% - 64rpx);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    &-item {
-      background-color: transparent;
-      width: 310rpx;
-      height: 74rpx;
-      padding: 0;
-      margin: 0;
-      border: none;
-      &-img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    &-item::after {
-      background-color: transparent;
-      padding: 0;
-      margin: 0;
-      border: none;
-    }
-  }
-}
 </style>

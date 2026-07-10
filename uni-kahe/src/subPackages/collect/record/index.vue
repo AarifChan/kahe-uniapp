@@ -1,62 +1,73 @@
 <template>
-  <view class="collectRecord">
+  <view class="collectRecord relative w-full h-screen">
     <image
-      class="collectRecord-bg"
+      class="collectRecord-bg w-full h-full"
       src="/static/kahe-202510/collect/c-bg.png"
     />
-    <view class="collectRecord-content">
-      <view class="collectRecord-content-tab">
-        <view class="collectRecord-content-tab-item" @tap.stop="didClickTab(0)">
+    <view
+      class="collectRecord-content absolute left-0 top-0 w-full p-32 box-border h-[calc(100%-64rpx-env(safe-area-inset-bottom))]"
+    >
+      <view class="collectRecord-content-tab w-full h-60 bg-[#3274a4] rounded-10 flex flex-row justify-evenly">
+        <view
+          class="collectRecord-content-tab-item relative w-full h-full"
+          @tap.stop="didClickTab(0)"
+        >
           <image
             v-if="current === 0"
-            class="collectRecord-content-tab-item-bg"
+            class="collectRecord-content-tab-item-bg w-full h-full"
             src="/static/kahe-202510/collect/btn3.png"
           />
           <view
-            class="collectRecord-content-tab-item-title theme-font"
+            class="collectRecord-content-tab-item-title absolute left-0 top-0 leading-60 w-full text-center font-normal text-30 theme-font"
             :style="{ color: current === 0 ? '#693301' : '#60B1EC' }"
             >我参与的</view
           >
         </view>
-        <!--        <view class="collectRecord-content-tab-item" @tap.stop="didClickTab(1)">-->
+        <!--        <view class="collectRecord-content-tab-item relative w-full h-full" @tap.stop="didClickTab(1)">-->
         <!--          <image-->
         <!--            v-if="current === 1"-->
-        <!--            class="collectRecord-content-tab-item-bg"-->
+        <!--            class="collectRecord-content-tab-item-bg w-full h-full"-->
         <!--            src="/static/kahe-202510/collect/btn3.png"-->
         <!--          />-->
         <!--          <view-->
-        <!--            class="collectRecord-content-tab-item-title theme-font"-->
+        <!--            class="collectRecord-content-tab-item-title absolute left-0 top-0 leading-60 w-full text-center font-normal text-30 theme-font"-->
         <!--            :style="{ color: current === 1 ? '#693301' : '#60B1EC' }"-->
         <!--            >好友帮我</view-->
         <!--          >-->
         <!--        </view>-->
       </view>
       <scroll-view
-        class="collectRecord-content-list"
+        class="collectRecord-content-list mt-32 relative w-full h-[calc(100%-124rpx)] flex flex-col"
         scroll-y
         @scrolltolower="handleScrollToLower"
       >
         <view
           v-for="(item, index) in dataList"
           :key="'collectRecord' + index"
-          class="collectRecord-content-list-item"
+          class="collectRecord-content-list-item relative w-full aspect-ratio-[698/242] rounded-10 mb-24"
         >
           <image
-            class="collectRecord-content-list-item-bg"
+            class="collectRecord-content-list-item-bg w-full h-full"
             src="/static/kahe-202510/collect/item-bg.png"
           />
-          <view class="collectRecord-content-list-item-content">
-            <view class="collectRecord-content-list-item-content-top">
-              <view class="collectRecord-content-list-item-content-top-left">
+          <view
+            class="collectRecord-content-list-item-content absolute left-0 top-0 w-full h-full flex flex-col p-9 box-border"
+          >
+            <view
+              class="collectRecord-content-list-item-content-top px-24 w-full box-border flex flex-row items-center h-124 justify-between"
+            >
+              <view
+                class="collectRecord-content-list-item-content-top-left flex flex-row items-center"
+              >
                 <image
-                  class="collectRecord-content-list-item-content-top-left-avatar"
+                  class="collectRecord-content-list-item-content-top-left-avatar w-84 h-84 rounded-42"
                   :src="current === 0 ? item.user?.avatar : item.helper?.avatar"
                 />
                 <view
-                  class="collectRecord-content-list-item-content-top-left-info"
+                  class="collectRecord-content-list-item-content-top-left-info ml-12 flex flex-col"
                 >
                   <view
-                    class="collectRecord-content-list-item-content-top-left-info-title"
+                    class="collectRecord-content-list-item-content-top-left-info-title my-5 font-normal text-24 text-[#000000]"
                     >{{
                       current === 0
                         ? item.user?.nickname
@@ -64,27 +75,34 @@
                     }}</view
                   >
                   <view
-                    class="collectRecord-content-list-item-content-top-left-info-title"
+                    class="collectRecord-content-list-item-content-top-left-info-title my-5 font-normal text-24 text-[#000000]"
                     >ID:{{
                       current === 0 ? item.user?.uid : item.helper?.uid
                     }}</view
                   >
                 </view>
               </view>
-              <view class="collectRecord-content-list-item-content-top-right">{{
-                item.createTime
-              }}</view>
+              <view
+                class="collectRecord-content-list-item-content-top-right font-normal text-24 text-[#616161]"
+                >{{ item.createTime }}</view
+              >
             </view>
-            <view class="collectRecord-content-list-item-content-line" />
-            <view class="collectRecord-content-list-item-content-bottom">
-              <view class="collectRecord-content-list-item-content-bottom-left">
+            <view
+              class="collectRecord-content-list-item-content-line w-674 h-2 bg-gradient-[linear-gradient(-90deg,#86b8ef,#abd3ff)]"
+            />
+            <view
+              class="collectRecord-content-list-item-content-bottom px-24 w-full box-border flex flex-row items-center h-124 justify-between"
+            >
+              <view
+                class="collectRecord-content-list-item-content-bottom-left flex flex-row items-center"
+              >
                 <image
-                  class="collectRecord-content-list-item-content-bottom-left-logo"
+                  class="collectRecord-content-list-item-content-bottom-left-logo w-80 h-80"
                   :src="item.logo"
                   mode="heightFix"
                 />
                 <view
-                  class="collectRecord-content-list-item-content-bottom-left-title text-flow-ellipsis-single"
+                  class="collectRecord-content-list-item-content-bottom-left-title ml-16 font-normal text-24 text-[#000000] w-200 text-flow-ellipsis-single"
                   >{{ item.name }}</view
                 >
               </view>
@@ -97,16 +115,16 @@
                 "
               >
                 <view
-                  class="collectRecord-content-list-item-content-bottom-right"
+                  class="collectRecord-content-list-item-content-bottom-right font-normal text-24 text-[#000000]"
                   >+{{ item.amount }}助力值</view
                 >
                 <view
-                  class="collectRecord-content-list-item-content-bottom-thank"
+                  class="collectRecord-content-list-item-content-bottom-thank relative w-111 h-41"
                   v-if="current === 1"
                   @tap.stop="handleThank(item)"
                 >
                   <image
-                    class="collectRecord-content-list-item-content-bottom-thank-bg"
+                    class="collectRecord-content-list-item-content-bottom-thank-bg w-full h-full"
                     :src="
                       item.isThanked
                         ? '/static/kahe-202510/collect/btn5.png'
@@ -114,7 +132,7 @@
                     "
                   />
                   <view
-                    class="collectRecord-content-list-item-content-bottom-thank-title theme-font"
+                    class="collectRecord-content-list-item-content-bottom-thank-title absolute left-0 top-0 w-full z-2 text-center leading-41 font-normal text-24 text-white theme-font"
                     >感谢</view
                   >
                 </view>
@@ -122,7 +140,7 @@
             </view>
           </view>
           <image
-            class="collectRecord-content-list-item-decorate"
+            class="collectRecord-content-list-item-decorate absolute right-0 top-0 w-85 h-52"
             :src="
               current === 0
                 ? '/static/kahe-202510/collect/label1.png'
@@ -197,184 +215,4 @@ const handleScrollToLower = () => {
 </script>
 
 <style lang="scss" scoped>
-.collectRecord {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  &-bg {
-    width: 100%;
-    height: 100%;
-  }
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    padding: 32rpx;
-    box-sizing: border-box;
-    height: calc(100% - 64rpx - env(safe-area-inset-bottom));
-
-    &-tab {
-      width: 100%;
-      height: 60rpx;
-      background: #3274a4;
-      border-radius: 10rpx;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      &-item {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        &-bg {
-          width: 100%;
-          height: 100%;
-        }
-        &-title {
-          position: absolute;
-          left: 0;
-          top: 0;
-          line-height: 60rpx;
-          width: 100%;
-          text-align: center;
-          font-weight: 400;
-          font-size: 30rpx;
-        }
-      }
-    }
-
-    &-list {
-      margin-top: 32rpx;
-      position: relative;
-      width: 100%;
-      height: calc(100% - 64rpx - 60rpx);
-      display: flex;
-      flex-direction: column;
-
-      &-item {
-        position: relative;
-        width: 100%;
-        aspect-ratio: 698 / 242;
-        border-radius: 10rpx;
-        margin-bottom: 24rpx;
-
-        &-bg {
-          width: 100%;
-          height: 100%;
-        }
-        &-content {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          padding: 9rpx;
-          box-sizing: border-box;
-          &-top {
-            padding: 0 24rpx;
-            width: 100%;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            height: 124rpx;
-            justify-content: space-between;
-            &-left {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              &-avatar {
-                width: 84rpx;
-                height: 84rpx;
-                border-radius: 42rpx;
-              }
-              &-info {
-                margin-left: 12rpx;
-                display: flex;
-                flex-direction: column;
-                &-title {
-                  margin: 5rpx 0;
-                  font-weight: 400;
-                  font-size: 24rpx;
-                  color: #000000;
-                }
-              }
-            }
-            &-right {
-              font-weight: 400;
-              font-size: 24rpx;
-              color: #616161;
-            }
-          }
-          &-line {
-            width: 674rpx;
-            height: 2rpx;
-            background: linear-gradient(-90deg, #86b8ef, #abd3ff);
-          }
-          &-bottom {
-            padding: 0 24rpx;
-            width: 100%;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            height: 124rpx;
-            justify-content: space-between;
-            &-left {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              &-logo {
-                width: 80rpx;
-                height: 80rpx;
-              }
-              &-title {
-                margin-left: 16rpx;
-                font-weight: 400;
-                font-size: 24rpx;
-                color: #000000;
-                width: 200rpx;
-              }
-            }
-            &-right {
-              font-weight: 400;
-              font-size: 24rpx;
-              color: #000000;
-            }
-            &-thank {
-              position: relative;
-              width: 111rpx;
-              height: 41rpx;
-              &-bg {
-                width: 100%;
-                height: 100%;
-              }
-              &-title {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                z-index: 2;
-                text-align: center;
-                line-height: 41rpx;
-                font-weight: 400;
-                font-size: 24rpx;
-                color: #ffffff;
-              }
-            }
-          }
-        }
-        &-decorate {
-          position: absolute;
-          right: 0;
-          top: 0;
-          width: 85rpx;
-          height: 52rpx;
-        }
-      }
-    }
-  }
-}
 </style>

@@ -1,25 +1,45 @@
 <template>
-  <view class="collect-goods" @tap.stop="emits('didSelect', item)">
-    <view class="collect-goods-top">
+  <view
+    class="collect-goods relative w-full aspect-ratio-[216/302] overflow-hidden rounded-20 shadow-[0rpx_3rpx_3rpx_0rpx_#587a95]"
+    @tap.stop="emits('didSelect', item)"
+  >
+    <view
+      class="collect-goods-top relative w-full aspect-ratio-[1/1] box-border bg-white flex flex-row items-center justify-center"
+    >
       <image
-        class="collect-goods-top-logo"
+        class="collect-goods-top-logo w-180 h-180"
         :src="item.goods.image"
         mode="heightFix"
       />
-      <view class="collect-goods-top-num">X{{ item.num }}</view>
+      <view
+        class="collect-goods-top-num absolute bottom-20 right-16 py-6 px-12 bg-[rgba(40,177,255,0.7)] rounded-4 font-normal text-24 text-white z-3"
+        >X{{ item.num }}</view
+      >
     </view>
-    <view class="collect-goods-bottom">
-      <view class="collect-goods-bottom-title text-flow-ellipsis-multiple">{{
-        item.goods.name
-      }}</view>
-      <view class="collect-goods-bottom-subTitle"
+    <view
+      class="collect-goods-bottom absolute bottom-24 left-16 w-[calc(100%-32rpx)] flex flex-col z-3"
+    >
+      <view
+        class="collect-goods-bottom-title font-normal text-20 text-white leading-20 h-40 text-flow-ellipsis-multiple text-shadow-[-1px_-1px_0_#1aa1ff,1px_-1px_0_#1aa1ff,-1px_1px_0_#1aa1ff,1px_1px_0_#1aa1ff]"
+        >{{ item.goods.name }}</view
+      >
+      <view
+        class="collect-goods-bottom-subTitle font-normal text-20 text-white leading-20 mt-8 text-shadow-[-1px_-1px_0_#1aa1ff,1px_-1px_0_#1aa1ff,-1px_1px_0_#1aa1ff,1px_1px_0_#1aa1ff]"
         >助力值:{{ Number(item.goods.price * item.num).toFixed(2) }}</view
       >
     </view>
 
-    <image class="collect-goods-bg" src="/static/kahe-202510/collect/card-bg.png" />
-    <view class="collect-goods-select">
-      <view v-if="item.selected" class="collect-goods-select-target" />
+    <image
+      class="collect-goods-bg absolute left-0 top-0 w-full h-full z-2"
+      src="/static/kahe-202510/collect/card-bg.png"
+    />
+    <view
+      class="collect-goods-select z-3 absolute right-24 top-16 w-34 h-34 rounded-16 border-2 border-[#68d6ff] flex flex-row items-center justify-center"
+    >
+      <view
+        v-if="item.selected"
+        class="collect-goods-select-target p-4 w-26 h-26 rounded-13 bg-[#68d6ff]"
+      />
     </view>
   </view>
 </template>
@@ -38,96 +58,4 @@ const emits = defineEmits(["didSelect"]);
 </script>
 
 <style lang="scss" scoped>
-.collect-goods {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 216 / 302;
-  overflow: hidden;
-  border-radius: 20rpx;
-  box-shadow: 0rpx 3rpx 3rpx 0rpx #587a95;
-  &-top {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1;
-    box-sizing: border-box;
-    background-color: white;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    &-logo {
-      width: 180rpx;
-      height: 180rpx;
-    }
-    &-num {
-      position: absolute;
-      bottom: 20rpx;
-      right: 16rpx;
-      padding: 6rpx 12rpx;
-      background: rgba($color: #28b1ff, $alpha: 0.7);
-      border-radius: 4rpx;
-      font-weight: 400;
-      font-size: 24rpx;
-      color: #ffffff;
-      z-index: 3;
-    }
-  }
-  &-bottom {
-    position: absolute;
-    bottom: 24rpx;
-    left: 16rpx;
-    width: calc(100% - 32rpx);
-    display: flex;
-    flex-direction: column;
-    z-index: 3;
-    &-title,
-    &-subTitle {
-      font-weight: 400;
-      font-size: 20rpx;
-      color: #ffffff;
-      line-height: 20rpx;
-      text-shadow:
-        -1px -1px 0 #1aa1ff,
-        1px -1px 0 #1aa1ff,
-        -1px 1px 0 #1aa1ff,
-        1px 1px 0 #1aa1ff;
-    }
-    &-title {
-      height: 40rpx;
-    }
-    &-subTitle {
-      margin-top: 8rpx;
-    }
-  }
-  &-bg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-  }
-
-  &-select {
-    z-index: 3;
-    position: absolute;
-    right: 24rpx;
-    top: 16rpx;
-    width: 34rpx;
-    height: 34rpx;
-    border-radius: 16rpx;
-    border: 2rpx solid #68d6ff;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    &-target {
-      padding: 4rpx;
-      width: 26rpx;
-      height: 26rpx;
-      border-radius: 13rpx;
-      background-color: #68d6ff;
-    }
-  }
-}
 </style>

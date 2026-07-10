@@ -5,15 +5,22 @@
     bg-color="transparent"
     @close="emits('update:show', false)"
   >
-    <view class="boxSelect">
-      <image class="boxSelect-bg" src="/static/kahe-202510/ka-he/common/select-bg.png" />
-      <view class="boxSelect-wrapper">
-        <view class="boxSelect-wrapper-content">
-          <view class="boxSelect-wrapper-content-title other-font"
+    <view class="boxSelect relative overflow-hidden w-680 h-388">
+      <image class="boxSelect-bg w-full h-full" src="/static/kahe-202510/ka-he/common/select-bg.png" />
+      <view class="boxSelect-wrapper absolute left-0 top-0 w-full h-full">
+        <view class="boxSelect-wrapper-content relative flex flex-col">
+          <view
+            class="boxSelect-wrapper-content-title mt-69 mx-0 mb-0 w-full text-center font-normal text-32 text-white leading-36 text-shadow-[-3rpx_-3rpx_0_#9e6c2c,3rpx_-3rpx_0_#9e6c2c,-3rpx_3rpx_0_#9e6c2c,3rpx_3rpx_0_#9e6c2c] other-font"
             >输入数量</view
           >
-          <view class="boxSelect-wrapper-content-center">
-            <view class="boxSelect-wrapper-content-center-input">
+          <view class="boxSelect-wrapper-content-center mt-42 w-full flex flex-row items-center justify-center">
+            <view
+              class="boxSelect-wrapper-content-center-input w-408 h-56 bg-[#e3dfd6] border-1 border-[#9e6450] rounded-4 flex flex-row items-center"
+              :style="{
+                '--cell-background-color': 'transparent',
+                '--field-input-text-color': '#9e6450',
+              }"
+            >
               <tn-input
                 v-model="input"
                 type="digit"
@@ -22,21 +29,24 @@
                 :placeholder="'最大' + max"
                 :border="false"
                 height="80"
-                label-class="boxSelect-wrapper-content-center-input"
+                label-class="boxSelect-wrapper-content-center-input w-408 h-56 bg-[#e3dfd6] border-1 border-[#9e6450] rounded-4 flex flex-row items-center"
               />
             </view>
-            <text class="boxSelect-wrapper-content-center-title other-font"
+            <text class="boxSelect-wrapper-content-center-title ml-16 font-normal text-48 text-[#9e6450] other-font"
               >个</text
             >
           </view>
-          <view class="boxSelect-wrapper-content-bottom">
+          <view class="boxSelect-wrapper-content-bottom mt-48 px-80 box-border w-full flex flex-row items-center justify-between">
             <view
-              class="btnCancel other-font"
+              class="btnCancel w-217 h-65 bg-[#6be6aa] shadow-[3rpx_3rpx_0rpx_0rpx_#a9ffd6,-2rpx_-4rpx_0rpx_0rpx_#5dd098] rounded-33 border-3 border-[#2c9e67] text-center leading-65 font-normal text-32 text-white text-shadow-[-1px_-1px_0_#2c9e67,1px_-1px_0_#2c9e67,-1px_1px_0_#2c9e67,1px_1px_0_#2c9e67] other-font"
               @tap.stop="emits('update:show', false)"
             >
               取消
             </view>
-            <view class="btnConfirm other-font" @tap.stop="didTapConfirm">
+            <view
+              class="btnConfirm w-217 h-65 bg-[#ffdd80] shadow-[3rpx_3rpx_0rpx_0rpx_#fffea9,-2rpx_-4rpx_0rpx_0rpx_#d0a95d] rounded-33 border-3 border-[#9e6c2c] text-center leading-65 font-normal text-32 text-white text-shadow-[-1px_-1px_0_#9e6c2c,1px_-1px_0_#9e6c2c,-1px_1px_0_#9e6c2c,1px_1px_0_#9e6c2c] other-font"
+              @tap.stop="didTapConfirm"
+            >
               确定
             </view>
           </view>
@@ -102,112 +112,4 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-.boxSelect {
-  position: relative;
-  overflow: hidden;
-  width: 680rpx;
-  height: 388rpx;
-  &-bg {
-    width: 100%;
-    height: 100%;
-  }
-  &-wrapper {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    &-content {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      &-title {
-        margin: 69rpx 0 0;
-        width: 100%;
-        text-align: center;
-        font-weight: 400;
-        font-size: 32rpx;
-        color: #ffffff;
-        line-height: 36rpx;
-        @include text-stroke(3rpx, #9e6c2c);
-      }
-      &-center {
-        margin-top: 42rpx;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        &-input {
-          width: 408rpx;
-          height: 56rpx;
-          background: #e3dfd6;
-          border: 1px solid #9e6450;
-          border-radius: 4rpx;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-
-          --cell-background-color: transparent;
-          --field-input-text-color: #9e6450;
-          &-title {
-            font-size: 36rpx;
-            font-weight: 400;
-            color: #9e6450;
-          }
-        }
-        &-title {
-          margin-left: 16rpx;
-          font-size: 48rpx;
-          font-weight: 400;
-          color: #9e6450;
-        }
-      }
-
-      &-bottom {
-        margin-top: 48rpx;
-        padding: 0 80rpx;
-        box-sizing: border-box;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
-    }
-  }
-}
-.btnCancel {
-  width: 217rpx;
-  height: 65rpx;
-  background: #6be6aa;
-  box-shadow:
-    3rpx 3rpx 0rpx 0rpx #a9ffd6,
-    -2rpx -4rpx 0rpx 0rpx #5dd098;
-  border-radius: 33rpx;
-  border: 3rpx solid #2c9e67;
-  text-align: center;
-  line-height: 65rpx;
-  font-weight: 400;
-  font-size: 32rpx;
-  color: #ffffff;
-  @include text-stroke-color(#2c9e67);
-}
-.btnConfirm {
-  width: 217rpx;
-  height: 65rpx;
-  background: #ffdd80;
-  box-shadow:
-    3rpx 3rpx 0rpx 0rpx #fffea9,
-    -2rpx -4rpx 0rpx 0rpx #d0a95d;
-  border-radius: 33rpx;
-  border: 3rpx solid #9e6c2c;
-  text-align: center;
-  line-height: 65rpx;
-  font-weight: 400;
-  font-size: 32rpx;
-  color: #ffffff;
-  @include text-stroke-color(#9e6c2c);
-}
 </style>

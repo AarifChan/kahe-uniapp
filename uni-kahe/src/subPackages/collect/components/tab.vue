@@ -1,11 +1,11 @@
 <template>
-    <view class="collect-tab">
-        <view class="collect-tab-content">
+    <view class="collect-tab relative w-full py-16 px-32 box-border">
+        <view class="collect-tab-content w-full h-48 bg-[rgba(32,54,148,0.3)] rounded-24 overflow-hidden flex flex-row justify-evenly">
             <view
                 v-for="(item, index) in levelList"
                 :key="'key'+index"
-                class="collect-tab-content-item"
-                :class="current === index ? 'active-tab' : ''"
+                class="collect-tab-content-item text-center leading-48 w-full rounded-24 h-full font-normal text-30 text-[#8DBFD8]"
+                :class="current === index ? 'bg-gradient-[linear-gradient(90deg,#17FAFF,rgba(183,251,255,0.74))] text-[#245070]' : ''"
                 @tap.stop="handleClickItem(index)"
             >
                 {{item.title}}
@@ -45,35 +45,4 @@ const handleClickItem = (index: number) => {
 </script>
 
 <style lang="scss" scoped>
-.collect-tab{
-    position: relative;
-    width: 100%;
-    padding: 16rpx 32rpx;
-    box-sizing: border-box;
-    &-content{
-        width: 100%;
-        height: 48rpx;
-        background: rgba($color: #203694, $alpha: 0.3);
-        border-radius: 24rpx;
-        overflow: hidden;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        &-item{
-            text-align: center;
-            line-height: 48rpx;
-            width: 100%;
-            border-radius: 24rpx;
-            height: 100%;
-            font-weight: 400;
-            font-size: 30rpx;
-            color: #8DBFD8;
-        }
-    }
-
-}
-.active-tab{
-    background: linear-gradient(90deg, #17FAFF, rgba(183,251,255,0.74));
-    color: #245070;
-}
 </style>
