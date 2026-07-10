@@ -1,15 +1,15 @@
 <template>
-  <view class="bottom">
+  <view class="bottom px-82 relative w-full flex justify-between items-center box-border">
     <view
-      class="bottom-btn"
+      class="bottom-btn flex flex-col items-center"
       v-for="item in BtnIcon"
       :key="item"
       @tap.stop="tapAward(item)"
     >
-      <view class="btn_icon">
-        <text>{{ item === "award" ? "领取奖券" : "本期记录" }}</text>
+      <view class="btn_icon w-242 h-85 bg-[url(/static/kahe-202510/shine/blue.png)] bg-[length:100%_100%] bg-no-repeat flex justify-center items-center">
+        <text class="theme-font text-36 font-normal text-black leading-48">{{ item === "award" ? "领取奖券" : "本期记录" }}</text>
       </view>
-      <view class="day">
+      <view class="day SimHei-font text-26 font-normal text-black" :style="{ textShadow: '-2rpx -2rpx 0 #ffffff, 2rpx -2rpx 0 #ffffff, -2rpx 2rpx 0 #ffffff, 2rpx 2rpx 0 #ffffff' }">
         {{
           item === "award"
             ? `今日全服剩${(info?.dailyLimit ?? 0) - (info?.todayReceived ?? 0)}张待领取`
@@ -43,46 +43,4 @@ const tapAward = (item: string) => {
 </script>
 
 <style lang="scss" scoped>
-.bottom {
-  padding: 0 82rpx;
-  position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-
-  &-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .btn_icon {
-      width: 242rpx;
-      height: 85rpx;
-      background-image: url("/static/kahe-202510/shine/blue.png");
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      text {
-        font-family: YouSheBiaoTiHei;
-        font-weight: 400;
-        font-size: 36rpx;
-        color: #000000;
-        line-height: 48rpx;
-      }
-    }
-
-    .day {
-      font-family: SimHei;
-      font-weight: 400;
-      font-size: 26rpx;
-      color: #000000;
-      @include text-stroke(2rpx, #ffffff);
-    }
-  }
-}
 </style>

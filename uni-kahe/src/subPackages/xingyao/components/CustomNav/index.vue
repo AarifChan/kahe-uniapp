@@ -1,5 +1,5 @@
 <template>
-  <view class="nav">
+  <view class="nav relative mt-60 w-full h-475 flex justify-center">
     <!--    <Lamp-->
     <!--      ref="lampRef"-->
     <!--      backGround="rgba(128, 128, 128, 0.6)"-->
@@ -7,37 +7,38 @@
     <!--      :list="lampList"-->
     <!--      @tapLampAction="tapLampAction"-->
     <!--    />-->
-    <view class="nav-box">
-      <image src="/static/kahe-202510/shine/nav.png" mode="scaleToFill" class="bg" />
+    <view class="nav-box relative w-468 h-full flex flex-col items-center">
+      <image src="/static/kahe-202510/shine/nav.png" mode="scaleToFill" class="bg absolute w-full h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
 
       <!-- 这里是动态图片 -->
       <!--      <image src="/static/kahe-202510/shine/title.png" mode="scaleToFill" class="goods" />-->
       <image
         mode="aspectFit"
-        class="goods"
+        class="goods mt-46 mb-34 w-282 h-282"
         :src="info?.prizePool[0].goodsDto.image"
       />
-      <view class="contont">
-        <view class="contont-triangle"></view>
-        <view class="contont-triangle1"></view>
-        <text class="contont-text">{{ info?.prizePool[0].goodsDto.name }}</text>
+      <view class="contont relative w-313 h-46 bg-[#62e2fc] flex justify-center items-center">
+        <view class="contont-triangle absolute bottom-0 right-0 w-0 h-0" :style="{ borderTop: '20rpx solid transparent', borderRight: '20rpx solid #fff', borderBottom: '0', borderLeft: '0' }"></view>
+        <view class="contont-triangle1 absolute left-0 top-0 w-0 h-0" :style="{ borderBottom: '20rpx solid transparent', borderLeft: '20rpx solid #fff', borderTop: '0', borderRight: '0' }"></view>
+        <text class="contont-text theme-font text-30 text-white leading-48">{{ info?.prizePool[0].goodsDto.name }}</text>
       </view>
-      <view class="texts"> 本期赠品 </view>
-      <view class="top">
-        <image src="/static/kahe-202510/shine/top.png" mode="scaleToFill" class="top-bg" />
-        <text>第{{ info?.id ?? 0 }}期</text>
+      <view class="texts absolute bottom-4 left-1/2 -translate-x-1/2 theme-font text-26 text-white" :style="{ textShadow: '-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000' }"> 本期赠品 </view>
+      <view class="top absolute -top-66 -left-92 w-201 h-80">
+        <image src="/static/kahe-202510/shine/top.png" mode="scaleToFill" class="top-bg relative w-full h-full" />
+        <text class="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 theme-font text-22 text-white" :style="{ top: '40%' }">第{{ info?.id ?? 0 }}期</text>
       </view>
     </view>
-    <view class="nav-right">
+    <view class="nav-right absolute right-18 top-100 z-3">
       <view
-        class="item"
+        class="item relative w-82 h-94 bg-[url(/static/kahe-202510/shine/btn.png)] bg-no-repeat flex items-center justify-center mb-25"
+        :style="{ backgroundSize: '100%' }"
         v-for="item in itemList"
         :key="item.key"
         :id="item.key"
         @tap.stop="tapNav(item)"
       >
-        <image :src="item.icon" mode="scaleToFill" class="item-icon" />
-        <view class="text">{{ item.text }}</view>
+        <image :src="item.icon" mode="scaleToFill" class="item-icon w-41 h-46" />
+        <view class="text w-full flex justify-center absolute -bottom-12 left-1/2 -translate-x-1/2 theme-font text-26 text-white" :style="{ textShadow: '-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000' }">{{ item.text }}</view>
       </view>
     </view>
   </view>
@@ -110,155 +111,4 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.nav {
-  position: relative;
-  margin-top: 60rpx;
-  width: 100%;
-  height: 475rpx;
-  display: flex;
-  justify-content: center;
-
-  &-box {
-    position: relative;
-    width: 468rpx;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .bg {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .goods {
-      margin: 46rpx 0 34rpx 0;
-      width: 282rpx;
-      height: 282rpx;
-    }
-
-    .contont {
-      position: relative;
-      width: 313rpx;
-      height: 46rpx;
-      background: #62e2fc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      &-triangle {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 0;
-        height: 0;
-        border-top: 20rpx solid transparent;
-        border-right: 20rpx solid #fff;
-        border-bottom: 0;
-        border-left: 0;
-      }
-
-      &-triangle1 {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 0;
-        height: 0;
-        border-bottom: 20rpx solid transparent;
-        border-left: 20rpx solid #fff;
-        border-top: 0;
-        border-right: 0;
-      }
-
-      &-text {
-        font-family: YouSheBiaoTiHei;
-        font-weight: 400;
-        font-size: 30rpx;
-        color: #ffffff;
-        line-height: 48rpx;
-      }
-    }
-
-    .texts {
-      position: absolute;
-      bottom: 4rpx;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: YouSheBiaoTiHei;
-      font-weight: 400;
-      font-size: 26rpx;
-      color: #ffffff;
-      @include text-stroke-color(#000000);
-    }
-
-    .top {
-      position: absolute;
-      top: -66rpx;
-      left: -92rpx;
-      width: 201rpx;
-      height: 80rpx;
-
-      &-bg {
-        position: relative;
-        width: 100%;
-        height: 100%;
-      }
-
-      text {
-        position: absolute;
-        left: 50%;
-        top: 40%;
-        transform: translate(-50%, -50%);
-        font-family: YouSheBiaoTiHei;
-        font-weight: 400;
-        font-size: 22rpx;
-        color: #ffffff;
-      }
-    }
-  }
-
-  &-right {
-    position: absolute;
-    right: 18rpx;
-    top: 100rpx;
-    z-index: 3;
-
-    .item {
-      position: relative;
-      width: 82rpx;
-      height: 94rpx;
-      background-image: url("/static/kahe-202510/shine/btn.png");
-      background-size: 100%;
-      background-repeat: no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 25rpx;
-
-      &-icon {
-        width: 41rpx;
-        height: 46rpx;
-      }
-
-      .text {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        position: absolute;
-        bottom: -12rpx;
-        left: 50%;
-        transform: translateX(-50%);
-        font-family: YouSheBiaoTiHei;
-        font-weight: 400;
-        font-size: 26rpx;
-        color: #fff;
-        @include text-stroke-color(#000000);
-      }
-    }
-  }
-}
 </style>

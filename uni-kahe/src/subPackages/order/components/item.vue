@@ -1,29 +1,29 @@
 <template>
-  <view class="payItem">
-    <view class="payItem-top">
-      <image class="payItem-top-icon" src="/static/kahe-202510/order/item.png" />
-      <view class="payItem-top-title">{{ item.title }}</view>
+  <view class="payItem relative w-full box-border p-22 bg-white rounded-20 border-3 border-[#000000] mb-24">
+    <view class="payItem-top w-full flex flex-row items-center pb-12 pl-13" :style="{ borderBottom: '1px solid rgba(0,0,0,0.05)' }">
+      <image class="payItem-top-icon w-26 h-26" src="/static/kahe-202510/order/item.png" />
+      <view class="payItem-top-title ml-8 text-24 text-[#010101]">{{ item.title }}</view>
     </view>
     <view
-      class="payItem-content"
+      class="payItem-content relative box-border py-20 flex flex-row items-center"
       v-for="(goods, zIndex) in goodsList"
       :key="item.id + ':' + zIndex"
     >
-      <image class="payItem-content-logo" :src="goods.goodsDto?.image" />
-      <view class="payItem-content-info">
-        <view class="payItem-content-info-title">{{ goods.goodsDto?.name }}</view>
-        <view class="payItem-content-info-bottom">
-          <view class="payItem-content-info-bottom-price"></view>
-          <view class="payItem-content-info-bottom-num">X{{ goods.num }}</view>
+      <image class="payItem-content-logo w-162 h-162 rounded-10" :src="goods.goodsDto?.image" />
+      <view class="payItem-content-info relative w-full h-140 ml-14 flex flex-col justify-between">
+        <view class="payItem-content-info-title text-28 font-normal text-[#010101]">{{ goods.goodsDto?.name }}</view>
+        <view class="payItem-content-info-bottom w-full flex flex-row items-center justify-between">
+          <view class="payItem-content-info-bottom-price text-30 font-normal text-[#010101]"></view>
+          <view class="payItem-content-info-bottom-num text-30 font-normal text-[#010101]">X{{ goods.num }}</view>
         </view>
       </view>
     </view>
-    <view class="payItem-bottom theme-font">
-      <view class="payItem-bottom-title">共</view>
-      <view class="payItem-bottom-value">{{ item.num }}</view>
-      <view class="payItem-bottom-title">件</view>
-      <view class="payItem-bottom-title">合计</view>
-      <view class="payItem-bottom-value">¥{{ item.price + item.ticket + item.coin }}</view>
+    <view class="payItem-bottom theme-font w-full flex flex-row items-center justify-end pt-12" :style="{ borderTop: '1px solid rgba(0,0,0,0.05)' }">
+      <view class="payItem-bottom-title text-28 font-normal text-[#010101]">共</view>
+      <view class="payItem-bottom-value text-28 font-normal text-[#ff610f]">{{ item.num }}</view>
+      <view class="payItem-bottom-title text-28 font-normal text-[#010101]">件</view>
+      <view class="payItem-bottom-title text-28 font-normal text-[#010101]">合计</view>
+      <view class="payItem-bottom-value text-28 font-normal text-[#ff610f]">¥{{ item.price + item.ticket + item.coin }}</view>
     </view>
   </view>
 </template>
@@ -59,93 +59,4 @@
 </script>
 
 <style lang="scss" scoped>
-  .payItem {
-    width: 100%;
-    padding: 22rpx;
-    box-sizing: border-box;
-    background: #ffffff;
-    border-radius: 20rpx;
-    border: 3rpx solid #000000;
-    margin-bottom: 24rpx;
-
-    &-top {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 0 0 12rpx 13rpx;
-      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
-      &-icon {
-        width: 26rpx;
-        height: 26rpx;
-      }
-      &-title {
-        margin-left: 8rpx;
-        font-size: 24rpx;
-        color: #010101;
-      }
-    }
-    &-content {
-      position: relative;
-      box-sizing: border-box;
-      padding: 20rpx 0;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      &-logo {
-        width: 162rpx;
-        height: 162rpx;
-        border-radius: 10rpx;
-      }
-      &-info {
-        position: relative;
-        width: 100%;
-        margin-left: 14rpx;
-        height: 140rpx;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        &-title {
-          font-weight: normal;
-          font-size: 28rpx;
-          color: #010101;
-        }
-        &-bottom {
-          width: 100%;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          &-price {
-            font-weight: normal;
-            font-size: 30rpx;
-            color: #010101;
-          }
-          &-num {
-            font-weight: normal;
-            font-size: 30rpx;
-            color: #010101;
-          }
-        }
-      }
-    }
-    &-bottom {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 12rpx 0 0;
-      border-top: 1px solid rgba($color: #000000, $alpha: 0.05);
-      &-value {
-        font-weight: 400;
-        font-size: 28rpx;
-        color: #ff610f;
-      }
-      &-title {
-        font-weight: 400;
-        font-size: 28rpx;
-        color: #010101;
-      }
-    }
-  }
 </style>

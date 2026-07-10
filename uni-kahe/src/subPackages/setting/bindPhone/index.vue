@@ -1,24 +1,24 @@
 <template>
-  <view class="bind-phone">
+  <view class="bind-phone relative w-full h-screen flex flex-col">
     <image
-      class="bind-phone-bg"
+      class="bind-phone-bg w-full h-full"
       src="/static/kahe-202510/new-login/bg.png"
     />
-    <view class="bind-phone-content">
-      <view class="bind-phone-content-top">
-        <text class="bind-phone-content-top-title theme-font">绑定手机号</text>
+    <view class="bind-phone-content absolute left-0 top-0 w-full h-full flex flex-col justify-center items-center">
+      <view class="bind-phone-content-top flex flex-row items-center justify-center w-screen mb-80">
+        <text class="bind-phone-content-top-title theme-font text-center text-[#83e3ff] font-normal text-72" :style="{ textShadow: '-1px -1px 0 #2b2b2b, 1px -1px 0 #2b2b2b, -1px 1px 0 #2b2b2b, 1px 1px 0 #2b2b2b' }">绑定手机号</text>
         <image
-          class="bind-phone-content-top-subTitle"
+          class="bind-phone-content-top-subTitle w-97 h-66 mb-60"
           src="/static/kahe-202510/new-login/item.png"
         />
       </view>
 
-      <view class="bind-phone-content-form">
+      <view class="bind-phone-content-form w-560 mb-10 flex flex-col items-center">
         <!-- 手机号输入 -->
-        <view class="bind-phone-content-form-field">
+        <view class="bind-phone-content-form-field w-full h-78 px-22 bg-[rgba(255,255,255,0.85)] rounded-16 flex items-center mb-18 box-border">
           <input
             v-model="formData.phone"
-            class="bind-phone-content-form-input"
+            class="bind-phone-content-form-input flex-1 h-78 leading-78 text-28 text-black"
             type="number"
             maxlength="11"
             placeholder="请输入手机号"
@@ -26,17 +26,17 @@
         </view>
 
         <!-- 验证码输入 -->
-        <view class="bind-phone-content-form-field sms">
+        <view class="bind-phone-content-form-field sms w-full h-78 px-22 bg-[rgba(255,255,255,0.85)] rounded-16 flex items-center justify-between mb-18 box-border">
           <input
             v-model="formData.code"
-            class="bind-phone-content-form-input"
+            class="bind-phone-content-form-input flex-1 h-78 leading-78 text-28 text-black"
             type="number"
             maxlength="6"
             placeholder="请输入验证码"
           />
           <view
-            class="bind-phone-content-form-smsBtn"
-            :class="{ disabled: maxTime > 0 }"
+            class="bind-phone-content-form-smsBtn ml-16 py-10 px-16 text-24 text-[#1a5fb6] border-1 border-[#1a5fb6] rounded-12 bg-[rgba(255,255,255,0.9)] whitespace-nowrap flex items-center justify-center min-w-140"
+            :class="{ 'opacity-60': maxTime > 0 }"
             @tap.stop="getSmsCodeAction"
           >
             <TnCountDown
@@ -55,17 +55,17 @@
       </view>
 
       <!-- 绑定按钮 -->
-      <view class="bind-phone-content-login" @tap.stop="handleBind">
+      <view class="bind-phone-content-login relative mt-40 w-494 h-67" @tap.stop="handleBind">
         <image
-          class="bind-phone-content-login-img"
+          class="bind-phone-content-login-img w-full h-full"
           src="/static/kahe-202510/login/login-btn-bg.png"
         />
-        <text class="bind-phone-content-login-text theme-font">确认绑定</text>
+        <text class="bind-phone-content-login-text absolute left-0 top-0 w-full leading-67 text-center text-27 text-white">确认绑定</text>
       </view>
 
       <!-- 跳过按钮 -->
-      <view class="bind-phone-content-skip" @tap.stop="handleSkip">
-        <text class="bind-phone-content-skip-text">跳过</text>
+      <view class="bind-phone-content-skip mt-40 py-20 px-60" @tap.stop="handleSkip">
+        <text class="bind-phone-content-skip-text text-28 text-[#1a5fb6] underline">跳过</text>
       </view>
     </view>
   </view>
@@ -159,137 +159,5 @@ const navigateAfterBind = () => {
 };
 </script>
 
-<style scoped lang="scss">
-.bind-phone {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-
-  &-bg {
-    width: 100%;
-    height: 100%;
-  }
-
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    &-top {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      width: 100vw;
-      margin-bottom: 80rpx;
-
-      &-title {
-        text-align: center;
-        color: #83e3ff;
-        font-weight: 400;
-        font-size: 72rpx;
-        @include text-stroke-color(#2b2b2b);
-      }
-
-      &-subTitle {
-        width: 97rpx;
-        height: 66rpx;
-        margin-bottom: 60rpx;
-      }
-    }
-
-    &-form {
-      width: 560rpx;
-      margin-bottom: 10rpx;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      &-field {
-        width: 100%;
-        height: 78rpx;
-        padding: 0 22rpx;
-        box-sizing: border-box;
-        background: rgba(255, 255, 255, 0.85);
-        border-radius: 16rpx;
-        display: flex;
-        align-items: center;
-        margin-bottom: 18rpx;
-      }
-
-      &-field.sms {
-        justify-content: space-between;
-      }
-
-      &-input {
-        flex: 1;
-        height: 78rpx;
-        line-height: 78rpx;
-        font-size: 28rpx;
-        color: #000;
-      }
-
-      &-smsBtn {
-        margin-left: 16rpx;
-        padding: 10rpx 16rpx;
-        font-size: 24rpx;
-        color: #1a5fb6;
-        border: 1rpx solid #1a5fb6;
-        border-radius: 12rpx;
-        background: rgba(255, 255, 255, 0.9);
-        white-space: nowrap;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 140rpx;
-      }
-
-      &-smsBtn.disabled {
-        opacity: 0.6;
-      }
-    }
-
-    &-login {
-      margin-top: 40rpx;
-      position: relative;
-      width: 494rpx;
-      height: 67rpx;
-
-      &-img {
-        width: 100%;
-        height: 100%;
-      }
-
-      &-text {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        line-height: 67rpx;
-        text-align: center;
-        font-size: 27rpx;
-        color: #ffffff;
-      }
-    }
-
-    &-skip {
-      margin-top: 40rpx;
-      padding: 20rpx 60rpx;
-
-      &-text {
-        font-size: 28rpx;
-        color: #1a5fb6;
-        text-decoration: underline;
-      }
-    }
-  }
-}
+<style lang="scss" scoped>
 </style>

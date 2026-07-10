@@ -21,26 +21,27 @@ const emits = defineEmits(["scrolltolower"]);
     bg-color="transparent"
     :custom-style="{ overflow: 'visible' }"
   >
-    <view class="pop">
-      <view class="pop-topIcon">
+    <view class="pop w-full py-90 px-30 relative h-916 box-border flex flex-col">
+      <view class="pop-topIcon absolute -top-45 left-0 w-397 h-125">
         <image
           src="/static/kahe-202510/shine/left-top.png"
           mode="scaleToFill"
-          class="icon"
+          class="icon relative w-full h-full"
         />
-        <text>{{ "往期欧皇" }}</text>
+        <text class="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 theme-font text-36 text-black leading-22" :style="{ top: '55%' }">{{ "往期欧皇" }}</text>
       </view>
       <image
         src="/static/kahe-202510/shine/pop-bg.png"
         mode="scaleToFill"
-        class="pop-bg"
+        class="pop-bg absolute h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        :style="{ width: 'calc(100% - 50rpx)', zIndex: -1 }"
       />
       <scroll-view
         :scroll-y="true"
-        class="container"
+        class="container flex-1 min-h-0 overflow-auto"
         @scrolltolower="emits('scrolltolower')"
       >
-        <view class="container-content">
+        <view class="container-content px-30 box-border">
           <div v-for="(item, index) in list" :id="item.id" :key="item.id">
             <div v-for="(zItem, zIndex) in item.prizePool">
               <HistoryItem
@@ -58,61 +59,6 @@ const emits = defineEmits(["scrolltolower"]);
     </view>
   </TnPopup>
 </template>
+
 <style lang="scss" scoped>
-.pop {
-  width: 100%;
-  padding: 90rpx 30rpx;
-  position: relative;
-  height: 916rpx;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-
-  &-bg {
-    position: absolute;
-    width: calc(100% - 50rpx);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 100%;
-    z-index: -1;
-  }
-
-  &-topIcon {
-    position: absolute;
-    top: -45rpx;
-    left: 0;
-    width: 397rpx;
-    height: 125rpx;
-
-    .icon {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    text {
-      position: absolute;
-      left: 50%;
-      top: 55%;
-      transform: translate(-50%, -50%);
-      font-family: YouSheBiaoTiHei;
-      font-weight: 400;
-      font-size: 36rpx;
-      color: #000000;
-      line-height: 22rpx;
-    }
-  }
-
-  .container {
-    flex: 1;
-    min-height: 0;
-    overflow: auto;
-
-    &-content {
-      padding: 0 30rpx;
-      box-sizing: border-box;
-    }
-  }
-}
 </style>

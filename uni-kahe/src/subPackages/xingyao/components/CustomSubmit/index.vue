@@ -1,13 +1,14 @@
 <template>
-  <view class="submit">
+  <view class="submit px-34 relative w-full flex justify-between box-border items-center">
     <input
       v-model="textValue"
       placeholder="请输入券码参与活动"
-      class="input-placeholder"
+      class="input-placeholder flex-1 h-63 bg-white rounded-6 mr-32"
+      :style="{ border: '1px solid #000000' }"
     />
-    <view class="submit-btn" @tap.stop="tapSubmit">
-      <image src="/static/kahe-202510/shine/yellow.png" mode="scaleToFill" class="btn_bg" />
-      <text>提交</text>
+    <view class="submit-btn relative w-187 h-63 flex justify-center items-center" @tap.stop="tapSubmit">
+      <image src="/static/kahe-202510/shine/yellow.png" mode="scaleToFill" class="btn_bg absolute inset-0 w-full h-full z-0" />
+      <text class="relative theme-font text-36 font-normal text-black leading-48">提交</text>
     </view>
   </view>
 </template>
@@ -31,47 +32,4 @@ const tapSubmit = () => {
 </script>
 
 <style lang="scss" scoped>
-.submit {
-  padding: 0 34rpx;
-  position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  box-sizing: border-box;
-  align-items: center;
-  .input-placeholder {
-    flex: 1;
-    height: 63rpx;
-    background: #ffffff;
-    border-radius: 6rpx;
-    border: 1px solid #000000;
-    margin-right: 32rpx;
-  }
-
-  &-btn {
-    position: relative;
-    width: 187rpx;
-    height: 63rpx;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .btn_bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-    }
-
-    text {
-      position: relative;
-      font-family: YouSheBiaoTiHei;
-      font-weight: 400;
-      font-size: 36rpx;
-      color: #000000;
-      line-height: 48rpx;
-    }
-  }
-}
 </style>

@@ -79,30 +79,31 @@ const formData = reactive({
     bg-color="transparent"
     :custom-style="{ overflow: 'visible' }"
   >
-    <view class="content">
-      <view class="pop">
-        <view class="pop-topIcon">
+    <view class="content py-64 w-screen">
+      <view class="pop w-full py-85 px-75 relative h-916 box-border flex flex-col overflow-visible">
+        <view class="pop-topIcon absolute -top-45 left-1/2 -translate-x-1/2 w-605 h-100">
           <image
             src="/static/kahe-202510/shine/top-icon.png"
-            class="icon_bg"
+            class="icon_bg relative w-full h-full"
           />
-          <text class="icon_title theme-font">恭喜获得</text>
+          <text class="icon_title theme-font absolute left-1/2 -translate-x-1/2 -translate-y-1/2 text-45 text-white font-normal" :style="{ top: '35%', textShadow: '-3rpx -3rpx 0 #ff3333, 3rpx -3rpx 0 #ff3333, -3rpx 3rpx 0 #ff3333, 3rpx 3rpx 0 #ff3333' }">恭喜获得</text>
         </view>
         <image
           src="/static/kahe-202510/shine/pop-bg.png"
           mode="scaleToFill"
-          class="pop-bg"
+          class="pop-bg absolute h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          :style="{ width: 'calc(100% - 50rpx)', zIndex: -1 }"
         />
-        <view class="pop-title"
+        <view class="pop-title text-center font-normal text-26 text-black leading-22 mb-33"
           >今日消费满{{ info?.minScore }}元，即可领取参与码!</view
         >
-        <view class="pop-content">
-          <view class="top">
-            <text>选择收货信息</text>
+        <view class="pop-content pt-25 pr-17 pb-17 pl-32 box-border h-503 bg-[rgba(255,255,255,0.5)] rounded-10" :style="{ border: '2px solid #972424' }">
+          <view class="top flex justify-between">
+            <text class="font-normal text-26 text-black leading-30">选择收货信息</text>
             <image
               src="/static/kahe-202510/shine/right-icon.png"
               mode="scaleToFill"
-              class="top-img"
+              class="top-img w-17 h-30"
               @tap.stop="navToSelectAddress"
             />
           </view>
@@ -117,176 +118,31 @@ const formData = reactive({
               <TnInput v-model="selectAddress.address" textarea />
             </TnFormItem>
           </TnForm>
-          <view class="card">参与码为实体卡片，需填写收货信息。</view>
+          <view class="card text-center font-normal text-26 text-black leading-72" :style="{ fontFamily: 'Adobe Heiti Std' }">参与码为实体卡片，需填写收货信息。</view>
         </view>
-        <view class="pop-button" @click="handleRecieve">
-          <view class="btn"> 确定领取 </view>
+        <view class="pop-button mt-35 mx-auto" @click="handleRecieve">
+          <view class="btn flex items-center justify-center w-187 h-63 bg-[url(/static/kahe-202510/shine/yellow.png)] bg-[length:100%_100%] bg-no-repeat"> 确定领取 </view>
         </view>
-        <view class="pop-bottom">
-          <view class="rectangle" @tap.stop="tapChoose">
+        <view class="pop-bottom mt-44 flex items-center justify-center">
+          <view class="rectangle relative w-36 h-36" @tap.stop="tapChoose">
             <image
               src="/static/kahe-202510/shine/normal.png"
               mode="scaleToFill"
-              class="select-icon"
+              class="select-icon absolute w-full h-full inset-0"
             />
             <image
               src="/static/kahe-202510/shine/selected.png"
               mode="scaleToFill"
-              class="icon"
+              class="icon absolute w-full h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
               v-if="choose"
             />
           </view>
-          <text @click="emits('protocol')">已阅读并同意《用户使用协议》</text>
+          <text @click="emits('protocol')" class="font-normal text-26 text-black leading-72" :style="{ fontFamily: 'Adobe Heiti Std' }">已阅读并同意《用户使用协议》</text>
         </view>
       </view>
     </view>
   </TnPopup>
 </template>
+
 <style lang="scss" scoped>
-.content {
-  padding: 64rpx 0;
-  width: 100vw;
-}
-.pop {
-  width: 100%;
-  padding: 85rpx 75rpx;
-  position: relative;
-  height: 916rpx;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  overflow: visible;
-
-  &-bg {
-    position: absolute;
-    width: calc(100% - 50rpx);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 100%;
-    z-index: -1;
-  }
-
-  &-topIcon {
-    position: absolute;
-    top: -45rpx;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 605rpx;
-    height: 100rpx;
-
-    .icon_bg {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    .icon_title {
-      position: absolute;
-      left: 50%;
-      top: 35%;
-      transform: translate(-50%, -50%);
-      font-weight: 400;
-      font-size: 45rpx;
-      color: #ffffff;
-      @include text-stroke(3rpx, #ff3333);
-    }
-  }
-
-  &-title {
-    text-align: center;
-    font-weight: normal;
-    font-size: 26rpx;
-    color: #000000;
-    line-height: 22rpx;
-    margin-bottom: 33rpx;
-  }
-
-  &-content {
-    padding: 25rpx 17rpx 17rpx 32rpx;
-    box-sizing: border-box;
-    height: 503rpx;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 10rpx;
-    border: 2px solid #972424;
-
-    .top {
-      display: flex;
-      justify-content: space-between;
-
-      text {
-        font-weight: normal;
-        font-size: 26rpx;
-        color: #000000;
-        line-height: 30rpx;
-      }
-
-      &-img {
-        width: 17rpx;
-        height: 30rpx;
-      }
-    }
-
-    .card {
-      font-family: Adobe Heiti Std;
-      font-weight: normal;
-      font-size: 26rpx;
-      color: #000000;
-      line-height: 72rpx;
-      text-align: center;
-    }
-  }
-
-  &-button {
-    margin: 35rpx auto 0 auto;
-
-    .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 187rpx;
-      height: 63rpx;
-      background-image: url("/static/kahe-202510/shine/yellow.png");
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-    }
-  }
-
-  &-bottom {
-    margin-top: 44rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .rectangle {
-      position: relative;
-      width: 36rpx;
-      height: 36rpx;
-
-      .select-icon {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        inset: 0;
-      }
-
-      .icon {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
-    }
-
-    text {
-      font-family: Adobe Heiti Std;
-      font-weight: normal;
-      font-size: 26rpx;
-      color: #000000;
-      line-height: 72rpx;
-    }
-  }
-}
 </style>

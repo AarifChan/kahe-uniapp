@@ -1,17 +1,17 @@
 <template>
-  <view class="item">
+  <view class="item relative w-full flex justify-center items-center">
     <view
-      class="item-list"
+      class="item-list relative flex items-center"
       v-for="(item, index) in itemList"
       :key="`item-${index}`"
     >
-      <view class="box">
-        <image src="/static/kahe-202510/shine/item.png" mode="scaleToFill" class="box-bg" />
-        <view class="box-text">{{ item.text }}</view>
-        <view class="box-text">{{ item.content }}</view>
+      <view class="box relative w-103 h-103 flex items-center justify-center flex-col">
+        <image src="/static/kahe-202510/shine/item.png" mode="scaleToFill" class="box-bg absolute w-full h-full" />
+        <view class="box-text relative theme-font text-26 font-normal text-black">{{ item.text }}</view>
+        <view class="box-text relative theme-font text-26 font-normal text-black">{{ item.content }}</view>
       </view>
       <image
-        class="arrow"
+        class="arrow w-66 h-53 mx-22"
         v-if="index !== 2"
         mode="scaleToFill"
         src="/static/kahe-202510/shine/arrow.png"
@@ -41,46 +41,4 @@ const itemList = ref<ItemIcon[]>([
 </script>
 
 <style lang="scss" scoped>
-.item {
-  position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &-list {
-    position: relative;
-    display: flex;
-    align-items: center;
-
-    .box {
-      position: relative;
-      width: 103rpx;
-      height: 103rpx;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-
-      &-bg {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-      }
-
-      &-text {
-        position: relative;
-        font-family: YouSheBiaoTiHei;
-        font-weight: 400;
-        font-size: 26rpx;
-        color: #000000;
-      }
-    }
-  }
-
-  .arrow {
-    width: 66rpx;
-    height: 53rpx;
-    margin: 0 22rpx;
-  }
-}
 </style>
