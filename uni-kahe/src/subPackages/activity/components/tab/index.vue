@@ -1,21 +1,24 @@
 <template>
-  <view class="activityTab">
+  <view class="activityTab relative w-full flex flex-row items-center justify-evenly">
     <view
-      class="activityTab-item"
+      class="activityTab-item relative w-231 h-77"
       v-for="(item, index) in tabList"
       :key="'id' + index"
       :id="'id' + index"
       @tap.stop="didClick(index)"
     >
       <image
-        class="activityTab-item-img"
+        class="activityTab-item-img w-full h-full"
         :src="
           index === current
             ? '/static/kahe-202510/ka-he/welfare/btn-selected.png'
             : '/static/kahe-202510/ka-he/welfare/btn-normal.png'
         "
       />
-      <text class="activityTab-item-title theme-font">{{ item.title }}</text>
+      <text
+        class="activityTab-item-title theme-font absolute left-0 bottom-20 w-full text-center font-normal text-30 text-white"
+        :style="{ textShadow: '-1px -1px 0 #bc6953, 1px -1px 0 #bc6953, -1px 1px 0 #bc6953, 1px 1px 0 #bc6953' }"
+      >{{ item.title }}</text>
     </view>
   </view>
 </template>
@@ -48,32 +51,4 @@ const emits = defineEmits(["update:current", "didClick"]);
 </script>
 
 <style lang="scss" scoped>
-.activityTab {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  &-item {
-    position: relative;
-    width: 231rpx;
-    height: 77rpx;
-    &-img {
-      width: 100%;
-      height: 100%;
-    }
-    &-title {
-      position: absolute;
-      left: 0;
-      bottom: 20rpx;
-      width: 100%;
-      text-align: center;
-      font-weight: 400;
-      font-size: 30rpx;
-      color: #ffffff;
-      @include text-stroke-color(#bc6953);
-    }
-  }
-}
 </style>

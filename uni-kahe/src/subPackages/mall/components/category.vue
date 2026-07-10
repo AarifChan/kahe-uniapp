@@ -1,20 +1,20 @@
 <template>
-    <view class="mallC">
+    <view class="mallC relative h-162 py-20 px-30 box-border">
         <scroll-view
-            class="mallC-category"
+            class="mallC-category mt-8 relative h-full flex whitespace-nowrap"
             :enable-flex="true"
             :scroll-x="true"
             scroll-with-animation
         >
             <view
-                class="mallC-category-item"
+                class="mallC-category-item inline-block"
                 v-for="(item, index) in mallCategory"
                 :key="'id' + index"
                 @tap.stop="handleClickCategory(item)"
             >
-                <view class="mallC-category-item__item">
-                    <image class="mallC-category-item-icon" :src="item.image" />
-                    <text class="mallC-category-item-title">{{ item.name }}</text>
+                <view class="mallC-category-item__item relative flex flex-col items-center mr-32">
+                    <image class="mallC-category-item-icon w-92 h-92" :src="item.image" />
+                    <text class="mallC-category-item-title text-22 font-normal text-black">{{ item.name }}</text>
                 </view>
 
             </view>
@@ -34,37 +34,4 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.mallC {
-    position: relative;
-    height: 162rpx;
-    padding: 20rpx 30rpx;
-    box-sizing: border-box;
-    &-category {
-        margin-top: 8rpx;
-        display: flex;
-
-        white-space: nowrap;
-        position: relative;
-        height: 100%;
-        &-item {
-            display: inline-block;
-            &__item{
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin-right: 32rpx;
-            }
-            &-icon {
-                width: 92rpx;
-                height: 92rpx;
-            }
-            &-title {
-                font-size: 22rpx;
-                font-weight: 400;
-                color: #000000;
-            }
-        }
-    }
-}
 </style>

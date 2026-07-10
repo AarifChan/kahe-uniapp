@@ -1,36 +1,36 @@
 <template>
-  <view class="merchantInfoGoods">
-    <view class="merchantInfoGoods-empty" v-if="item.productNum === 0">
+  <view class="merchantInfoGoods w-full relative overflow-hidden mb-20 bg-white rounded-30 shadow-[0rpx_2rpx_7rpx_0rpx_rgba(12,19,52,0.6)]">
+    <view class="merchantInfoGoods-empty absolute inset-0 w-full h-full bg-[rgba(0,0,0,0.8)] z-3 flex flex-row items-center justify-center" v-if="item.productNum === 0">
       <image
         style="width: 137rpx; height: 63rpx"
         src="/static/jos/1214/sell-out.png"
       />
     </view>
-    <view class="merchantInfoGoods-cover">
+    <view class="merchantInfoGoods-cover pt-12 px-12 relative w-full aspect-ratio-[1/1] h-auto box-border overflow-hidden flex flex-row items-center justify-center">
       <image
-        class="merchantInfoGoods-cover-img"
+        class="merchantInfoGoods-cover-img h-full rounded-16"
         :src="item.image"
         mode="heightFix"
       />
-      <view class="merchantInfoGoods-cover-pattern">
+      <view class="merchantInfoGoods-cover-pattern absolute left-10 bottom-12 z-2 flex flex-col">
         <image
           v-for="(label, index) in item.labels"
           :key="'labels:' + index"
           :src="formatLabelImage(label)"
-          class="merchantInfoGoods-cover-pattern-img"
+          class="merchantInfoGoods-cover-pattern-img mt-8 w-149 h-49"
         />
       </view>
     </view>
     <view class="merchantInfoGoods-info">
-      <view class="merchantInfoGoods-info-content">
-        <view class="merchantInfoGoods-info-content-bottom">
+      <view class="merchantInfoGoods-info-content relative w-full h-full">
+        <view class="merchantInfoGoods-info-content-bottom px-12 w-[calc(100%-24rpx)]">
           <view
-            class="merchantInfoGoods-info-content-bottom-title text-flow-ellipsis-multiple"
+            class="merchantInfoGoods-info-content-bottom-title text-ellipsis-2 mt-10 ml-10 text-24 font-normal text-black leading-30 h-60 mb-0"
             >{{ item.name }}</view
           >
-          <view class="merchantInfoGoods-info-content-bottom-row1">
+          <view class="merchantInfoGoods-info-content-bottom-row1 px-10 box-border flex flex-row items-center justify-between" :style="{ transform: 'translateY(-16rpx)' }">
             <text
-              class="merchantInfoGoods-info-content-bottom-row1-title price-font"
+              class="merchantInfoGoods-info-content-bottom-row1-title price-font text-black text-40"
               >{{ isFromMall ? "" : "" }}{{ item.price
               }}{{ isFromMall ? "点券" : "" }}</text
             >
@@ -39,7 +39,7 @@
       </view>
     </view>
     <image
-      class="merchantInfoGoods-tags"
+      class="merchantInfoGoods-tags absolute -left-4 -top-2 w-180 h-54"
       v-if="showTag"
       :src="item.mainTagImage"
     />
@@ -70,109 +70,4 @@ const formatLabelImage = (index: number) => {
 </script>
 
 <style lang="scss" scoped>
-.merchantInfoGoods {
-  width: 100%;
-  //height: 452rpx;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 20rpx;
-  background-color: white;
-  border-radius: 30rpx;
-  box-shadow: 0rpx 2rpx 7rpx 0rpx rgba(12, 19, 52, 0.6);
-  &-empty {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 3;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-  &-bg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-  }
-  &-tags {
-    position: absolute;
-    left: -4rpx;
-    top: -2rpx;
-    width: 180rpx;
-    height: 54rpx;
-  }
-
-  &-cover {
-    padding: 12rpx 12rpx 0 12rpx;
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    height: fit-content;
-    box-sizing: border-box;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    &-img {
-      //width: 100%;
-      height: 100%;
-      border-radius: 16rpx;
-    }
-    &-pattern {
-      position: absolute;
-      left: 10rpx;
-      bottom: 12rpx;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-
-      &-img {
-        margin-top: 8rpx;
-        width: 149rpx;
-        height: 49rpx;
-      }
-    }
-  }
-  &-info {
-    &-content {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      &-bottom {
-        padding: 0 12rpx;
-        width: calc(100% - 24rpx);
-        &-title {
-          margin-top: 10rpx;
-          margin-left: 10rpx;
-          font-weight: 400;
-          font-size: 24rpx;
-          color: #000000;
-          line-height: 30rpx;
-          height: 60rpx;
-          margin-bottom: 0;
-        }
-        &-row1 {
-          padding: 0 10rpx;
-          box-sizing: border-box;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          transform: translateY(-16rpx);
-          &-title {
-            color: #000000;
-            font-size: 40rpx;
-          }
-        }
-      }
-    }
-  }
-}
 </style>

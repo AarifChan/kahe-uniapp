@@ -1,13 +1,21 @@
 <template>
-    <view class="merchantTab">
-        <view class="merchantTab-list">
-            <view class="merchantTab-list-item" v-for="(item, index) in list" :key="index" @tap.stop="clickItem(index)">
-                <view class="merchantTab-list-item-content">
-                    <view class="merchantTab-list-item-content-select theme-font" v-if="current === index">
-                        <image src="/static/kahe-202510/ka-he/home/round.png" class="img" />
+    <view class="merchantTab relative mx-32 mt-32 mb-10">
+        <view class="merchantTab-list relative flex flex-row items-center justify-start">
+            <view class="merchantTab-list-item relative h-50 mr-43" v-for="(item, index) in list" :key="index" @tap.stop="clickItem(index)">
+                <view class="merchantTab-list-item-content relative w-full">
+                    <view
+                        class="merchantTab-list-item-content-select theme-font relative text-center font-normal text-30 text-[#FD9D08]"
+                        :style="{ textShadow: '-2rpx -2rpx 0 #000, 2rpx -2rpx 0 #000, -2rpx 2rpx 0 #000, 2rpx 2rpx 0 #000' }"
+                        v-if="current === index"
+                    >
+                        <image src="/static/kahe-202510/ka-he/home/round.png" class="img absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 object-cover" />
                         {{ item.title }}
                     </view>
-                    <text class="merchantTab-list-item-content-title theme-font" v-else>{{ item.title }}</text>
+                    <text
+                        class="merchantTab-list-item-content-title theme-font h-full text-center font-normal text-30 text-[#A7A7A7]"
+                        :style="{ textShadow: '-2rpx -2rpx 0 #000, 2rpx -2rpx 0 #000, -2rpx 2rpx 0 #000, 2rpx 2rpx 0 #000' }"
+                        v-else
+                    >{{ item.title }}</text>
                 </view>
             </view>
         </view>
@@ -45,56 +53,4 @@ const clickItem = (index: number) => {
 </script>
 
 <style lang="scss" scoped>
-.merchantTab {
-    position: relative;
-    margin: 32rpx 32rpx 10rpx 32rpx;
-
-    &-list {
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-
-        &-item {
-            position: relative;
-
-            height: 50rpx;
-            margin-right: 43rpx;
-
-            &-content {
-                position: relative;
-                width: 100%;
-
-                &-title {
-                    height: 100%;
-                    text-align: center;
-                    font-weight: 400;
-                    font-size: 30rpx;
-                    color: #A7A7A7;
-                    @include text-stroke(2rpx, #000);
-                }
-
-                &-select {
-                    position: relative;
-                    text-align: center;
-                    font-weight: 400;
-                    font-size: 30rpx;
-                    color: #FD9D08;
-                    @include text-stroke(2rpx, #000);
-
-                    .img {
-                        position: absolute;
-                        left: 50%;
-                        top: 50%;
-                        transform: translate(-50%, -50%);
-                        width: 60rpx;
-                        height: 60rpx;
-                        object-fit: cover;
-                    }
-                }
-            }
-        }
-    }
-}
 </style>

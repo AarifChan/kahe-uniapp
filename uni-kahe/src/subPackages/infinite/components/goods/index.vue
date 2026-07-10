@@ -1,7 +1,7 @@
 <template>
-  <view class="homeGoods">
+  <view class="homeGoods w-full aspect-ratio-[506/692] relative overflow-hidden mb-20 bg-white rounded-10">
     <image
-      class="homeGoods-bg"
+      class="homeGoods-bg w-full h-full"
       src="/static/kahe-202510/ka-he/home/item-bg.png"
     />
     <!--        <view class="homeGoods-empty" v-if="item.isSellout">-->
@@ -11,58 +11,58 @@
     <!--            />-->
     <!--        </view>-->
 
-    <view class="homeGoods-cover">
-      <view class="homeGoods-cover-top">
+    <view class="homeGoods-cover absolute top-0 left-0 w-full aspect-ratio-[1/1] overflow-hidden flex flex-row items-center justify-center">
+      <view class="homeGoods-cover-top relative w-full h-full flex flex-row items-center justify-center">
         <image
-          class="homeGoods-cover-top-img"
+          class="homeGoods-cover-top-img h-full"
           :src="item.image"
           mode="heightFix"
         />
       </view>
 
-      <view class="homeGoods-cover-pattern">
+      <view class="homeGoods-cover-pattern absolute left-10 bottom-12 z-2 flex flex-col">
         <image
           v-for="(label, index) in item.labels"
           :key="'labels:' + index"
           :src="formatLabelImage(label)"
-          class="homeGoods-cover-pattern-img"
+          class="homeGoods-cover-pattern-img mt-8 w-149 h-49"
         />
       </view>
     </view>
-    <view class="homeGoods-info">
-      <view class="homeGoods-info-content">
-        <view class="homeGoods-info-content-bottom">
+    <view class="homeGoods-info absolute bottom-0 left-0 w-full">
+      <view class="homeGoods-info-content relative w-full h-full">
+        <view class="homeGoods-info-content-bottom px-12 w-[calc(100%-24rpx)]">
           <view
-            class="homeGoods-info-content-bottom-title text-flow-ellipsis-multiple"
+            class="homeGoods-info-content-bottom-title text-ellipsis-2 mt-10 ml-10 text-24 font-normal text-black leading-30 h-60 mb-0"
             >{{ item.name }}</view
           >
-          <view class="homeGoods-info-content-bottom-row1">
-            <view class="homeGoods-info-content-bottom-row1-price">
+          <view class="homeGoods-info-content-bottom-row1 px-10 box-border flex flex-row items-center justify-between" :style="{ transform: 'translateY(-16rpx)' }">
+            <view class="homeGoods-info-content-bottom-row1-price relative w-137 h-46">
               <image
-                class="homeGoods-info-content-bottom-row1-price-img"
+                class="homeGoods-info-content-bottom-row1-price-img w-full h-full"
                 src="/static/kahe-202510/ka-he/integral/price-bg.png"
               />
               <text
-                class="homeGoods-info-content-bottom-row1-price-title price-font"
+                class="homeGoods-info-content-bottom-row1-price-title price-font absolute left-54 top-4 leading-42 text-black text-28"
                 >{{ isFromMall ? "" : "" }}{{ item.price
                 }}{{ isFromMall ? "/点券" : "" }}</text
               >
             </view>
           </view>
         </view>
-        <view class="homeGoods-info-content-merchant">
+        <view class="homeGoods-info-content-merchant absolute right-19 bottom-17 flex flex-row items-center">
           <image
-            class="homeGoods-info-content-merchant-logo"
+            class="homeGoods-info-content-merchant-logo w-36 h-36 rounded-full"
             :src="item.merchant?.icon"
           />
           <view
-            class="homeGoods-info-content-merchant-name text-flow-ellipsis-single"
+            class="homeGoods-info-content-merchant-name max-w-120 ml-5 font-normal text-18 text-[#504f4f] text-ellipsis"
             >{{ item.merchant?.name }}</view
           >
         </view>
       </view>
     </view>
-    <image class="homeGoods-tags" v-if="showTag" :src="item.mainTagImage" />
+    <image class="homeGoods-tags absolute -left-4 -top-2 w-180 h-54" v-if="showTag" :src="item.mainTagImage" />
   </view>
 </template>
 
@@ -90,153 +90,4 @@ const formatLabelImage = (index: number) => {
 </script>
 
 <style lang="scss" scoped>
-.homeGoods {
-  width: 100%;
-  aspect-ratio: 506 / 692;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 20rpx;
-  background-color: white;
-  border-radius: 10rpx;
-  &-bg {
-    width: 100%;
-    height: 100%;
-  }
-  &-empty {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 3;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-  &-tags {
-    position: absolute;
-    left: -4rpx;
-    top: -2rpx;
-    width: 180rpx;
-    height: 54rpx;
-  }
-
-  &-cover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    &-top {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      &-img {
-        height: 100%;
-      }
-    }
-
-    &-pattern {
-      position: absolute;
-      left: 10rpx;
-      bottom: 12rpx;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-
-      &-img {
-        margin-top: 8rpx;
-        width: 149rpx;
-        height: 49rpx;
-      }
-    }
-  }
-  &-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    &-content {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      &-bottom {
-        padding: 0 12rpx;
-        width: calc(100% - 24rpx);
-        &-title {
-          margin-top: 10rpx;
-          margin-left: 10rpx;
-          font-weight: 400;
-          font-size: 24rpx;
-          color: #000000;
-          line-height: 30rpx;
-          height: 60rpx;
-          margin-bottom: 0;
-        }
-        &-row1 {
-          padding: 0 10rpx;
-          box-sizing: border-box;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          transform: translateY(-16rpx);
-          &-price {
-            position: relative;
-            width: 137rpx;
-            height: 46rpx;
-            &-img {
-              width: 100%;
-              height: 100%;
-            }
-            &-title {
-              position: absolute;
-              left: 54rpx;
-              top: 4rpx;
-              line-height: 42rpx;
-              color: #000;
-              font-size: 28rpx;
-            }
-          }
-          &-title {
-            color: #000000;
-            font-size: 40rpx;
-          }
-        }
-      }
-
-      &-merchant {
-        position: absolute;
-        right: 19rpx;
-        bottom: 17rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        &-name {
-          max-width: 120rpx;
-          margin-left: 5rpx;
-          font-weight: normal;
-          font-size: 18rpx;
-          color: #504f4f;
-        }
-        &-logo {
-          width: 36rpx;
-          height: 36rpx;
-          border-radius: 50%;
-        }
-      }
-    }
-  }
-}
 </style>

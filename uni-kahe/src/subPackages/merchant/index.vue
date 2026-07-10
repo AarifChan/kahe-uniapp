@@ -45,7 +45,7 @@
           <view class="merchantInfo-content-top-info relative ml-68 flex flex-col">
             <view class="flex flex-row">
               <view
-                class="merchantInfo-content-top-info-title theme-font text-flow-ellipsis-single font-normal text-36 text-[#621b08] leading-36"
+                class="merchantInfo-content-top-info-title theme-font text-ellipsis font-normal text-36 text-[#621b08] leading-36"
                 >{{ detail?.name }}</view
               >
             </view>
@@ -64,7 +64,7 @@
               }}</text>
             </view>
             <view
-              class="merchantInfo-content-top-info-desc w-460 font-normal text-24 text-[#ff730d] leading-36 text-flow-ellipsis-multiple"
+              class="merchantInfo-content-top-info-desc w-460 font-normal text-24 text-[#ff730d] leading-36 text-ellipsis-2"
               >{{ detail?.desc }}
             </view>
           </view>

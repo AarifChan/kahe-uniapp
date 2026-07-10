@@ -5,22 +5,25 @@
         bg-color="transparent"
         @close="emits('update:show', false)"
     >
-        <view class="dailySuccess">
+        <view class="dailySuccess relative bg-transparent w-637 h-616">
             <image
-                class="dailySuccess-bg"
+                class="dailySuccess-bg w-full h-full"
                 src="/static/kahe-202510/home-upgrade/modal-success.png"
             />
             <image
-                class="dailySuccess-close"
+                class="dailySuccess-close absolute top-50 right-50 w-43 h-39"
                 src="/static/kahe-202510/home-upgrade/close.png"
                 @tap.stop="emits('update:show', false)"
             />
-            <view class="dailySuccess-btn" @tap.stop="emits('didClickUse')">
+            <view class="dailySuccess-btn absolute bottom-68 right-26 w-210 h-62" @tap.stop="emits('didClickUse')">
                 <image
-                    class="dailySuccess-btn-img"
+                    class="dailySuccess-btn-img w-full h-full"
                     src="/static/kahe-202510/home-upgrade/btn-style2-normal.png"
                 />
-                <view class="dailySuccess-btn-title theme-font">去使用</view>
+                <view
+                    class="dailySuccess-btn-title theme-font absolute top-4 left-0 w-full text-center font-normal text-36 text-white"
+                    :style="{ textShadow: '0 2rpx 0 #a02301' }"
+                >去使用</view>
             </view>
         </view>
     </tn-popup>
@@ -45,43 +48,4 @@ const emits = defineEmits(['update:show', 'didClickUse'])
 </script>
 
 <style lang="scss" scoped>
-.dailySuccess {
-    position: relative;
-    background-color: transparent;
-    width: 637rpx;
-    height: 616rpx;
-    &-bg {
-        width: 100%;
-        height: 100%;
-    }
-    &-close {
-        position: absolute;
-        top: 50rpx;
-        right: 50rpx;
-        width: 43rpx;
-        height: 39rpx;
-    }
-    &-btn {
-        position: absolute;
-        bottom: 68rpx;
-        right: 26rpx;
-        width: 210rpx;
-        height: 62rpx;
-        &-img {
-            width: 100%;
-            height: 100%;
-        }
-        &-title {
-            position: absolute;
-            top: 4rpx;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            font-weight: 400;
-            font-size: 36rpx;
-            color: #ffffff;
-            text-shadow: 0 2rpx 0 #a02301;
-        }
-    }
-}
 </style>

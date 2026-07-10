@@ -1,3 +1,15 @@
+<template>
+  <view class="lamp relative w-full flex flex-row justify-center">
+    <Lamp
+      ref="lampRef"
+      backGround="rgba(128, 128, 128, 0.6)"
+      :border="0"
+      :list="lampList"
+      @tapLampAction="tapLampAction"
+    />
+  </view>
+</template>
+
 <script setup lang="ts">
 import { type PropType, ref, watch } from "vue";
 import Lamp from "../lamp/index.vue";
@@ -27,24 +39,5 @@ watch(
 );
 </script>
 
-<template>
-  <view class="lamp">
-    <Lamp
-      ref="lampRef"
-      backGround="rgba(128, 128, 128, 0.6)"
-      :border="0"
-      :list="lampList"
-      @tapLampAction="tapLampAction"
-    />
-  </view>
-</template>
-
 <style scoped lang="scss">
-.lamp {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
 </style>

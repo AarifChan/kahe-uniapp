@@ -1,26 +1,32 @@
 <template>
-  <view class="lamp" v-if="list && list.length">
+  <view class="lamp relative w-full h-46" v-if="list && list.length">
     <view
       v-for="(item, index) in list"
       :key="index"
-      class="ma1"
+      class="ma1 flex items-center absolute top-0 left-0 w-707 h-73"
       :class="item.action ? `anmt1 ${item.class}` : ''"
-      :style="['animation-duration:' + animationTime + 's']"
+      :style="{ transform: 'translateX(120%)', animationDuration: animationTime + 's', pointerEvents: 'all' }"
       @tap.stop="emits('tapLampAction', item)"
     >
-      <view class="ma1-content">
+      <view class="ma1-content relative w-698 h-46">
         <image
-          class="ma1-content-bg"
+          class="ma1-content-bg w-698 h-46"
           src="/static/kahe-202510/ka-he/integral/infinite-bg.png"
         />
-        <view class="ma1-content-title theme-font">欧皇来袭</view>
-        <view class="ma1-content-info">
-          <view class="userName text-flow-ellipsis-single">{{
+        <view
+          class="ma1-content-title theme-font absolute left-48 top-0 leading-46 text-24 font-normal text-white"
+          :style="{ textShadow: '-1px -1px 0 #87320c, 1px -1px 0 #87320c, -1px 1px 0 #87320c, 1px 1px 0 #87320c' }"
+        >欧皇来袭</view>
+        <view class="ma1-content-info absolute left-169 top-0 flex flex-row items-center h-full">
+          <view class="userName max-w-80 text-24 text-white font-normal leading-24">{{
             item.userName
           }}</view>
-          <view class="title">获得</view>
-          <image class="level" :src="getLevelImageByLevel(item.level)"></image>
-          <view class="info text-flow-ellipsis-single">{{
+          <view class="title text-24 text-white font-normal leading-24">获得</view>
+          <image class="level w-96 h-68" :src="getLevelImageByLevel(item.level)"></image>
+          <view
+            class="info flex-1 text-white font-medium"
+            :style="{ fontSize: '12px', lineHeight: '13px', wordWrap: 'break-word', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 1, overflow: 'hidden', textOverflow: 'ellipsis' }"
+          >{{
             item.goodsName
           }}</view>
         </view>
@@ -105,99 +111,7 @@ onUnmounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.lamp {
-  position: relative;
-  width: 100%;
-  height: 46rpx;
-}
-.ma1 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translateX(120%);
-  width: 707rpx;
-  height: 73rpx;
-  display: flex;
-  align-items: center;
-  pointer-events: all;
-
-  &-content {
-    position: relative;
-    width: 698rpx;
-    height: 46rpx;
-
-    &-bg {
-      width: 698rpx;
-      height: 46rpx;
-    }
-    &-title {
-      position: absolute;
-      left: 48rpx;
-      top: 0;
-      line-height: 46rpx;
-      font-weight: 400;
-      font-size: 24rpx;
-      color: #ffffff;
-      @include text-stroke-color(#87320c);
-    }
-    &-info {
-      position: absolute;
-      left: 169rpx;
-      top: 0;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      height: 100%;
-      &-title {
-        font-weight: 400;
-        font-size: 34rpx;
-        color: #ffffff;
-        line-height: 46rpx;
-      }
-      .avatar {
-        margin-left: 16rpx;
-        width: 50rpx;
-        height: 50rpx;
-        object-fit: cover;
-        border-radius: 50%;
-        box-sizing: border-box;
-      }
-      .userName {
-        max-width: 80rpx;
-        font-size: 24rpx;
-        color: white;
-        font-weight: normal;
-        line-height: 24rpx;
-      }
-      .title {
-        font-size: 24rpx;
-        color: white;
-        font-weight: normal;
-        line-height: 24rpx;
-      }
-      .level {
-        width: 96rpx;
-        height: 68rpx;
-      }
-      .info {
-        flex: 1;
-
-        font-size: 12px;
-        font-weight: 500;
-        color: white;
-        line-height: 13px;
-        word-wrap: break-word;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 1; /* 这里是超出几行省略 */
-      }
-    }
-  }
-}
-
+<style lang="scss">
 .ma1 {
   &.action_1 {
     top: 0;
@@ -237,4 +151,7 @@ onUnmounted(() => {
     transform: translateX(-170%);
   }
 }
+</style>
+
+<style lang="scss" scoped>
 </style>
