@@ -1,22 +1,22 @@
 <template>
-    <view class="mergeTop">
-        <image class="mergeTop-bg" src="/static/kahe-202510/pet/merge-bg.png" />
-        <view class="mergeTop-side leftSide">
-            <image class="mergeTop-side-bg" :src=" left ? '/static/kahe-202510/pet/merge-empty.png' : '/static/kahe-202510/pet/merge-add.png' " />
+    <view class="mergeTop relative w-full h-full">
+        <image class="mergeTop-bg w-full h-full" src="/static/kahe-202510/pet/merge-bg.png" />
+        <view class="mergeTop-side leftSide absolute left-62 bottom-62 w-174 h-174">
+            <image class="mergeTop-side-bg w-full h-full" :src=" left ? '/static/kahe-202510/pet/merge-empty.png' : '/static/kahe-202510/pet/merge-add.png' " />
         </view>
-        <view class="mergeTop-icon leftSide" v-if="left" @tap.stop="emits('update:left', null)">
-            <image class="mergeTop-icon-bg" :src="left?.icon" />
+        <view class="mergeTop-icon leftSide absolute left-62 bottom-62 w-174 h-174" v-if="left" @tap.stop="emits('update:left', null)">
+            <image class="mergeTop-icon-bg absolute left-24 top-24" style="width: calc(100% - 48rpx); height: calc(100% - 48rpx);" :src="left?.icon" />
         </view>
-        <view class="mergeTop-side rightSide">
-            <image class="mergeTop-side-bg" :src=" right ? '/static/kahe-202510/pet/merge-empty.png' : '/static/kahe-202510/pet/merge-add.png' " />
+        <view class="mergeTop-side rightSide absolute right-62 bottom-62 w-174 h-174">
+            <image class="mergeTop-side-bg w-full h-full" :src=" right ? '/static/kahe-202510/pet/merge-empty.png' : '/static/kahe-202510/pet/merge-add.png' " />
         </view>
-        <view class="mergeTop-icon rightSide" v-if="right" @tap.stop="emits('update:right', null)">
-            <image class="mergeTop-icon-bg" :src="right?.icon" />
+        <view class="mergeTop-icon rightSide absolute right-62 bottom-62 w-174 h-174" v-if="right" @tap.stop="emits('update:right', null)">
+            <image class="mergeTop-icon-bg absolute left-24 top-24" style="width: calc(100% - 48rpx); height: calc(100% - 48rpx);" :src="right?.icon" />
         </view>
-        <image class="leftArrow" src="/static/kahe-202510/pet/side-left.png" />
-        <image class="rightArrow" src="/static/kahe-202510/pet/side-right.png" />
-        <text class="mergeTop-tips">放入两个同等级的宠物，会随机一个同等级的宠物</text>
-        <custom-pet-btn v-if="left && right" class="mergeTop-action theme-font"  @tap.stop="emits('didClickMerge')" title="融合"></custom-pet-btn>
+        <image class="leftArrow absolute left-192 bottom-192 w-60 h-57" src="/static/kahe-202510/pet/side-left.png" />
+        <image class="rightArrow absolute right-192 bottom-192 w-60 h-57" src="/static/kahe-202510/pet/side-right.png" />
+        <text class="mergeTop-tips absolute left-0 top-18 w-full text-24 font-normal text-black text-center">放入两个同等级的宠物，会随机一个同等级的宠物</text>
+        <custom-pet-btn v-if="left && right" class="mergeTop-action theme-font absolute bottom-32 w-142 h-60" style="left: calc((100% - 142rpx) / 2);"  @tap.stop="emits('didClickMerge')" title="融合"></custom-pet-btn>
     </view>
 </template>
 
@@ -38,74 +38,4 @@ const emits = defineEmits(['update:left', 'update:right', 'didClickMerge'])
 </script>
 
 <style lang="scss" scoped>
-.mergeTop{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    &-bg{
-        width: 100%;
-        height: 100%;
-    }
-    &-side{
-        width: 174rpx;
-        height: 174rpx;
-        &-bg{
-            width: 100%;
-            height: 100%;
-        }
-    }
-    &-action{
-        position: absolute;
-        left: calc((100% - 142rpx) / 2);
-        bottom: 32rpx;
-        width: 142rpx;
-        height: 60rpx;
-    }
-    &-icon{
-        position: relative;
-        width: 174rpx;
-        height: 174rpx;
-        &-bg{
-            position: absolute;
-            left: 24rpx;
-            top: 24rpx;
-            width: calc(100% - 48rpx);
-            height: calc(100% - 48rpx);
-        }
-    }
-    &-tips{
-        position: absolute;
-        left: 0;
-        top: 18rpx;
-        font-weight: normal;
-        font-size: 24rpx;
-        color: #000000;
-        text-align: center;
-        width: 100%;
-    }
-}
-.leftSide{
-    position: absolute;
-    left: 62rpx;
-    bottom: 62rpx;
-}
-.leftArrow{
-    position: absolute;
-    left: 192rpx;
-    bottom: 192rpx;
-    width: 60rpx;
-    height: 57rpx;
-}
-.rightArrow{
-    position: absolute;
-    right: 192rpx;
-    bottom: 192rpx;
-    width: 60rpx;
-    height: 57rpx;
-}
-.rightSide{
-    position: absolute;
-    right: 62rpx;
-    bottom: 62rpx;
-}
 </style>

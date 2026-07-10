@@ -1,15 +1,15 @@
 <template>
-    <view class="explore">
-        <view class="explore-top" @tap.stop="emits('didClickAction',1)">
-            <image class="explore-top-bg" :src="item !== null ? '/static/kahe-202510/pet/explore-bg2.png' : '/static/kahe-202510/pet/explore-bg1.png'" />
-            <image class="explore-top-content" :src="item?.icon" />
+    <view class="explore relative w-full h-full flex flex-col items-center justify-center">
+        <view class="explore-top relative w-328 h-328" @tap.stop="emits('didClickAction',1)">
+            <image class="explore-top-bg w-full h-full" :src="item !== null ? '/static/kahe-202510/pet/explore-bg2.png' : '/static/kahe-202510/pet/explore-bg1.png'" />
+            <image class="explore-top-content absolute top-16 left-16" style="width: calc(100% - 16rpx); height: calc(100% - 32rpx);" :src="item?.icon" />
         </view>
-        <view class="explore-bottom" v-if="item!==null">
-            <text class="explore-bottom-time">{{item?.name}}正在探险</text>
-            <text class="explore-bottom-time">{{dispatchTimeTitle}}</text>
-            <image class="explore-bottom-cancel" src="/static/kahe-202510/pet/explore-btn2.png" @tap.stop="emits('didClickAction',2)" />
+        <view class="explore-bottom mt-15 flex flex-col items-center justify-center" v-if="item!==null">
+            <text class="explore-bottom-time text-32 font-normal text-black leading-39">{{item?.name}}正在探险</text>
+            <text class="explore-bottom-time text-32 font-normal text-black leading-39">{{dispatchTimeTitle}}</text>
+            <image class="explore-bottom-cancel mb-16 w-328 h-78" src="/static/kahe-202510/pet/explore-btn2.png" @tap.stop="emits('didClickAction',2)" />
         </view>
-        <view class="explore-bottom" v-else>
+        <view class="explore-bottom mt-15 flex flex-col items-center justify-center" v-else>
             <text class="explore-time">请选择需要派遣的宠物</text>
         </view>
     </view>
@@ -75,47 +75,4 @@ const handleTimer = (endTime: string) => {
 </script>
 
 <style lang="scss" scoped>
-.explore{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    &-top{
-        position: relative;
-        width: 328rpx;
-        height: 328rpx;
-        &-bg{
-            width: 100%;
-            height: 100%;
-        }
-        &-content{
-            position: absolute;
-            top: 16rpx;
-            left: 16rpx;
-            width: calc(100% - 16rpx);
-            height: calc(100% - 32rpx);
-        }
-    }
-    &-bottom{
-        margin-top: 15rpx;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        &-time{
-            font-weight: 400;
-            font-size: 32rpx;
-            color: #000000;
-            line-height: 39rpx;
-        }
-        &-cancel{
-            margin-bottom: 16rpx;
-            width: 328rpx;
-            height: 78rpx;
-        }
-    }
-}
 </style>

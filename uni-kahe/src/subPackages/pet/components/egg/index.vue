@@ -1,12 +1,12 @@
 <template>
-    <view class="egg">
-        <view class="egg-bg" />
-        <image class="egg-icon" :src="item.icon" />
-        <view class="egg-num">{{item.number}}</view>
-        <image class="egg-decorate" src="/static/kahe-202510/pet/card-bottom.png" />
-        <text class="egg-name theme-font text-stroke">{{item.name}}</text>
-        <image class="egg-level" :src="'/static/kahe-202510/pet/level2.png' " />
-        <image v-if="selected" class="egg-select" src="/static/kahe-202510/pet/select.png" />
+    <view class="egg relative w-full flex flex-row items-center justify-center" style="aspect-ratio: 152 / 176;">
+        <view class="egg-bg absolute top-10 left-10 bg-[#3C3C3C]" style="width: calc(100% - 20rpx); height: calc(100% - 20rpx);" />
+        <image class="egg-icon absolute left-0 w-full" style="top: 8px; aspect-ratio: 1;" :src="item.icon" />
+        <view class="egg-num absolute right-8 top-8 bg-black text-white text-20 text-center leading-24" style="width: 52rpx; height: 24rpx;">{{item.number}}</view>
+        <image class="egg-decorate absolute bottom-0 left-10" style="width: calc(100% - 20rpx); aspect-ratio: 132 / 41;" src="/static/kahe-202510/pet/card-bottom.png" />
+        <text class="egg-name absolute bottom-8 left-16 text-24 font-normal text-white text-center theme-font text-stroke" style="width: calc(100% - 32rpx);">{{item.name}}</text>
+        <image class="egg-level absolute left-0 top-0 w-full h-full" :src="'/static/kahe-202510/pet/level2.png' " />
+        <image v-if="selected" class="egg-select absolute -left-8 -top-8 w-47 h-46" src="/static/kahe-202510/pet/select.png" />
     </view>
 </template>
 
@@ -28,76 +28,4 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-
-.egg{
-    position: relative;
-    width: 100%;
-    aspect-ratio:  152 / 176.0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    &-bg{
-        position: absolute;
-        top: 10rpx;
-        left: 10rpx;
-        width: calc(100% - 20rpx);
-        height: calc(100% - 20rpx);
-        background-color: #3C3C3C;
-    }
-    &-icon{
-        position: absolute;
-        top: 8px;
-        left: 0;
-        width: 100%;
-        aspect-ratio:  1;
-    }
-
-    &-num{
-        position: absolute;
-        right: 8rpx;
-        top: 8rpx;
-        background-color: black;
-        width: 52rpx;
-        height: 24rpx;
-        line-height: 24rpx;
-        font-size: 20rpx;
-        color: white;
-        text-align: center;
-    }
-
-    &-select{
-        position: absolute;
-        left: -8rpx;
-        top: -8rpx;
-        width: 47rpx;
-        height: 46rpx;
-    }
-
-    &-level{
-        position: absolute;
-        left: 0;
-        top:0;
-        width: 100%;
-        height: 100%;
-    }
-
-    &-decorate{
-        position: absolute;
-        bottom: 0;
-        left: 10rpx;
-        width: calc(100% - 20rpx);
-        aspect-ratio:  132 / 41.0;
-    }
-    &-name{
-        position: absolute;
-        bottom: 8rpx;
-        left: 16rpx;
-        width: calc(100% - 32rpx);
-        font-weight: 400;
-        font-size: 24rpx;
-        color: #FFFFFF;
-        text-align: center;
-    }
-}
 </style>
