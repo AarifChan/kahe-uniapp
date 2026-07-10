@@ -1,16 +1,16 @@
 <template>
-  <view class="all">
+  <view class="all relative flex mt-20 overflow-x-scroll box-border" :style="{ width: 'calc(100% - 50rpx)', padding: '0 25rpx 8rpx 25rpx' }">
     <view
-      class="all-tabItem"
+      class="all-tabItem w-110 h-56 mr-8 text-center leading-56 bg-[#e8ad82] rounded-18 flex-shrink-0"
       v-for="(item, index) in sortList"
       :key="index"
       @tap.stop="sortTabAction(item)"
-      :class="sortIndex === item.value ? 'active' : ''"
+      :class="sortIndex === item.value ? 'active bg-[#ac5a3e]' : ''"
     >
       <text
-        class="all-tabItem-text"
+        class="all-tabItem-text font-400 text-white"
         :class="sortIndex === item.value ? 'textColor' : ''"
-        :style="{ opacity: sortIndex === item.value ? 1 : 0.45 }"
+        :style="{ opacity: sortIndex === item.value ? 1 : 0.45, fontSize: '13px' }"
         >{{ getNormalLevelNameByLevel(item.value) }}</text
       >
     </view>
@@ -37,34 +37,4 @@ const sortTabAction = (i: any) => {
 </script>
 
 <style lang="scss" scoped>
-.all {
-  width: calc(100% - 50rpx);
-  display: flex;
-  margin-top: 20rpx;
-  padding: 0 25rpx 8rpx 25rpx;
-  position: relative;
-  overflow-x: scroll;
-  box-sizing: border-box;
-  &-tabItem {
-    width: 110rpx;
-    height: 56rpx;
-    margin-right: 8rpx;
-    text-align: center;
-    line-height: 56rpx;
-    background: #e8ad82;
-    border-radius: 18rpx;
-    flex-shrink: 0;
-    &-text {
-      font-size: 13px;
-      font-weight: 400;
-      color: #ffffff;
-      &.textColor {
-        color: #ffffff;
-      }
-    }
-    &.active {
-      background: #ac5a3e;
-    }
-  }
-}
 </style>

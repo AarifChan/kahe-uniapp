@@ -1,12 +1,14 @@
 <template>
-    <view class="boxChooseBottom">
-        <image class="boxChooseBottom-bg" src="/static/kahe/product/normal-bottom-bg1.png" />
-        <view class="boxChooseBottom-other" />
-        <view class="boxChooseBottom-info">
-            <text class="boxChooseBottom-info-title">请选择福袋</text>
-            <view class="boxChooseBottom-info-right">
-                <image class="boxChooseBottom-info-right-bg" src="/static/kahe/product/chase-btn.png" />
-                <text class="boxChooseBottom-info-right-title theme-font">立即购买</text>
+    <view class="boxChooseBottom relative flex flex-col">
+        <image class="boxChooseBottom-bg w-750 h-146" src="/static/kahe/product/normal-bottom-bg1.png" />
+        <view class="boxChooseBottom-other w-full bg-[#393939]" :style="{ height: 'env(safe-area-inset-bottom)' }" />
+        <view class="boxChooseBottom-info absolute left-0 top-0 w-full h-146 flex flex-row items-center justify-between">
+            <text class="boxChooseBottom-info-title ml-28 text-28 font-normal text-[#FFFFFF]">请选择福袋</text>
+            <view class="boxChooseBottom-info-right relative mr-52 w-300 h-80">
+                <image class="boxChooseBottom-info-right-bg w-full h-full" src="/static/kahe/product/chase-btn.png" />
+                <text class="boxChooseBottom-info-right-title theme-font absolute left-0 top-0 w-full h-full text-center leading-70 text-40 font-normal text-[#FFFFFF]"
+                    :style="{ WebkitTextStroke: '1.5px #000000' }"
+                >立即购买</text>
             </view>
         </view>
     </view>
@@ -17,61 +19,4 @@
 </script>
 
 <style lang="scss" scoped>
-
-.boxChooseBottom{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-
-    &-bg{
-        width: 750rpx;
-        height: 146rpx;
-    }
-    &-other{
-        width: 100%;
-        height: env(safe-area-inset-bottom);
-        background-color: #393939;
-    }
-    &-info{
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 146rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        &-title{
-            margin-left: 28rpx;
-            font-size: 28rpx;
-            font-weight: 400;
-            color: #FFFFFF;
-        }
-        &-right{
-            position: relative;
-            margin-right: 52rpx;
-            width: 300rpx;
-            height: 80rpx;
-            &-bg{
-                width: 100%;
-                height: 100%;
-            }
-            &-title{
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                line-height: 70rpx;
-                text-align: center;
-                font-size: 40rpx;
-                font-weight: 400;
-                color: #FFFFFF;
-                -webkit-text-stroke: 1.5px #000000;
-                //text-stroke: 1rpx #000000;
-            }
-        }
-    }
-}
 </style>

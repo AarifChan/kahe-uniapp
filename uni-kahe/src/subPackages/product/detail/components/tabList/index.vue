@@ -1,21 +1,24 @@
 <template>
-    <view class="normalTab">
-        <view class="normalTab-content">
+    <view
+        class="normalTab relative flex w-332 h-57 bg-[rgba(0,0,0,0.2)]"
+        :style="{ borderRadius: '28.5rpx' }"
+    >
+        <view class="normalTab-content relative flex flex-row">
             <view
-                class="normalTab-content-item"
+                class="normalTab-content-item relative w-166 h-57"
                 @tap.stop="didClickTab(index)"
                 v-for="(item, index) in tabList"
                 :key="index"
             >
                 <image
-                    class="normalTab-content-item-bg"
+                    class="normalTab-content-item-bg w-full h-full"
                     :src="
                         currentTab === index ? '/static/kahe-202510/product/product-tab-item.png' : ''
                     "
                 />
                 <text
-                    class="normalTab-content-item-title theme-font"
-                    :class="currentTab === index ? 'active' : ''"
+                    class="normalTab-content-item-title theme-font absolute left-1/2 top-1/2 text-28 font-normal leading-36 whitespace-nowrap -translate-x-[50%] -translate-y-[50%]"
+                    :class="currentTab === index ? 'text-[#11FFEB]' : 'text-[#868686]'"
                 >{{item}}</text>
             </view>
         </view>
@@ -56,40 +59,4 @@ const emits = defineEmits(['update:current', 'tabDidChange'])
 </script>
 
 <style lang="scss" scoped>
-.normalTab {
-    position: relative;
-    display: flex;
-    width: 332rpx;
-    height: 57rpx;
-    background-color: rgba(0,0,0, 0.2);
-    border-radius: 28.5rpx;
-    &-content {
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        &-item {
-            position: relative;
-            width: 166rpx;
-            height: 57rpx;
-            &-bg {
-                width: 100%;
-                height: 100%;
-            }
-            &-title {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                font-weight: 400;
-                font-size: 28rpx;
-                color: #868686;
-                line-height: 36rpx;
-                transform: translate(-50%, -50%);
-                white-space: nowrap;
-                &.active {
-                    color: #11FFEB;
-                }
-            }
-        }
-    }
-}
 </style>

@@ -1,16 +1,16 @@
 <template>
-    <view class="rights">
+    <view class="rights absolute top-0 right-12">
         <view
-            class="rights-list"
+            class="rights-list relative flex flex-col items-center justify-center mb-20"
             v-for="(item, index) in list"
             :key="index"
             @tap.stop="$emit('tapItem', item)"
         >
             <image
-                class="rights-list-img"
+                class="rights-list-img w-80 h-82"
                 :src="item.image"
             />
-            <image class="rights-list-texts" :src="item.text">{{
+            <image class="rights-list-texts -mt-2 w-53 h-26" :src="item.text">{{
                 item.text
             }}</image>
         </view>
@@ -28,23 +28,4 @@ defineProps({
 })
 </script>
 <style lang="scss" scoped>
-.rights {
-    position: absolute;
-    right: 12rpx;
-    top: 0;
-    &-list {
-        position: relative;
-        @include flex-xy-center(column);
-        margin-bottom: 20rpx;
-        &-img {
-            width: 80rpx;
-            height: 82rpx;
-        }
-        &-texts {
-            margin-top: -2rpx;
-            width: 53rpx;
-            height: 26rpx;
-        }
-    }
-}
 </style>

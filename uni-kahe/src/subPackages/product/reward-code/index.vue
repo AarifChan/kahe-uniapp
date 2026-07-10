@@ -1,24 +1,36 @@
 <template>
-    <view class="code">
-        <view class="code-tab">
-            <view class="code-tab-tabList" v-for="(item,index) in tabList" :key="index" @tap.stop="tabActive(item.value)"
-                  :class="current===item.value?'active':''"
+    <view class="code w-full bg-[#f3f6fe]" style="height: 100vh;">
+        <view class="code-tab w-full flex justify-between">
+            <view class="code-tab-tabList relative mt-43 text-center w-1/2"
+                v-for="(item,index) in tabList" :key="index"
+                @tap.stop="tabActive(item.value)"
+                :class="current===item.value?'text-30 text-black':'text-28 text-[#7D7D7D]'"
             >
                 {{ item.title }}
+                <view v-if="current===item.value" class="code-tab-tabList-line absolute -bottom-4 left-1/2 -translate-x-1/2 w-104 h-2 bg-black" />
             </view>
         </view>
-        <scroll-view class="code-list" :scroll-y="true" :enable-flex="true">
-            <view class="code-list-item" v-for="(item,index) in codeList" :key="index">
-                <view class="code-list-item-left">
-                    <view class="code-list-item-left-code">{{ calculateMD5(item.id, 10)  }}</view>
-                    <view class="code-list-item-left-time">{{item.time}}初始获得</view>
-                    <view class="code-list-item-left-title">福利抽选</view>
-                    <view class="code-list-item-left-context">
-                        <text class="code-list-item-left-context-text">第一期</text>
+        <scroll-view class="code-list relative mt-30 flex items-center flex-col w-full"
+            :scroll-y="true"
+            :enable-flex="true"
+            style="height: calc(100% - 80rpx - env(safe-area-inset-bottom));"
+        >
+            <view class="code-list-item mt-10 flex-shrink-0 mb-20 w-693 h-168 bg-[#F3F6FE] rounded-4 box-border flex items-center"
+                style="box-shadow: 0rpx 0rpx 8rpx 0rpx #B7B7B7; padding: 0 40rpx 0 20rpx;"
+                v-for="(item,index) in codeList" :key="index"
+            >
+                <view class="code-list-item-left relative flex-1">
+                    <view class="code-list-item-left-code text-30 text-black" style="transform: translateY(-20rpx);">{{ calculateMD5(item.id, 10)  }}</view>
+                    <view class="code-list-item-left-time text-24 text-[#7A7A7A]">{{item.time}}初始获得</view>
+                    <view class="code-list-item-left-title mt-10 text-26 text-[#2E2E2E]">福利抽选</view>
+                    <view class="code-list-item-left-context absolute left-114 -bottom-2 w-87 h-31 bg-[#444444] rounded-16 text-center"
+                        style="line-height: 23rpx;"
+                    >
+                        <text class="code-list-item-left-context-text text-20 text-white">第一期</text>
                     </view>
                 </view>
                 <view class="code-list-item-right">
-                    <text class="code-list-item-right-title theme-font">{{ item.status === 2 ? '已开奖':'等待开奖' }}</text>
+                    <text class="code-list-item-right-title theme-font text-40 text-black">{{ item.status === 2 ? '已开奖':'等待开奖' }}</text>
                 </view>
             </view>
             <empty :show="codeList.length===0" />
@@ -59,109 +71,4 @@ onMounted(async() => {
 
 </script>
 <style lang="scss" scoped>
-.code {
-    width:100%;
-    height:calc(100vh);
-    background: #f3f6fe;
-
-    &-tab {
-        width:100%;
-        display:flex;
-        justify-content:space-between;
-        &-tabList {
-            position: relative;
-            margin-top: 43rpx;
-            text-align: center;
-            width:50%;
-            font-size: 28rpx;
-            color: #7D7D7D;
-            &.active {
-                font-size: 30rpx;
-                color: #000000;
-            }
-            &.active::after {
-                position: absolute;
-                bottom: -4rpx;
-                left: 50%;
-                transform: translateX(-50%);
-                content: '';
-                width: 104rpx;
-                height: 2rpx;
-                background: #000000;
-            }
-        }
-    }
-    &-list {
-        margin-top: 30rpx;
-        position: relative;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        width: 100%;
-        height: calc(100% - 80rpx  - env(safe-area-inset-bottom));
-        &-item {
-        margin-top: 10rpx;
-        flex-shrink: 0;
-        margin-bottom: 20rpx;
-        width: 693rpx;
-        height: 168rpx;
-        background: #F3F6FE;
-        box-shadow: 0rpx 0rpx 8rpx 0rpx #B7B7B7;
-        border-radius: 4rpx;
-        display: flex;
-        align-items: center;
-        padding: 0 40rpx 0 20rpx;
-        box-sizing: border-box;
-        &-left {
-            position: relative;
-            flex: 1;
-            &-code {
-                font-size: 30rpx;
-                color: #000000;
-                transform: translateY(-20rpx);
-            }
-            &-time {
-                font-size: 24rpx;
-                color: #7A7A7A;
-            }
-            &-title {
-                margin-top: 10rpx;
-                font-size: 26rpx;
-                color: #2E2E2E;
-                &-text {
-                    width: 87rpx;
-                    height: 31rpx;
-                    background: #444444;
-                    border-radius: 16rpx;
-                    color: #fff;
-                    text-align: center;
-                    line-height: 31rpx;
-                }
-            }
-            &-context {
-                position: absolute;
-                left: 114rpx;
-                bottom: -2rpx;
-                width: 87rpx;
-                height: 31rpx;
-                background: #444444;
-                border-radius: 16rpx;
-                text-align: center;
-                line-height: 23rpx;
-                &-text {
-                    font-size: 20rpx;
-                    color: #fff
-                }
-            }
-        }
-        &-right {
-            &-title {
-                font-size: 40rpx;
-                color: #000000;
-            }
-        }
-    }
-    }
-
-}
 </style>

@@ -1,12 +1,12 @@
 <template>
-    <view class="infinite">
-        <view class="infinite-top">
+    <view class="infinite w-full flex flex-col pb-20 box-border" :style="{ height: 'calc(100vh - env(safe-area-inset-bottom))' }">
+        <view class="infinite-top relative w-750 h-474">
             <image src="/static/kahe-202510/ka-he/product/infinite-top-bg.png"
-                class="infinite-top-img" />
-            <view class="infinite-top-btn">
-                <view class="infinite-top-btn-item style1 theme-font" @tap.stop="tapShowModel(0)">发货须知</view>
-                <view class="infinite-top-btn-item style2 theme-font" @tap.stop="tapShowModel(1)">购买说明</view>
-                <view class="infinite-top-btn-item style3 theme-font" @tap.stop="tapShowModel(2)">品相定义</view>
+                class="infinite-top-img absolute left-0 top-0 w-full h-full" />
+            <view class="infinite-top-btn absolute right-4 top-18 flex flex-row items-center">
+                <view class="infinite-top-btn-item theme-font text-24 text-center py-4 px-6 rounded-8 mr-13 bg-[#7fff85] border-2 border-[#29984b] text-[#237927]" @tap.stop="tapShowModel(0)">发货须知</view>
+                <view class="infinite-top-btn-item theme-font text-24 text-center py-4 px-6 rounded-8 mr-13 bg-[#fffa70] border-2 border-[#785e30] text-[#85733a]" @tap.stop="tapShowModel(1)">购买说明</view>
+                <view class="infinite-top-btn-item theme-font text-24 text-center py-4 px-6 rounded-8 mr-13 bg-[#7cd2f0] border-2 border-[#785e30] text-[#237927]" @tap.stop="tapShowModel(2)">品相定义</view>
             </view>
             <!--      <view-->
             <!--        class="infinite-top-paymodel1 theme-font"-->
@@ -18,45 +18,52 @@
             <!--        @tap.stop="emits('tapShowModel', 1)"-->
             <!--        >购买说明</view-->
             <!--      >-->
-            <image class="infinite-top-logo" src="/static/kahe-202510/ka-he/common/logo.png" />
+            <image class="infinite-top-logo absolute left-0 top-0 w-180 h-71" src="/static/kahe-202510/ka-he/common/logo.png" />
         </view>
-        <view class="infinite-top-swiper">
+        <view class="infinite-top-swiper absolute left-80 top-78 flex flex-row items-center" :style="{ width: 'calc(100% - 160rpx)', height: '220rpx' }">
             <z-swiper v-model="bannerList" :options="options">
                 <z-swiper-item :custom-style="slideCustomStyle" v-for="(item, index) in bannerList" :key="index">
-                    <view class="imageBox">
-                        <image src="/static/kahe-202510/product/card-bg.png" class="imageBg" />
-                        <image class="image" :src="item" mode="aspectFill" />
+                    <view class="imageBox relative w-151" :style="{ height: 'calc(151rpx / 300 * 420)' }">
+                        <image src="/static/kahe-202510/product/card-bg.png" class="imageBg absolute w-full h-full left-0 top-0 z-1" />
+                        <image class="image absolute left-0 top-0 h-full w-full z-2" :src="item" mode="aspectFill" />
                     </view>
                 </z-swiper-item>
             </z-swiper>
         </view>
         <King v-if="product.isKindMode" :product="product" />
-        <view class="infinite-center" v-else>
-            <view class="boxItem">
-                <image src="/static/kahe-202510/ka-he/product/kings-bg.png" class="border-bg" />
-                <view class="infinite-center-right" @tap.stop="openChestModal(1)">
-                    <image class="infinite-center-right-img"
+        <view class="infinite-center relative -mt-124 w-full flex flex-row items-center justify-center mb-10" v-else
+        >
+            <view class="boxItem relative w-540 h-92 flex items-center"
+            >
+                <image src="/static/kahe-202510/ka-he/product/kings-bg.png" class="border-bg absolute inset-0 w-full h-full" />
+                <view class="infinite-center-right relative w-93 h-66" :style="{ transform: 'translate(-50rpx)' }" @tap.stop="openChestModal(1)"
+                >
+                    <image class="infinite-center-right-img w-full h-full"
                         src="/static/kahe-202510/ka-he/product/chest.png" />
-                    <view class="infinite-center-right-title theme-font">查看宝箱</view>
+                    <view class="infinite-center-right-title theme-font absolute left-1/2 w-100 -bottom-26 text-center text-26 font-normal text-white" :style="{ transform: 'translateX(-50%)', textShadow: '-1px -1px 0 #87320c, 1px -1px 0 #87320c, -1px 1px 0 #87320c, 1px 1px 0 #87320c' }">查看宝箱</view>
                 </view>
-                <view class="infinite-center-left">
-                    <view class="infinite-center-left-title">再抽{{ product.another }}发必出{{ product.nextLevel }}以上<text
-                            class="infinite-center-left-title-tips">(若提前出了则幸运值重置)</text></view>
-                    <view class="infinite-center-left-progressBg">
-                        <view class="infinite-center-left-progressBg-progress" :style="luckProgress"></view>
+                <view class="infinite-center-left relative z-1 flex flex-col items-center" :style="{ transform: 'translateX(-30rpx)' }"
+                >
+                    <view class="infinite-center-left-title text-18 text-black">再抽{{ product.another }}发必出{{ product.nextLevel }}以上<text
+                            class="infinite-center-left-title-tips text-18 text-black">(若提前出了则幸运值重置)</text></view>
+                    <view class="infinite-center-left-progressBg relative mt-15 w-459 h-22 bg-[rgba(0,0,0,0.4)] rounded-10"
+                    >
+                        <view class="infinite-center-left-progressBg-progress absolute h-full max-w-full left-0 top-0 bg-[#FF9A63] rounded-10" :style="luckProgress"></view>
                     </view>
                 </view>
 
             </view>
         </view>
-        <view class="infinite-tips" v-if="product?.attachList?.length > 0" @tap.stop="openChestModal(0)">
-            <image class="infinite-tips-bg" src="/static/kahe-202510/ka-he/product/decorate.png" />
-            <view class="infinite-tips-title theme-font">隐藏掉落</view>
-            <view class="infinite-tips-tips">每次购买均有独立概率触发掉落，存在一次多得的情况</view>
+        <view class="infinite-tips relative pl-45 pb-24 box-border flex flex-row items-center" v-if="product?.attachList?.length > 0" @tap.stop="openChestModal(0)"
+        >
+            <image class="infinite-tips-bg w-698 h-45" src="/static/kahe-202510/ka-he/product/decorate.png" />
+            <view class="infinite-tips-title theme-font absolute top-0 leading-45 left-92 text-24 font-normal text-white" :style="{ textShadow: '-1px -1px 0 #87320c, 1px -1px 0 #87320c, -1px 1px 0 #87320c, 1px 1px 0 #87320c' }">隐藏掉落</view>
+            <view class="infinite-tips-tips absolute top-0 left-208 leading-45 text-18 font-normal text-[#87320c]">每次购买均有独立概率触发掉落，存在一次多得的情况</view>
         </view>
         <InGroup @tap.stop="emits('didClickRemark')" :content="product.remark" />
         <CommonTab v-model:current-index="currentIndex" @scroll-to-lower="scrollToLower" @did-click-button=""
-            :product="product" @tabDidChange="tabDidChange" @didClickButton="handleClickAction" class="infinite-common">
+            :product="product" @tabDidChange="tabDidChange" @didClickButton="handleClickAction" class="infinite-common flex-1"
+        >
             <template #goods>
                 <in-goods :product="product" v-for="(item, index) in levelGroupList" :key="index" :item="item"
                     @click-detail="clickItem" />
@@ -229,571 +236,4 @@ const scrollToLower = () => {
 };
 </script>
 <style lang="scss" scoped>
-.infinite {
-    width: 100%;
-    height: calc(100vh - env(safe-area-inset-bottom));
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 20rpx;
-    box-sizing: border-box;
-
-    &-common {
-        flex: 1;
-    }
-
-    &-top {
-        width: 750rpx;
-        height: 474rpx;
-        position: relative;
-
-        &-img {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        &-btn {
-            position: absolute;
-            right: 4rpx;
-            top: 18rpx;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            // gap: 8rpx;
-            //z-index: 99;
-
-            &-item {
-                font-size: 24rpx;
-                text-align: center;
-                padding: 4rpx 6rpx;
-                border-radius: 8rpx;
-                margin-right: 13rpx;
-                color: #ffffff;
-            }
-
-            .style1 {
-                background: #7fff85;
-                //border-radius: 4rpx;
-                border: 2rpx solid #29984b;
-                color: #237927;
-            }
-
-            .style2 {
-                background: #fffa70;
-                //border-radius: 4rpx;
-                border: 2rpx solid #785e30;
-                color: #85733a;
-            }
-
-            .style3 {
-                background: #7cd2f0;
-                //border-radius: 4rpx;
-                border: 2rpx solid #785e30;
-                color: #237927;
-            }
-        }
-
-        &-logo {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 180rpx;
-            height: 71rpx;
-        }
-
-        &-paymodel {
-            position: absolute;
-            padding: 8rpx;
-            font-size: 28rpx;
-            color: #85733a;
-            line-height: 25rpx;
-            text-align: center;
-            border-radius: 4rpx;
-            right: 23rpx;
-            top: 20rpx;
-            background: #fffa70;
-            border: 2rpx solid #785e30;
-        }
-
-        &-paymodel1 {
-            position: absolute;
-            padding: 8rpx;
-            font-size: 28rpx;
-            color: #237927;
-            line-height: 25rpx;
-            text-align: center;
-            right: 163rpx;
-            top: 20rpx;
-            background: #7fff85;
-            border-radius: 4rpx;
-            border: 2rpx solid #29984b;
-        }
-
-        &-swiper {
-            position: absolute;
-            left: 80rpx;
-            top: 78rpx;
-            width: calc(100% - 160rpx);
-            height: 220rpx;
-
-            .imageBox {
-                position: relative;
-                height: calc(151rpx / 300 * 420);
-                width: 151rpx;
-
-                //border: 4rpx solid white;
-                //border-radius: 8rpx;
-                .imageBg {
-                    position: absolute;
-                    width: 100%;
-                    height: 100%;
-                    left: 0;
-                    top: 0;
-                    z-index: 1;
-                }
-
-                .image {
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    height: 100%;
-                    width: 100%;
-                    z-index: 2;
-                }
-            }
-        }
-
-        &-style {
-            position: absolute;
-            top: 16rpx;
-            left: 40rpx;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-
-            &-avatar {
-                width: 52rpx;
-                height: 52rpx;
-                border-radius: 50%;
-                border: 2rpx solid white;
-                z-index: 1;
-            }
-
-            &-bar {
-                margin-left: -26rpx;
-                width: 168rpx;
-                height: 36rpx;
-                background: rgba(255, 255, 255, 0.56);
-                border-radius: 18rpx;
-
-                &-title {
-                    margin-left: 32rpx;
-                    font-weight: 400;
-                    font-size: 22rpx;
-                    color: #000000;
-                    line-height: 36rpx;
-                }
-            }
-        }
-    }
-
-    &-king {
-        position: relative;
-        margin-top: -204rpx;
-        width: 713rpx;
-        height: 170rpx;
-
-        &-bg {
-            width: 713rpx;
-            height: 170rpx;
-        }
-
-        &-left {
-            position: absolute;
-            left: 120rpx;
-            top: 32rpx;
-            width: 120rpx;
-            height: 100rpx;
-
-            &-content {
-                position: relative;
-                width: 100%;
-                height: 100%;
-
-                &-decorate {
-                    width: 100%;
-                    height: 100%;
-                }
-
-                &-avatar {
-                    position: absolute;
-                    left: 30rpx;
-                    top: 24rpx;
-                    width: 60rpx;
-                    height: 60rpx;
-                    border-radius: 30rpx;
-                }
-
-                &-empty {
-                    position: absolute;
-                    left: 13rpx;
-                    top: -12rpx;
-                    width: 94rpx;
-                    height: 124rpx;
-                }
-            }
-        }
-
-        &-info {
-            position: absolute;
-            left: 224rpx;
-            top: 42rpx;
-            height: 100%;
-            margin-left: 50rpx;
-            display: flex;
-            justify-content: flex-start;
-            flex-direction: column;
-
-            &-title {
-                font-weight: 400;
-                font-size: 30rpx;
-                color: #ffffff;
-                line-height: 36rpx;
-            }
-
-            &-subTitle {
-                font-weight: normal;
-                font-size: 24rpx;
-                color: #ffffff;
-            }
-        }
-    }
-
-    &-center {
-        position: relative;
-        margin-top: -124rpx;
-        width: 100%;
-        // padding: 32rpx 60rpx 32rpx 94rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 10rpx;
-
-        .boxItem {
-            position: relative;
-            width: 540rpx;
-            height: 92rpx;
-            display: flex;
-            align-items: center;
-
-            .border-bg {
-                position: absolute;
-                inset: 0;
-                width: 100%;
-                height: 100%;
-            }
-
-
-        }
-
-        &-left {
-            position: relative;
-            z-index: 1;
-            transform: translateX(-30rpx);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            &-progressBg {
-                margin-top: 15rpx;
-                position: relative;
-                width: 459rpx;
-                height: 22rpx;
-                background-color: rgba(0, 0, 0, 0.4);
-                border-radius: 10rpx;
-
-                &-progress {
-                    position: absolute;
-                    height: 100%;
-                    max-width: 100%;
-                    left: 0;
-                    top: 0;
-                    background-color: #FF9A63;
-                    border-radius: 10rpx;
-                }
-            }
-
-            &-title {
-                font-size: 18rpx;
-                color: #000000;
-
-                &-tips {
-                    font-size: 18rpx;
-                    color: #000000;
-                }
-            }
-
-            &-text {
-                font-size: 18rpx;
-                color: #525252;
-            }
-        }
-
-        &-right {
-            position: relative;
-            width: 93rpx;
-            height: 66rpx;
-            transform: translate(-50rpx);
-
-            &-img {
-                width: 100%;
-                height: 100%;
-            }
-
-            &-title {
-                position: absolute;
-                left: 50%;
-                width: 100rpx;
-                bottom: -26rpx;
-                transform: translateX(-50%);
-                text-align: center;
-                font-weight: 400;
-                font-size: 26rpx;
-                color: #ffffff;
-                @include text-stroke-color(#87320c);
-            }
-        }
-
-
-    }
-
-    &-tips {
-        position: relative;
-        padding: 0 0 24rpx 45rpx;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        &-bg {
-            width: 698rpx;
-            height: 45rpx;
-        }
-
-        &-title {
-            position: absolute;
-            top: 0;
-            line-height: 45rpx;
-            left: 92rpx;
-            font-weight: 400;
-            font-size: 24rpx;
-            color: #ffffff;
-            @include text-stroke-color(#87320c);
-        }
-
-        &-tips {
-            position: absolute;
-            top: 0;
-            left: 208rpx;
-            line-height: 45rpx;
-            font-weight: normal;
-            font-size: 18rpx;
-            color: #87320c;
-        }
-
-        &-icon {
-            width: 41rpx;
-            height: 45rpx;
-            z-index: 2;
-        }
-
-        &-item1 {
-            z-index: 1;
-            margin-left: -28rpx;
-            position: relative;
-            width: 143rpx;
-            height: 35rpx;
-
-            &-img {
-                width: 100%;
-                height: 100%;
-            }
-
-            &-title {
-                position: absolute;
-                left: 38rpx;
-                top: 0;
-                height: 100%;
-                line-height: 35rpx;
-                font-weight: 400;
-                font-size: 24rpx;
-                color: #ffffff;
-                text-shadow:
-                    -1px -1px 0 #0c3887,
-                    1px -1px 0 #0c3887,
-                    -1px 1px 0 #0c3887,
-                    1px 1px 0 #0c3887;
-            }
-        }
-
-        &-item2 {
-            margin-left: -17rpx;
-            width: calc(100% - 140rpx);
-            height: 35rpx;
-            background: linear-gradient(90deg, #4422c2, rgba(188, 223, 255, 0.6));
-            opacity: 0.7;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-
-            &-title {
-                margin-left: 37rpx;
-                font-weight: normal;
-                font-size: 18rpx;
-                color: #ffffff;
-            }
-
-            &-search {
-                margin-left: 21rpx;
-                width: 28rpx;
-                height: 30rpx;
-            }
-        }
-    }
-
-    //&-product {
-    //  margin-top: -16rpx;
-    //  position: relative;
-    //  width: 100%;
-    //  &-bg {
-    //    width: 750rpx;
-    //    height: 454rpx;
-    //    background: linear-gradient(
-    //      to bottom,
-    //      rgba(255, 255, 255, 0.8),
-    //      rgba(255, 255, 255, 0)
-    //    );
-    //    border-radius: 50rpx 50rpx 0 0;
-    //  }
-    //  &-content {
-    //    position: absolute;
-    //    left: 0;
-    //    top: 0;
-    //    width: 100%;
-    //  }
-    //}
-
-    &-tabList {
-        margin-top: 24rpx;
-        width: 100%;
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-
-    &-scroll {
-        position: relative;
-        margin: 20rpx;
-        box-sizing: border-box;
-        width: calc(100% - 40rpx);
-        height: calc(100vh - 578rpx - env(safe-area-inset-bottom) - 142rpx);
-        background: #272727;
-        box-shadow:
-            2rpx 3rpx 3rpx 0 #445084,
-            0rpx -4rpx 4rpx 0rpx rgba(0, 0, 0, 0.45),
-            0rpx 4rpx 5rpx 0rpx rgba(179, 197, 219, 0.45);
-        border-radius: 30rpx;
-        border: 13rpx solid #000000;
-        overflow: hidden;
-
-        &-list {
-            position: relative;
-            box-sizing: border-box;
-            width: 100%;
-            height: 308rpx;
-            margin: 0 auto 30rpx;
-            border-radius: 24rpx;
-
-            &-titleTo {
-                transform: translateY(20rpx);
-                position: relative;
-                display: flex;
-                justify-content: space-evenly;
-                width: 100%;
-                height: 30rpx;
-
-                &-pro {
-                    font-size: 22rpx;
-                    color: #000000;
-                }
-
-                &-text {
-                    font-size: 16rpx;
-                    color: #888888;
-                }
-            }
-
-            &-levelName {
-                position: absolute;
-                left: 40rpx;
-                top: 0;
-                font-size: 48rpx;
-                color: #ff7f7f;
-            }
-
-            &-bg {
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                left: 0;
-                top: 0;
-            }
-
-            &-item {
-                margin-top: 40rpx;
-                position: relative;
-                padding: 0 24rpx;
-                display: flex;
-                align-items: center;
-                box-sizing: border-box;
-                width: 696rpx;
-
-                &-goods {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    margin-right: 28rpx;
-
-                    &-img {
-                        width: 171.4rpx;
-                        height: 171.4rpx;
-                    }
-
-                    &-title,
-                    &-text {
-                        font-size: 20rpx;
-                        color: #000000;
-                    }
-
-                    &-title {
-                        margin-top: 10rpx;
-                    }
-                }
-            }
-        }
-    }
-}
-
-.box-record {
-    box-sizing: border-box;
-    //padding: 0 20rpx;
-    width: calc(100% - 40rpx);
-    height: calc(100vh - 578rpx - env(safe-area-inset-bottom) - 212rpx);
-    border-radius: 24rpx;
-    overflow: hidden;
-}
 </style>

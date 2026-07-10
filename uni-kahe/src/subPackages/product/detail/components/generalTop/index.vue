@@ -1,71 +1,57 @@
 <template>
-  <view class="general-top">
+  <view class="general-top relative flex justify-center items-center" :style="{ margin: '0 auto 18rpx auto', width: '738rpx', height: '311rpx' }">
     <image
-      class="general-top-img"
+      class="general-top-img absolute w-full h-full top-0 left-0"
       src="/static/kahe-202510/ka-he/product/product-top.png"
     />
-    <view class="general-top-btn">
+    <view class="general-top-btn absolute right-16 top-28 flex flex-row items-center gap-16">
       <view
-        class="general-top-btn-item style1 theme-font"
+        class="general-top-btn-item style1 text-28 text-center py-4 px-6 rounded-10 mr-16 text-[#237927] theme-font"
         @tap.stop="tapShowModel(0)"
         >发货须知</view
       >
       <view
-        class="general-top-btn-item style2 theme-font"
+        class="general-top-btn-item style2 text-28 text-center py-4 px-6 rounded-10 mr-16 text-[#85733a] theme-font"
         @tap.stop="tapShowModel(1)"
         >购买说明</view
       >
       <view
-        class="general-top-btn-item style3 theme-font"
+        class="general-top-btn-item style3 text-28 text-center py-4 px-6 rounded-10 mr-16 text-[#237927] theme-font"
         @tap.stop="tapShowModel(2)"
         >品相定义</view
       >
     </view>
-    <view class="general-top-content">
-      <image class="general-top-content-img" :src="product.image" />
-      <view class="general-top-content-info">
-        <view class="general-top-content-info-title theme-font">{{
+    <view class="general-top-content absolute top-104 left-32 flex flex-row items-center h-175" :style="{ width: 'calc(100% - 64rpx)' }">
+      <image class="general-top-content-img aspect-square w-175 h-175" :src="product.image" />
+      <view class="general-top-content-info relative flex flex-col ml-26 mt-22">
+        <view class="general-top-content-info-title font-400 text-30 text-black theme-font">{{
           product.title
         }}</view>
-        <view
-          style="
-            display: flex;
-            flex-direction: row;
-            align-items: baseline;
-            margin-top: 25rpx;
-          "
-        >
+        <view class="flex flex-row items-baseline mt-25">
           <text
-            class="general-top-content-info-tag"
+            class="general-top-content-info-tag font-normal text-30 text-black"
             v-if="product.payType !== 8"
             >￥</text
           >
-          <view class="general-top-content-info-center theme-font">{{
+          <view class="general-top-content-info-center font-normal text-50 text-black theme-font">{{
             product.price
           }}</view>
           <text
-            class="general-top-content-info-tag"
+            class="general-top-content-info-tag font-normal text-30 text-black"
             v-if="product.payType === 8"
             >积分</text
           >
         </view>
-        <view
-          style="
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 16rpx;
-          "
-        >
-          <view class="general-top-content-info-num" v-if="choose"
+        <view class="flex flex-row items-center gap-16">
+          <view class="general-top-content-info-num text-20 text-black" v-if="choose"
             >商品余量:{{ product.num }}/{{ product.total }}
           </view>
           <view
-            class="general-top-content-info-people"
+            class="general-top-content-info-people relative w-299 h-16 bg-[#c2beb0] rounded-8 overflow-hidden"
             :style="{ width: choose ? '268rpx' : '299rpx' }"
           >
             <view
-              class="general-top-content-info-people-bg"
+              class="general-top-content-info-people-bg absolute left-0 top-0 max-w-full h-full bg-[#ff6161] rounded-8"
               :style="widthStyle"
             />
           </view>
@@ -73,19 +59,20 @@
       </view>
     </view>
     <view
-      class="general-top-reload"
+      class="general-top-reload absolute right-54 bottom-42 w-140 h-50 bg-[#5ad7af] shadow-[0_4rpx_0_0_#43a17f] rounded-20 flex flex-row items-center justify-center gap-13"
       @tap.stop="emits('didTapChange')"
       v-if="!choose"
     >
       <image
-        class="general-top-reload-icon"
+        class="general-top-reload-icon w-36 h-38"
         src="/static/kahe-202510/ka-he/product/reload-icon.png"
       />
-      <text class="general-top-reload-text theme-font">换一套</text>
+      <text class="general-top-reload-text font-400 text-24 text-white theme-font">换一套</text>
     </view>
     <image
-      class="general-top-logo"
+      class="general-top-logo absolute left-0 top-0"
       src="/static/kahe-202510/jikaquan/jikaquan-logo.png"
+      :style="{ width: 'calc(149rpx * 1.3)', height: 'calc(53rpx * 1.3)' }"
     />
   </view>
 </template>
@@ -112,168 +99,4 @@ const tapShowModel = (value: number) => {
 };
 </script>
 <style lang="scss" scoped>
-.general-top {
-  position: relative;
-  margin: 0 auto 18rpx auto;
-  width: 738rpx;
-  height: 311rpx;
-  @include flex-xy-center();
-
-  &-logo {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: calc(149rpx * 1.3);
-    height: calc(53rpx * 1.3);
-  }
-
-  &-btn {
-    position: absolute;
-    right: 16rpx;
-    top: 28rpx;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 16rpx;
-
-    &-item {
-      font-size: 28rpx;
-      text-align: center;
-      padding: 4rpx 6rpx;
-      border-radius: 10rpx;
-      margin-right: 16rpx;
-      color: #ffffff;
-    }
-
-    .style1 {
-      background: #7fff85;
-      border-radius: 4rpx;
-      border: 2rpx solid #29984b;
-      color: #237927;
-    }
-
-    .style2 {
-      background: #fffa70;
-      border-radius: 4rpx;
-      border: 2rpx solid #785e30;
-      color: #85733a;
-    }
-
-    .style3 {
-      background: #7cd2f0;
-      border-radius: 4rpx;
-      border: 2rpx solid #785e30;
-      color: #237927;
-    }
-  }
-
-  &-img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-  }
-
-  &-content {
-    position: absolute;
-    top: 104rpx;
-    left: 32rpx;
-    width: calc(100% - 64rpx);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 175rpx;
-
-    &-img {
-      aspect-ratio: 1;
-      width: 175rpx;
-      height: 175rpx;
-    }
-
-    &-info {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      margin-left: 26rpx;
-      margin-top: 22rpx;
-
-      &-title {
-        font-weight: 400;
-        font-size: 30rpx;
-        color: #000000;
-      }
-
-      &-tag {
-        font-weight: normal;
-        font-size: 30rpx;
-        color: #000000;
-      }
-
-      &-center {
-        font-weight: normal;
-        font-size: 50rpx;
-        color: #000000;
-      }
-
-      &-num {
-        font-size: 20rpx;
-        color: #000000;
-      }
-
-      &-people {
-        position: relative;
-        width: 299rpx;
-        height: 16rpx;
-        background: #c2beb0;
-        border-radius: 8rpx;
-        overflow: hidden;
-
-        &-bg {
-          position: absolute;
-          left: 0;
-          top: 0;
-          max-width: 100%;
-          height: 100%;
-          background: #ff6161;
-          border-radius: 8rpx;
-          transition: width 1s ease;
-        }
-
-        &-text {
-          font-weight: normal;
-          font-size: 20rpx;
-          color: #000000;
-        }
-      }
-    }
-  }
-
-  &-reload {
-    position: absolute;
-    right: 54rpx;
-    bottom: 42rpx;
-    width: 140rpx;
-    height: 50rpx;
-    background: #5ad7af;
-    box-shadow: 0 4rpx 0 0 #43a17f;
-    border-radius: 20rpx;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 13rpx;
-
-    &-icon {
-      width: 36rpx;
-      height: 38rpx;
-    }
-
-    &-text {
-      font-weight: 400;
-      font-size: 24rpx;
-      color: #ffffff;
-    }
-  }
-}
 </style>

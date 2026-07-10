@@ -1,23 +1,20 @@
 <template>
-    <view class="category-detail container">
-        <image class="category-detail-bg" src="/static/kahe-202510/images/mall-bg.png" />
-        <!--        <text class="category-detail-title theme-font">{{ model.name ?? '' }}</text>-->
-        <!--        <view class="custom-h-padding">-->
-
-        <!--        </view>-->
+    <view class="category-detail container relative w-full h-screen">
+        <image class="category-detail-bg absolute w-full h-full left-0 top-0" src="/static/kahe-202510/images/mall-bg.png" />
         <tab @did-change="sortDidChange" />
         <scroll-view
-            class="category-detail-content"
+            class="category-detail-content relative w-full"
             :scroll-y="true"
             :enable-flex="true"
             @scrolltolower="scrollToLower"
+            style="height: calc(100vh - env(safe-area-inset-bottom) - 100rpx);"
         >
             <view
-                class="category-detail-content-padding"
-                style="margin-top: 8px"
+                class="category-detail-content-padding w-full grid"
+                style="padding: 0 30rpx; grid-template-columns: repeat(auto-fill, minmax(40%, 1fr)); gap: 10px; margin-top: 8px;"
             >
                 <view
-                    class="category-detail-content-padding-item"
+                    class="category-detail-content-padding-item inline-block"
                     v-for="(item, index) in mallList"
                     :key="index"
                     @tap.stop="mallListAction(item)"
@@ -86,35 +83,4 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.category-detail {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    &-bg {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        top: 0;
-    }
-    &-content {
-        position: relative;
-        width: 100%;
-        height: calc(100vh - env(safe-area-inset-bottom) - 100rpx);
-        &-padding {
-            width: calc(100% - 60rpx);
-            padding: 0 30rpx;
-            display: grid;
-            grid-template-columns: repeat(
-                auto-fill,
-                minmax(40%, 1fr)
-            ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-            grid-gap: 10px; // 这是网格间的间隙，根据需要调整
-
-            &-item {
-                display: inline-block;
-            }
-        }
-    }
-}
 </style>

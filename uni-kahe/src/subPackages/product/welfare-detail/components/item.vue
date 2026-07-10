@@ -1,9 +1,11 @@
 <template>
-    <view class="list">
-        <image class="list-img" :src="item.goodsDto.image" />
+    <view class="list w-300 h-113 flex items-center rounded-10 border-4 border-[#91bff8]"
+        style="background: linear-gradient(180deg, #d8e9fd, #91bff8);"
+    >
+        <image class="list-img relative w-86 ml-12" :src="item.goodsDto.image" style="height: calc(86rpx / 320 * 400);" />
         <view style="margin-left: 12rpx">
-            <view class="list-title theme-font">{{ item.goodsDto.name }}</view>
-            <view class="list-text">抽{{ item.num }}份/期</view>
+            <view class="list-title theme-font relative text-26 font-normal text-black">{{ item.goodsDto.name }}</view>
+            <view class="list-text relative text-18 text-[#5d5d5d]">抽{{ item.num }}份/期</view>
         </view>
     </view>
 </template>
@@ -20,32 +22,4 @@ defineProps({
 })
 </script>
 <style lang="scss" scoped>
-.list {
-    width: 300rpx;
-    height: 113rpx;
-    background: linear-gradient(180deg, #d8e9fd, #91bff8);
-    border-radius: 10rpx;
-    border: 4rpx solid #91bff8;
-    display: flex;
-    align-items: center;
-    &-img {
-        position: relative;
-        width: 86rpx;
-        height: calc(86rpx / 320 * 400);
-        margin-left: 12rpx;
-    }
-    &-title {
-        position: relative;
-
-        font-weight: 400;
-        font-size: 26rpx;
-        color: #000000;
-    }
-    &-text {
-        position: relative;
-
-        font-size: 18rpx;
-        color: #5d5d5d;
-    }
-}
 </style>

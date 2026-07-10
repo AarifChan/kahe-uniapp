@@ -1,21 +1,23 @@
 <template>
-    <view class="card">
-        <view class="bottoms">
-            <image src="/static/kahe-202510/ka-he/machine/btn-bg.png" class="bottoms-bg" />
-            <view class="content">
-                <view class="content-Progressbar">
-                    <view class="content-Progressbar-bg">
-                        <view class="content-Progressbar-bg-style" :style="luckProgress" />
+    <view class="card fixed flex w-full flex-row" style="bottom: env(safe-area-inset-bottom);">
+        <view class="bottoms relative w-full h-244 flex flex-col items-center">
+            <image src="/static/kahe-202510/ka-he/machine/btn-bg.png" class="bottoms-bg absolute w-full h-full inset-0" style="z-index: -1;" />
+            <view class="content my-25 flex flex-col items-center">
+                <view class="content-Progressbar mt-8 w-406 h-18">
+                    <view class="content-Progressbar-bg relative w-406 h-18 rounded-9" style="background: rgba(0, 0, 0, 0.3);">
+                        <view class="content-Progressbar-bg-style absolute top-0 left-0 h-18 max-w-full rounded-9" :style="luckProgress" style="background-color: #CD5700;" />
                     </view>
                 </view>
-                <text class="content-title theme-font">单人{{ (productDetail.another / 5).toFixed(0)
+                <text class="content-title theme-font text-24 text-[#CD5700] mr-24">单人{{ (productDetail.another / 5).toFixed(0)
                 }}包,必出高罕卡</text>
             </view>
-            <view class="btnList">
-                <view class="btnList-bolist" v-for="(item, index) in list" :key="index"
-                    @tap.stop="$emit('tapCards', item)">
-                    <image src="/static/kahe-202510/ka-he/machine/card-btn.png" class="img" />
-                    <view class="num theme-font">{{ item.num / 5 }}包</view>
+            <view class="btnList w-full grid box-border" style="padding: 0 45rpx; gap: 28rpx; grid-template-columns: repeat(4, 1fr);"
+            >
+                <view class="btnList-bolist relative w-full h-67" v-for="(item, index) in list" :key="index"
+                    @tap.stop="$emit('tapCards', item)"
+                >
+                    <image src="/static/kahe-202510/ka-he/machine/card-btn.png" class="img absolute left-0 top-0 w-full h-full" />
+                    <view class="num theme-font relative w-full text-center mt-4 text-26 font-normal text-[#DA571D]">{{ item.num / 5 }}包</view>
                 </view>
             </view>
         </view>
@@ -44,119 +46,4 @@ const luckProgress = computed(() => {
 });
 </script>
 <style lang="scss" scoped>
-.card {
-    position: fixed;
-    bottom: calc(env(safe-area-inset-bottom));
-    display: flex;
-    width: calc(100%);
-    flex-direction: row;
-
-    .bottoms {
-        width: 100%;
-        // 68rpx
-        position: relative;
-        height: 244rpx;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-
-        &-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            bottom: 0;
-            inset: 0;
-            z-index: -1;
-        }
-
-        .content {
-            margin: 25rpx 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            &-title {
-                font-size: 24rpx;
-                color: #CD5700;
-                margin-right: 24rpx;
-            }
-
-            &-Progressbar {
-                margin-top: 8rpx;
-                width: 406rpx;
-                height: 18rpx;
-
-                &-bg {
-                    position: relative;
-                    width: 406rpx;
-                    height: 18rpx;
-                    background: rgba(0, 0, 0, 0.3);
-                    border-radius: 9rpx;
-
-                    &-ProgressbarBg {
-                        position: absolute;
-                        width: 100%;
-                        height: 100%;
-                        left: 0;
-                        top: 0;
-                        z-index: 0;
-                    }
-
-                    &-style {
-                        position: absolute;
-                        max-width: 100%;
-                        top: 0;
-                        height: 18rpx;
-                        border-radius: 9rpx;
-                        left: 0;
-                        background-color: #CD5700;
-                    }
-                }
-            }
-
-            &-img {
-                position: absolute;
-                top: 32rpx;
-                right: 46rpx;
-                width: 93rpx;
-                height: 92rpx;
-            }
-        }
-
-        .btnList {
-            width: 100%;
-            padding: 0 45rpx;
-            box-sizing: border-box;
-            display: grid;
-            gap: 28rpx;
-            grid-template-columns: repeat(4, 1fr);
-
-            &-bolist {
-                position: relative;
-                width: 100%;
-                height: 67rpx;
-
-                .img {
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    width: 100%;
-                    height: 100%;
-                }
-
-                .num {
-                    position: relative;
-                    font-weight: 400;
-                    font-size: 26rpx;
-                    color: #DA571D;
-                    width: 100%;
-                    text-align: center;
-                    margin-top: 4rpx;
-                }
-            }
-        }
-
-    }
-}
 </style>

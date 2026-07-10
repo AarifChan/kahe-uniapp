@@ -1,65 +1,69 @@
 <template>
-  <view class="goodsBox">
-    <view class="goodsBox-top">
-      <view class="goodsBox-top-image">
+  <view class="goodsBox inline-block relative">
+    <view class="goodsBox-top relative w-200 h-200 bg-[rgba(253,239,204,0.72)] rounded-10 border-5 border-[#fcd570]">
+      <view class="goodsBox-top-after absolute left-0 top-0 right-0 bottom-0 rounded-10 border-4 border-[#e2af2f] pointer-events-none" />
+      <view class="goodsBox-top-image absolute left-0 top-0 rounded-12 w-full h-full flex flex-row justify-center items-center">
         <image
-          class="goodsBox-top-image-img"
+          class="goodsBox-top-image-img w-full h-full"
           :src="item.image"
           mode="heightFix"
+          :style="{ width: 'calc(100% - 24rpx)', height: 'calc(100% - 24rpx)' }"
         />
       </view>
 
-      <view v-if="!item.isHide && !isInfinite" class="goodsBox-top-numBg">
+      <view v-if="!item.isHide && !isInfinite" class="goodsBox-top-numBg absolute right-0 bottom-0 w-87 h-54 z-10">
         <image
-          class="goodsBox-top-numBg-bg"
+          class="goodsBox-top-numBg-bg w-full h-full"
           src="/static/kahe-202510/ka-he/common/num_bg.png"
         />
-        <text class="goodsBox-top-numBg-num" v-if="item.isSky">{{
+        <text class="goodsBox-top-numBg-num absolute right-0 bottom-0 w-87 leading-54 text-center text-18 text-black" v-if="item.isSky">{{
           item.num
         }}</text>
-        <text class="goodsBox-top-numBg-num" v-else-if="item.isStrand"
+        <text class="goodsBox-top-numBg-num absolute right-0 bottom-0 w-87 leading-54 text-center text-18 text-black" v-else-if="item.isStrand"
           >串{{ item.total }}</text
         >
-        <text class="goodsBox-top-numBg-num" v-else
+        <text class="goodsBox-top-numBg-num absolute right-0 bottom-0 w-87 leading-54 text-center text-18 text-black" v-else
           >{{ item.last }}/{{ item.total }}</text
         >
       </view>
-      <view class="goodsBox-top-quality">{{
+      <view class="goodsBox-top-quality absolute left-8 py-4 px-8 text-[#222] text-20 bg-[#f6ac41] rounded-4"
+        :style="{ bottom: '4px' }"
+        >{{
         getTitleByQuality(item.quality)
       }}</view>
-      <view class="goodsBox-top-empty" v-if="item.isSellOut">
+      <view class="goodsBox-top-empty absolute left-0 top-0 w-full h-full bg-[rgba(0,0,0,0.73)] flex flex-row justify-center items-center" v-if="item.isSellOut">
         <image
-          style="width: 132rpx; height: 113rpx"
+          class="goodsBox-top-empty-img w-132 h-113"
           src="/static/kahe-202510/product/sell-out.png"
         />
       </view>
       <image
         v-if="!item.isHide"
-        class="goodsBox-top-level"
+        class="goodsBox-top-level absolute -left-24 -top-24 w-100 h-80 z-10"
         mode="widthFix"
         :src="getLevelImageByLevel(item.level)"
       />
       <image
         v-if="item.isDemon"
-        class="goodsBox-top-king"
+        class="goodsBox-top-king absolute -top-36 -right-16 w-107 h-72 z-10"
         src="/static/kahe-202510/common/king.png"
       />
     </view>
-    <view class="goodsBox-info">
+    <view class="goodsBox-info mt-8 flex flex-col">
       <view
-        class="goodsBox-info-title text-flow-ellipsis-single"
-        :style="{ color: showPrice ? '#000000' : '#ffffff' }"
+        class="goodsBox-info-title w-200 text-black text-flow-ellipsis-single"
+        :style="{ color: showPrice ? '#000000' : '#ffffff', fontSize: '10px' }"
         >{{ item.title }}</view
       >
       <view v-if="showPrice">
-        <view class="goodsBox-info-subTitle" v-if="!item.isHide"
+        <view class="goodsBox-info-subTitle" :style="{ color: '#909090', fontSize: '9px' }" v-if="!item.isHide"
           >参考价: {{ goodsPrice }}</view
         >
-        <view class="goodsBox-info-prob" v-if="item.isSky"
+        <view class="goodsBox-info-prob" :style="{ color: '#55d8b0', fontSize: '9px' }" v-if="item.isSky"
           >{{ item.prob }}~{{ item.weight }}抽完赠送</view
         >
-        <view class="goodsBox-info-prob" v-else-if="item.isSpec">只赠不售</view>
-        <view class="goodsBox-info-prob" v-else> 获得概率{{ item.prob }}%</view>
+        <view class="goodsBox-info-prob" :style="{ color: '#55d8b0', fontSize: '9px' }" v-else-if="item.isSpec">只赠不售</view>
+        <view class="goodsBox-info-prob" :style="{ color: '#55d8b0', fontSize: '9px' }" v-else> 获得概率{{ item.prob }}%</view>
       </view>
     </view>
   </view>
@@ -113,133 +117,4 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-.goodsBox {
-  display: inline-block;
-  position: relative;
-
-  &-top {
-    position: relative;
-    width: 200rpx;
-    height: 200rpx;
-    background: rgba(253, 239, 204, 0.72);
-    border-radius: 10rpx;
-    border: 5rpx solid #fcd570;
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border-radius: 10rpx;
-      border: 4rpx solid #e2af2f;
-      pointer-events: none; // 确保伪元素不阻挡鼠标事件
-    }
-    &-bg {
-      left: 0;
-      top: 0;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-    }
-
-    &-quality {
-      position: absolute;
-      left: 8rpx;
-      bottom: 4px;
-      padding: 4rpx 8rpx;
-      color: #222;
-      font-size: 20rpx;
-      background: #f6ac41;
-      border-radius: 4rpx;
-    }
-
-    &-empty {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.73);
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-    }
-    &-image {
-      position: absolute;
-      left: 0;
-      top: 0;
-      border-radius: 12rpx;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      &-img {
-        width: calc(100% - 24rpx);
-        height: calc(100% - 24rpx);
-      }
-    }
-
-    &-level {
-      position: absolute;
-      left: -24rpx;
-      top: -24rpx;
-      width: 100rpx;
-      height: 80rpx;
-      z-index: 10;
-    }
-    &-king {
-      position: absolute;
-      top: -36rpx;
-      right: -16rpx;
-      width: 107rpx;
-      height: 72rpx;
-      z-index: 10;
-    }
-    &-numBg {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 87rpx;
-      height: 54rpx;
-      z-index: 10;
-      &-bg {
-        width: 100%;
-        height: 100%;
-      }
-      &-num {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 87rpx;
-        line-height: 54rpx;
-        text-align: center;
-        font-size: 18rpx;
-        color: #000000;
-      }
-    }
-  }
-
-  &-info {
-    margin-top: 8rpx;
-    display: flex;
-    flex-direction: column;
-    &-title {
-      width: 200rpx;
-      color: #000000;
-      font-size: 10px;
-    }
-    &-subTitle {
-      color: #909090;
-      font-size: 9px;
-    }
-    &-prob {
-      color: #55d8b0;
-      font-size: 9px;
-    }
-  }
-}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <view class="general">
+  <view class="general w-full py-32 flex flex-col" :style="{ height: 'calc(100vh - env(safe-area-inset-bottom))' }">
     <top
       :product="product"
       @tap-show-model="tapShowModel"
@@ -20,12 +20,12 @@
       @scroll-to-lower="scrollToLower"
       :product="product"
       @did-click-button="handleClickAction"
-      class="general-common"
+      class="general-common flex-1"
     >
       <template #goods>
-        <view class="general-content-list">
+        <view class="general-content-list box-border relative grid gap-30" :style="{ gridTemplateColumns: 'repeat(auto-fill, minmax(calc((100% - 60rpx) / 3), 1fr))' }">
           <goods-item
-            class="general-content-list-item"
+            class="general-content-list-item inline-block w-full"
             v-for="(item, index) in goodsList"
             :key="index"
             :item="item"
@@ -163,187 +163,4 @@ const didClickPurchase = (num: number) => {
 };
 </script>
 <style lang="scss" scoped>
-.general {
-  width: 100%;
-  padding: 32rpx 0;
-  height: calc(100vh - env(safe-area-inset-bottom));
-  display: flex;
-  flex-direction: column;
-
-  &-common {
-    flex: 1;
-  }
-
-  &-tab {
-    width: 100%;
-    margin-top: 24rpx;
-    position: relative;
-    @include flex-y-center();
-    justify-content: center;
-
-    &-tabList {
-      position: relative;
-      width: 309rpx;
-      height: 46rpx;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 23rpx;
-
-      &-tabListBg {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-      }
-    }
-  }
-
-  &-content {
-    position: relative;
-    margin: 16rpx 20rpx;
-    box-sizing: border-box;
-    width: calc(100% - 40rpx);
-    overflow: hidden;
-
-    &-bg {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 723 / 707;
-    }
-
-    &-tab2 {
-      position: absolute;
-      left: 192rpx;
-      top: 20rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 5rpx;
-    }
-
-    &-tab {
-      position: absolute;
-      left: 34rpx;
-      top: 20rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 5rpx;
-
-      &-active {
-        width: 7rpx;
-        height: 30rpx;
-        background: #fe7a4e;
-        border-radius: 4rpx;
-      }
-
-      &-title {
-        font-weight: 400;
-        font-size: 36rpx;
-        color: #000000;
-      }
-    }
-
-    &-style {
-      position: absolute;
-      top: 16rpx;
-      right: 40rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-
-      &-avatar {
-        width: 52rpx;
-        height: 52rpx;
-        border-radius: 50%;
-        border: 2rpx solid white;
-        z-index: 1;
-      }
-
-      &-bar {
-        margin-left: -26rpx;
-        height: 36rpx;
-        background: rgba(255, 255, 255, 0.56);
-        border-radius: 18rpx;
-
-        &-title {
-          margin-left: 32rpx;
-          font-weight: 400;
-          font-size: 22rpx;
-          color: #000000;
-          line-height: 36rpx;
-        }
-      }
-    }
-
-    &-actions {
-      position: absolute;
-      right: 0;
-      top: 100rpx;
-      display: flex;
-      flex-direction: column;
-      gap: 20rpx;
-
-      &-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        &-img {
-          width: 56rpx;
-          height: 56rpx;
-        }
-
-        &-title {
-          z-index: 2;
-          margin-top: -14rpx;
-          font-weight: 400;
-          font-size: 20rpx;
-          color: #ffffff;
-          @include text-stroke-color(#703b16);
-        }
-      }
-    }
-
-    &-record {
-      position: absolute;
-      //width: 100%;
-      box-sizing: border-box;
-      left: 20rpx;
-      top: 96rpx;
-      height: calc(100vh - 678rpx - env(safe-area-inset-bottom) - 122rpx);
-      width: calc(100% - 40rpx);
-      display: flex;
-      flex-direction: column;
-    }
-
-    &-goods {
-      position: absolute;
-      left: 20rpx;
-      top: 96rpx;
-      height: calc(100vh - 678rpx - env(safe-area-inset-bottom) - 122rpx);
-      width: calc(100% - 40rpx);
-    }
-
-    &-list {
-      position: relative;
-      box-sizing: border-box;
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fill,
-        minmax(calc((100% - 60rpx) / 3), 1fr)
-      ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-      grid-gap: 30rpx; // 这是网格间的间隙，根据需要调整
-
-      &-item {
-        display: inline-block;
-        width: 100%;
-      }
-    }
-  }
-}
 </style>

@@ -1,7 +1,9 @@
 <template>
-    <view class="boxSelectRow">
-        <image class="boxSelectRow-bg" mode="widthFix" src="/static/kahe/product/box-select-row-bg.png" />
-        <view class="boxSelectRow-content">
+    <view class="boxSelectRow relative w-full mb-20">
+        <image class="boxSelectRow-bg w-full" mode="widthFix" src="/static/kahe/product/box-select-row-bg.png" />
+        <view class="boxSelectRow-content absolute left-0 top-0 py-16 px-21 flex flex-row justify-start"
+            :style="{ width: 'calc(100% - 42rpx)', height: 'calc(100% - 42rpx)' }"
+        >
             <box-item
                 v-for="(item,zIndex) in  boxList"
                 :index=" index * 8 + zIndex + 1 "
@@ -59,23 +61,4 @@ const checkIsSelected = (index: number) => {
 </script>
 
 <style lang="scss" scoped>
-.boxSelectRow{
-    position: relative;
-    width: 100%;
-    margin-bottom: 20rpx;
-    &-bg{
-        width: 100%;
-    }
-    &-content{
-        position: absolute;
-        left: 0;
-        top: 0;
-        padding: 16rpx 21rpx;
-        width: calc(100% - 42rpx);
-        height: calc(100% - 42rpx);
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-    }
-}
 </style>

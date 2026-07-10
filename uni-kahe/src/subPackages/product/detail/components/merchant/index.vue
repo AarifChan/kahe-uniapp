@@ -1,18 +1,18 @@
 <template>
-  <view class="merchantCard">
-    <view class="left">
-      <view class="avatar">
-        <image class="avatar-img" :src="product.merchant?.icon" />
+  <view class="merchantCard relative m-32 w-[calc(100%-64rpx)] p-16 box-border flex flex-row items-center justify-between bg-[#fffbef] shadow-[0rpx_3rpx_7rpx_0rpx_#d9be86] rounded-10">
+    <view class="left flex flex-row items-center">
+      <view class="avatar w-131 h-131 bg-white shadow-[0rpx_3rpx_7rpx_0rpx_#d4d4d4] rounded-full p-8">
+        <image class="avatar-img w-full h-full rounded-full" :src="product.merchant?.icon" />
       </view>
-      <view class="info">
-        <view class="info-name">{{ product.merchant?.name }}</view>
-        <view class="info-tips" v-if="product.type === 4"
+      <view class="info ml-12 flex flex-col">
+        <view class="info-name font-normal text-30 text-black">{{ product.merchant?.name }}</view>
+        <view class="info-tips mt-24 font-normal text-24 text-[#4e4e4e]" v-if="product.type === 4"
           >【满开福袋，售罄后揭晓结果】</view
         ><view v-else>本次福袋支付后立即显示结果</view>
       </view>
     </view>
     <view
-      class="right-btn theme-font"
+      class="right-btn theme-font w-146 h-56 bg-[#53d6ac] shadow-[0rpx_4rpx_0rpx_0rpx_#43a17f] rounded-8 text-center leading-56 font-normal text-30 text-white"
       @tap.stop="didClickMerchant(product.merchant)"
       >进店看看</view
     >
@@ -32,65 +32,5 @@ defineProps({
 });
 </script>
 
-<style scoped lang="scss">
-.merchantCard {
-  margin: 32rpx;
-  position: relative;
-  width: calc(100% - 64rpx);
-  padding: 16rpx;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  background: #fffbef;
-  box-shadow: 0rpx 3rpx 7rpx 0rpx #d9be86;
-  border-radius: 10rpx;
-}
-.left {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.avatar {
-  width: 131rpx;
-  height: 131rpx;
-  background: #ffffff;
-  box-shadow: 0rpx 3rpx 7rpx 0rpx #d4d4d4;
-  border-radius: 50%;
-  padding: 8rpx;
-  &-img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-  }
-}
-.info {
-  margin-left: 12rpx;
-  display: flex;
-  flex-direction: column;
-  &-name {
-    font-weight: 400;
-    font-size: 30rpx;
-    color: #000000;
-  }
-  &-tips {
-    margin-top: 24rpx;
-    font-weight: 400;
-    font-size: 24rpx;
-    color: #4e4e4e;
-  }
-}
-.right-btn {
-  width: 146rpx;
-  height: 56rpx;
-  background: #53d6ac;
-  box-shadow: 0rpx 4rpx 0rpx 0rpx #43a17f;
-  border-radius: 8rpx;
-  text-align: center;
-  line-height: 56rpx;
-  font-weight: 400;
-  font-size: 30rpx;
-  color: #ffffff;
-}
+<style lang="scss" scoped>
 </style>

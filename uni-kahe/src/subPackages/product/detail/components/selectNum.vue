@@ -1,7 +1,8 @@
 <template>
-  <view class="box-container">
+  <view class="box-container relative w-full h-screen">
     <scroll-view
-      class="selectNum"
+      class="selectNum w-full flex flex-col box-border"
+      :style="{ padding: '16px 0', height: 'calc(100vh - env(safe-area-inset-bottom) - 100rpx)' }"
       :scroll-y="true"
       @scrolltolower="emits('scrollToLower')"
     >
@@ -15,9 +16,9 @@
       />
       <merchant :product="product" />
       <InGroup @tap.stop="emits('didClickRemark')" :content="product.remark" />
-      <view class="selectNum-content-goods">
+      <view class="selectNum-content-goods box-border relative grid gap-30 mx-20 my-16 p-32 bg-[#fffbef] overflow-hidden shadow-[0rpx_3rpx_7rpx_0rpx_#d9be86] rounded-10" :style="{ width: 'calc(100% - 40rpx)', gridTemplateColumns: 'repeat(auto-fill, minmax(calc((100% - 60rpx) / 3), 1fr))' }">
         <goods-item
-          class="selectNum-content-goods-item"
+          class="selectNum-content-goods-item inline-block w-full"
           :is-select="true"
           v-for="(item, index) in goodsList"
           :key="index"
@@ -27,115 +28,116 @@
         />
       </view>
 
-      <view class="selectNum-tab">
-        <view class="selectNum-tab-item" @tap.stop="didClickTabItem(0)">
+      <view class="selectNum-tab w-full box-border flex flex-row items-center justify-evenly gap-40 py-8 px-20">
+        <view class="selectNum-tab-item relative w-309 aspect-ratio-[309/106]" @tap.stop="didClickTabItem(0)">
           <image
-            class="selectNum-tab-item-bg"
+            class="selectNum-tab-item-bg relative w-full h-full"
             :src="
               currentTab === 0
                 ? '/static/kahe-202510/ka-he/product/tab-normal.png'
                 : '/static/kahe-202510/ka-he/product/tab-disable.png'
             "
           />
-          <view class="selectNum-tab-item-content">
+          <view class="selectNum-tab-item-content absolute left-0 top-0 w-full h-full flex flex-row items-center justify-center">
             <text
-              class="theme-font selectNum-tab-item-title"
-              :style="{ color: currentTab === 0 ? '#fb7f3c' : '#969696' }"
+              class="theme-font selectNum-tab-item-title text-40 font-normal"
+              :style="{ color: currentTab === 0 ? '#fb7f3c' : '#969696', textShadow: '-3rpx -3rpx 0 #ffffff, 3rpx -3rpx 0 #ffffff, -3rpx 3rpx 0 #ffffff, 3rpx 3rpx 0 #ffffff' }"
               >{{ product.type === 4 ? "赏品" : "赏品一览" }}</text
             >
           </view>
         </view>
         <view
-          class="selectNum-tab-item"
+          class="selectNum-tab-item relative w-309 aspect-ratio-[309/106]"
           @tap.stop="didClickTabItem(product.type === 4 ? 2 : 1)"
         >
           <image
-            class="selectNum-tab-item-bg"
+            class="selectNum-tab-item-bg relative w-full h-full"
             :src="
               currentTab === (product.type === 4 ? 2 : 1)
                 ? '/static/kahe-202510/ka-he/product/tab-normal.png'
                 : '/static/kahe-202510/ka-he/product/tab-disable.png'
             "
           />
-          <view class="selectNum-tab-item-content">
+          <view class="selectNum-tab-item-content absolute left-0 top-0 w-full h-full flex flex-row items-center justify-center">
             <text
-              class="theme-font selectNum-tab-item-title"
+              class="theme-font selectNum-tab-item-title text-40 font-normal"
               :style="{
                 color:
                   currentTab === (product.type === 4 ? 2 : 1)
                     ? '#fb7f3c'
                     : '#969696',
+                textShadow: '-3rpx -3rpx 0 #ffffff, 3rpx -3rpx 0 #ffffff, -3rpx 3rpx 0 #ffffff, 3rpx 3rpx 0 #ffffff',
               }"
               >{{ product.type === 4 ? "购买记录" : "抽赏记录" }}</text
             >
           </view>
         </view>
         <view
-          class="selectNum-tab-item"
+          class="selectNum-tab-item relative w-309 aspect-ratio-[309/106]"
           @tap.stop="didClickTabItem(1)"
           v-if="product.type === 4"
         >
           <image
-            class="selectNum-tab-item-bg"
+            class="selectNum-tab-item-bg relative w-full h-full"
             :src="
               currentTab === 1
                 ? '/static/kahe-202510/ka-he/product/tab-normal.png'
                 : '/static/kahe-202510/ka-he/product/tab-disable.png'
             "
           />
-          <view class="selectNum-tab-item-content">
+          <view class="selectNum-tab-item-content absolute left-0 top-0 w-full h-full flex flex-row items-center justify-center">
             <text
-              class="theme-font selectNum-tab-item-title"
-              :style="{ color: currentTab === 1 ? '#fb7f3c' : '#969696' }"
+              class="theme-font selectNum-tab-item-title text-40 font-normal"
+              :style="{ color: currentTab === 1 ? '#fb7f3c' : '#969696', textShadow: '-3rpx -3rpx 0 #ffffff, 3rpx -3rpx 0 #ffffff, -3rpx 3rpx 0 #ffffff, 3rpx 3rpx 0 #ffffff' }"
               >结果</text
             >
           </view>
         </view>
       </view>
-      <view class="selectNum-content" v-if="currentTab === 0">
-        <view class="selectNum-content-top">
-          <view class="selectNum-content-top-info">
-            <view class="selectNum-content-top-info-left">
-              <text class="selectNum-content-top-info-left-title theme-font"
+      <view class="selectNum-content box-border mx-20 my-8 p-21 bg-[#fffbef] overflow-hidden shadow-[0rpx_3rpx_7rpx_0rpx_#d9be86] rounded-10" :style="{ width: 'calc(100% - 40rpx)' }" v-if="currentTab === 0">
+        <view class="selectNum-content-top relative w-full">
+          <view class="selectNum-content-top-info w-full flex flex-row justify-between items-center">
+            <view class="selectNum-content-top-info-left flex flex-row items-center">
+              <text class="selectNum-content-top-info-left-title theme-font mx-20 text-24 font-normal text-black"
                 >指定福袋</text
               >
               <image
-                class="selectNum-content-top-info-left-box"
+                class="selectNum-content-top-info-left-box w-36 h-36"
                 src="/static/kahe-202510/jikaquan/box-normal.png"
               />
-              <text class="selectNum-content-top-info-left-tips">可选</text>
+              <text class="selectNum-content-top-info-left-tips ml-5 mr-28 text-16 text-black">可选</text>
               <image
-                class="selectNum-content-top-info-left-box"
+                class="selectNum-content-top-info-left-box w-36 h-36"
                 src="/static/kahe-202510/ka-he/product/box-sell.png"
               />
-              <text class="selectNum-content-top-info-left-tips">已售</text>
+              <text class="selectNum-content-top-info-left-tips ml-5 mr-28 text-16 text-black">已售</text>
               <image
-                class="selectNum-content-top-info-left-box"
+                class="selectNum-content-top-info-left-box w-36 h-36"
                 src="/static/kahe-202510/ka-he/product/box-lock.png"
               />
-              <text class="selectNum-content-top-info-left-tips">上锁</text>
+              <text class="selectNum-content-top-info-left-tips ml-5 mr-28 text-16 text-black">上锁</text>
             </view>
           </view>
         </view>
-        <view class="selectNum-content-box">
+        <view class="selectNum-content-box box-border w-full grid gap-20 mt-21" :style="{ gridTemplateColumns: 'repeat(auto-fill, minmax(calc((100% - 7 * 20rpx) / 8), 1fr))' }">
           <view
-            class="selectNum-content-box-item"
+            class="selectNum-content-box-item relative aspect-ratio-[1/1] text-white"
             v-for="(item, index) in boxList"
             :key="index"
             @tap.stop="handleSelectBox(item)"
           >
             <image
-              class="selectNum-content-box-item-img"
+              class="selectNum-content-box-item-img w-full h-full"
               :src="`/static/kahe-202510/ka-he/product/box-${item.state === 1 ? 'normal' : item.state === 0 ? 'sell' : 'lock'}.png`"
             />
-            <view class="selectNum-content-box-item-title">
+            <view class="selectNum-content-box-item-title absolute left-10 top-5 font-normal text-24 text-white">
               {{ item.title }}</view
             >
           </view>
         </view>
       </view>
-      <view class="selectNum-content" v-if="currentTab === 1">
-        <view class="selectNum-content-records">
+      <view class="selectNum-content box-border mx-20 my-8 p-21 bg-[#fffbef] overflow-hidden shadow-[0rpx_3rpx_7rpx_0rpx_#d9be86] rounded-10" :style="{ width: 'calc(100% - 40rpx)' }" v-if="currentTab === 1">
+        <view class="selectNum-content-records box-border w-full">
           <record
             :record-list="recordList"
             :is-select="true"
@@ -145,8 +147,8 @@
           />
         </view>
       </view>
-      <view class="selectNum-content" v-if="currentTab === 2">
-        <view class="selectNum-content-records">
+      <view class="selectNum-content box-border mx-20 my-8 p-21 bg-[#fffbef] overflow-hidden shadow-[0rpx_3rpx_7rpx_0rpx_#d9be86] rounded-10" :style="{ width: 'calc(100% - 40rpx)' }" v-if="currentTab === 2">
+        <view class="selectNum-content-records box-border w-full">
           <record
             :record-list="orderList"
             :is-select="true"
@@ -158,55 +160,57 @@
         </view>
       </view>
     </scroll-view>
-    <view class="box-container-bottom">
+    <view class="box-container-bottom fixed bottom-0 left-0 w-750 flex flex-col">
       <image
-        class="box-container-bottom-bg"
+        class="box-container-bottom-bg w-750 h-164"
         src="/static/kahe-202510/ka-he/welfare/bottom-bg.png"
       />
-      <view class="box-container-bottom-content">
-        <view class="box-container-bottom-left">
+      <view class="box-container-bottom-content absolute left-0 bottom-32 w-full px-32 box-border flex flex-row items-center justify-between" :style="{ padding: '0 32rpx' }">
+        <view class="box-container-bottom-left flex flex-row items-center justify-start font-normal text-28 text-black">
           已选<text style="color: red">{{ boxSelect.length }}</text
           >个 共<text style="color: red">{{
             (boxSelect.length * product.price).toFixed(1)
           }}</text
           >元
         </view>
-        <view class="box-container-bottom-right">
+        <view class="box-container-bottom-right flex flex-row items-center">
           <view
-            class="box-container-bottom-right-item"
+            class="box-container-bottom-right-item relative ml-16 w-181 h-76"
             @tap.stop="didClickExchange"
           >
             <image
-              class="box-container-bottom-right-item-bg"
+              class="box-container-bottom-right-item-bg w-full h-full"
               src="/static/kahe-202510/ka-he/common/common-btn-bg.png"
             />
             <text
-              class="box-container-bottom-right-item-text theme-font text-stroke-main"
+              class="box-container-bottom-right-item-text theme-font absolute left-0 top-16 w-full text-center text-40 font-normal text-white leading-36"
+              :style="{ textShadow: '-1px -1px 0 #0F2268, 1px -1px 0 #0F2268, -1px 1px 0 #0F2268, 1px 1px 0 #0F2268' }"
               >换 箱</text
             >
           </view>
           <view
-            class="box-container-bottom-right-item"
+            class="box-container-bottom-right-item relative ml-16 w-181 h-76"
             @tap.stop="didClickPurchase"
           >
             <image
-              class="box-container-bottom-right-item-bg"
+              class="box-container-bottom-right-item-bg w-full h-full"
               src="/static/kahe-202510/ka-he/common/common-btn-bg.png"
             />
             <text
-              class="box-container-bottom-right-item-text theme-font text-stroke-main"
+              class="box-container-bottom-right-item-text theme-font absolute left-0 top-16 w-full text-center text-40 font-normal text-white leading-36"
+              :style="{ textShadow: '-1px -1px 0 #0F2268, 1px -1px 0 #0F2268, -1px 1px 0 #0F2268, 1px 1px 0 #0F2268' }"
               >购 买</text
             >
 
             <view
               v-if="product.queueLockTime"
-              class="box-container-bottom-right-item-queue"
+              class="box-container-bottom-right-item-queue absolute -top-60 left-40 w-155 h-60 z-90"
             >
               <image
-                class="box-container-bottom-right-item-queue-bg"
+                class="box-container-bottom-right-item-queue-bg w-full h-full"
                 src="/static/kahe-202510/product/lock-queue.png"
               />
-              <text class="box-container-bottom-right-item-queue-title"
+              <text class="box-container-bottom-right-item-queue-title absolute top-8 left-16 text-20 font-normal text-black" :style="{ width: 'calc(100% - 10rpx)' }"
                 >每发锁{{ product.queueLockTime }}秒</text
               >
             </view>
@@ -351,262 +355,4 @@ const didClickTabItem = (index: number) => {
 };
 </script>
 <style lang="scss" scoped>
-.box-container {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-
-  &-bottom {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 750rpx;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    &-bg {
-      width: 750rpx;
-      height: 164rpx;
-    }
-
-    &-content {
-      position: absolute;
-      left: 0;
-      bottom: calc(32rpx);
-      width: 100%;
-      padding: 0 32rpx;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
-    &-left {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      font-weight: normal;
-      font-size: 28rpx;
-      color: #000000;
-    }
-    &-right {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      &-item {
-        margin-left: 16rpx;
-        position: relative;
-        width: 181rpx;
-        height: 76rpx;
-        &-bg {
-          width: 100%;
-          height: 100%;
-        }
-        &-text {
-          position: absolute;
-          left: 0;
-          top: 16rpx;
-          width: 100%;
-          text-align: center;
-          font-weight: 400;
-          font-size: 40rpx;
-          color: #ffffff;
-          line-height: 36rpx;
-        }
-
-        &-queue {
-          position: absolute;
-          top: -60rpx;
-          left: 40rpx;
-          width: calc(155rpx * 1);
-          height: calc(60rpx * 1);
-          z-index: 90;
-          &-bg {
-            width: 100%;
-            height: 100%;
-          }
-          &-title {
-            position: absolute;
-            top: 8rpx;
-            left: 16rpx;
-            width: calc(100% - 10rpx);
-            font-weight: normal;
-            font-size: 20rpx;
-            color: #000000;
-          }
-        }
-      }
-    }
-  }
-}
-
-.selectNum {
-  padding: 16px 0;
-  width: 100%;
-  height: calc(100vh - env(safe-area-inset-bottom) - 100rpx);
-  display: flex;
-  flex-direction: column;
-
-  &-content {
-    margin: 8rpx 20rpx;
-    width: calc(100% - 40rpx);
-    background: #fffbef;
-    box-shadow: 0rpx 3rpx 7rpx 0rpx #d9be86;
-    border-radius: 10rpx;
-    overflow: hidden;
-    padding: 21rpx;
-    &-top {
-      position: relative;
-      width: 100%;
-      &-info {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        &-left {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          &-title {
-            margin: 0 20rpx;
-            font-weight: 400;
-            font-size: 24rpx;
-            color: #000000;
-          }
-          &-tips {
-            margin-left: 5rpx;
-            margin-right: 28rpx;
-            font-size: 16rpx;
-            color: #000000;
-          }
-          &-box {
-            width: 36rpx;
-            height: 36rpx;
-          }
-        }
-
-        &-right {
-          margin-right: 28rpx;
-          width: 71rpx;
-          height: 30rpx;
-          line-height: 30rpx;
-          text-align: center;
-          background: #4c82c1;
-          border-radius: 4rpx;
-          border: 2px solid #1e2d5e;
-          font-weight: 400;
-          font-size: 20rpx;
-          color: #ffffff;
-        }
-      }
-
-      &-tips {
-        position: absolute;
-        left: 20rpx;
-        top: 20rpx;
-        font-weight: normal;
-        font-size: 24rpx;
-        color: #000000;
-      }
-    }
-
-    &-records {
-      box-sizing: border-box;
-      width: 100%;
-    }
-    &-goods {
-      margin: 16rpx 20rpx;
-      padding: 32rpx;
-      width: calc(100% - 40rpx);
-      box-sizing: border-box;
-      position: relative;
-      background: #fffbef;
-      box-shadow: 0rpx 3rpx 7rpx 0rpx #d9be86;
-      border-radius: 10rpx;
-      display: grid;
-
-      grid-template-columns: repeat(
-        auto-fill,
-        minmax(calc((100% - 60rpx) / 3), 1fr)
-      ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-      grid-gap: 30rpx; // 这是网格间的间隙，根据需要调整
-      &-item {
-        display: inline-block;
-        width: 100%;
-      }
-    }
-
-    &-box {
-      margin-top: 21rpx;
-      box-sizing: border-box;
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fill,
-        minmax(calc((100% - 7 * 20rpx) / 8), 1fr)
-      ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-      grid-gap: 20rpx; // 这是网格间的间隙，根据需要调整
-      &-item {
-        position: relative;
-        aspect-ratio: 1;
-        color: #ffffff;
-        &-img {
-          width: 100%;
-          height: 100%;
-        }
-        &-title {
-          position: absolute;
-          left: 10rpx;
-          top: 5rpx;
-          font-weight: normal;
-          font-size: 24rpx;
-          color: #ffffff;
-        }
-      }
-    }
-  }
-  &-tab {
-    padding: 8rpx 20rpx;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 40rpx;
-    &-item {
-      position: relative;
-      width: 309rpx;
-      aspect-ratio: 309 / 106;
-
-      &-bg {
-        position: relative;
-        width: 100%;
-        height: 100%;
-      }
-      &-content {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-      }
-      &-title {
-        font-weight: 400;
-        font-size: 40rpx;
-        color: #fb7f3c;
-        @include text-stroke(3rpx, #ffffff);
-      }
-    }
-    &-item:last-child {
-      margin-right: 0;
-    }
-  }
-}
 </style>

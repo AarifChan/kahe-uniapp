@@ -1,37 +1,39 @@
 <template>
-  <view class="actions">
+  <view class="actions fixed right-8 flex flex-col items-center z-99" :style="{ bottom: 'calc(200rpx + env(safe-area-inset-bottom))' }">
     <template v-for="(item, index) in actionList" :key="index + 'itemId'">
       <!-- #ifdef MP-WEIXIN -->
       <button
         v-if="item.action === 5"
-        class="actions-item actions-item-btn"
+        class="actions-item actions-item-btn relative mb-32 w-66 h-66 border-none bg-transparent p-0 m-0"
         :id="index + 'itemId'"
         open-type="share"
+        plain
+        style="border: none; background: transparent; line-height: normal"
       >
         <image
-          class="actions-item-bg"
+          class="actions-item-bg w-full h-full"
           src="/static/kahe-202510/ka-he/product/item-bg.png"
         />
-        <image class="actions-item-icon" :src="item.icon" />
-        <text class="actions-item-title theme-font">{{ item.title }}</text>
+        <image class="actions-item-icon absolute left-8 top-8 w-50 h-50" :src="item.icon" />
+        <text class="actions-item-title theme-font absolute left-0 w-full text-center -bottom-14 text-20 text-white" :style="{ textShadow: '-1px -1px 0 #703b16, 1px -1px 0 #703b16, -1px 1px 0 #703b16, 1px 1px 0 #703b16' }">{{ item.title }}</text>
       </button>
       <!-- #endif -->
 
       <view
         v-if="item.action !== 5"
-        class="actions-item"
+        class="actions-item relative mb-32 w-66 h-66"
         :id="index + 'itemId'"
         @tap.stop="handleAction(item)"
       >
         <image
-          class="actions-item-bg"
+          class="actions-item-bg w-full h-full"
           src="/static/kahe-202510/ka-he/product/item-bg.png"
         />
-        <image class="actions-item-icon" :src="item.icon" />
-        <text class="actions-item-title theme-font">{{ item.title }}</text>
+        <image class="actions-item-icon absolute left-8 top-8 w-50 h-50" :src="item.icon" />
+        <text class="actions-item-title theme-font absolute left-0 w-full text-center -bottom-14 text-20 text-white" :style="{ textShadow: '-1px -1px 0 #703b16, 1px -1px 0 #703b16, -1px 1px 0 #703b16, 1px 1px 0 #703b16' }">{{ item.title }}</text>
         <view
           v-if="item.action === 4 && unReadCount > 0"
-          class="actions-item-num"
+          class="actions-item-num absolute -right-4 -top-4 w-32 h-32 text-center leading-32 text-20 bg-red text-white rounded-16"
           >{{ unReadCount }}</view
         >
       </view>
@@ -39,16 +41,16 @@
       <!-- #ifndef MP-WEIXIN -->
       <view
         v-if="item.action === 5"
-        class="actions-item"
+        class="actions-item relative mb-32 w-66 h-66"
         :id="index + 'itemId'"
         @tap.stop="handleAction(item)"
       >
         <image
-          class="actions-item-bg"
+          class="actions-item-bg w-full h-full"
           src="/static/kahe-202510/ka-he/product/item-bg.png"
         />
-        <image class="actions-item-icon" :src="item.icon" />
-        <text class="actions-item-title theme-font">{{ item.title }}</text>
+        <image class="actions-item-icon absolute left-8 top-8 w-50 h-50" :src="item.icon" />
+        <text class="actions-item-title theme-font absolute left-0 w-full text-center -bottom-14 text-20 text-white" :style="{ textShadow: '-1px -1px 0 #703b16, 1px -1px 0 #703b16, -1px 1px 0 #703b16, 1px 1px 0 #703b16' }">{{ item.title }}</text>
       </view>
       <!-- #endif -->
     </template>
@@ -173,68 +175,5 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-.actions {
-  position: fixed;
-  right: 8rpx;
-  bottom: calc(200rpx + env(safe-area-inset-bottom));
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 99;
-  &-item {
-    position: relative;
-    margin-bottom: 32rpx;
-    width: 66rpx;
-    height: 66rpx;
-
-    &-bg {
-      width: 100%;
-      height: 100%;
-    }
-
-    &-icon {
-      position: absolute;
-      left: 8rpx;
-      top: 8rpx;
-      width: 50rpx;
-      height: 50rpx;
-    }
-
-    &-title {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      bottom: -14rpx;
-      font-weight: 400;
-      font-size: 20rpx;
-      color: #ffffff;
-      @include text-stroke-color(#703b16);
-    }
-    &-num {
-      position: absolute;
-      right: -4rpx;
-      top: -4rpx;
-      width: 32rpx;
-      height: 32rpx;
-      text-align: center;
-      line-height: 32rpx;
-      font-size: 20rpx;
-      background-color: red;
-      color: #fff;
-      border-radius: 16rpx;
-    }
-
-    &-btn {
-      padding: 0;
-      border: 0;
-      background: transparent;
-      line-height: normal;
-    }
-
-    &-btn::after {
-      border: 0;
-    }
-  }
-}
+button::after { border: none; }
 </style>

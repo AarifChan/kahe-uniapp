@@ -1,6 +1,6 @@
 <template>
-    <view class="title theme-font">{{ value }}</view>
-    <view class="line"></view>
+    <view class="title theme-font absolute left-32 top-10 text-30 font-normal text-black z-1">{{ value }}</view>
+    <view class="line absolute left-32 top-35 w-110 h-10 bg-[#5ea2fd] z-0"></view>
 </template>
 <script setup lang="ts">
 defineProps({
@@ -11,22 +11,4 @@ defineProps({
 });
 </script>
 <style lang="scss" scoped>
-.title {
-    position: absolute;
-    left: 32rpx;
-    top: 10rpx;
-    font-weight: 400;
-    font-size: 30rpx;
-    color: #000000;
-    z-index: 1;
-}
-.line {
-    width: 110rpx;
-    position: absolute;
-    left: 32rpx;
-    top: 35rpx;
-    height: 10rpx;
-    background-color: #5ea2fd;
-    z-index: 0;
-}
 </style>

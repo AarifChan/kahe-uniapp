@@ -1,17 +1,21 @@
 <template>
-    <view class="people">
-        <view class="people-title theme-font">当期<text>{{ value }}</text><text style="color: #ff2a2a">{{ total}}</text>人</view>
-        <view class="people-line"></view>
-        <scroll-view :enable-flex="true" :scroll-x="true" class="people-user">
+    <view class="people relative mt-40 w-688 h-217 bg-white rounded-20 opacity-97">
+        <view class="people-title theme-font absolute left-32 top-10 text-30 font-normal text-black z-1">当期<text>{{ value }}</text><text style="color: #ff2a2a">{{ total}}</text>人</view>
+        <view class="people-line absolute left-32 top-35 w-178 h-10 bg-[#5ea2fd] z-0"></view>
+        <scroll-view :enable-flex="true" :scroll-x="true" class="people-user relative flex w-full h-full whitespace-nowrap"
+            style="padding: 68rpx 20rpx 0 20rpx;"
+        >
             <view
-                class="people-user-item"
+                class="people-user-item relative inline-block mr-16"
                 v-for="(item, index) in list"
                 :key="index"
             >
-                <image class="people-user-item-img" :src="item.user.avatar" />
-                <view class="people-user-item-num">{{item.num}}</view>
+                <image class="people-user-item-img w-93 h-93 rounded-full" :src="item.user.avatar" />
+                <view class="people-user-item-num absolute top-0 -right-4 w-28 h-28 rounded-14 text-white text-20 text-center bg-[#61A4FD]"
+                    style="line-height: 28rpx;"
+                >{{item.num}}</view>
                 <view
-                    class="people-user-item-title text-flow-ellipsis-single"
+                    class="people-user-item-title text-flow-ellipsis-single w-93 text-center text-18 font-normal text-black"
                 >{{ item.user.nickname }}</view>
             </view>
         </scroll-view>
@@ -37,71 +41,4 @@ defineProps({
 })
 </script>
 <style lang="scss" scoped>
-.people {
-    position: relative;
-    margin-top: 40rpx;
-    width: 688rpx;
-    height: 217rpx;
-    background: #ffffff;
-    border-radius: 20rpx;
-    opacity: 0.97;
-
-    &-title {
-        position: absolute;
-        left: 32rpx;
-        top: 10rpx;
-        font-weight: 400;
-        font-size: 30rpx;
-        color: #000000;
-        z-index: 1;
-    }
-    &-line {
-        width: 178rpx;
-        position: absolute;
-        left: 32rpx;
-        top: 35rpx;
-        height: 10rpx;
-        background-color: #5ea2fd;
-        z-index: 0;
-    }
-    &-user {
-        position: relative;
-        display: flex;
-        height: 100%;
-        width: 100%;
-        padding: 68rpx 20rpx 0 20rpx;
-        box-sizing: border-box;
-        white-space: nowrap;
-        &-item {
-            position: relative;
-            display: inline-block;
-            margin-right: 16rpx;
-            &-img {
-                width: 93rpx;
-                height: 93rpx;
-                border-radius: 50%;
-            }
-            &-num{
-                position: absolute;
-                top:0;
-                right: -4rpx;
-                width: 28rpx;
-                height: 28rpx;
-                border-radius: 14rpx;
-                color: white;
-                font-size: 20rpx;
-                text-align: center;
-                line-height: 28rpx;
-                background-color: #61A4FD;
-            }
-            &-title {
-                width: 93rpx;
-                text-align: center;
-                font-weight: normal;
-                font-size: 18rpx;
-                color: #000000;
-            }
-        }
-    }
-}
 </style>

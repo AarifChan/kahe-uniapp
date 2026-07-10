@@ -1,38 +1,42 @@
 <template>
     <view
-        class="goods"
+        class="goods relative w-full h-255 mx-auto flex items-center mb-28"
         v-for="(item, index) in list"
         :key="index"
         @tap.stop="emits('tapCardListItem', item)"
     >
-        <image class="goods-bg" src="/static/kahe-202510/images/machine-goods-bg.png" />
-        <view class="goods-left">
-            <image class="goods-left-img" :src="item.logo"></image>
+        <image class="goods-bg w-full h-full absolute left-0 top-0 z-0" src="/static/kahe-202510/images/machine-goods-bg.png" />
+        <view class="goods-left relative ml-20" style="width: 173rpx; height: calc(173rpx / 300 * 420);">
+            <image class="goods-left-img absolute left-0 top-0 w-full h-full object-cover" :src="item.logo"></image>
         </view>
-        <view class="goods-right">
-            <view class="goods-right-num">
+        <view class="goods-right absolute bottom-28 right-10 w-470">
+            <view class="goods-right-num absolute top-70 -right-8 w-143 h-30 text-center text-white text-16 flex items-center rounded-6"
+                style="line-height: 30rpx;"
+            >
                 <image
                     src="/static/kahe-202510/images/huo.png"
-                    class="goods-right-num-img"
-                ></image>
-                <view class="goods-right-num-text">10w+</view>
+                    class="goods-right-num-img w-22 h-26"
+                />
+                <view class="goods-right-num-text text-21 font-normal text-[#4c4c4c]">10w+</view>
             </view>
-            <view class="goods-right-title theme-font">{{ item.title }}</view>
-            <view class="goods-right-price" style="color: #ff2a2a">￥{{ item.price }}</view>
-            <view class="goods-right-bottom">
+            <view class="goods-right-title theme-font text-30 text-black">{{ item.title }}</view>
+            <view class="goods-right-price relative mt-20 text-28 text-black" style="color: #ff2a2a">￥{{ item.price }}</view>
+            <view class="goods-right-bottom mt-20 flex">
                 <scroll-view
                     :scroll-x="true"
                     :enable-flex="true"
                     scroll-with-animation
-                    class="goods-right-bottom-scroll"
+                    class="goods-right-bottom-scroll whitespace-nowrap"
+                    style="width: calc(100% - 35rpx);"
                 >
                     <view
-                        class="goods-right-bottom-scroll-item"
+                        class="goods-right-bottom-scroll-item inline-block relative mr-18"
+                        style="width: 46rpx; height: calc(46rpx / 300 * 420);"
                         v-for="(goods, index) in item.goods"
                         :key="index"
                     >
                         <image
-                            class="goods-right-bottom-scroll-item-img"
+                            class="goods-right-bottom-scroll-item-img absolute left-0 top-0 w-full h-full"
                             :src="goods.image"
                         />
                     </view>
@@ -52,104 +56,4 @@ defineProps({
 const emits = defineEmits(['tapCardListItem'])
 </script>
 <style lang="scss" scoped>
-.goods {
-    position: relative;
-    width:100%;
-    height: 255rpx;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    margin-bottom: 28rpx;
-    &-bg {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        z-index: 0;
-    }
-    &-left {
-        position: relative;
-        width: 173rpx;
-        height: calc(173rpx / 300 * 420);
-        margin-left: 20rpx;
-        &-img {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    }
-    &-right {
-        position: absolute;
-        right: 10rpx;
-        bottom: 28rpx;
-        width: 470rpx;
-        &-num {
-            position: absolute;
-            right: -8rpx;
-            top: 70rpx;
-            text-align: center;
-            width: 143rpx;
-            line-height: 30rpx;
-            height: 30rpx;
-            border-radius: 6rpx;
-            font-size: 16rpx;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            &-img {
-                width: 22rpx;
-                height: 26rpx;
-            }
-            &-text {
-                font-weight: 400;
-                font-size: 21rpx;
-                color: #4c4c4c;
-            }
-        }
-        &-title {
-            position: relative;
-            font-size: 30rpx;
-            color: #000000;
-        }
-        &-price {
-            margin-top: 20rpx;
-            position: relative;
-            font-size: 28rpx;
-            color: #000000;
-        }
-        &-text {
-            position: relative;
-            font-size: 20rpx;
-            color: #505050;
-            margin-bottom: 5rpx;
-        }
-        &-bottom {
-            margin-top: 20rpx;
-            display: flex;
-            &-scroll {
-                white-space: nowrap;
-                width: calc(100% - 35rpx);
-                &-item {
-                    display: inline-block;
-                    position: relative;
-                    width: 46rpx;
-                    height: calc(46rpx / 300 * 420);
-                    margin-right: 18rpx;
-                    &-img {
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        height: 100%;
-                    }
-                }
-            }
-        }
-    }
-}
 </style>

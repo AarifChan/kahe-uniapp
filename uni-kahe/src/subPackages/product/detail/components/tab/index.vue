@@ -1,14 +1,14 @@
 <template>
-    <view class="normalCenterTab">
-        <text class="normalCenterTab-price theme-font text-stroke-white">¥{{product.price}}元</text>
-        <view class="normalCenterTab-content">
-            <view class="normalCenterTab-content-item" @tap.stop="didClickTab(0)">
-                <image class="normalCenterTab-content-item-bg" :src=" currentTab === 0 ? '/static/kahe/product/tab1.png' : '/static/kahe/product/tab2.png'" />
-                <text class="normalCenterTab-content-item-title theme-font text-stroke">赏池一览</text>
+    <view class="normalCenterTab relative flex w-full" :style="{ marginTop: '-24rpx' }">
+        <text class="normalCenterTab-price theme-font px-30 text-28 font-normal text-black" :style="{ textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff' }">¥{{product.price}}元</text>
+        <view class="normalCenterTab-content relative flex flex-row" :style="{ marginTop: '-30rpx' }">
+            <view class="normalCenterTab-content-item relative w-158 h-74 mr-20" @tap.stop="didClickTab(0)">
+                <image class="normalCenterTab-content-item-bg w-full h-full" :src=" currentTab === 0 ? '/static/kahe/product/tab1.png' : '/static/kahe/product/tab2.png'" />
+                <text class="normalCenterTab-content-item-title theme-font absolute left-0 top-10 w-full text-24 font-normal text-white text-center" :style="{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }">赏池一览</text>
             </view>
-            <view class="normalCenterTab-content-item" @tap.stop="didClickTab(1)">
-                <image class="normalCenterTab-content-item-bg" :src=" currentTab === 1 ? '/static/kahe/product/tab1.png' : '/static/kahe/product/tab2.png'" />
-                <text class="normalCenterTab-content-item-title theme-font text-stroke">抽赏记录</text>
+            <view class="normalCenterTab-content-item relative w-158 h-74 mr-20" @tap.stop="didClickTab(1)">
+                <image class="normalCenterTab-content-item-bg w-full h-full" :src=" currentTab === 1 ? '/static/kahe/product/tab1.png' : '/static/kahe/product/tab2.png'" />
+                <text class="normalCenterTab-content-item-title theme-font absolute left-0 top-10 w-full text-24 font-normal text-white text-center" :style="{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }">抽赏记录</text>
             </view>
         </view>
     </view>
@@ -47,44 +47,4 @@ const emits = defineEmits(['update:current', 'tabDidChange'])
 </script>
 
 <style lang="scss" scoped>
-.normalCenterTab{
-    margin-top: -24rpx;
-    position: relative;
-    display: flex;
-    width: 100%;
-    &-price{
-        padding: 0 30rpx;
-        font-size: 28rpx;
-        font-weight: 400;
-        color: #000000;
-    }
-    &-content{
-        position: relative;
-        margin-top: -30rpx;
-        display: flex;
-        flex-direction: row;
-        &-item{
-            position: relative;
-            width: 158rpx;
-            height: 74rpx;
-            margin-right: 20rpx;
-            &-bg{
-                width: 100%;
-                height: 100%;
-            }
-            &-title{
-                position: absolute;
-                left: 0;
-                top: 10rpx;
-                width: 100%;
-                font-size: 24rpx;
-                font-weight: 400;
-                color: #FFFFFF;
-                text-align: center;
-            }
-        }
-
-    }
-
-}
 </style>

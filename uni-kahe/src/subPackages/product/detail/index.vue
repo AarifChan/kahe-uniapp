@@ -1,5 +1,5 @@
 <template>
-  <view class="product">
+  <view class="product relative w-full h-screen bg-[#fbe8bd] overflow-hidden">
     <!-- 选号模式 -->
     <SelectNum
       v-if="isSelectNum"
@@ -266,18 +266,4 @@ onShareTimeline(() => {
 </script>
 
 <style lang="scss" scoped>
-.product {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background-color: #fbe8bd;
-  overflow: hidden;
-  &-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-}
 </style>

@@ -1,30 +1,19 @@
 <template>
-    <view calss="cards">
-        <image class="cards-cardBg" src="/static/kahe-202510/ka-he/machine/newCard-bg.png" />
+    <view class="cards relative">
+        <image class="cards-cardBg w-full h-full absolute left-0 top-0" src="/static/kahe-202510/ka-he/machine/newCard-bg.png" />
         <Lamp ref="barrageRef" @tapLampAction="tapLampAction" :list="barrageList" />
-        <view class="cards-mains">
-            <view class="cards-mains-awardBg">
-                <!-- <image src="/static/kahe-202510/images/award-bg.png" class="cards-mains-awardBg-imgs" /> -->
-                <image class="cards-mains-awardBg-prize" :src="productDetail.image" />
+        <view class="cards-mains relative w-full flex justify-center" style="transform: translateY(420rpx);">
+            <view class="cards-mains-awardBg relative w-294 h-388 flex flex-col items-center justify-center"
+                style="animation: floatAnimation 2s ease-in-out infinite;"
+            >
+                <image class="cards-mains-awardBg-prize relative w-190" :src="productDetail.image" style="height: calc(190rpx / 300 * 420);" />
             </view>
             <Rightmo :list="itemList" @tapItem="tapItem" />
         </view>
-        <!-- <view class="cards-box"> -->
-        <!-- <image class="cards-box-bg" src="/static/kahe-202510/product/king-bg.png" /> -->
-        <!-- <view class="cards-box-content">
-                <text class="cards-box-content-title theme-font">单人{{ (productDetail.another / 5).toFixed(0)
-                    }}包,必出高罕卡</text>
-                <view class="cards-box-content-Progressbar">
-                    <view class="cards-box-content-Progressbar-bg">
-                        <view class="cards-box-content-Progressbar-bg-style" :style="luckProgress" />
-                    </view>
-                                   <view class="cards-box-Progressbar-num">{{luckLabel}}</view>
-                </view>
-            </view> -->
-        <!-- <image class="cards-box-img" src="/static/kahe-202510/product/card-decorate.png" /> -->
-        <!-- </view> -->
-        <view class="cards-box">
-            <text>{{ productDetail.title }}</text>
+        <view class="cards-box fixed flex items-center justify-center bg-white rounded-28"
+            style="bottom: calc(267rpx + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); width: 432rpx; height: 56rpx; box-shadow: 0rpx 4rpx 0rpx 0rpx #DA9007;"
+        >
+            <text class="theme-font text-36 font-normal text-[#E69401]">{{ productDetail.title }}</text>
         </view>
         <bottoms :list="cardsList" @tapCards="didTapPurchaseNum" :product-detail="productDetail" />
         <pay v-model:show="payShow" :goods="payItem" :merchant="productDetail.merchant" @did-tap-pay="didTapPay"
@@ -144,92 +133,20 @@ onShareTimeline(() => {
 });
 </script>
 <style lang="scss" scoped>
-.cards {
-    position: relative;
+</style>
 
-    &-cardBg {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
-
-    &-mains {
-        position: relative;
-        width: 100%;
-        @include flex-x-center();
-        transform: translateY(420rpx);
-
-        &-awardBg {
-            position: relative;
-            width: 294rpx;
-            height: 388rpx;
-            @include flex-xy-center(column);
-            animation: floatAnimation 2s ease-in-out infinite;
-
-            &-imgs {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-            }
-
-            &-prize {
-                position: relative;
-                width: 190rpx;
-                height: calc(190rpx / 300 * 420);
-            }
-        }
-    }
-
-    &-box {
-        position: fixed;
-        bottom: calc(267rpx + env(safe-area-inset-bottom));
-        left: 50%;
-        transform: translateX(-50%);
-        width: 432rpx;
-        height: 56rpx;
-        background: #FFFFFF;
-        box-shadow: 0rpx 4rpx 0rpx 0rpx #DA9007;
-        border-radius: 28rpx;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        text {
-            font-family: YouSheBiaoTiHei;
-            font-weight: 400;
-            font-size: 36rpx;
-            color: #E69401;
-        }
-    }
-
-    &-img {
-        position: absolute;
-        top: 32rpx;
-        right: 46rpx;
-        width: 93rpx;
-        height: 92rpx;
-
-    }
-}
-
+<style lang="scss">
 @keyframes floatAnimation {
     0% {
         transform: translateY(0);
-        /* 初始位置：不偏移 */
     }
 
     50% {
         transform: translateY(-20px);
-        /* 50%时间点：向上偏移20像素 */
     }
 
     100% {
         transform: translateY(0);
-        /* 结束位置：不偏移 */
     }
 }
 </style>

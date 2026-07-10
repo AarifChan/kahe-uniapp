@@ -1,8 +1,8 @@
 <template>
-    <view class="boxItem">
-        <image class="boxItem-img" src="/static/kahe/product/box-selected.png" v-if="selected" />
-        <image class="boxItem-img" src="/static/kahe/product/box-normal.png" v-else />
-        <text class="boxItem-title">{{index}}</text>
+    <view class="boxItem mr-22 flex flex-col items-center">
+        <image class="boxItem-img w-61 h-61" src="/static/kahe/product/box-selected.png" v-if="selected" />
+        <image class="boxItem-img w-61 h-61" src="/static/kahe/product/box-normal.png" v-else />
+        <text class="boxItem-title mt-20 w-26 h-16 bg-[#262626] opacity-60 rounded-2 text-12 leading-16 text-center font-normal text-[#FFFFFF]">{{index}}</text>
     </view>
 </template>
 
@@ -24,28 +24,4 @@ const emits = defineEmits(['update:selected'])
 </script>
 
 <style lang="scss" scoped>
-.boxItem{
-    margin-right: 22rpx;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    &-img{
-        width: 61rpx;
-        height: 61rpx;
-    }
-    &-title{
-        margin-top: 20rpx;
-
-        width: 26rpx;
-        height: 16rpx;
-        background: #262626;
-        opacity: 0.6;
-        border-radius: 2rpx;
-        font-size: 12rpx;
-        line-height: 16rpx;
-        text-align: center;
-        font-weight: 400;
-        color: #FFFFFF;
-    }
-}
 </style>

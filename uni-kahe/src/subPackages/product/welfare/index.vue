@@ -1,36 +1,44 @@
 <template>
-    <view class="welfare">
-        <view class="welfare-header">
-            <view class="welfare-header-title theme-font text-stroke-main">福利大派送进行中</view>
-            <view class="welfare-header-right">
+    <view class="welfare w-full flex flex-col items-center bg-[#bcd9ff]" style="height: 100vh;">
+        <view class="welfare-header relative mt-32 w-688 h-362 bg-white rounded-20 opacity-97">
+            <view class="welfare-header-title theme-font absolute left-38 -top-26 text-40 font-normal text-white">福利大派送进行中</view>
+            <view class="welfare-header-right absolute top-0 right-0 w-141 h-39 text-center" style="line-height: 39rpx;">
                 <image
-                    class="welfare-header-right-img"
+                    class="welfare-header-right-img absolute left-0 top-0 w-full h-full"
                     src="/static/kahe-202510/images/welfare-topBg.png"
                 />
-                <view class="welfare-header-right-text theme-font">免费抽选</view>
+                <view class="welfare-header-right-text theme-font relative text-24 font-normal text-black" style="transform: translateX(12rpx);">免费抽选</view>
             </view>
-            <view class="welfare-header-item">
+            <view class="welfare-header-item relative h-362 flex overflow-x-auto" style="width: calc(100% - 60rpx); padding: 0 30rpx;"
+            >
                 <view
-                    class="welfare-header-item-goods"
+                    class="welfare-header-item-goods flex-shrink-0 mt-60 relative w-203 h-272 flex flex-col items-center justify-between"
                     @tap.stop="tapWelfareAction(item)"
                     v-for="(item, index) in welfareList"
                     :key="index"
+                    :class="{ 'mr-30': index !== welfareList.length - 1 }"
                 >
                     <image
-                        class="welfare-header-item-goods-bg"
+                        class="welfare-header-item-goods-bg absolute w-full h-full z-0"
                         src="/static/kahe-202510/images/welfare-goodsTopBg.png"
                         mode="widthFix"
                     />
                     <image
-                        class="welfare-header-item-goods-img"
+                        class="welfare-header-item-goods-img relative mt-15 w-177 rounded-10"
                         :src="item.image"
                         mode="widthFix"
+                        style="height: calc(177rpx / 320 * 400);"
                     />
-                    <view class="welfare-header-item-goods-content">
-                        <view class="welfare-header-item-goods-content-title text-flow-ellipsis-single">{{
+                    <view class="welfare-header-item-goods-content relative mb-20 flex flex-col items-center justify-center"
+                    >
+                        <view class="welfare-header-item-goods-content-title theme-font absolute bottom-32 w-150 text-center text-20 text-black z-1"
+                            style="left: 50%; transform: translateX(-50%);"
+                        >{{
                             item.title
                         }}</view>
-                        <view class="welfare-header-item-goods-content-time text-flow-ellipsis-single">
+                        <view class="welfare-header-item-goods-content-time text-flow-ellipsis-single absolute bottom-4 w-180 text-center text-18 text-[#8d8d8d]"
+                            style="left: 50%; transform: translateX(-50%);"
+                        >
                             <Countdown :end-time="item.endTime" />
                         </view>
                     </view>
@@ -38,25 +46,29 @@
                 <empty style="margin-top: 40rpx" :show="welfareList.length===0" />
             </view>
         </view>
-        <scroll-view class="welfare-center" :scroll-y="true"  @scrolltolower="handleScrollToLower">
-            <view class="welfare-center-title theme-font">已送出抽选</view>
-            <view class="welfare-center-item">
+        <scroll-view class="welfare-center mt-30 w-688 bg-white rounded-20 opacity-97 overflow-y-auto" :scroll-y="true"  @scrolltolower="handleScrollToLower"
+            style="height: calc(100% - 424rpx - env(safe-area-inset-bottom));"
+        >
+            <view class="welfare-center-title theme-font relative mt-26 ml-44 text-34 font-normal text-[#010101]">已送出抽选</view>
+            <view class="welfare-center-item mt-32 w-full grid" style="padding: 0 40rpx; grid-template-columns: repeat(auto-fill, minmax(40%, 1fr)); gap: 16rpx;"
+            >
                 <view
-                    class="welfare-center-item-list"
+                    class="welfare-center-item-list relative w-293 h-280 flex justify-center items-center mb-40"
                     v-for="(item, index) in smokeList"
                     :key="index"
                     @tap.stop="tapWelfareAction(item)"
                 >
                     <image
-                        class="welfare-center-item-list-bg"
+                        class="welfare-center-item-list-bg absolute w-full h-full object-cover left-0 top-0 z-0"
                         src="/static/kahe-202510/images/welfare-listBg.png"
                     />
                     <image
                         :src="item.image"
-                        class="welfare-center-item-list-img"
+                        class="welfare-center-item-list-img absolute w-177 rounded-10 object-cover z-1"
                         mode="widthFix"
+                        style="height: calc(177rpx / 320 * 400);"
                     />
-                    <view class="welfare-center-item-list-text theme-font text-flow-ellipsis-single">{{
+                    <view class="welfare-center-item-list-text theme-font text-flow-ellipsis-single absolute left-12 bottom-5 text-20 text-black z-1">{{
                         item.title
                     }}</view>
                 </view>
@@ -79,182 +91,4 @@ onMounted(() => {
 })
 </script>
 <style lang="scss" scoped>
-.welfare {
-    width: 100%;
-    height: calc(100vh);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #bcd9ff;
-    &-header {
-        margin-top: 32rpx;
-        position: relative;
-        width: 688rpx;
-        height: 362rpx;
-        background-color: #ffffff;
-        opacity: 0.97;
-        border-radius: 20rpx;
-        &-title {
-            position: absolute;
-            left: 38rpx;
-            top: -26rpx;
-            font-weight: 400;
-            font-size: 40rpx;
-            color: #ffffff;
-        }
-        &-right {
-            position: absolute;
-            width: 141rpx;
-            height: 39rpx;
-            line-height: 39rpx;
-            text-align: center;
-            top: 0;
-            right: 0;
-            &-img {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-            }
-            &-text {
-                transform: translateX(12rpx);
-                position: relative;
-                font-weight: 400;
-                font-size: 24rpx;
-                color: #000000;
-            }
-        }
-        &-item {
-            width: calc(100% - 60rpx);
-            padding: 0 30rpx;
-            height: 362rpx;
-            position: relative;
-            display: flex;
-            overflow-x: auto;
-            &-goods {
-                flex-shrink: 0;
-                margin-top: 60rpx;
-                position: relative;
-                width: 203rpx;
-                height: 272rpx;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-between;
-                margin-right: 30rpx;
-                &-bg {
-                    position: absolute;
-                    width: 100%;
-                    height: 100%;
-                    z-index: 0;
-                }
-                &-img {
-                    margin-top: 15rpx;
-                    position: relative;
-                    width: 177rpx;
-                    height: calc(177rpx / 320 * 400);
-                    border-radius: 10rpx;
-                }
-                &-content {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    position: relative;
-                    margin-bottom: 20rpx;
-
-                &-title {
-                    text-align: center;
-                    width: 150rpx;
-                    position: absolute;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    bottom: 32rpx;
-                    font-size: 20rpx;
-                    color: #000000;
-                    z-index: 1;
-                }
-                &-time {
-                    position: absolute;
-                    bottom: 4rpx;
-                    text-align: center;
-                    width: 180rpx;
-                    font-size: 18rpx;
-                    color: #8d8d8d;
-                    left: 50%;
-                    transform: translateX(-50%);
-                }
-                }
-
-            }
-            &-goods:nth-last-child(1) {
-                margin-right: 0;
-            }
-        }
-    }
-    &-center {
-        margin-top: 30rpx;
-        width: 688rpx;
-        height: calc(100% - 424rpx - env(safe-area-inset-bottom));
-        background: #ffffff;
-        border-radius: 20rpx;
-        opacity: 0.97;
-        overflow-y: auto;
-        &-title {
-            margin-top: 26rpx;
-            margin-left: 44rpx;
-            position: relative;
-            font-weight: 400;
-            font-size: 34rpx;
-            color: #010101;
-        }
-        &-item {
-            margin-top: 32rpx;
-            width: 100%;
-            padding: 0 40rpx;
-            display: grid;
-            grid-template-columns: repeat(
-                auto-fill,
-                minmax(40%, 1fr)
-            ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-            grid-gap: 16rpx;
-            box-sizing: border-box;
-            &-list {
-                position: relative;
-                width: 293rpx;
-                height: 280rpx;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-bottom: 40rpx;
-                &-bg {
-                    position: absolute;
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    left: 0;
-                    top: 0;
-                    z-index: 0;
-                }
-                &-img {
-                    position: absolute;
-                    width: 177rpx;
-                    height: calc(177rpx / 320 * 400);
-                    border-radius: 10rpx;
-                    object-fit: cover;
-                    z-index: 1;
-                }
-                &-text {
-                    position: absolute;
-                    font-size: 20rpx;
-                    color: #000000;
-                    left: 12rpx;
-                    bottom: 5rpx;
-                    z-index: 1;
-                }
-            }
-        }
-    }
-}
 </style>

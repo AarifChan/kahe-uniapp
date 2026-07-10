@@ -1,25 +1,27 @@
 <template>
-    <view class="limitless">
-        <view class="limitless-top">
+    <view class="limitless relative w-full h-screen py-36 box-border bg-[#232635]">
+        <view class="limitless-top relative w-full">
             <image
-                class="limitless-top-bg"
+                class="limitless-top-bg mt-24 ml-8 w-711 h-231"
                 src="/static/kahe/product/limitless-top.png"
             />
-            <view class="limitless-top-content">
-                <view class="limitless-top-content-info">
+            <view class="limitless-top-content absolute left-60 top-0 h-full flex flex-row items-center justify-around z-3" :style="{ width: 'calc(100% - 100rpx)' }">
+                <view class="limitless-top-content-info flex flex-row items-center">
                     <image
-                        class="limitless-top-content-info-avatar"
+                        class="limitless-top-content-info-avatar w-122 h-122 rounded-full bg-white"
                         :src="product?.demonKing?.avatar ?? ''"
                     />
-                    <view class="limitless-top-content-info-text">
+                    <view class="limitless-top-content-info-text ml-26 flex flex-col">
                         <text
-                            class="limitless-top-content-info-text-title text-flow-ellipsis-multiple theme-font"
+                            class="limitless-top-content-info-text-title text-flow-ellipsis-multiple theme-font py-4 text-30 font-normal text-[#649bff]"
+                            :style="{ width: '300rpx' }"
                         >领主
                             {{
                                 product?.demonKing?.nickname ?? "未有新领主"
                             }}</text>
                         <text
-                            class="limitless-top-content-info-text-title theme-font"
+                            class="limitless-top-content-info-text-title theme-font py-4 text-30 font-normal text-[#649bff]"
+                            :style="{ width: '300rpx' }"
                             v-if="product?.demonKing?.exist"
                         >[{{ product?.demonKing?.time }}
                             {{
@@ -30,103 +32,114 @@
                 <item :item="kingItem" />
             </view>
         </view>
-        <view class="limitless-center">
+        <view class="limitless-center relative -mt-130 w-750 h-698">
             <image
-                class="limitless-center-bg"
+                class="limitless-center-bg w-full h-full"
                 src="/static/kahe/product/limitless-center.png"
             />
             <swiper
-                class="limitless-center-main"
+                class="limitless-center-main absolute left-10 top-10 h-750"
+                :style="{ width: 'calc(100% - 20rpx)' }"
                 :current="currentIndex"
                 :circular="true"
             >
                 <swiper-item
-                    class="limitless-center-content-item"
+                    class="limitless-center-content-item inline-block w-full"
                     v-for="(item, index) in itemsList"
                     :key="'limitless' + index"
                 >
-                    <view class="limitless-center-content-item-content">
+                    <view class="limitless-center-content-item-content w-full flex flex-col items-center">
                         <image
-                            class="limitless-center-content-item-content-image"
+                            class="limitless-center-content-item-content-image z-3 mt-200 w-300 h-300"
                             :src="item.image"
                         />
                         <view
-                            class="limitless-center-content-item-content-label1"
+                            class="limitless-center-content-item-content-label1 mt-36 relative w-110 h-37"
                         >
                             <image
-                                class="limitless-center-content-item-content-label1-bg"
+                                class="limitless-center-content-item-content-label1-bg w-full h-full"
+                                :style="{ transform: 'scale(1.4)' }"
                                 src="/static/kahe/product/title-bg1.png"
                             />
                             <text
-                                class="limitless-center-content-item-content-label1-title theme-font"
+                                class="limitless-center-content-item-content-label1-title theme-font absolute left-0 top-0 w-full text-center leading-37 text-28 font-normal text-[#f0f5ff]"
                             >{{ index + 1 }}/{{ goodsList.length }}</text>
                         </view>
                         <view
-                            class="limitless-center-content-item-content-label2"
+                            class="limitless-center-content-item-content-label2 mt-16 relative w-326 h-47"
                         >
                             <image
-                                class="limitless-center-content-item-content-label2-bg"
+                                class="limitless-center-content-item-content-label2-bg w-full h-full"
                                 src="/static/kahe/product/title-bg2.png"
                             />
                             <text
-                                class="limitless-center-content-item-content-label2-title theme-font"
+                                class="limitless-center-content-item-content-label2-title theme-font absolute left-0 top-0 w-full leading-47 text-28 font-normal text-[#f0f5ff] text-center"
                             >{{ item.levelName }}￥{{ product.price }}</text>
                         </view>
                     </view>
                 </swiper-item>
             </swiper>
             <image
-                class="limitless-center-left"
+                class="limitless-center-left absolute top-350 left-20 w-32 h-49"
                 src="/static/kahe/common/left-arrow.png"
                 @tap.stop="changeIndex(true)"
             />
             <image
-                class="limitless-center-right"
+                class="limitless-center-right absolute right-20 top-350 w-32 h-49"
                 src="/static/kahe/common/right-arrow.png"
                 @tap.stop="changeIndex(false)"
             />
         </view>
-        <view class="limitless-bottom">
+        <view class="limitless-tips relative pl-45 pb-24 box-border flex flex-row items-center" v-if="product?.attachList?.length > 0" @tap.stop="openChestModal(0)">
+            <image class="limitless-tips-bg w-698 h-45" src="/static/kahe/product/decorate.png" />
+            <view class="limitless-tips-title theme-font absolute top-0 leading-45 left-92 text-24 font-normal text-white text-shadow-[-1px_-1px_0_#0c3887,1px_-1px_0_#0c3887,-1px_1px_0_#0c3887,1px_1px_0_#0c3887]">隐藏掉落</view>
+            <view class="limitless-tips-tips absolute top-0 left-208 leading-45 font-normal text-18 text-[#87320c]">每次购买均有独立概率触发掉落，存在一次多得的情况</view>
+        </view>
+        <InGroup @tap.stop="emits('didClickRemark')" :content="product.remark" />
+        <view class="limitless-bottom relative bg-[#232635] w-full h-391">
             <image
-                class="limitless-bottom-bg"
+                class="limitless-bottom-bg absolute left-0 top-0 w-750 h-391"
                 src="/static/kahe/product/limitless-bottom.png"
             />
-            <view class="limitless-bottom-tab">
+            <view class="limitless-bottom-tab absolute left-0 top-0 w-full flex flex-row items-center justify-center">
                 <view
-                    class="limitless-bottom-tab-item"
+                    class="limitless-bottom-tab-item relative"
                     v-for="(item, index) in tabList"
                     :key="'tab-item' + index"
                     @tap.stop="handleTapTab(index)"
                 >
                     <image
-                        class="limitless-bottom-tab-item-img"
+                        class="limitless-bottom-tab-item-img w-175 h-72"
                         :src="
                             currentTab == index
                                 ? '/static/kahe/product/tab-active.png'
                                 : '/static/kahe/product/tab-normal.png'
                         "
                     />
-                    <text class="limitless-bottom-tab-item-title theme-font">{{
+                    <text class="limitless-bottom-tab-item-title theme-font absolute left-0 top-0 w-full text-center leading-72 text-28 font-normal text-white text-shadow-[0rpx_0rpx_7rpx_#4974ff]">{{
                         item
                     }}</text>
                 </view>
             </view>
             <scroll-view
-                class="limitless-bottom-content"
+                class="limitless-bottom-content absolute left-0 top-74 w-full flex flex-col"
+                :style="{ height: 'calc(100% - 130rpx)' }"
                 :scroll-y="true"
                 scroll-with-animation
                 v-if="currentTab === 0"
             >
                 <view
-                    class="limitless-bottom-content-item"
+                    class="limitless-bottom-content-item inline-block relative w-750 h-258"
                     v-for="(group, index) in levelGroupList"
                     :key="'levelGroupList' + index"
                 >
                     <text
-                        class="limitless-bottom-content-item-title theme-font"
+                        class="limitless-bottom-content-item-title theme-font absolute left-20 top-0 w-full text-center text-40 font-normal text-white text-shadow-[0rpx_0rpx_7rpx_#2e20e6]"
+                        :style="{ width: 'calc(100% - 40rpx)' }"
                     >{{ group.levelName }}</text>
                     <scroll-view
-                        class="limitless-bottom-content-item-content"
+                        class="limitless-bottom-content-item-content absolute left-40 top-58 h-204 flex flex-row whitespace-nowrap"
+                        :style="{ width: 'calc(100% - 100rpx)' }"
                         :enable-flex="true"
                         :scroll-x="true"
                         scroll-with-animation
@@ -141,36 +154,37 @@
                 </view>
             </scroll-view>
             <scroll-view
-                class="limitless-bottom-content"
+                class="limitless-bottom-content absolute left-0 top-74 w-full flex flex-col"
+                :style="{ height: 'calc(100% - 130rpx)' }"
                 :scroll-y="true"
                 scroll-with-animation
                 @scrolltolower="scrollToLower"
                 v-else
             >
-                <view class="limitless-bottom-content-record">
+                <view class="limitless-bottom-content-record px-40 pb-20 grid gap-18" :style="{ width: 'calc(100% - 100rpx)', gridTemplateColumns: 'repeat(auto-fill, minmax(48%, 1fr))' }">
                     <view
-                        class="limitless-bottom-content-record-item"
+                        class="limitless-bottom-content-record-item w-full h-65 border-2 border-[#6facff] rounded-4 bg-gradient-[linear-gradient(0deg,rgba(85,99,169,0.99),rgba(85,99,169,0.01))] flex flex-row items-center justify-between"
                         v-for="(item, index) in recordList"
                         :key="'record' + index"
                     >
-                        <view class="limitless-bottom-content-record-item-left">
+                        <view class="limitless-bottom-content-record-item-left ml-14 flex flex-row items-center">
                             <image
-                                class="limitless-bottom-content-record-item-left-avatar"
+                                class="limitless-bottom-content-record-item-left-avatar w-49 h-49 rounded-full"
                                 :src="item.avatar"
                             />
                             <view
-                                class="limitless-bottom-content-record-item-left-info"
+                                class="limitless-bottom-content-record-item-left-info ml-8 flex flex-col justify-between"
                             >
                                 <text
-                                    class="limitless-bottom-content-record-item-left-info-title"
+                                    class="limitless-bottom-content-record-item-left-info-title w-100 text-18 font-normal text-white"
                                 >{{ item.nickName }}</text>
                                 <text
-                                    class="limitless-bottom-content-record-item-left-info-subTitle"
+                                    class="limitless-bottom-content-record-item-left-info-subTitle text-15 font-normal text-[#feffff]"
                                 >{{ item.time }}</text>
                             </view>
                         </view>
                         <image
-                            class="limitless-bottom-content-record-item-right"
+                            class="limitless-bottom-content-record-item-right w-49 h-49"
                             mode="heightFix"
                             :src="item.levelImage"
                         />
@@ -179,20 +193,20 @@
             </scroll-view>
         </view>
 
-        <view class="limitless-card">
+        <view class="limitless-card fixed left-0 bottom-0 w-full flex flex-row bg-[#232635] justify-between" :style="{ padding: '22rpx 16rpx env(safe-area-inset-bottom) 16rpx', width: 'calc(100% - 32rpx)' }">
             <view
-                class="limitless-card-item"
+                class="limitless-card-item relative w-227 h-95"
                 v-for="(item, index) in cardsArray"
                 :key="index + 'cardArray'"
                 @tap.stop="emits('didClickPayCardItem', item)"
             >
                 <image
-                    class="limitless-card-item-bg"
+                    class="limitless-card-item-bg relative w-full h-full"
                     src="/static/kahe/product/card-style1.png"
                 />
-                <view class="limitless-card-item-content">
-                    <text class="limitless-card-item-content-value theme-font">来{{ item.formatNum }}发</text>
-                    <text class="limitless-card-item-content-price theme-font">¥{{ item.price }}</text>
+                <view class="limitless-card-item-content absolute left-0 top-0 w-full h-full flex flex-col items-center">
+                    <text class="limitless-card-item-content-value theme-font mt-8 text-32 font-normal text-white text-shadow-[0rpx_0rpx_7rpx_#2e20e6]">来{{ item.formatNum }}发</text>
+                    <text class="limitless-card-item-content-price theme-font -mt-8 text-24 font-normal text-white text-shadow-[0rpx_0rpx_7rpx_#2e20e6]">¥{{ item.price }}</text>
                 </view>
             </view>
         </view>
@@ -318,345 +332,4 @@ const kingItem = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-page {
-    background-color: #232635;
-}
-.limitless {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background-color: #232635;
-    padding: 36rpx 0;
-    &-top {
-        position: relative;
-        width: 100%;
-        &-bg {
-            margin-top: 24rpx;
-            margin-left: 8rpx;
-            width: 711rpx;
-            height: 231rpx;
-        }
-        &-content {
-            position: absolute;
-            left: 60rpx;
-            top: 0;
-            width: calc(100% - 100rpx);
-            height: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-around;
-            z-index: 3;
-            &-info {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-
-                &-avatar {
-                    width: 122rpx;
-                    height: 122rpx;
-                    border-radius: 61rpx;
-                    background-color: white;
-                }
-                &-text {
-                    margin-left: 26rpx;
-                    display: flex;
-                    flex-direction: column;
-                    &-title {
-                        padding: 4rpx 0;
-                        width: 300rpx;
-                        color: #649bff;
-                        font-size: 30rpx;
-                        font-weight: 400;
-                    }
-                }
-            }
-        }
-    }
-    &-center {
-        position: relative;
-        margin-top: -130rpx;
-        width: 750rpx;
-        height: 698rpx;
-
-        &-bg {
-            width: 100%;
-            height: 100%;
-        }
-        &-main {
-            position: absolute;
-            left: 10rpx;
-            top: 10rpx;
-            width: calc(100% - 20rpx);
-            height: 750rpx;
-        }
-        &-left {
-            position: absolute;
-            top: 350rpx;
-            left: 20rpx;
-            width: 32rpx;
-            height: 49rpx;
-        }
-        &-right {
-            position: absolute;
-            right: 20rpx;
-            top: 350rpx;
-            width: 32rpx;
-            height: 49rpx;
-        }
-        &-content {
-            width: 100%;
-            white-space: nowrap;
-            scroll-snap-type: x mandatory;
-            &-item {
-                display: inline-block;
-
-                width: 100%; /* 设置每个页面的宽度为视口宽度 */
-                scroll-snap-align: start;
-                &-content {
-                    width: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    &-image {
-                        z-index: 3;
-                        margin-top: 200rpx;
-                        width: 300rpx;
-                        height: 300rpx;
-                    }
-                    &-label1 {
-                        margin-top: 36rpx;
-                        position: relative;
-                        width: 110rpx;
-                        height: 37rpx;
-
-                        &-bg {
-                            width: 100%;
-                            height: 100%;
-                            transform: scale(1.4);
-                        }
-                        &-title {
-                            position: absolute;
-                            left: 0;
-                            top: 0;
-                            width: 100%;
-                            text-align: center;
-                            line-height: 37rpx;
-                            font-size: 28rpx;
-                            font-weight: 400;
-                            color: #f0f5ff;
-                        }
-                    }
-                    &-label2 {
-                        margin-top: 16rpx;
-                        position: relative;
-                        width: 326rpx;
-                        height: 47rpx;
-                        &-bg {
-                            width: 100%;
-                            height: 100%;
-                        }
-                        &-title {
-                            position: absolute;
-                            left: 0;
-                            top: 0;
-                            width: 100%;
-                            line-height: 47rpx;
-                            font-size: 28rpx;
-                            font-weight: 400;
-                            color: #f0f5ff;
-                            text-align: center;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    &-bottom {
-        position: relative;
-        background-color: #232635;
-        width: 100%;
-        height: 391rpx;
-        &-tab {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            &-item {
-                position: relative;
-                &-img {
-                    width: 175rpx;
-                    height: 72rpx;
-                }
-                &-title {
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    width: 100%;
-                    text-align: center;
-                    line-height: 72rpx;
-                    font-size: 28rpx;
-                    font-weight: 400;
-                    color: #ffffff;
-                    text-shadow: 0rpx 0rpx 7rpx #4974ff;
-                }
-            }
-        }
-
-        &-bg {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 750rpx;
-            height: 391rpx;
-        }
-        &-content {
-            position: absolute;
-            left: 0;
-            top: 74rpx;
-            width: 100%;
-            height: calc(100% - 130rpx);
-            display: flex;
-            flex-direction: column;
-            &-item {
-                display: inline-block;
-                //width: 100%;
-                position: relative;
-                width: 750rpx;
-                height: 258rpx;
-
-                &-title {
-                    position: absolute;
-                    left: 20rpx;
-                    top: 0;
-                    width: calc(100% - 40rpx);
-                    text-align: center;
-                    font-size: 40rpx;
-                    font-weight: 400;
-                    color: #ffffff;
-                    text-shadow: 0rpx 0rpx 7rpx #2e20e6;
-                }
-                &-content {
-                    position: absolute;
-                    left: 40rpx;
-                    top: 58rpx;
-                    width: calc(100% - 100rpx);
-                    height: 204rpx;
-                    display: flex;
-                    flex-direction: row;
-                    white-space: nowrap;
-                }
-            }
-
-            &-record {
-                padding: 0 40rpx 20rpx 40rpx;
-                width: calc(100% - 100rpx);
-                display: grid;
-                grid-template-columns: repeat(
-                    auto-fill,
-                    minmax(48%, 1fr)
-                ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-                grid-gap: 18rpx; // 这是网格间的间隙，根据需要调整
-                &-item {
-                    //display: inline-block;
-                    width: 100%;
-                    height: 65rpx;
-                    border: 2rpx solid #6facff;
-                    border-radius: 4rpx;
-                    background: linear-gradient(
-                        0deg,
-                        rgba(85, 99, 169, 0.99),
-                        rgba(85, 99, 169, 0.01)
-                    );
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: space-between;
-                    &-left {
-                        margin-left: 14rpx;
-                        display: flex;
-                        flex-direction: row;
-                        align-items: center;
-                        &-avatar {
-                            width: 49rpx;
-                            height: 49rpx;
-                            border-radius: 24.5rpx;
-                        }
-                        &-info {
-                            margin-left: 8rpx;
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: space-between;
-                            &-title {
-                                width: 100rpx;
-                                font-size: 18rpx;
-                                font-weight: 400;
-                                color: #ffffff;
-                            }
-                            &-subTitle {
-                                font-size: 15rpx;
-                                font-weight: 400;
-                                color: #feffff;
-                            }
-                        }
-                    }
-                    &-right {
-                        width: 49rpx;
-                        height: 49rpx;
-                    }
-                }
-            }
-        }
-    }
-
-    &-card {
-        position: fixed;
-        padding: 22rpx 16rpx env(safe-area-inset-bottom) 16rpx;
-        left: 0;
-        bottom: 0;
-        width: calc(100% - 32rpx);
-        display: flex;
-        flex-direction: row;
-        background-color: #232635;
-        justify-content: space-between;
-        &-item {
-            position: relative;
-            width: 227rpx;
-            height: 95rpx;
-            &-bg {
-                position: relative;
-                width: 100%;
-                height: 100%;
-            }
-            &-content {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                &-value {
-                    margin-top: 8rpx;
-                    font-size: 32rpx;
-                    font-weight: 400;
-                    color: #ffffff;
-                    text-shadow: 0rpx 0rpx 7rpx #2e20e6;
-                }
-                &-price {
-                    margin-top: -8rpx;
-                    font-size: 24rpx;
-                    font-weight: 400;
-                    color: #ffffff;
-                    text-shadow: 0rpx 0rpx 7rpx #2e20e6;
-                }
-            }
-        }
-    }
-}
 </style>
