@@ -1,16 +1,23 @@
 <template>
-    <view class="redBag">
-        <view class="redBag-left">
-            <image class="redBag-left-img" :src="item?.goodsDto?.image" mode="widthFix" />
-            <view class="redBag-left-info">
-                <text class="redBag-left-info-title text-flow-ellipsis-multiple theme-font text-flow-ellipsis-multiple">{{item.goodsDto.name}}</text>
-                <view class="redBag-left-info-other">
-                    <text class="redBag-left-info-other-title">指导价:{{item.goodsDto.price}}</text>
+    <view class="redBag relative w-full box-border py-36 bg-white shadow-[0rpx_1rpx_1rpx_0rpx_rgba(212,222,233,0.5),0rpx_0rpx_5rpx_0rpx_#d4dee9] rounded-4 min-h-228 mb-32 flex flex-row items-center justify-between">
+        <view class="redBag-left relative ml-36 h-full flex flex-row items-center">
+            <image class="redBag-left-img w-178 h-165 rounded-8" :src="item?.goodsDto?.image" mode="widthFix" />
+            <view class="redBag-left-info relative ml-48 mt-16 h-full flex flex-col justify-center">
+                <text class="redBag-left-info-title font-normal text-38 text-black w-full text-flow-ellipsis-multiple theme-font">{{item.goodsDto.name}}</text>
+                <view class="redBag-left-info-other mt-36 flex flex-col">
+                    <text class="redBag-left-info-other-title text-24 font-normal text-[#727272]">指导价:{{item.goodsDto.price}}</text>
                 </view>
             </view>
         </view>
-        <view class="redBag-btn" :class="item?.status === 0 ? 'enable' : 'disable' " @tap.stop="emits('didClick')">
-            <text class="redBag-btn-title theme-font">分享红包</text>
+        <view class="redBag-btn absolute right-18 bottom-36 w-156 h-45 rounded-22 flex items-center justify-center" :class="item?.status === 0 ? 'enable' : 'disable' " @tap.stop="emits('didClick')"
+            :style="{
+                background: item?.status === 0
+                    ? 'linear-gradient(-90deg, #3AE5FD, #15AFFF)'
+                    : 'linear-gradient(-90deg, #AFAFAF, #7D7D7D)',
+                color: item?.status === 0 ? 'black' : 'white'
+            }"
+        >
+            <text class="redBag-btn-title font-normal text-25 theme-font">分享红包</text>
         </view>
     </view>
 </template>
@@ -31,94 +38,4 @@ const emits = defineEmits(['didClick'])
 </script>
 
 <style lang="scss" scoped>
-.redBag{
-    width: 100%;
-    box-sizing: border-box;
-    padding: 36rpx 0;
-    position: relative;
-    background: #FFFFFF;
-    box-shadow: 0rpx 1rpx 1rpx 0rpx rgba(212,222,233,0.5), 0rpx 0rpx 5rpx 0rpx #D4DEE9;
-    border-radius: 4rpx;
-    min-height: 228rpx;
-    margin-bottom: 32rpx;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    &-left{
-        position: relative;
-        margin-left: 36rpx;
-        height: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        &-img{
-            width: 178rpx;
-            height: 165rpx;
-            border-radius: 8rpx;
-        }
-        &-info{
-            position: relative;
-            margin-left: 48rpx;
-            margin-top: 16rpx;
-
-            display: flex;
-            height: 100%;
-            flex-direction: column;
-            justify-content: center;
-
-            &-title{
-                font-weight: 400;
-                color: #000000;
-                width: 100%;
-                font-size: 38rpx;
-            }
-            &-other{
-                margin-top: 36rpx;
-                display: flex;
-                flex-direction: column;
-                &-title{
-                    font-size: 24rpx;
-                    font-weight: 400;
-                    color: #727272;
-                }
-            }
-
-        }
-    }
-
-    &-btn{
-        position: absolute;
-        right: 18rpx;
-        bottom: 36rpx;
-        width: 156rpx;
-        height: 45rpx;
-        border-radius: 22rpx;
-        &-bg{
-            width: 156rpx;
-            height: 45rpx;
-        }
-        &-title{
-            position: absolute;
-            left: 0;
-            top:0;
-            width: 100%;
-            height: 100%;
-            line-height: 45rpx;
-            text-align: center;
-            font-weight: 400;
-            font-size: 25rpx;
-
-        }
-    }
-}
-.enable{
-    background: linear-gradient(-90deg, #3AE5FD, #15AFFF);
-    color: black;
-}
-.disable{
-    background: linear-gradient(-90deg, #AFAFAF, #7D7D7D);
-    color: white;
-}
 </style>

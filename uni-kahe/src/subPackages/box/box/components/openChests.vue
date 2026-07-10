@@ -1,35 +1,41 @@
 <template>
-  <view class="goodsContent">
-    <view class="goodsContent-list">
-      <view class="goodsContent-list-goods">
+  <view class="goodsContent w-full box-border flex pt-20 px-30">
+    <view class="goodsContent-list relative flex w-full h-full">
+      <view class="goodsContent-list-goods w-full flex flex-wrap relative h-320"
+      >
         <view
           v-for="(item, index) in list"
           :key="index"
-          class="goodsContent-list-goods-info"
+          class="goodsContent-list-goods-info relative mr-22 mb-18 box-border w-215 h-full"
+          :class="{ 'mr-0': (index + 1) % 3 === 0 }"
           @tap.stop="emits('selectItem', item)"
         >
-          <view class="goodsContent-list-goods-info-top">
+          <view class="goodsContent-list-goods-info-top relative w-full" style="padding-top: 100%;"
+          >
             <image
-              class="goodsContent-list-goods-info-top-img"
+              class="goodsContent-list-goods-info-top-img absolute left-0 top-0 w-full h-full z-0"
               :src="item.logo"
               :lazy-load="true"
             >
             </image>
           </view>
-          <view class="goodsContent-list-goods-info-content">
+          <view class="goodsContent-list-goods-info-content w-[calc(100%-16rpx)] relative left-9 bottom-0 flex flex-col"
+          >
             <text
-              class="goodsContent-list-goods-info-content-title text-flow-ellipsis-single"
+              class="goodsContent-list-goods-info-content-title mt-8 relative w-160 text-20 font-normal text-[#2356a9] leading-32 text-flow-ellipsis-single"
             >
               {{ item.title }}
             </text>
-            <view class="goodsContent-list-goods-info-content-row">
-              <image class="goodsContent-list-goods-info-content-row-img" />
+            <view class="goodsContent-list-goods-info-content-row flex flex-row items-center"
+            >
+              <image class="goodsContent-list-goods-info-content-row-img w-19 h-11.5 mr-4" />
               <text
-                class="goodsContent-list-goods-info-content-row-title"
+                class="goodsContent-list-goods-info-content-row-title text-20 font-normal text-[#2356a9]"
               ></text>
             </view>
-            <view class="goodsContent-list-goods-info-content-row">
-              <text class="goodsContent-list-goods-info-content-row-title"
+            <view class="goodsContent-list-goods-info-content-row flex flex-row items-center"
+            >
+              <text class="goodsContent-list-goods-info-content-row-title text-20 font-normal text-[#2356a9]"
                 >数量:{{ item.num }}
               </text>
             </view>
@@ -52,125 +58,4 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-.goodsContent {
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  padding: 20rpx 30rpx 0 30rpx;
-  &-list {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    &-goods {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      position: relative;
-      height: 320rpx;
-      &-info {
-        position: relative;
-        margin: 0 22rpx 18rpx 0;
-        box-sizing: border-box;
-        width: 215rpx;
-        height: 100%;
-        &-top {
-          position: relative;
-          width: 100%;
-          padding-top: 100%;
-          &-goodsImage {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-          }
-          &-goodsBg {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-          }
-          &-img {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-          }
-
-          &-select {
-            position: absolute;
-            right: 18rpx;
-            top: 18rpx;
-            width: 33rpx;
-            height: 33rpx;
-            &-img {
-              position: absolute;
-              right: 0;
-              top: 0;
-              width: 100%;
-              height: 100%;
-            }
-            &-bg {
-              width: 100%;
-              height: 100%;
-            }
-          }
-          &-level {
-            position: absolute;
-            right: -8px;
-            bottom: 8rpx;
-            width: 100rpx;
-            height: 50rpx;
-          }
-        }
-        &-content {
-          width: calc(100% - 16rpx);
-          position: relative;
-          left: 9rpx;
-          bottom: 0;
-          display: flex;
-          flex-direction: column;
-          &-title {
-            margin-top: 8rpx;
-            position: relative;
-            width: 160rpx;
-            font-size: 20rpx;
-            font-weight: 400;
-            color: #2356a9;
-            line-height: 32rpx;
-          }
-          &-row {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            &-img {
-              width: 19px;
-              height: 11.5px;
-              margin-right: 4rpx;
-            }
-            &-title {
-              font-size: 20rpx;
-              font-weight: normal;
-              color: #2356a9;
-            }
-            &-active {
-              font-size: 20rpx;
-              font-weight: 500;
-              color: gray;
-            }
-          }
-        }
-      }
-      &-info:nth-child(3n) {
-        margin-right: 0 !important;
-      }
-    }
-  }
-}
 </style>

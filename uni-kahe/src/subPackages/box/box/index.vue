@@ -1,28 +1,37 @@
 <template>
-  <view class="box">
-    <image class="box-bg" src="/static/kahe-202510/ka-he/mine/mine-bg.png" />
+  <view class="box relative w-full h-screen overflow-hidden">
+    <image
+      class="box-bg absolute inset-0 w-full h-full z-[-1]"
+      src="/static/kahe-202510/ka-he/mine/mine-bg.png"
+    />
     <!-- logo -->
-    <view class="box-logo">
+    <view
+      class="box-logo mt-16 mb-16 ml-28"
+      :style="{
+        width: 'calc(149rpx * 1.3)',
+        height: 'calc(53rpx * 1.3)',
+      }"
+    >
       <image
-        class="box_img"
+        class="box_img w-full h-full"
         src="/static/kahe-202510/jikaquan/jikaquan-logo.png"
       />
     </view>
     <!-- 公告 -->
     <bulletinar />
-    <view class="box-top">
-      <view class="line"></view>
+    <view class="box-top relative p-16 box-border w-full flex flex-row justify-between items-center">
+      <view class="line absolute left-0 bottom-26 w-full h-2 bg-[#e8cda7]" />
       <common-tab :list="tabList" v-model:current="currentIndex" />
-      <view class="box-top-question" @tap.stop="showModalType(4)">
+      <view class="box-top-question box-border relative flex flex-row items-center w-100 mb-8" @tap.stop="showModalType(4)">
         <image
-          class="box-top-question-img"
+          class="box-top-question-img mr-4 w-30 h-30"
           src="/static/kahe-202510/ka-he/common/question.png"
         />
-        <text class="box-top-question-title theme-font">规则</text>
+        <text class="box-top-question-title font-normal text-24 text-[#775435] theme-font">规则</text>
       </view>
     </view>
     <scroll-view
-      class="box-scroll"
+      class="box-scroll w-full"
       :style="{
         height:
           currentIndex === 0
@@ -32,7 +41,7 @@
       :scroll-y="true"
       @scrolltolower="handleScrollToLower"
     >
-      <view class="box-scroll-content" v-if="currentTabValue === 0">
+      <view class="box-scroll-content px-30 box-border w-full" v-if="currentTabValue === 0">
         <Merchant
           v-for="(item, index) in mineMerchantList"
           :key="'merchant-' + index"
@@ -45,7 +54,7 @@
         />
       </view>
       <view
-        class="box-scroll-content"
+        class="box-scroll-content px-30 box-border w-full"
         v-if="currentTabValue === 1 || currentTabValue === 2"
       >
         <record
@@ -59,7 +68,7 @@
         <Chest @select-item="selectItem" :list="chestsList" />
         <empty :show="chestsList.length === 0" />
       </view>
-      <view class="box-scroll-content" v-if="currentTabValue === 4">
+      <view class="box-scroll-content px-30 box-border w-full" v-if="currentTabValue === 4">
         <red-bag-item
           v-for="(item, index) in redBagList"
           :key="'redBag' + index"
@@ -192,82 +201,4 @@ eventBus.on("didLogin", async (_: any) => {
 </script>
 
 <style lang="scss" scoped>
-.box {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-
-  &-logo {
-    margin: 16rpx 0 16rpx 28rpx;
-    width: calc(149rpx * 1.3);
-    height: calc(53rpx * 1.3);
-
-    .box_img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  // background: linear-gradient(180deg, #f7daa1, #fff3dc);
-  &-bg {
-    width: 100%;
-    height: 100%;
-    inset: 0;
-    position: absolute;
-    z-index: -1;
-  }
-
-  &-top {
-    position: relative;
-    padding: 16rpx;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    .line {
-      position: absolute;
-      left: 0;
-      bottom: 26rpx;
-      width: 100%;
-      height: 2rpx;
-      background: #e8cda7;
-    }
-
-    &-question {
-      box-sizing: border-box;
-      position: relative;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      width: 100rpx;
-      margin-bottom: 8rpx;
-
-      &-img {
-        margin-right: 4rpx;
-        width: 30rpx;
-        height: 30rpx;
-      }
-
-      &-title {
-        font-weight: 400;
-        font-size: 24rpx;
-        color: #775435;
-      }
-    }
-  }
-
-  &-scroll {
-    width: 100%;
-
-    &-content {
-      padding: 0 30rpx;
-      box-sizing: border-box;
-      width: 100%;
-    }
-  }
-}
 </style>

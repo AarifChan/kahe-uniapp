@@ -1,12 +1,12 @@
 <template>
-  <view class="custom-btn">
+  <view class="custom-btn relative w-160 h-67">
     <image
-      class="custom-btn-img"
+      class="custom-btn-img w-full h-full"
       src="/static/kahe-202510/ka-he/common/common-btn-bg.png"
     />
-    <view class="custom-btn-content">
+    <view class="custom-btn-content absolute top-4rpx left-0 w-full h-full flex text-center flex-row items-center justify-center">
       <slot />
-      <text class="custom-btn-title theme-font">{{ title }}</text>
+      <text class="custom-btn-title font-normal text-34 text-[#511818] theme-font">{{ title }}</text>
     </view>
   </view>
 </template>
@@ -25,31 +25,4 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-.custom-btn {
-  position: relative;
-  width: 160rpx;
-  height: 67rpx;
-  &-img {
-    width: 100%;
-    height: 100%;
-  }
-
-  &-content {
-    position: absolute;
-    top: 4rpx;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    text-align: center;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
-  &-title {
-    color: #511818;
-    font-weight: 400;
-    font-size: 34rpx;
-  }
-}
 </style>

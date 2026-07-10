@@ -1,38 +1,35 @@
 <template>
-  <view class="boxItem">
-    <view class="boxItem-top">
+  <view class="boxItem relative w-full h-324 flex flex-col mb-10 bg-white rounded-30 border-5 border-[#d3c5a2]">
+    <view class="boxItem-top relative w-full mt-16 flex flex-row items-center justify-center">
       <image
-        class="boxItem-top-image"
+        class="boxItem-top-image h-192"
         mode="heightFix"
         :src="item?.goods?.image"
         @tap.passive="emits('didTapDetail', item)"
       />
-      <view class="boxItem-top-quality">{{
-        getTitleByQuality(item.goods.quality)
-      }}</view>
+      <view class="boxItem-top-quality absolute left-8 bottom-4px py-4 px-8 text-[#222] text-20 bg-[#f6ac41] rounded-4"
+        >{{ getTitleByQuality(item.goods.quality) }}</view>
 
-      <!--            <view class="boxItem-top-levelBg">-->
-      <!--                <image mode="heightFix"  class="boxItem-top-levelBg-level" :src="getLevelImage(item?.goods?.level ?? 0)" />-->
+      <!--            <view class="boxItem-top-levelBg flex justify-center items-center absolute left-0 bottom-8 w-90 h-40 bg-[#95c3f7] rounded-[0rpx_8rpx_0rpx_8rpx]">-->
+      <!--                <image mode="heightFix"  class="boxItem-top-levelBg-level h-full" :src="getLevelImage(item?.goods?.level ?? 0)" />-->
       <!--            </view>-->
     </view>
-    <view class="boxItem-info">
-      <text class="boxItem-info-title text-flow-ellipsis-single">{{
-        item?.goods?.name
-      }}</text>
-      <view class="boxItem-info-ticket">
-        <!--                <image class="boxItem-info-ticket-img" src="/static/kahe/mine/icon2.png" />-->
-        <text class="boxItem-info-ticket-title price-font">
-          {{ item?.goods?.price ?? 0 }}</text
+    <view class="boxItem-info mt-24 ml-24 flex flex-col">
+      <text class="boxItem-info-title text-16 font-normal text-black text-flow-ellipsis-single">{{ item?.goods?.name }}</text>
+      <view class="boxItem-info-ticket flex flex-row items-center">
+        <!--                <image class="boxItem-info-ticket-img w-27 h-28" src="/static/kahe/mine/icon2.png" />-->
+        <text class="boxItem-info-ticket-title text-32 font-normal text-black price-font"
         >
+          {{ item?.goods?.price ?? 0 }}</text>
       </view>
-      <text class="boxItem-info-num">数量：{{ item?.num }}</text>
-      <text v-if="item?.goods?.type === 1" class="boxItem-info-num"
-        >仅限发货</text
-      >
+      <text class="boxItem-info-num text-16 font-normal text-black"
+        >数量：{{ item?.num }}</text>
+      <text v-if="item?.goods?.type === 1" class="boxItem-info-num text-16 font-normal text-black"
+        >仅限发货</text>
     </view>
-    <view class="boxItem-lock" @tap.stop="emits('didTapLock', item)">
+    <view class="boxItem-lock absolute right-24 bottom-48" @tap.stop="emits('didTapLock', item)">
       <image
-        class="boxItem-lock-img"
+        class="boxItem-lock-img w-20 h-30"
         :src="
           item.status === 0
             ? '/static/kahe/box/box-goods-unlock.png'
@@ -40,7 +37,7 @@
         "
       />
     </view>
-    <view class="boxItem-select" @tap.stop="emits('didTapSelect', item)">
+    <view class="boxItem-select absolute bottom-16 right-16" @tap.stop="emits('didTapSelect', item)">
       <select-item :is-select="item.selectNum > 0" size="36rpx" />
     </view>
   </view>
@@ -65,104 +62,4 @@ const emits = defineEmits(["didTapSelect", "didTapLock", "didTapDetail"]);
 </script>
 
 <style lang="scss" scoped>
-.boxItem {
-  position: relative;
-  width: 100%;
-  height: 324rpx;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10rpx;
-  background: #ffffff;
-  border-radius: 30rpx;
-  border: 5rpx solid #d3c5a2;
-
-  &-select {
-    position: absolute;
-    bottom: 16rpx;
-    right: 16rpx;
-  }
-  &-lock {
-    position: absolute;
-    right: 24rpx;
-    bottom: 48rpx;
-    &-img {
-      width: 20rpx;
-      height: 30rpx;
-    }
-  }
-  &-top {
-    margin-top: 16rpx;
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    &-quality {
-      position: absolute;
-      left: 8rpx;
-      bottom: 4px;
-      padding: 4rpx 8rpx;
-      color: #222;
-      font-size: 20rpx;
-      background: #f6ac41;
-      border-radius: 4rpx;
-    }
-    &-image {
-      height: 192rpx;
-    }
-    &-decorate {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-    }
-
-    &-levelBg {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      left: 0rpx;
-      bottom: 8rpx;
-      width: 90rpx;
-      height: 40rpx;
-      background: #95c3f7;
-      border-radius: 0rpx 8rpx 0rpx 8rpx;
-      &-level {
-        height: 100%;
-      }
-    }
-  }
-  &-info {
-    margin-top: 24rpx;
-    margin-left: 24rpx;
-    display: flex;
-    flex-direction: column;
-    &-title {
-      font-size: 16rpx;
-      font-weight: 400;
-      color: #000000;
-    }
-    &-ticket {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      &-title {
-        font-size: 32rpx;
-        font-weight: 400;
-        color: #000000;
-      }
-      &-img {
-        width: 27rpx;
-        height: 28rpx;
-      }
-    }
-    &-num {
-      font-size: 16rpx;
-      font-weight: 400;
-      color: #000000;
-    }
-  }
-}
 </style>
