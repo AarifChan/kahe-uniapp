@@ -1,6 +1,6 @@
 <template>
   <view
-    class="merchantCard relative w-730 h-201 mx-auto my-32 box-border p-32 flex flex-row items-center justify-between bg-[url('/static/kahe-202510/groupBuy/merchat-bg.png')]"
+    class="merchantCard relative w-730 h-201 mx-auto my-32 box-border p-32 flex flex-row items-center justify-between bg-[url(/static/kahe-202510/groupBuy/merchat-bg.png)]"
     :style="{
       backgroundSize: '100% 100%',
       backgroundRepeat: 'no-repeat',

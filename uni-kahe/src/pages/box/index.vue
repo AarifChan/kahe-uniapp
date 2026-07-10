@@ -1,102 +1,110 @@
 <template>
-  <view class="relative w-full overflow-hidden flex flex-col bg-main-bg" style="height: calc(100vh - env(safe-area-inset-bottom) - 132rpx);">
-    <image class="w-full h-full absolute inset-0 -z-1" src="/static/kahe-202510/ka-he/mine/mine-bg.png" />
+  <view class="relative w-screen h-screen bg-[#FFF8E9] flex flex-col">
     <!-- logo -->
-    <view class="m-16 mx-0 mb-16 ml-28" style="width: calc(149rpx * 1.3); height: calc(53rpx * 1.3);"
-    >
-      <image
-        class="w-full h-full"
-        src="/static/kahe-202510/jikaquan/jikaquan-logo.png"
+    <NavBar :opacity="0" position="sticky" @search="handleSearch" />
+    <view class="relative w-full overflow-hidden flex flex-col">
+      <!-- 公告 -->
+      <view class="mt-16">
+        <bulletinar />
+      </view>
+
+      <view
+        class="relative p-16 w-full box-border flex flex-row justify-between items-center"
+      >
+        <common-tab :list="tabList" v-model:current="currentIndex" />
+        <view
+          class="relative flex flex-row items-center"
+          @tap.stop="showModalType(4)"
+        >
+          <image
+            class="mr-4 w-113 h-37"
+            src="/static/kaju/common/tips-bg.png"
+          />
+          <text
+            class="absolute left-0 top-2 text-center w-full text-24 text-[#000000] theme-font"
+            >发货须知</text
+          >
+        </view>
+      </view>
+      <!-- :style="{
+              height:
+                  currentIndex === 0
+                      ? 'calc(100vh - 142rpx - env(safe-area-inset-bottom))'
+                      : 'calc(100vh - env(safe-area-inset-bottom))',
+      }"  -->
+      <scroll-view
+        class="w-full"
+        :scroll-y="true"
+        @scrolltolower="handleScrollToLower"
+      >
+        <view
+          class="px-30 box-border w-full h-full"
+          v-if="currentTabValue === 0"
+        >
+          <Merchant
+            v-for="(item, index) in mineMerchantList"
+            :key="'merchant-' + index"
+            :id="'merchant:id' + index"
+            :item="item"
+            :is-expand="index === currentExpand"
+            @did-expand-merchant="handleExpandMerchant(index)"
+            @did-click-box-item="clickBoxItem"
+            @did-select-box="didSelectBox"
+          />
+        </view>
+        <view
+          class="px-30 box-border w-full h-full"
+          v-if="currentTabValue === 1 || currentTabValue === 2"
+        >
+          <record
+            v-for="(item, index) in recordList"
+            :key="'record' + index"
+            :item="item"
+          />
+          <empty :show="recordList.length === 0" />
+        </view>
+        <view v-if="currentTabValue === 3">
+          <Chest @select-item="selectItem" :list="chestsList" />
+          <empty :show="chestsList.length === 0" />
+        </view>
+        <view
+          class="px-30 box-border w-full h-full"
+          v-if="currentTabValue === 4"
+        >
+          <red-bag-item
+            v-for="(item, index) in redBagList"
+            :key="'redBag' + index"
+            :item="item"
+            @did-click="didClickRedBagItem(item)"
+          />
+        </view>
+      </scroll-view>
+
+      <handle
+        v-if="currentIndex === 0"
+        @did-tap-item="handleTapItem"
+        :isSelectAll="isSelectAll"
+      />
+      <smash
+        v-model:show="smashShow"
+        :recycleGoods="smashList"
+        @did-tap-smash="didTapPay"
+      />
+      <shipment
+        v-model:show="shipmentShow"
+        :address="address"
+        :list="smashList"
+        @did-tap-address="chooseAddress"
+        @did-tap-protocol="showModalType(ModalType.UserProtocol)"
+        @did-click-confirm="didTapPay"
+      />
+      <common-modal
+        v-model:show="modalShow"
+        :title="modalTitle"
+        :content="modalContent"
       />
     </view>
-    <!-- 公告 -->
-    <bulletinar />
-    <view class="relative p-16 w-full box-border flex flex-row justify-between items-center"
-    >
-      <view class="absolute left-0 bottom-26 w-full h-2 bg-[#e8cda7]"></view>
-      <common-tab :list="tabList" v-model:current="currentIndex" />
-      <view class="box-border relative flex flex-row items-center w-100 mb-8" @tap.stop="showModalType(4)">
-        <image
-          class="mr-4 w-30 h-30"
-          src="/static/kahe-202510/ka-he/common/question.png"
-        />
-        <text class="font-normal text-24 text-[#775435] theme-font">规则</text>
-      </view>
-    </view>
-    <!-- :style="{
-            height:
-                currentIndex === 0
-                    ? 'calc(100vh - 142rpx - env(safe-area-inset-bottom))'
-                    : 'calc(100vh - env(safe-area-inset-bottom))',
-    }"  -->
-    <scroll-view
-      class="w-full"
-      style="height: calc(100vh - env(safe-area-inset-bottom) - 132rpx - 332rpx); padding-bottom: calc(128rpx + env(safe-area-inset-bottom));"
-      :scroll-y="true"
-      @scrolltolower="handleScrollToLower"
-    >
-      <view class="px-30 box-border w-full h-full" v-if="currentTabValue === 0">
-        <Merchant
-          v-for="(item, index) in mineMerchantList"
-          :key="'merchant-' + index"
-          :id="'merchant:id' + index"
-          :item="item"
-          :is-expand="index === currentExpand"
-          @did-expand-merchant="handleExpandMerchant(index)"
-          @did-click-box-item="clickBoxItem"
-          @did-select-box="didSelectBox"
-        />
-      </view>
-      <view
-        class="px-30 box-border w-full h-full"
-        v-if="currentTabValue === 1 || currentTabValue === 2"
-      >
-        <record
-          v-for="(item, index) in recordList"
-          :key="'record' + index"
-          :item="item"
-        />
-        <empty :show="recordList.length === 0" />
-      </view>
-      <view v-if="currentTabValue === 3">
-        <Chest @select-item="selectItem" :list="chestsList" />
-        <empty :show="chestsList.length === 0" />
-      </view>
-      <view class="px-30 box-border w-full h-full" v-if="currentTabValue === 4">
-        <red-bag-item
-          v-for="(item, index) in redBagList"
-          :key="'redBag' + index"
-          :item="item"
-          @did-click="didClickRedBagItem(item)"
-        />
-      </view>
-    </scroll-view>
-
-    <handle
-      v-if="currentIndex === 0"
-      @did-tap-item="handleTapItem"
-      :isSelectAll="isSelectAll"
-    />
-    <smash
-      v-model:show="smashShow"
-      :recycleGoods="smashList"
-      @did-tap-smash="didTapPay"
-    />
-    <shipment
-      v-model:show="shipmentShow"
-      :address="address"
-      :list="smashList"
-      @did-tap-address="chooseAddress"
-      @did-tap-protocol="showModalType(ModalType.UserProtocol)"
-      @did-click-confirm="didTapPay"
-    />
-    <common-modal
-      v-model:show="modalShow"
-      :title="modalTitle"
-      :content="modalContent"
-    />
   </view>
-  <!--  <TabBar />-->
 </template>
 
 <script lang="ts" setup>
@@ -174,6 +182,10 @@ const tabList = ref([
   //   value: 4,
   // },
 ]);
+const handleSearch = (value: string) => {
+  console.log("search", value);
+};
+
 watch(
   () => currentIndex.value,
   async (value) => {
@@ -191,11 +203,8 @@ onMounted(() => {
   loadData();
 });
 onShow(() => {
-  if (AppModule.boxTabIndex) {
-    currentIndex.value = AppModule.boxTabIndex;
-
-    loadData();
-  }
+  currentIndex.value = AppModule.boxTabIndex;
+  loadData();
 });
 
 eventBus.on("didLogin", async (_: any) => {

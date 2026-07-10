@@ -17,13 +17,14 @@
         class="flex flex-row items-center w-345 h-58 bg-white rounded-29 border-2px border-[#ffe4d0] ml-28 pl-20 box-border"
       >
         <image
-          class="w-28 h-28 flex-shrink-0"
+          class="w-46 h-43 flex-shrink-0"
           src="/static/kaju/common/search.png"
         />
         <input
           class="flex-1 h-full ml-10 text-26 text-[#333]"
           type="text"
           placeholder="搜索"
+          @confirm="onSearchConfirm"
         />
       </view>
     </view>

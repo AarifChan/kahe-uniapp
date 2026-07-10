@@ -133,7 +133,7 @@
         >
         <view class="groupBuySubmit-content-list mt-28 flex flex-row">
           <view
-            class="groupBuySubmit-content-list-item mr-26 w-140 h-73 rounded-10 bg-[url('/static/kahe-202510/groupBuy/buy-item.png')] bg-[length:100%_100%] bg-no-repeat flex flex-col items-center justify-center"
+            class="groupBuySubmit-content-list-item mr-26 w-140 h-73 rounded-10 bg-[url(/static/kahe-202510/groupBuy/buy-item.png)] bg-[length:100%_100%] bg-no-repeat flex flex-col items-center justify-center"
             :class="
               item.num === selectNum
                 ? 'rounded-10 border-2 border-[#081d62]'
@@ -175,7 +175,7 @@
       <!--            </view>-->
     </scroll-view>
     <view
-      class="groupBuySubmit-bottom absolute left-[-4rpx] bottom-0 w-[calc(100%+8rpx)] box-border bg-[url('/static/kahe-202510/groupBuy/pay-bg.png')] bg-[length:100%_100%] bg-no-repeat"
+      class="groupBuySubmit-bottom absolute left-[-4rpx] bottom-0 w-[calc(100%+8rpx)] box-border bg-[url(/static/kahe-202510/groupBuy/pay-bg.png)] bg-[length:100%_100%] bg-no-repeat"
       :style="{ padding: '16rpx 16rpx env(safe-area-inset-bottom)' }"
     >
       <view

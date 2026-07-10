@@ -230,7 +230,7 @@
             @tap.stop="showInGroupImage"
           >
             <view
-              class="groupBuyDetail-bottom-line-left-item-tips absolute top-[-50rpx] left-[-20rpx] w-132 h-49 text-center text-24 pt-4 text-[#794627] bg-[url('/static/kahe-202510/groupBuy/bunddle.png')] bg-no-repeat"
+              class="groupBuyDetail-bottom-line-left-item-tips absolute top-[-50rpx] left-[-20rpx] w-132 h-49 text-center text-24 pt-4 text-[#794627] bg-[url(/static/kahe-202510/groupBuy/bunddle.png)] bg-no-repeat"
               :style="{ backgroundSize: '100% 100%' }"
               >开播通知</view
             >

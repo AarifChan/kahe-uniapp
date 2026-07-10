@@ -1,6 +1,6 @@
 <template>
   <view
-    class="groupBuyItem w-full p-10 box-border aspect-ratio-[331/500] relative overflow-hidden mb-0 rounded-12 flex flex-col bg-[url('/static/kahe-202510/ka-he/home/item-bg.png')] bg-[length:100%_100%] bg-center bg-no-repeat"
+    class="groupBuyItem w-full p-10 box-border aspect-ratio-[331/500] relative overflow-hidden mb-0 rounded-12 flex flex-col bg-[url(/static/kahe-202510/ka-he/home/item-bg.png)] bg-[length:100%_100%] bg-center bg-no-repeat"
   >
     <!--        <image class="groupBuyItem-bg" src="/static/kahe-202510/ka-he/home/item-bg.png"  />-->
     <image
@@ -81,7 +81,7 @@
           class="groupBuyItem-info-row flex flex-row items-center justify-between"
         >
           <view
-            class="groupBuyItem-info-row-price price-font font-normal text-32 text-[#000000] text-right leading-[46rpx] pr-[6rpx] w-[97rpx] h-[46rpx] bg-[url('/static/kahe-202510/ka-he/home/price-bg.png')] bg-no-repeat bg-[length:100%_100%]"
+            class="groupBuyItem-info-row-price price-font font-normal text-32 text-[#000000] text-right leading-[46rpx] pr-[6rpx] w-[97rpx] h-[46rpx] bg-[url(/static/kahe-202510/ka-he/home/price-bg.png)] bg-no-repeat bg-[length:100%_100%]"
             >¥{{ item.price }}</view
           >
         </view>

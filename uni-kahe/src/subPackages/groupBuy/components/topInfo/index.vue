@@ -74,7 +74,7 @@
         <view
           v-for="(item, index) in detail.prices"
           :key="'price' + index"
-          class="topInfo-content-row2-price inline-block w-[202rpx] h-41 leading-41 mr-12 font-normal text-20 text-[#794627] text-center bg-[url('/static/kahe-202510/groupBuy/discount-item.png')] bg-no-repeat bg-[length:100%_100%] rounded-4"
+          class="topInfo-content-row2-price inline-block w-[202rpx] h-41 leading-41 mr-12 font-normal text-20 text-[#794627] text-center bg-[url(/static/kahe-202510/groupBuy/discount-item.png)] bg-no-repeat bg-[length:100%_100%] rounded-4"
           >单笔满{{ item.num }}份｜{{ item.price }}/份</view
         >
       </scroll-view>
