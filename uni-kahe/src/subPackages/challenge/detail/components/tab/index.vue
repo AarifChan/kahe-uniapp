@@ -125,9 +125,5 @@ const tabDidChange = (index: number) => {
 };
 </script>
 
-<style scoped>
-/* 字体类 */
-.font-theme {
-  font-family: "YouSheBiaoTiHei", sans-serif;
-}
+<style lang="scss" scoped>
 </style>

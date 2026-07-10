@@ -26,7 +26,7 @@
       <view class="relative w-full h-full">
         <view class="px-12 w-[calc(100%-24rpx)]">
           <view
-            class="mt-10 ml-10 font-normal text-24 text-black leading-30 h-60 text-flow-ellipsis-multiple"
+            class="mt-10 ml-10 font-normal text-24 text-black leading-30 h-60 text-ellipsis-2"
             >{{ item.name }}</view
           >
           <view
@@ -48,7 +48,7 @@
         <view class="absolute right-19 bottom-4 flex items-center">
           <image class="w-36 h-36 rounded-full" :src="item.merchant?.icon" />
           <view
-            class="max-w-[120rpx] ml-5 font-normal text-18 text-[#504F4F] text-flow-ellipsis-single"
+            class="max-w-[120rpx] ml-5 font-normal text-18 text-[#504F4F] text-ellipsis"
             >{{ item.merchant?.name }}</view
           >
         </view>

@@ -7,8 +7,8 @@
       v-for="(item, index) in list"
       :key="index"
       class="absolute top-0 left-full w-707rpx h-73rpx flex items-center pointer-events-auto"
-      :class="item.action ? `anmt1 ${item.class}` : ''"
-      :style="['animation-duration:' + animationTime + 's']"
+      :class="item.action ? item.class : ''"
+      :style="{ animation: item.action ? `move1 linear ${animationTime}s` : 'none' }"
       @tap.stop="emits('tapLampAction', item)"
     >
       <view class="relative w-698rpx h-46rpx" :style="lampBarBgStyle">
@@ -20,7 +20,7 @@
           class="absolute left-169rpx top-0 flex flex-row items-center h-full"
         >
           <view
-            class="max-w-120rpx text-24rpx text-white font-normal line-height-24rpx text-flow-ellipsis-single"
+            class="max-w-120rpx text-24rpx text-white font-normal line-height-24rpx text-ellipsis"
             >{{ item.userName }}</view
           >
           <view
@@ -34,7 +34,7 @@
             style="width: 96rpx; height: 68rpx"
           />
           <view
-            class="flex-1 text-12px font-500 text-white line-height-13px ml-8rpx text-flow-ellipsis-single truncate"
+            class="flex-1 text-12px font-500 text-white line-height-13px ml-8rpx text-ellipsis"
             >{{ item.goodsName }}</view
           >
         </view>
@@ -112,6 +112,13 @@ const convertList = () => {
 let timer: any = null;
 const animationTime = 8;
 
+const topClassMap: Record<number, string> = {
+  1: "top-0",
+  2: "top-135rpx",
+  3: "top-240rpx",
+  4: "top-340rpx",
+};
+
 const play = (playList: BarrageUIType[], num: number) => {
   if (playList.length) {
     actionMa(playList, num);
@@ -131,7 +138,7 @@ const actionMa = (playList: BarrageUIType[], num: number) => {
     const index = actionMa1Index % playList.length;
     if (!playList[index].action) {
       playList[index].action = true;
-      playList[index].class = "action_" + ((actionMa1Index % num) + 1);
+      playList[index].class = topClassMap[(actionMa1Index % num) + 1];
       setTimeout(
         () => {
           playList[index].action = false;
@@ -177,27 +184,9 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.action_1 {
-  top: 0;
-}
-.action_2 {
-  top: 135rpx;
-}
-.action_3 {
-  top: 240rpx;
-}
-.action_4 {
-  top: 340rpx;
-}
+</style>
 
-.ma-text {
-  @include text-stroke-color(#87320c);
-}
-.anmt1 {
-  animation: move1 linear;
-  -webkit-animation: move1 linear;
-}
-
+<style lang="scss">
 @keyframes move1 {
   from {
     transform: translateX(0);

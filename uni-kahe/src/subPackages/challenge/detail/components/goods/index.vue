@@ -23,9 +23,12 @@
         :src="getLevelImage(index)"
         mode="aspectFit"
       />
+      <view
+        class="absolute inset-0 rounded-10rpx border-4rpx border-solid border-[#e2af2f] pointer-events-none"
+      />
     </view>
     <view class="mt-8rpx flex flex-col">
-      <view class="w-200rpx text-black text-10px text-flow-ellipsis-single">{{
+      <view class="w-200rpx text-black text-10px text-ellipsis">{{
         item?.goodsDto?.name
       }}</view>
       <view>
@@ -76,17 +79,5 @@ defineProps({
 defineEmits(["click"]);
 </script>
 
-<style scoped>
-/* 双层边框效果 - 内层边框通过伪元素实现 */
-.goodsBox-top::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 10rpx;
-  border: 4rpx solid #e2af2f;
-  pointer-events: none;
-}
+<style lang="scss" scoped>
 </style>

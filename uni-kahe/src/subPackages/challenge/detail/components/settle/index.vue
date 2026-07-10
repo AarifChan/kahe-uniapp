@@ -119,6 +119,14 @@ const playTopBgStyle = {
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
 };
+
+const qualityTagStyle = {
+  backgroundImage:
+    "url(/static/kahe-202510/ka-he/common/num_bg.png)",
+  backgroundSize: "100% 100%",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 </script>
 
 <template>
@@ -195,8 +203,11 @@ const playTopBgStyle = {
                     mode="aspectFit"
                   />
 
-                  <view class="reward-card-quality">
-                    <text class="reward-card-quality-text">
+                  <view
+                    class="absolute right-4rpx bottom-64rpx w-96rpx h-42rpx flex items-center justify-center"
+                    :style="qualityTagStyle"
+                  >
+                    <text class="text-20rpx text-[#222222]">
                       {{ getTitleByQuality(item?.goodsDto?.quality) }}
                     </text>
                   </view>
@@ -279,25 +290,4 @@ const playTopBgStyle = {
 </template>
 
 <style scoped lang="scss">
-.reward-card-quality {
-  position: absolute;
-  right: 4rpx;
-  bottom: 64rpx;
-  width: 96rpx;
-  height: 42rpx;
-  background-image: url("/static/kahe-202510/ka-he/common/num_bg.png");
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.reward-card-quality-text {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20rpx;
-  color: #222222;
-}
 </style>

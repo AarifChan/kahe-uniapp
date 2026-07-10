@@ -3,7 +3,7 @@
     <view class="w-full relative flex box-border overflow-x-auto">
       <view
         class="shrink-0 mr-12rpx px-36 h-40rpx rounded-18rpx text-center leading-40"
-        :class="sortIndex === item.value ? 'tab-active' : 'tab-inactive'"
+        :class="sortIndex === item.value ? 'bg-[#ac5a3e]' : 'bg-[#e8ad82]'"
         v-for="(item, index) in tabs"
         :key="item.value"
         :id="item.value"
@@ -102,10 +102,4 @@ const sortTabAction = (item: { label: string; value: number }) => {
 </script>
 
 <style scoped lang="scss">
-.tab-active {
-  background-color: #ac5a3e;
-}
-.tab-inactive {
-  background-color: #e8ad82;
-}
 </style>
