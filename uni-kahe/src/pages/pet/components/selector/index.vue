@@ -8,8 +8,9 @@
         <!--        </view>-->
         <view class="absolute top-full left-0 w-full bg-[#3A3A3A] rounded-10 text-center font-normal text-24 text-white z-1000 overflow-hidden shadow-[2rpx_3rpx_3rpx_0rpx_#448483,0rpx_-1rpx_1rpx_0rpx_rgba(0,0,0,0.45),0rpx_1rpx_1rpx_0rpx_rgba(179,197,219,0.45)]"
                v-if="dropDown">
-            <view v-for="option in options" :key="option.value"
-                  class="py-[5px] px-[4px] cursor-pointer border-b border-[#202020] shadow-[0rpx_1rpx_0rpx_0rpx_rgba(255,255,255,0.14)] last:border-b-0 last:shadow-none hover:bg-[#f0f0f0] hover:text-[#3A3A3A] theme-font"
+            <view v-for="(option, idx) in options" :key="option.value"
+                  class="py-[5px] px-[4px] cursor-pointer hover:bg-[#f0f0f0] hover:text-[#3A3A3A] theme-font"
+                  :style="idx === options.length - 1 ? {} : { borderBottom: '1px solid #202020', boxShadow: '0rpx 1rpx 0rpx 0rpx rgba(255,255,255,0.14)' }"
                   @click="clickOption(option)">
                 <text>{{ option.label }}</text>
             </view>
