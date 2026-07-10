@@ -14,6 +14,8 @@ Task 4a (subPackages/collect): complete (commits 51d6083..be9627b, review clean)
 Task 4b (subPackages/box): complete (commits be9627b..15b5866, review clean)
 Task 4c (subPackages/groupBuy): complete (commits 15b5866..e1983af, review clean)
 Task 7 (subPackages/product): complete (commit 8d5757b, review clean, build green)
+Task 8 (remaining subPackages): complete (commits 94336d5..35054bf, review clean, build green)
+Global `text-flow-ellipsis` cleanup: complete (commit d04f43c, build green)
 
 ## In Progress
-Task 8: Migrate remaining subPackages pages and components to UnoCSS
+Task 9 (final cleanup): Remove empty style tags and verify no remaining scoped SCSS/rpx usage.
