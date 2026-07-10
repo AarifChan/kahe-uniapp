@@ -1,58 +1,99 @@
 <template>
-  <view class="groupBuyItem" :style="groupBuyItemBgStyle">
+  <view
+    class="groupBuyItem w-full p-10 box-border aspect-ratio-[331/500] relative overflow-hidden mb-0 rounded-12 flex flex-col bg-[url('/static/kahe-202510/ka-he/home/item-bg.png')] bg-[length:100%_100%] bg-center bg-no-repeat"
+  >
     <!--        <image class="groupBuyItem-bg" src="/static/kahe-202510/ka-he/home/item-bg.png"  />-->
-    <image class="groupBuyItem-logo" :src="item.logo" />
-    <view class="groupBuyItem-num">{{ item.num }}/{{ item.total }}</view>
-    <view class="groupBuyItem-info">
+    <image
+      class="groupBuyItem-logo relative w-full aspect-ratio-[1/1]"
+      :src="item.logo"
+    />
+    <view
+      class="groupBuyItem-num absolute right-[14rpx] top-[251rpx] rounded-4 font-normal text-20 text-[#FFFFFF] py-2 px-9 bg-[rgba(0,0,0,0.7)] z-1"
+    >
+      {{ item.num }}/{{ item.total }}
+    </view>
+    <view
+      class="groupBuyItem-info relative flex flex-col px-12 pb-12 box-border z-1"
+    >
       <!--            <view class="groupBuyItem-info-subTitle SimHei-font" style="margin-top: 15rpx">{{isTimeout ? '已结束' : '剩余时间'}}</view>-->
       <view
         v-if="!isTimeout"
-        class="groupBuyItem-info-row"
+        class="groupBuyItem-info-row flex flex-row items-center justify-between"
         style="margin-top: 5rpx"
       >
-        <view class="groupBuyItem-info-row-last SimHei-font">
-          <view class="groupBuyItem-info-row-last-value price-font">{{
-            day
-          }}</view>
-          <view class="groupBuyItem-info-row-last-title">天</view>
-          <view class="groupBuyItem-info-row-last-value price-font">{{
-            hour
-          }}</view>
-          <view class="groupBuyItem-info-row-last-title">时</view>
-          <view class="groupBuyItem-info-row-last-value price-font">{{
-            minute
-          }}</view>
-          <view class="groupBuyItem-info-row-last-title">分</view>
-          <view class="groupBuyItem-info-row-last-value price-font">{{
-            second
-          }}</view>
-          <view class="groupBuyItem-info-row-last-title">秒</view>
+        <view
+          class="groupBuyItem-info-row-last SimHei-font flex flex-row items-center"
+        >
+          <view
+            class="groupBuyItem-info-row-last-value price-font text-center leading-[30rpx] font-normal text-22 text-[#FFFFFF] w-[30rpx] h-[30rpx] bg-[#1AE1FF] rounded-6"
+            >{{ day }}</view
+          >
+          <view
+            class="groupBuyItem-info-row-last-title font-normal text-22 text-[#000000]"
+            >天</view
+          >
+          <view
+            class="groupBuyItem-info-row-last-value price-font text-center leading-[30rpx] font-normal text-22 text-[#FFFFFF] w-[30rpx] h-[30rpx] bg-[#1AE1FF] rounded-6"
+            >{{ hour }}</view
+          >
+          <view
+            class="groupBuyItem-info-row-last-title font-normal text-22 text-[#000000]"
+            >时</view
+          >
+          <view
+            class="groupBuyItem-info-row-last-value price-font text-center leading-[30rpx] font-normal text-22 text-[#FFFFFF] w-[30rpx] h-[30rpx] bg-[#1AE1FF] rounded-6"
+            >{{ minute }}</view
+          >
+          <view
+            class="groupBuyItem-info-row-last-title font-normal text-22 text-[#000000]"
+            >分</view
+          >
+          <view
+            class="groupBuyItem-info-row-last-value price-font text-center leading-[30rpx] font-normal text-22 text-[#FFFFFF] w-[30rpx] h-[30rpx] bg-[#1AE1FF] rounded-6"
+            >{{ second }}</view
+          >
+          <view
+            class="groupBuyItem-info-row-last-title font-normal text-22 text-[#000000]"
+            >秒</view
+          >
         </view>
       </view>
-      <view class="groupBuyItem-info-title text-flow-ellipsis-single">{{
-        item.title
-      }}</view>
+      <view
+        class="groupBuyItem-info-title text-flow-ellipsis-single font-normal text-24 text-[#000000] leading-[36rpx]"
+        >{{ item.title }}</view
+      >
 
-      <view class="groupBuyItem-info-progress" style="margin-top: 5rpx">
+      <view
+        class="groupBuyItem-info-progress flex flex-row w-full h-[12rpx] bg-[#E0E0E0] rounded-6 overflow-hidden"
+        style="margin-top: 5rpx"
+      >
         <view
           v-if="item.total > 0"
-          class="groupBuyItem-info-progress-value"
+          class="groupBuyItem-info-progress-value h-full bg-[#F95151]"
           :style="{ width: `${(item.num / item.total) * 100.0}%` }"
         ></view>
       </view>
-      <view class="groupBuyItem-info-row" style="margin-top: 12rpx">
-        <view class="groupBuyItem-info-row">
-          <view class="groupBuyItem-info-row-price price-font"
+      <view
+        class="groupBuyItem-info-row flex flex-row items-center justify-between"
+        style="margin-top: 12rpx"
+      >
+        <view
+          class="groupBuyItem-info-row flex flex-row items-center justify-between"
+        >
+          <view
+            class="groupBuyItem-info-row-price price-font font-normal text-32 text-[#000000] text-right leading-[46rpx] pr-[6rpx] w-[97rpx] h-[46rpx] bg-[url('/static/kahe-202510/ka-he/home/price-bg.png')] bg-no-repeat bg-[length:100%_100%]"
             >¥{{ item.price }}</view
           >
         </view>
-        <view class="groupBuyItem-info-row-merchant">
+        <view
+          class="groupBuyItem-info-row-merchant flex flex-row items-center"
+        >
           <image
-            class="groupBuyItem-info-row-merchant-logo"
+            class="groupBuyItem-info-row-merchant-logo w-36 h-36 rounded-full"
             :src="item.merchant?.icon"
           />
           <view
-            class="groupBuyItem-info-row-merchant-name text-flow-ellipsis-single"
+            class="groupBuyItem-info-row-merchant-name text-flow-ellipsis-single max-w-[120rpx] ml-[5rpx] font-normal text-18 text-[#504F4F]"
             >{{ item.merchant?.name ?? "" }}</view
           >
         </view>
@@ -71,14 +112,6 @@
 import { computed, onMounted, PropType } from "vue";
 import type { GroupBuyItem } from "@/model";
 import { useTimeCount } from "@/composables/countTime";
-
-const groupBuyItemBgStyle = {
-  backgroundImage:
-    "url(/static/kahe-202510/ka-he/home/item-bg.png)",
-  backgroundSize: "100% 100%",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-};
 
 const { startTimeRemain, hour, day, second, minute, isTimeout } =
   useTimeCount();
@@ -99,165 +132,4 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.groupBuyItem {
-  width: 100%;
-  padding: 10rpx;
-  box-sizing: border-box;
-  aspect-ratio: 331 / 500;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 0;
-  border-radius: 12rpx;
-  display: flex;
-  flex-direction: column;
-
-  &-bg {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
-
-  &-logo {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1;
-  }
-
-  &-num {
-    position: absolute;
-    right: 14rpx;
-    top: 251rpx;
-    border-radius: 4rpx;
-    font-weight: 400;
-    font-size: 20rpx;
-    color: #ffffff;
-    padding: 2rpx 9rpx;
-    background: rgba($color: #000000, $alpha: 0.7);
-    z-index: 1;
-  }
-
-  &-info {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding: 0 12rpx 12rpx;
-    box-sizing: border-box;
-    z-index: 1;
-
-    &-row {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-
-      &-price {
-        font-weight: 400;
-        font-size: 32rpx;
-        color: #000000;
-        text-align: right;
-        line-height: 46rpx;
-        padding-right: 6rpx;
-        width: 97rpx;
-        height: 46rpx;
-        background-image: url("/static/kahe-202510/ka-he/home/price-bg.png");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-      }
-
-      &-last {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        &-title {
-          font-weight: 400;
-          font-size: 22rpx;
-          color: #000000;
-        }
-
-        &-value {
-          text-align: center;
-          line-height: 30rpx;
-          font-weight: 400;
-          font-size: 22rpx;
-          color: #ffffff;
-          width: 30rpx;
-          height: 30rpx;
-          background: #1ae1ff;
-          border-radius: 6rpx;
-        }
-      }
-
-      &-merchant {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        &-name {
-          max-width: 120rpx;
-          margin-left: 5rpx;
-          font-weight: normal;
-          font-size: 18rpx;
-          color: #504f4f;
-        }
-
-        &-logo {
-          width: 36rpx;
-          height: 36rpx;
-          border-radius: 50%;
-        }
-      }
-    }
-
-    &-progress {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      height: 12rpx;
-      background: #e0e0e0;
-      border-radius: 6rpx;
-      overflow: hidden;
-
-      &-value {
-        height: 100%;
-        background: #f95151;
-      }
-    }
-
-    &-subTitle {
-      font-weight: 400;
-      font-size: 24rpx;
-      color: #6e6e6e;
-    }
-
-    &-title {
-      font-weight: normal;
-      font-size: 24rpx;
-      color: #000000;
-      line-height: 36rpx;
-    }
-
-    &-price {
-      color: #000000;
-      font-size: 40rpx;
-    }
-  }
-
-  &-empty {
-    z-index: 1;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba($color: #000000, $alpha: 0.69);
-  }
-}
-</style>
+<style lang="scss" scoped></style>

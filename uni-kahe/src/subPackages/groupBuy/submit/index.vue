@@ -1,6 +1,10 @@
 <template>
-  <view class="groupBuySubmit">
-    <scroll-view class="groupBuySubmit-content" scroll-y>
+  <view class="groupBuySubmit relative bg-[#000000] w-full h-screen">
+    <scroll-view
+      class="groupBuySubmit-content absolute left-0 top-0 w-full"
+      :style="{ height: 'calc(100% - env(safe-area-inset-bottom) - 303rpx)' }"
+      scroll-y
+    >
       <!--            <view class="groupBuySubmit-content-address" @tap.stop="navToSelectAddress">-->
       <!--                <view class="groupBuySubmit-content-address-left">-->
       <!--                    <image class="groupBuySubmit-content-address-left-img" src="/static/kahe-202510/groupBuy/address.png" />-->
@@ -12,117 +16,144 @@
       <!--                </view>-->
       <!--                <image class="groupBuySubmit-content-address-right" src="/static/kahe-202510/groupBuy/arrow-1.png" />-->
       <!--            </view>-->
-      <view class="groupBuySubmit-content-group">
+      <view
+        class="groupBuySubmit-content-group mx-16 my-30 w-[calc(100%-32rpx)] box-border rounded-20 border-2 border-[#5e432b] bg-[#212121] py-16 px-32 flex flex-col"
+      >
         <!--                <view class="groupBuySubmit-content-merchant">-->
         <!--                    <image class="groupBuySubmit-content-merchant-logo" />-->
         <!--                    <view class="groupBuySubmit-content-merchant-title">阿里嘎多卡社</view>-->
         <!--                </view>-->
-        <view class="groupBuySubmit-content-info">
-          <view class="groupBuySubmit-content-info-left">
+        <view
+          class="groupBuySubmit-content-info mt-12 w-full flex flex-row justify-between"
+        >
+          <view class="groupBuySubmit-content-info-left flex flex-row">
             <image
-              class="groupBuySubmit-content-info-left-logo"
+              class="groupBuySubmit-content-info-left-logo w-180 h-180 rounded-20 border-2 border-[#ffb777] bg-[#d9d9d9]"
               :src="groupBuyDetail.logo"
             />
-            <view class="groupBuySubmit-content-info-left-subInfo">
+            <view
+              class="groupBuySubmit-content-info-left-subInfo ml-16 flex flex-col"
+            >
               <view
-                class="groupBuySubmit-content-info-left-subInfo-title"
+                class="groupBuySubmit-content-info-left-subInfo-title font-normal text-20 text-white leading-36"
                 style="margin-top: 10px"
                 >{{ groupBuyDetail.title }}</view
               >
               <view
-                class="groupBuySubmit-content-info-left-subInfo-price"
+                class="groupBuySubmit-content-info-left-subInfo-price flex flex-row"
                 v-if="payPrice !== groupBuyDetail.price"
               >
-                <view class="groupBuySubmit-content-info-left-subInfo-price-p1"
+                <view
+                  class="groupBuySubmit-content-info-left-subInfo-price-p1 font-normal text-32 text-white leading-36"
                   >¥{{ payPrice }}</view
                 >
                 <view
-                  class="groupBuySubmit-content-info-left-subInfo-price-p2"
+                  class="groupBuySubmit-content-info-left-subInfo-price-p2 ml-8 font-normal text-32 text-white leading-36 line-through"
                   >{{ groupBuyDetail.price }}</view
                 >
               </view>
               <view
-                class="groupBuySubmit-content-info-left-subInfo-price"
+                class="groupBuySubmit-content-info-left-subInfo-price flex flex-row"
                 v-else
               >
-                <view class="groupBuySubmit-content-info-left-subInfo-price-p1"
+                <view
+                  class="groupBuySubmit-content-info-left-subInfo-price-p1 font-normal text-32 text-white leading-36"
                   >¥{{ groupBuyDetail.price }}</view
                 >
               </view>
               <view
-                class="groupBuySubmit-content-info-left-subInfo-subTitle"
+                class="groupBuySubmit-content-info-left-subInfo-subTitle font-normal text-18 text-white leading-36"
                 style="margin-top: 15px"
                 >库存:{{ groupBuyDetail.total - groupBuyDetail.sales }}</view
               >
-              <view class="groupBuySubmit-content-info-left-subInfo-subTitle"
+              <view
+                class="groupBuySubmit-content-info-left-subInfo-subTitle font-normal text-18 text-white leading-36"
                 >规格 | 1 张</view
               >
             </view>
           </view>
-          <view class="groupBuySubmit-content-info-right">
-            <view class="groupBuySubmit-content-info-right-num">数量×1</view>
+          <view
+            class="groupBuySubmit-content-info-right flex flex-col justify-end items-end"
+          >
+            <view
+              class="groupBuySubmit-content-info-right-num font-normal text-18 text-white leading-36 mb-12"
+              >数量×1</view
+            >
             <image
-              class="groupBuySubmit-content-info-right-arrow"
+              class="groupBuySubmit-content-info-right-arrow w-14 h-25"
               src="/static/kahe-202510/groupBuy/right-arrow.png"
             />
           </view>
         </view>
-        <view class="groupBuySubmit-content-other">
-          <view class="groupBuySubmit-content-other-title theme-font"
+        <view
+          class="groupBuySubmit-content-other mt-18 flex flex-row items-center"
+        >
+          <view
+            class="groupBuySubmit-content-other-title theme-font font-normal text-30 text-[#fcd09d] leading-36"
             >赠送卡密</view
           >
-          <view class="groupBuySubmit-content-other-line" />
+          <view
+            class="groupBuySubmit-content-other-line w-[calc(100%-120rpx-16rpx)] h-1 mx-8 bg-[#fcd09d]"
+          />
         </view>
-        <view class="groupBuySubmit-content-detail"
+        <view
+          class="groupBuySubmit-content-detail mt-26 font-normal text-20 text-white leading-36"
           >{{ groupBuyDetail.title }} 卡密一张</view
         >
         <!--                <view class="groupBuySubmit-content-price">{{payPrice}}</view>-->
-        <view class="groupBuySubmit-content-num">
+        <view
+          class="groupBuySubmit-content-num mt-8 flex flex-row items-center"
+        >
           <view
-            class="groupBuySubmit-content-num-item"
+            class="groupBuySubmit-content-num-item w-38 h-38 bg-[#fcd09d] rounded-4 leading-38 text-center text-white"
             @tap.stop="
               changeNum(true, groupBuyDetail.total - groupBuyDetail.sales)
             "
             >➖</view
           >
-          <view class="groupBuySubmit-content-num-value">{{ selectNum }}</view>
           <view
-            class="groupBuySubmit-content-num-item"
+            class="groupBuySubmit-content-num-value mx-8 px-32 h-38 leading-38 text-center font-normal text-32 text-white bg-[#000000] rounded-4"
+            >{{ selectNum }}</view
+          >
+          <view
+            class="groupBuySubmit-content-num-item w-38 h-38 bg-[#fcd09d] rounded-4 leading-38 text-center text-white"
             @tap.stop="
               changeNum(false, groupBuyDetail.total - groupBuyDetail.sales)
             "
             >➕</view
           >
-          <view class="groupBuySubmit-content-num-sock"
+          <view
+            class="groupBuySubmit-content-num-sock ml-24 font-normal text-20 text-white leading-36"
             >库存:{{ groupBuyDetail.total - groupBuyDetail.sales }}</view
           >
         </view>
-        <view class="groupBuySubmit-content-title">优惠套餐</view>
-        <view class="groupBuySubmit-content-list">
+        <view
+          class="groupBuySubmit-content-title mt-38 font-normal text-26 text-white leading-36"
+          >优惠套餐</view
+        >
+        <view class="groupBuySubmit-content-list mt-28 flex flex-row">
           <view
-            class="groupBuySubmit-content-list-item"
+            class="groupBuySubmit-content-list-item mr-26 w-140 h-73 rounded-10 bg-[url('/static/kahe-202510/groupBuy/buy-item.png')] bg-[length:100%_100%] bg-no-repeat flex flex-col items-center justify-center"
             :class="
-              item.num === selectNum ? 'groupBuySubmit-content-list-select' : ''
+              item.num === selectNum
+                ? 'rounded-10 border-2 border-[#081d62]'
+                : ''
             "
             v-for="(item, index) in groupBuyDetail.prices"
             :key="'index' + index"
             @tap.stop="handleSelectNum(item)"
           >
             <view
-              class="groupBuySubmit-content-list-item-num"
+              class="groupBuySubmit-content-list-item-num font-normal text-24 leading-36 text-[#794627]"
               :class="
-                item.num === selectNum
-                  ? 'groupBuySubmit-content-list-select-color'
-                  : ''
+                item.num === selectNum ? 'text-[#081d62]' : ''
               "
               >{{ item.num }}份</view
             >
             <view
-              class="groupBuySubmit-content-list-item-price"
+              class="groupBuySubmit-content-list-item-price font-normal text-20 text-[#794627] leading-36"
               :class="
-                item.num === selectNum
-                  ? 'groupBuySubmit-content-list-select-color'
-                  : ''
+                item.num === selectNum ? 'text-[#081d62]' : ''
               "
               >单价{{ item.price }}</view
             >
@@ -143,68 +174,92 @@
       <!--                </view>-->
       <!--            </view>-->
     </scroll-view>
-    <view class="groupBuySubmit-bottom">
-      <view class="groupBuySubmit-bottom-tips">
+    <view
+      class="groupBuySubmit-bottom absolute left-[-4rpx] bottom-0 w-[calc(100%+8rpx)] box-border bg-[url('/static/kahe-202510/groupBuy/pay-bg.png')] bg-[length:100%_100%] bg-no-repeat"
+      :style="{ padding: '16rpx 16rpx env(safe-area-inset-bottom)' }"
+    >
+      <view
+        class="groupBuySubmit-bottom-tips py-10 flex flex-row items-center justify-between"
+      >
         <view
-          class="groupBuySubmit-bottom-tips-select"
+          class="groupBuySubmit-bottom-tips-select ml-12 relative w-38 h-38"
           @tap.stop="checked = !checked"
         >
           <image
-            class="groupBuySubmit-bottom-tips-select-bg"
+            class="groupBuySubmit-bottom-tips-select-bg w-full h-full"
             src="/static/kahe-202510/groupBuy/select-normal.png"
           />
           <image
             v-if="checked"
-            class="groupBuySubmit-bottom-tips-select-value"
+            class="groupBuySubmit-bottom-tips-select-value absolute left-0 top-0 w-full h-full"
             src="/static/kahe-202510/groupBuy/select.png"
           />
         </view>
-        <view class="groupBuySubmit-bottom-tips-content">
-          <text class="groupBuySubmit-bottom-tips-content-value1"
+        <view class="groupBuySubmit-bottom-tips-content w-[calc(100%-80rpx)]">
+          <text
+            class="groupBuySubmit-bottom-tips-content-value1 font-normal text-24 text-[#ffd3a2] leading-36"
             >我已阅读并同意</text
           >
           <!--                    <text class="groupBuySubmit-bottom-tips-content-value2" @tap.stop="clickRule">《活动规则》</text>-->
           <!--                    <text class="groupBuySubmit-bottom-tips-content-value1">、</text>-->
           <text
-            class="groupBuySubmit-bottom-tips-content-value2"
+            class="groupBuySubmit-bottom-tips-content-value2 font-normal text-24 text-[#ffd3a2] leading-36"
             @tap.stop="clickRule"
             >《购买须知》</text
           >
-          <text class="groupBuySubmit-bottom-tips-content-value1"
+          <text
+            class="groupBuySubmit-bottom-tips-content-value1 font-normal text-24 text-[#ffd3a2] leading-36"
             >;您所购商品因其
             属性及价格的特殊性，同意购买商品后不支持7天无理由退款;我已知晓本产品checklist由商家自定义，并已查阅产品卡密列表
             的详细信息。</text
           >
         </view>
       </view>
-      <view class="groupBuySubmit-bottom-line">
-        <view class="groupBuySubmit-bottom-line-left">
-          <view class="groupBuySubmit-bottom-line-left-row">
-            <view class="groupBuySubmit-bottom-line-left-value1 SimHei-font"
+      <view
+        class="groupBuySubmit-bottom-line flex flex-row justify-between items-center"
+      >
+        <view
+          class="groupBuySubmit-bottom-line-left ml-43 flex flex-col"
+        >
+          <view
+            class="groupBuySubmit-bottom-line-left-row flex flex-row py-12"
+          >
+            <view
+              class="groupBuySubmit-bottom-line-left-value1 SimHei-font font-normal text-28 text-[#ffd3a2] leading-36"
               >共{{ selectNum }}份</view
             >
-            <view class="groupBuySubmit-bottom-line-left-line" />
-            <view class="groupBuySubmit-bottom-line-left-value1 SimHei-font"
+            <view
+              class="groupBuySubmit-bottom-line-left-line mx-16 w-1 h-31 bg-[#ffd3a2]"
+            />
+            <view
+              class="groupBuySubmit-bottom-line-left-value1 SimHei-font font-normal text-28 text-[#ffd3a2] leading-36"
               >优惠：{{ discountPrice }}</view
             >
           </view>
 
-          <view class="groupBuySubmit-bottom-line-left-row">
-            <view class="groupBuySubmit-bottom-line-left-value1">合计：</view>
-            <view class="groupBuySubmit-bottom-line-left-value2"
+          <view
+            class="groupBuySubmit-bottom-line-left-row flex flex-row py-12"
+          >
+            <view
+              class="groupBuySubmit-bottom-line-left-value1 font-normal text-28 text-[#ffd3a2] leading-36"
+              >合计：</view
+            >
+            <view
+              class="groupBuySubmit-bottom-line-left-value2 font-normal text-36 text-[#ff1111] leading-36"
               >¥{{ totalPrice }}</view
             >
           </view>
         </view>
         <view
-          class="groupBuySubmit-bottom-line-right"
+          class="groupBuySubmit-bottom-line-right relative w-207 h-90 rounded-10 bg-gradient-[linear-gradient(90deg,#ffd3a2_0%,#fdf2d8_100%)]"
           @tap.stop="didTapSubmit(valueId)"
         >
           <image
             class="groupBuySubmit-bottom-line-right-img"
             src="/static/kahe-202510/groupBuy/btn.png"
           />
-          <view class="groupBuySubmit-bottom-line-right-title theme-font"
+          <view
+            class="groupBuySubmit-bottom-line-right-title theme-font absolute left-0 top-0 w-full leading-90 font-normal text-34 text-[#794627] text-center"
             >提交订单</view
           >
         </view>
@@ -278,394 +333,4 @@ const fetchPageData = async () => {
 };
 </script>
 
-<style lang="scss" scoped>
-.groupBuySubmit {
-  position: relative;
-  background-color: #000000;
-  width: 100%;
-  height: 100vh;
-
-  &-bg {
-    width: 100%;
-    height: 100%;
-  }
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: calc(100% - env(safe-area-inset-bottom) - 303rpx);
-    &-address {
-      margin: 15rpx 30rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 16px;
-      box-sizing: border-box;
-      width: calc(100% - 60rpx);
-      border-bottom: 1px solid #ffffff;
-      justify-content: space-between;
-      &-left {
-        margin-left: 4rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        &-img {
-          width: 38rpx;
-          height: 47rpx;
-        }
-        &-value {
-          margin-left: 26rpx;
-          width: 480rpx;
-          font-weight: 400;
-          font-size: 22rpx;
-          color: #ffffff;
-          line-height: 30rpx;
-        }
-      }
-      &-right {
-        width: 15rpx;
-        height: 28rpx;
-      }
-    }
-    &-group {
-      margin: 30rpx 16rpx;
-      width: calc(100% - 32rpx);
-      box-sizing: border-box;
-      border-radius: 20rpx;
-      border: 2rpx solid #5e432b;
-      background: #212121;
-      padding: 16rpx 32rpx;
-      display: flex;
-      flex-direction: column;
-    }
-    &-merchant {
-      display: flex;
-      flex-direction: row;
-      margin-left: 5rpx;
-      align-items: center;
-      &-logo {
-        width: 50rpx;
-        height: 50rpx;
-        border-radius: 50%;
-        background-color: yellow;
-      }
-      &-title {
-        margin-left: 15rpx;
-        font-weight: 400;
-        font-size: 22rpx;
-        color: #081d62;
-        line-height: 23rpx;
-      }
-    }
-    &-info {
-      margin-top: 12rpx;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      &-left {
-        display: flex;
-        flex-direction: row;
-        &-logo {
-          width: 180rpx;
-          height: 180rpx;
-          border-radius: 20rpx;
-          border: 2rpx solid #ffb777;
-          background: #d9d9d9;
-        }
-        &-subInfo {
-          margin-left: 16rpx;
-          display: flex;
-          flex-direction: column;
-          &-title {
-            font-weight: 400;
-            font-size: 20rpx;
-            color: white;
-            line-height: 36rpx;
-          }
-          &-subTitle {
-            font-weight: 400;
-            font-size: 18rpx;
-            color: white;
-            line-height: 36rpx;
-          }
-          &-price {
-            display: flex;
-            flex-direction: row;
-            &-p1 {
-              font-weight: 400;
-              font-size: 32rpx;
-              color: white;
-              line-height: 36rpx;
-            }
-            &-p2 {
-              margin-left: 8rpx;
-              font-weight: 400;
-              font-size: 32rpx;
-              color: white;
-              line-height: 36rpx;
-              text-decoration-line: line-through;
-            }
-          }
-        }
-      }
-
-      &-right {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: flex-end;
-
-        &-num {
-          font-weight: 400;
-          font-size: 18rpx;
-          color: #ffffff;
-          line-height: 36rpx;
-          margin-bottom: 12rpx;
-        }
-        &-arrow {
-          width: 14rpx;
-          height: 25rpx;
-        }
-      }
-    }
-
-    &-other {
-      margin-top: 18rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      &-title {
-        font-weight: 400;
-        font-size: 30rpx;
-        color: #fcd09d;
-        line-height: 36rpx;
-      }
-      &-line {
-        width: calc(100% - 120rpx - 16rpx);
-        height: 1rpx;
-        margin: 0 8rpx;
-        background: #fcd09d;
-      }
-    }
-
-    &-detail {
-      margin-top: 26rpx;
-      font-weight: 400;
-      font-size: 20rpx;
-      color: white;
-      line-height: 36rpx;
-    }
-    &-price {
-      margin-top: 8rpx;
-      font-weight: 400;
-      font-size: 32rpx;
-      color: #ff1621;
-      line-height: 36rpx;
-    }
-    &-num {
-      margin-top: 8rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      &-item {
-        width: 38rpx;
-        height: 38rpx;
-        background: #fcd09d;
-        border-radius: 4rpx;
-        line-height: 38rpx;
-        text-align: center;
-        color: white;
-      }
-      &-value {
-        margin: 0 8rpx;
-        padding: 0 32rpx;
-        height: 38rpx;
-        line-height: 38rpx;
-        text-align: center;
-        font-weight: 400;
-        font-size: 32rpx;
-        color: #ffffff;
-        background: #000000;
-        border-radius: 4rpx;
-      }
-      &-sock {
-        margin-left: 24rpx;
-        font-weight: 400;
-        font-size: 20rpx;
-        color: white;
-        line-height: 36rpx;
-      }
-    }
-    &-title {
-      margin-top: 38rpx;
-      font-weight: 400;
-      font-size: 26rpx;
-      color: white;
-      line-height: 36rpx;
-    }
-    &-list {
-      margin-top: 28rpx;
-      display: flex;
-      flex-direction: row;
-      &-item {
-        margin-right: 26rpx;
-        width: 140rpx;
-        height: 73rpx;
-        border-radius: 10rpx;
-        background-image: url("/static/kahe-202510/groupBuy/buy-item.png");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        &-num {
-          font-weight: 400;
-          font-size: 24rpx;
-          line-height: 36rpx;
-          color: #794627;
-        }
-        &-price {
-          font-weight: 400;
-          font-size: 20rpx;
-          color: #794627;
-          line-height: 36rpx;
-        }
-      }
-      &-select {
-        border-radius: 10rpx;
-        border: 2rpx solid #081d62;
-        &-color {
-          color: #081d62;
-        }
-      }
-    }
-
-    &-line {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      &-value {
-        font-weight: 400;
-        font-size: 24rpx;
-        color: #081d62;
-        line-height: 36rpx;
-      }
-      &-arrow {
-        margin-left: 12rpx;
-        width: 12rpx;
-        height: 23rpx;
-      }
-    }
-  }
-  &-bottom {
-    position: absolute;
-    left: -4rpx;
-    bottom: 0;
-    width: calc(100% + 8rpx);
-    padding: 16rpx 16rpx env(safe-area-inset-bottom);
-    box-sizing: border-box;
-
-    background-image: url("/static/kahe-202510/groupBuy/pay-bg.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    &-tips {
-      padding: 10rpx 0;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      &-select {
-        margin-left: 12rpx;
-        position: relative;
-        width: 38rpx;
-        height: 38rpx;
-        &-bg {
-          width: 100%;
-          height: 100%;
-        }
-        &-value {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-        }
-      }
-
-      &-content {
-        width: calc(100% - 80rpx);
-        &-value1 {
-          font-weight: 400;
-          font-size: 24rpx;
-          color: #ffd3a2;
-          line-height: 36rpx;
-        }
-        &-value2 {
-          font-weight: 400;
-          font-size: 24rpx;
-          color: #ffd3a2;
-          line-height: 36rpx;
-        }
-      }
-    }
-    &-line {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-
-      &-left {
-        margin-left: 43rpx;
-        display: flex;
-        flex-direction: column;
-        &-row {
-          display: flex;
-          flex-direction: row;
-          padding: 12rpx 0;
-        }
-        &-line {
-          margin: 0 16rpx;
-          width: 1rpx;
-          height: 31rpx;
-          background: #ffd3a2;
-        }
-        &-value1 {
-          font-weight: 400;
-          font-size: 28rpx;
-          color: #ffd3a2;
-          line-height: 36rpx;
-        }
-        &-value2 {
-          font-weight: 400;
-          font-size: 36rpx;
-          color: #ff1111;
-          line-height: 36rpx;
-        }
-      }
-      &-right {
-        position: relative;
-        width: 207rpx;
-        height: 90rpx;
-        border-radius: 10rpx;
-        background: linear-gradient(90deg, #ffd3a2 0%, #fdf2d8 100%);
-
-        &-title {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          line-height: 90rpx;
-          font-weight: 400;
-          font-size: 34rpx;
-          color: #794627;
-          text-align: center;
-        }
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

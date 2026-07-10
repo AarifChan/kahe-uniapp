@@ -1,7 +1,7 @@
 <template>
-    <view class="groupBuyBtnStyle3">
-        <image class="groupBuyBtnStyle3-img" src="/static/kahe-202510/groupBuy/btn4.png" />
-        <view class="groupBuyBtnStyle3-title">{{title}}</view>
+    <view class="groupBuyBtnStyle3 flex flex-col items-center justify-center">
+        <image class="groupBuyBtnStyle3-img w-[72rpx] h-[72rpx]" src="/static/kahe-202510/groupBuy/btn4.png" />
+        <view class="groupBuyBtnStyle3-title z-[2] -mt-[20rpx] font-normal text-20 text-[#FFFFFF]">{{title}}</view>
     </view>
 </template>
 
@@ -14,22 +14,4 @@ defineProps({
 })
 </script>
 
-<style lang="scss" scoped>
-.groupBuyBtnStyle3{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    &-img{
-        width: 72rpx;
-        height: 72rpx;
-    }
-    &-title{
-        z-index: 2;
-        margin-top: -20rpx;
-        font-weight: 400;
-        font-size: 20rpx;
-        color: #FFFFFF;
-    }
-}
-</style>
+<style lang="scss" scoped></style>

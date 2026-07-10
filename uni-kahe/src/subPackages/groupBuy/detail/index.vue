@@ -1,9 +1,13 @@
 <template>
-  <view class="groupBuyDetail">
-    <scroll-view class="groupBuyDetail-content" scroll-y>
-      <view class="groupBuyDetail-content-icon">
+  <view class="groupBuyDetail relative bg-[#000000] w-full h-screen">
+    <scroll-view
+      class="groupBuyDetail-content absolute left-0 top-0 w-full pb-32"
+      scroll-y
+      :style="{ height: 'calc(100% - 144rpx - env(safe-area-inset-bottom))' }"
+    >
+      <view class="groupBuyDetail-content-icon w-full aspect-ratio-[1/1]">
         <swiper
-          class="groupBuyDetail-content-icon-swiper"
+          class="groupBuyDetail-content-icon-swiper relative w-full h-full"
           circular
           :indicator-dots="true"
           :autoplay="true"
@@ -12,10 +16,10 @@
           <swiper-item
             v-for="(item, index) in detailBanner"
             :key="index"
-            class="groupBuyDetail-content-icon-swiper-item"
+            class="groupBuyDetail-content-icon-swiper-item w-full h-full"
           >
             <image
-              class="groupBuyDetail-content-icon-swiper-item-img"
+              class="groupBuyDetail-content-icon-swiper-item-img w-full h-full"
               :src="item"
             />
           </swiper-item>
@@ -118,47 +122,61 @@
       <!--            />-->
       <!--          </view>-->
       <!--        </view>-->
-      <view class="groupBuyDetail-content-group-card2">
-        <view class="groupBuyDetail-content-group-card2-top">
+      <view
+        class="groupBuyDetail-content-group-card2 relative mt-0 mx-auto mb-35 w-730 rounded-20 border-2 border-[#5e432b] bg-[#212121]"
+      >
+        <view
+          class="groupBuyDetail-content-group-card2-top py-24 flex flex-row items-center justify-center"
+        >
           <image
-            class="groupBuyDetail-content-group-card2-top-img"
+            class="groupBuyDetail-content-group-card2-top-img w-330 h-40"
             src="/static/kahe-202510/groupBuy/kami-title.png"
           />
         </view>
 
         <view
           v-if="recordList.length > 0"
-          class="groupBuyDetail-content-group-card2-content"
+          class="groupBuyDetail-content-group-card2-content relative w-full pt-16 px-32 pb-24 grid box-border"
+          :style="{
+            gridTemplateColumns:
+              'repeat(auto-fill, minmax(calc((100% - 16px) / 2), 1fr))',
+            gridGap: '16px',
+          }"
         >
           <view
             v-for="(item, index) in recordList"
             :key="'record' + index"
-            class="groupBuyDetail-content-group-card2-content-item"
+            class="groupBuyDetail-content-group-card2-content-item flex flex-row items-center px-16 justify-between w-full box-border mb-16"
           >
-            <view class="groupBuyDetail-content-group-card2-content-item-left">
+            <view
+              class="groupBuyDetail-content-group-card2-content-item-left flex flex-row items-center"
+            >
               <image
-                class="groupBuyDetail-content-group-card2-content-item-left-avatar"
+                class="groupBuyDetail-content-group-card2-content-item-left-avatar w-68 h-68 rounded-34"
                 :src="item.user.avatar"
               />
               <view
-                class="groupBuyDetail-content-group-card2-content-item-left-info"
+                class="groupBuyDetail-content-group-card2-content-item-left-info ml-20 flex flex-col"
               >
                 <view
-                  class="groupBuyDetail-content-group-card2-content-item-left-info-nickName text-flow-ellipsis-single"
+                  class="groupBuyDetail-content-group-card2-content-item-left-info-nickName text-flow-ellipsis-single w-100 font-normal text-24 text-[#ffffff] leading-30"
                   >{{ item.user.nickname }}</view
                 >
                 <view
-                  class="groupBuyDetail-content-group-card2-content-item-left-info-title"
+                  class="groupBuyDetail-content-group-card2-content-item-left-info-title font-normal text-18 text-[#ffffff] leading-20"
                   >{{ getFormatTime(item.createTime) }}</view
                 >
               </view>
             </view>
-            <view class="groupBuyDetail-content-group-card2-content-item-num"
+            <view
+              class="groupBuyDetail-content-group-card2-content-item-num font-normal text-28 text-[#fcd09d] leading-30"
               >X{{ item.num }}</view
             >
           </view>
         </view>
-        <view v-else class="groupBuyDetail-content-group-card2-empty"
+        <view
+          v-else
+          class="groupBuyDetail-content-group-card2-empty relative pt-70 px-40 pb-36 leading-50 text-center font-normal text-30 text-[#ffffff]"
           >暂无记录</view
         >
       </view>
@@ -169,60 +187,73 @@
       <!--                <view class="groupBuyDetail-content-intro-detail">{{groupBuyDetail.remark}}</view>-->
       <!--            </view>-->
     </scroll-view>
-    <view class="groupBuyDetail-bottom">
+    <view
+      class="groupBuyDetail-bottom absolute left-0 bottom-0 w-750 bg-[#000000] box-border"
+      :style="{ height: 'calc(144rpx + env(safe-area-inset-bottom))' }"
+    >
       <image
-        class="groupBuyDetail-bottom-bg"
+        class="groupBuyDetail-bottom-bg w-750 h-144"
         src="/static/kahe-202510/groupBuy/group-bottom-bg.png"
       />
-      <view class="groupBuyDetail-bottom-line">
-        <view class="groupBuyDetail-bottom-line-left">
+      <view
+        class="groupBuyDetail-bottom-line absolute left-0 top-0 w-full p-16 box-border flex flex-row justify-between items-center"
+      >
+        <view class="groupBuyDetail-bottom-line-left flex flex-row">
           <view
-            class="groupBuyDetail-bottom-line-left-item"
+            class="groupBuyDetail-bottom-line-left-item relative mr-26 flex flex-col items-center"
             @tap.stop="navToListPage(groupBuyDetail.sid)"
           >
             <image
-              class="groupBuyDetail-bottom-line-left-item-icon"
+              class="groupBuyDetail-bottom-line-left-item-icon w-42 h-42"
               src="/static/kahe-202510/groupBuy/kami-item1.png"
             />
-            <view class="groupBuyDetail-bottom-line-left-item-title"
+            <view
+              class="groupBuyDetail-bottom-line-left-item-title mt-4 font-normal text-24 text-[#ffffff] leading-36"
               >卡密列表</view
             >
           </view>
           <view
-            class="groupBuyDetail-bottom-line-left-item"
+            class="groupBuyDetail-bottom-line-left-item relative mr-26 flex flex-col items-center"
             @tap.stop="navToMinePage(groupBuyDetail.id)"
           >
             <image
-              class="groupBuyDetail-bottom-line-left-item-icon"
+              class="groupBuyDetail-bottom-line-left-item-icon w-42 h-42"
               src="/static/kahe-202510/groupBuy/kami-item2.png"
             />
-            <view class="groupBuyDetail-bottom-line-left-item-title"
+            <view
+              class="groupBuyDetail-bottom-line-left-item-title mt-4 font-normal text-24 text-[#ffffff] leading-36"
               >我的卡密</view
             >
           </view>
           <view
-            class="groupBuyDetail-bottom-line-left-item"
+            class="groupBuyDetail-bottom-line-left-item relative mr-26 flex flex-col items-center"
             @tap.stop="showInGroupImage"
           >
-            <view class="groupBuyDetail-bottom-line-left-item-tips"
+            <view
+              class="groupBuyDetail-bottom-line-left-item-tips absolute top-[-50rpx] left-[-20rpx] w-132 h-49 text-center text-24 pt-4 text-[#794627] bg-[url('/static/kahe-202510/groupBuy/bunddle.png')] bg-no-repeat"
+              :style="{ backgroundSize: '100% 100%' }"
               >开播通知</view
             >
             <image
-              class="groupBuyDetail-bottom-line-left-item-icon"
+              class="groupBuyDetail-bottom-line-left-item-icon w-42 h-42"
               src="/static/kahe-202510/groupBuy/kami-item3.png"
             />
-            <view class="groupBuyDetail-bottom-line-left-item-title"
+            <view
+              class="groupBuyDetail-bottom-line-left-item-title mt-4 font-normal text-24 text-[#ffffff] leading-36"
               >加入群聊</view
             >
           </view>
         </view>
         <view
-          class="groupBuyDetail-bottom-line-right"
+          class="groupBuyDetail-bottom-line-right relative rounded-[10px] w-207 h-90 bg-gradient-[linear-gradient(90deg,#ffd3a2_0%,#fdf2d8_100%)]"
           @tap.stop="didClickBottom"
         >
-          <view class="groupBuyDetail-bottom-line-right-title STHupo-font">{{
-            isOver ? "查看详情" : "报名参加"
-          }}</view>
+          <view
+            class="groupBuyDetail-bottom-line-right-title STHupo-font absolute left-0 top-0 w-full leading-90 font-normal text-34 text-[#794627] text-center"
+            >{{
+              isOver ? "查看详情" : "报名参加"
+            }}</view
+          >
         </view>
       </view>
     </view>
@@ -335,377 +366,4 @@ onShareTimeline(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.groupBuyDetail {
-  position: relative;
-  background-color: #000000;
-  width: 100%;
-  height: 100vh;
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: calc(100% - 144rpx - env(safe-area-inset-bottom));
-    padding-bottom: 32rpx;
-    &-icon {
-      width: 100%;
-      aspect-ratio: 1;
-      &-swiper {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        &-item {
-          width: 100%;
-          height: 100%;
-          &-img {
-            width: 100%;
-            height: 100%;
-          }
-        }
-      }
-    }
-    &-base {
-      position: relative;
-      margin-top: 16rpx;
-      width: 100%;
-      aspect-ratio: 751 / 372;
-      &-img {
-        width: 100%;
-        height: 100%;
-      }
-      &-line1 {
-        position: absolute;
-        top: 32rpx;
-        left: 32rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        &-title {
-          font-weight: normal;
-          font-size: 40rpx;
-          color: #000000;
-        }
-        &-icon {
-          margin-left: 18rpx;
-          width: 12rpx;
-          height: 23rpx;
-        }
-      }
-
-      &-time {
-        position: absolute;
-        top: 16rpx;
-        right: 0;
-        width: 280rpx;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        &-title {
-          font-weight: normal;
-          font-size: 20rpx;
-          color: #000000;
-        }
-      }
-      &-other {
-        position: absolute;
-        top: 120rpx;
-        left: 0;
-        width: 100%;
-        padding: 16rpx;
-        &-row1 {
-          padding: 0 16px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          &-title {
-            font-weight: normal;
-            font-size: 30rpx;
-            color: #000000;
-          }
-          &-price {
-            font-weight: normal;
-            font-size: 20rpx;
-            color: #000000;
-          }
-          &-subTitle {
-            font-weight: normal;
-            font-size: 20rpx;
-            color: #000000;
-          }
-        }
-        &-row2 {
-          margin-top: 20rpx;
-          display: flex;
-          flex-direction: row;
-          justify-content: flex-start;
-          &-price {
-            margin-right: 12rpx;
-            padding: 6rpx 12rpx;
-            font-weight: normal;
-            font-size: 20rpx;
-            color: #7cf7ff;
-            background: #0095ff;
-            border-radius: 4rpx;
-          }
-        }
-        &-progress {
-          margin: 8rpx 0;
-          display: flex;
-          flex-direction: row;
-          width: 100%;
-          height: 14rpx;
-          background: #e0e0e0;
-          border-radius: 6rpx;
-          overflow: hidden;
-          &-value {
-            height: 100%;
-            background: #51b3f9;
-          }
-        }
-      }
-    }
-
-    &-group {
-      margin-top: -58rpx;
-      padding: 0 12rpx;
-      width: 100%;
-      box-sizing: border-box;
-      &-card1 {
-        width: 100%;
-        background: #daebff;
-        border-radius: 20rpx;
-        border: 3rpx solid #0067b1;
-        &-top {
-          padding: 32rpx 32rpx 12rpx;
-          width: 100%;
-          box-sizing: border-box;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          &-left {
-            width: 51rpx;
-            height: 37rpx;
-          }
-          &-right {
-            width: 569rpx;
-            font-weight: 400;
-            font-size: 30rpx;
-            color: #60bafa;
-            line-height: 30rpx;
-          }
-        }
-        &-bottom {
-          margin: 16rpx;
-          padding: 28rpx 38rpx;
-          border-top: 1px solid #7ab1e0;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          &-left {
-            width: 400rpx;
-            font-weight: 400;
-            font-size: 30rpx;
-            color: #5699d2;
-            line-height: 30rpx;
-          }
-          &-right {
-            width: 15rpx;
-            height: 28rpx;
-          }
-        }
-      }
-      &-card2 {
-        position: relative;
-        //margin-top: 35rpx;
-        margin: 0 auto 35rpx;
-        width: 730rpx;
-        border-radius: 20rpx;
-        border: 2rpx solid #5e432b;
-        background: #212121;
-
-        &-top {
-          padding: 24rpx 0;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-          &-img {
-            width: 330rpx;
-            height: 40rpx;
-          }
-        }
-
-        &-empty {
-          position: relative;
-          padding: 70rpx 40rpx 36rpx;
-          line-height: 50rpx;
-          text-align: center;
-          font-weight: 400;
-          font-size: 30rpx;
-          color: #ffffff;
-        }
-        &-content {
-          position: relative;
-          width: 100%;
-          padding: 16rpx 32rpx 24rpx;
-          display: grid;
-          box-sizing: border-box;
-
-          grid-template-columns: repeat(
-            auto-fill,
-            minmax(calc((100% - 16px) / 2), 1fr)
-          ); // 这里的100px是假设的最小宽度，1fr是灵活的宽度
-          grid-gap: 16px; // 这是网格间的间隙，根据需要调整
-          &-item {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            padding: 0 16rpx;
-            justify-content: space-between;
-            width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 16rpx;
-            &-left {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              &-avatar {
-                width: 68rpx;
-                height: 68rpx;
-                border-radius: 34rpx;
-              }
-              &-info {
-                margin-left: 20rpx;
-                display: flex;
-                flex-direction: column;
-                &-nickName {
-                  width: 100rpx;
-                  font-weight: 400;
-                  font-size: 24rpx;
-                  color: #ffffff;
-                  line-height: 30rpx;
-                }
-                &-title {
-                  font-weight: 400;
-                  font-size: 18rpx;
-                  color: #ffffff;
-                  line-height: 20rpx;
-                }
-              }
-            }
-            &-num {
-              font-weight: 400;
-              font-size: 28rpx;
-              color: #fcd09d;
-              line-height: 30rpx;
-            }
-          }
-        }
-      }
-    }
-    &-intro {
-      padding: 36px;
-      width: 100%;
-      box-sizing: border-box;
-      &-title {
-        font-weight: 400;
-        font-size: 36rpx;
-        color: #00056e;
-        line-height: 30rpx;
-      }
-      &-detail {
-        margin-top: 24rpx;
-        font-size: 26rpx;
-        color: #00056e;
-        line-height: 30rpx;
-      }
-    }
-  }
-
-  &-bottom {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 750rpx;
-    height: calc(144rpx + env(safe-area-inset-bottom));
-    background-color: #000000;
-    box-sizing: border-box;
-    &-bg {
-      width: 750rpx;
-      height: 144rpx;
-    }
-    &-line {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      padding: 16rpx;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      &-left {
-        display: flex;
-        flex-direction: row;
-        &-item {
-          position: relative;
-          margin-right: 26rpx;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          &-tips {
-            position: absolute;
-            top: -50rpx;
-            left: -20rpx;
-            width: 132rpx;
-            height: 49rpx;
-            background-image: url("/static/kahe-202510/groupBuy/bunddle.png");
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            text-align: center;
-            font-size: 24rpx;
-            padding-top: 4rpx;
-            color: #794627;
-          }
-          &-icon {
-            width: 42rpx;
-            height: 42rpx;
-          }
-          &-title {
-            margin-top: 4rpx;
-            font-weight: 400;
-            font-size: 24rpx;
-            color: #ffffff;
-            line-height: 36rpx;
-          }
-        }
-      }
-      &-right {
-        position: relative;
-        border-radius: 10px;
-        width: 207rpx;
-        height: 90rpx;
-        background: linear-gradient(90deg, #ffd3a2 0%, #fdf2d8 100%);
-        &-img {
-          width: 207rpx;
-          height: 90rpx;
-        }
-        &-title {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          line-height: 90rpx;
-          font-weight: 400;
-          font-size: 34rpx;
-          color: #794627;
-          text-align: center;
-        }
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

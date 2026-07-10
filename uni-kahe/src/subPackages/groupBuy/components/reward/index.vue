@@ -1,33 +1,33 @@
 <template>
-    <view class="groupBuyReward">
-        <image class="groupBuyReward-bg" src="/static/kahe-202510/groupBuy/reward-bg.png" />
-        <view class="groupBuyReward-content" v-if="!opened">
-            <view class="groupBuyReward-content-open">
-                <view class="groupBuyReward-content-center-title" />
-                <image class="groupBuyReward-content-center-card" :style="{transform: 'scale(1.4)'}" src="/static/kahe-202510/groupBuy/open-reward.png"  />
+    <view class="groupBuyReward absolute left-0 top-0 w-full h-screen bg-[#2F3B78]">
+        <image class="groupBuyReward-bg w-full aspect-ratio-[750/1344]" src="/static/kahe-202510/groupBuy/reward-bg.png" />
+        <view class="groupBuyReward-content absolute left-0 top-0 w-full h-full flex flex-col items-center justify-center" v-if="!opened">
+            <view class="groupBuyReward-content-open absolute left-0 top-[242rpx] w-full h-[600rpx] flex flex-col items-center justify-center">
+                <view class="groupBuyReward-content-center-title w-full text-center font-normal text-28 text-[#FFFFFF]" />
+                <image class="groupBuyReward-content-center-card mt-[42rpx] w-[378rpx] h-[560rpx]" :style="{transform: 'scale(1.4)'}" src="/static/kahe-202510/groupBuy/open-reward.png"  />
             </view>
         </view>
-        <view class="groupBuyReward-content" v-else>
-            <image class="groupBuyReward-content-bottom" src="/static/kahe-202510/groupBuy/reward-item.png" />
-            <view class="groupBuyReward-content-center">
+        <view class="groupBuyReward-content absolute left-0 top-0 w-full h-full flex flex-col items-center justify-center" v-else>
+            <image class="groupBuyReward-content-bottom absolute left-0 w-[750rpx] aspect-ratio-[813/481]" :style="{ bottom: 'calc(env(safe-area-inset-bottom) + 255rpx)' }" src="/static/kahe-202510/groupBuy/reward-item.png" />
+            <view class="groupBuyReward-content-center absolute left-0 top-[242rpx] w-full h-[600rpx]">
                 <z-swiper v-model="cardList">
                     <z-swiper-item
                         :custom-style="slideCustomStyle"
                         v-for="(item, index) in cardList"
                         :key="'ccc'+index"
                     >
-                        <view class="groupBuyReward-content-center-title">#{{item.sid}}-{{item.name}} {{item.sname}} {{getNormalLevelNameByLevel(item.level)}}</view>
-                        <image class="groupBuyReward-content-center-card" src="/static/kahe-202510/groupBuy/reward-card1.png" />
+                        <view class="groupBuyReward-content-center-title w-full text-center font-normal text-28 text-[#FFFFFF]">#{{item.sid}}-{{item.name}} {{item.sname}} {{getNormalLevelNameByLevel(item.level)}}</view>
+                        <image class="groupBuyReward-content-center-card mt-[42rpx] w-[378rpx] h-[560rpx]" src="/static/kahe-202510/groupBuy/reward-card1.png" />
                     </z-swiper-item>
                 </z-swiper>
             </view>
 
-            <view class="groupBuyReward-content-tips">卡密以原版信息为准，中文翻译及图片【仅供参考】</view>
-            <view v-if="all" class="groupBuyReward-content-button" style="justify-content: center">
+            <view class="groupBuyReward-content-tips absolute left-0 w-full font-normal text-20 text-[#98B8FF] underline text-center" :style="{ bottom: 'calc(env(safe-area-inset-bottom) + 245rpx)' }">卡密以原版信息为准，中文翻译及图片【仅供参考】</view>
+            <view v-if="all" class="groupBuyReward-content-button absolute left-0 w-full px-32 box-border flex flex-row items-center justify-center" :style="{ bottom: 'calc(env(safe-area-inset-bottom) + 100rpx)' }">
                 <style2-btn title="全部开启" />
             </view>
-            <view v-else class="groupBuyReward-content-button">
-                <view style="display: flex;flex-direction: row">
+            <view v-else class="groupBuyReward-content-button absolute left-0 w-full px-32 box-border flex flex-row items-center justify-between" :style="{ bottom: 'calc(env(safe-area-inset-bottom) + 100rpx)' }">
+                <view class="flex flex-row">
                     <style1-btn title="再来一份" @tap.stop="emits('didClickAgain')" />
                     <style1-btn title="订单详情" @tap.stop="emits('didClickDetail')" />
                 </view>
@@ -82,95 +82,4 @@ const emits = defineEmits(['didClickDetail', 'didClickAgain'])
 
 </script>
 
-<style lang="scss" scoped>
-.groupBuyReward{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: #2F3B78;
-    &-bg{
-        width: 100%;
-        aspect-ratio: 750 / 1344;
-    }
-    &-content{
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        &-card{
-            position: absolute;
-            left: calc( (100% - 378rpx) / 2);
-            bottom: calc(env(safe-area-inset-bottom) + 478rpx);
-
-        }
-        &-open{
-            position: absolute;
-            left: 0;
-            top: 242rpx;
-            width: 100%;
-            height: 600rpx;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        &-center{
-            position: absolute;
-            left: 0;
-            top: 242rpx;
-            width: 100%;
-            height: 600rpx;
-            &-title{
-                width: 100%;
-                text-align: center;
-                font-weight: 400;
-                font-size: 28rpx;
-                color: #FFFFFF;
-            }
-            &-card{
-                margin-top: 42rpx;
-                width: 378rpx;
-                height: 560rpx;
-            }
-        }
-        &-bottom{
-            position: absolute;
-            left: 0;
-            bottom: calc(env(safe-area-inset-bottom) + 255rpx);
-            width: 750rpx;
-            aspect-ratio: 813 / 481;
-        }
-        &-tips{
-            position: absolute;
-            left: 0;
-            width: 100%;
-            bottom: calc(env(safe-area-inset-bottom) + 245rpx);
-            font-weight: 400;
-            font-size: 20rpx;
-            color: #98B8FF;
-            text-decoration-line: underline;
-            text-align: center;
-        }
-        &-button{
-            position: absolute;
-            left: 0;
-            width: 100%;
-            padding: 0 32rpx;
-            box-sizing: border-box;
-            bottom: calc(env(safe-area-inset-bottom) + 100rpx);
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

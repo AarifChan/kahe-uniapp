@@ -1,9 +1,9 @@
 <template>
     <!-- <image class="sort-up" :src="isUp ? '/static/kahe-202510/groupBuy/up-active.png' : '/static/kahe-202510/groupBuy/up.png'" />
         <image class="sort-down" :src="!isUp ? '/static/kahe-202510/groupBuy/down-active.png' : '/static/kahe-202510/groupBuy/down.png'" /> -->
-    <view class="sort">
-        <view class="sort-up" :class="{ active: isUp }"></view>
-        <view class="sort-down" :class="{ active: !isUp }"></view>
+    <view class="sort ml-[12rpx] flex flex-col items-center justify-center">
+        <view class="sort-up w-0 h-0 border-l-[9rpx_solid_transparent] border-r-[9rpx_solid_transparent] border-b-[11rpx_solid_#d0d0d0] transition-[all_0.2s_ease]" :class="isUp ? 'border-b-[#731f1f]' : ''"></view>
+        <view class="sort-down w-0 h-0 mt-[5rpx] border-l-[9rpx_solid_transparent] border-r-[9rpx_solid_transparent] border-t-[11rpx_solid_#d0d0d0] transition-[all_0.2s_ease]" :class="!isUp ? 'border-t-[#731f1f]' : ''"></view>
     </view>
 </template>
 
@@ -17,54 +17,4 @@ defineProps({
 
 </script>
 
-<style lang="scss" scoped>
-// .sort{
-//     margin-left: 12rpx;
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     justify-content: center;
-//     &-up{
-//         width: 18rpx;
-//         height: 11rpx;
-//     }
-//     &-down{
-//         margin-top: 5rpx;
-//         width: 18rpx;
-//         height: 10rpx;
-//     }
-// }
-.sort {
-    margin-left: 12rpx;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    &-up,
-    &-down {
-        width: 0;
-        height: 0;
-        border-left: 9rpx solid transparent;
-        border-right: 9rpx solid transparent;
-        transition: all 0.2s ease;
-    }
-
-    &-up {
-        border-bottom: 11rpx solid #d0d0d0; // 默认灰色
-
-        &.active {
-            border-bottom-color: #731f1f; // 激活状态为主题色
-        }
-    }
-
-    &-down {
-        margin-top: 5rpx;
-        border-top: 11rpx solid #d0d0d0; // 默认灰色
-
-        &.active {
-            border-top-color: #731f1f; // 激活状态为主题色
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

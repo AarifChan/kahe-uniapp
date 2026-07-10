@@ -1,7 +1,7 @@
 <template>
-    <view class="groupBuyBtn">
-        <image class="groupBuyBtn-bg" src="/static/kahe-202510/groupBuy/btn2.png" />
-        <view class="groupBuyBtn-title theme-font">{{title}}</view>
+    <view class="groupBuyBtn relative w-[296rpx] h-[131rpx]">
+        <image class="groupBuyBtn-bg w-full h-full" src="/static/kahe-202510/groupBuy/btn2.png" />
+        <view class="groupBuyBtn-title absolute left-[68rpx] top-[38rpx] text-center font-normal text-40 text-[#FFFFFF] theme-font">{{title}}</view>
     </view>
 </template>
 
@@ -14,23 +14,4 @@ defineProps({
 })
 </script>
 
-<style lang="scss" scoped>
-.groupBuyBtn{
-    position: relative;
-    width: 296rpx;
-    height: 131rpx;
-    &-bg{
-        width: 100%;
-        height: 100%;
-    }
-    &-title{
-        position: absolute;
-        left: 68rpx;
-        top: 38rpx;
-        text-align: center;
-        font-weight: 400;
-        font-size: 40rpx;
-        color: #FFFFFF;
-    }
-}
-</style>
+<style lang="scss" scoped></style>

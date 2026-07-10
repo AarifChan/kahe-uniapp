@@ -1,61 +1,75 @@
 <template>
-  <view class="groupBuyResult">
-    <view class="groupBuyResult-content">
-      <view class="groupBuyResult-content-top">
+  <view class="groupBuyResult relative w-full h-screen bg-[#000000]">
+    <view
+      class="groupBuyResult-content absolute left-0 top-0 w-full flex flex-col box-border"
+      :style="{ height: 'calc(100vh - env(safe-area-inset-bottom) - 24rpx)' }"
+    >
+      <view
+        class="groupBuyResult-content-top relative w-full p-32 box-border flex flex-col"
+      >
         <image
-          class="groupBuyResult-content-top-live"
+          class="groupBuyResult-content-top-live w-full aspect-ratio-[708/84]"
           src="/static/kahe-202510/groupBuy/result-bg.png"
           @tap.stop="showLiveAddress"
         />
-        <view class="groupBuyResult-content-top-tab">
+        <view
+          class="groupBuyResult-content-top-tab mt-30 flex flex-row justify-center"
+        >
           <view
-            class="groupBuyResult-content-top-tab-item theme-font"
-            :class="current === 1 ? 'active-tab' : ''"
+            class="groupBuyResult-content-top-tab-item theme-font font-normal text-30 text-[#868686] w-[239rpx] h-[50rpx] leading-[50rpx] text-center border-2 border-[#868686] rounded-10 mx-40"
+            :class="current === 1 ? 'text-[#ffd3a2] bg-gradient-[linear-gradient(180deg,#764925,#764925)] border-[#af7f55]' : ''"
             @tap.stop="didClickTab(1)"
             >其他卡片</view
           >
           <view
-            class="groupBuyResult-content-top-tab-item theme-font"
-            :class="current === 2 ? 'active-tab' : ''"
+            class="groupBuyResult-content-top-tab-item theme-font font-normal text-30 text-[#868686] w-[239rpx] h-[50rpx] leading-[50rpx] text-center border-2 border-[#868686] rounded-10 mx-40"
+            :class="current === 2 ? 'text-[#ffd3a2] bg-gradient-[linear-gradient(180deg,#764925,#764925)] border-[#af7f55]' : ''"
             @tap.stop="didClickTab(2)"
             >精美卡片</view
           >
         </view>
       </view>
       <scroll-view
-        class="groupBuyResult-content-list"
+        class="groupBuyResult-content-list relative w-full px-32 box-border"
+        :style="{ height: 'calc(100vh - 204rpx - env(safe-area-inset-bottom))' }"
         scroll-y
         @scrolltolower="handleScrollToLower"
       >
         <view
-          class="groupBuyResult-content-list-item"
+          class="groupBuyResult-content-list-item relative w-full p-18 box-border flex flex-row items-center justify-between bg-[#ffffff] rounded-10 mb-24"
           v-for="(item, index) in mindCardList"
           :key="'recordList' + index"
         >
-          <view class="groupBuyResult-content-list-item-left">
-            <view class="groupBuyResult-content-list-item-left-top">
-              <view class="groupBuyResult-content-list-item-left-top-left">
+          <view class="groupBuyResult-content-list-item-left flex flex-col">
+            <view
+              class="groupBuyResult-content-list-item-left-top relative w-full flex flex-row items-center justify-between"
+            >
+              <view
+                class="groupBuyResult-content-list-item-left-top-left flex flex-row items-center"
+              >
                 <image
-                  class="groupBuyResult-content-list-item-left-top-left-avatar"
+                  class="groupBuyResult-content-list-item-left-top-left-avatar w-84 h-84 rounded-[42rpx]"
                   :src="item.user.avatar"
                 />
                 <view
-                  class="groupBuyResult-content-list-item-left-top-left-title"
+                  class="groupBuyResult-content-list-item-left-top-left-title font-normal text-24 text-[#616161] ml-12"
                   >{{ item.user.nickname }}</view
                 >
               </view>
-              <view class="groupBuyResult-content-list-item-left-top-right">{{
-                item.updateTime
-              }}</view>
+              <view
+                class="groupBuyResult-content-list-item-left-top-right font-normal text-24 text-[#616161]"
+                >{{ item.updateTime }}</view
+              >
             </view>
-            <view class="groupBuyResult-content-list-item-left-bottom">
-              <view class="groupBuyResult-content-list-item-left-bottom-title"
+            <view class="groupBuyResult-content-list-item-left-bottom mt-24">
+              <view
+                class="groupBuyResult-content-list-item-left-bottom-title font-normal text-26 text-[#000000]"
                 >#{{ item.number }} {{ item.name }}</view
               >
             </view>
           </view>
           <image
-            class="groupBuyResult-content-list-item-right"
+            class="groupBuyResult-content-list-item-right h-132 w-132"
             :src="item.image"
             mode="heightFix"
           />
@@ -107,128 +121,4 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.groupBuyResult {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background-color: #000000;
-
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: calc(100vh - env(safe-area-inset-bottom) - 24rpx);
-    display: flex;
-    flex-direction: column;
-
-    box-sizing: border-box;
-    &-top {
-      position: relative;
-      width: 100%;
-      padding: 32rpx;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      &-live {
-        width: 100%;
-        aspect-ratio: 708 / 84;
-      }
-
-      &-tab {
-        margin: 30rpx 0 0;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        &-item {
-          margin: 0 40rpx;
-          font-weight: 400;
-          font-size: 30rpx;
-          color: #868686;
-          width: 239rpx;
-          height: 50rpx;
-          line-height: 50rpx;
-          text-align: center;
-          border: 2rpx solid #868686;
-          border-radius: 10rpx;
-        }
-      }
-    }
-
-    &-list {
-      position: relative;
-      width: 100%;
-      height: calc(100vh - 204rpx - env(safe-area-inset-bottom));
-      padding: 0 32rpx;
-      box-sizing: border-box;
-      &-item {
-        padding: 18rpx;
-        position: relative;
-        width: 100%;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        background: #ffffff;
-        border-radius: 10rpx;
-        margin-bottom: 24rpx;
-
-        &-left {
-          display: flex;
-          flex-direction: column;
-          &-top {
-            position: relative;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            &-left {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-
-              &-avatar {
-                width: 84rpx;
-                height: 84rpx;
-                border-radius: 42rpx;
-              }
-              &-title {
-                margin-left: 12rpx;
-                font-weight: 400;
-                font-size: 24rpx;
-                color: #616161;
-              }
-            }
-
-            &-right {
-              font-weight: 400;
-              font-size: 24rpx;
-              color: #616161;
-            }
-          }
-          &-bottom {
-            margin-top: 24rpx;
-            &-title {
-              font-weight: 400;
-              font-size: 26rpx;
-              color: #000000;
-            }
-          }
-        }
-        &-right {
-          height: 132rpx;
-          width: 132rpx;
-        }
-      }
-    }
-  }
-}
-.active-tab {
-  color: #ffd3a2;
-  background: linear-gradient(180deg, #764925, #764925);
-  border: 2rpx solid #af7f55;
-}
-</style>
+<style lang="scss" scoped></style>

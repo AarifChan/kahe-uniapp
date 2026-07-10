@@ -1,80 +1,80 @@
 <template>
-  <view class="topInfo">
-    <image class="topInfo-bg" src="/static/kahe-202510/groupBuy/top-card.png" />
-    <view class="topInfo-content">
-      <view class="topInfo-content-head">
-        <view class="left">{{ detail.price }}</view>
-        <view class="right">
-          <view class="row">
-            <view class="title">距离结束还剩</view>
-            <view class="time">
-              <view class="timeItem">
+  <view class="topInfo relative mx-auto my-16 w-[730rpx] h-[341rpx]">
+    <image class="topInfo-bg w-full h-full" src="/static/kahe-202510/groupBuy/top-card.png" />
+    <view class="topInfo-content absolute top-0 left-0 w-full h-full box-border flex flex-col gap-20 p-16">
+      <view class="topInfo-content-head flex flex-row items-start justify-between">
+        <view class="left text-50 leading-[normal] text-white">{{ detail.price }}</view>
+        <view class="right flex flex-col items-end gap-20">
+          <view class="row flex flex-row items-center justify-end gap-20 text-white text-20">
+            <view class="title text-24 text-white">距离结束还剩</view>
+            <view class="time flex flex-row items-center gap-10">
+              <view class="timeItem relative w-[50rpx] h-[54rpx]">
                 <image
-                  class="timeItem-img"
+                  class="timeItem-img w-full h-full"
                   src="/static/kahe-202510/groupBuy/time-item.png"
                 />
-                <view class="timeItem-day">{{ day }}</view>
-                <view class="timeItem-unit">天</view>
+                <view class="timeItem-day absolute left-0 top-[6rpx] w-full text-center text-20 text-black">{{ day }}</view>
+                <view class="timeItem-unit absolute left-0 bottom-0 w-full text-center text-18 text-white">天</view>
               </view>
-              <view class="timeItem">
+              <view class="timeItem relative w-[50rpx] h-[54rpx]">
                 <image
-                  class="timeItem-img"
+                  class="timeItem-img w-full h-full"
                   src="/static/kahe-202510/groupBuy/time-item.png"
                 />
-                <view class="timeItem-day">{{ hour }}</view>
-                <view class="timeItem-unit">时</view>
+                <view class="timeItem-day absolute left-0 top-[6rpx] w-full text-center text-20 text-black">{{ hour }}</view>
+                <view class="timeItem-unit absolute left-0 bottom-0 w-full text-center text-18 text-white">时</view>
               </view>
-              <view class="timeItem">
+              <view class="timeItem relative w-[50rpx] h-[54rpx]">
                 <image
-                  class="timeItem-img"
+                  class="timeItem-img w-full h-full"
                   src="/static/kahe-202510/groupBuy/time-item.png"
                 />
-                <view class="timeItem-day">{{ minute }}</view>
-                <view class="timeItem-unit">分</view>
+                <view class="timeItem-day absolute left-0 top-[6rpx] w-full text-center text-20 text-black">{{ minute }}</view>
+                <view class="timeItem-unit absolute left-0 bottom-0 w-full text-center text-18 text-white">分</view>
               </view>
-              <view class="timeItem">
+              <view class="timeItem relative w-[50rpx] h-[54rpx]">
                 <image
-                  class="timeItem-img"
+                  class="timeItem-img w-full h-full"
                   src="/static/kahe-202510/groupBuy/time-item.png"
                 />
-                <view class="timeItem-day">{{ second }}</view>
-                <view class="timeItem-unit">秒</view>
+                <view class="timeItem-day absolute left-0 top-[6rpx] w-full text-center text-20 text-black">{{ second }}</view>
+                <view class="timeItem-unit absolute left-0 bottom-0 w-full text-center text-18 text-white">秒</view>
               </view>
             </view>
           </view>
-          <view class="row" style="font-size: 20rpx">
+          <view class="row flex flex-row items-center justify-end gap-20 text-white text-20">
             编号：{{ detail?.sid }}
           </view>
         </view>
       </view>
       <view>
-        <view class="topInfo-content-progress">
+        <view class="topInfo-content-progress relative flex flex-row w-full h-14 bg-black rounded-6 overflow-hidden">
           <view
             v-if="detail.total > 0"
-            class="topInfo-content-progress-value"
+            class="topInfo-content-progress-value h-full bg-white"
             :style="{
               width: `${((detail.total - detail.sales) / detail.total) * 100.0}%`,
             }"
           ></view>
         </view>
-        <view class="topInfo-content-row1">
-          <view class="topInfo-content-row1-subTitle"
+        <view class="topInfo-content-row1 flex flex-row justify-between">
+          <view class="topInfo-content-row1-subTitle font-normal text-20 text-white"
             >开售 {{ detail.openTime }}</view
           >
-          <view class="topInfo-content-row1-subTitle"
+          <view class="topInfo-content-row1-subTitle font-normal text-20 text-white"
             >余{{ detail.total - detail.sales }}/共{{ detail.total }}</view
           >
         </view>
       </view>
       <view
-        class="topInfo-content-title theme-font text-flow-ellipsis-single"
+        class="topInfo-content-title theme-font text-flow-ellipsis-single text-42 text-[#fcd09d] w-full text-left"
         >{{ detail.title }}</view
       >
-      <scroll-view class="topInfo-content-row2" scroll-x>
+      <scroll-view class="topInfo-content-row2 relative whitespace-nowrap" scroll-x>
         <view
           v-for="(item, index) in detail.prices"
           :key="'price' + index"
-          class="topInfo-content-row2-price"
+          class="topInfo-content-row2-price inline-block w-[202rpx] h-41 leading-41 mr-12 font-normal text-20 text-[#794627] text-center bg-[url('/static/kahe-202510/groupBuy/discount-item.png')] bg-no-repeat bg-[length:100%_100%] rounded-4"
           >单笔满{{ item.num }}份｜{{ item.price }}/份</view
         >
       </scroll-view>
@@ -106,148 +106,4 @@ onMounted(() => {});
 </script>
 
 <style scoped lang="scss">
-.topInfo {
-  margin: 16rpx auto;
-  position: relative;
-  width: 730rpx;
-  height: 341rpx;
-  &-bg {
-    width: 100%;
-    height: 100%;
-  }
-  &-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 20rpx;
-    padding: 16rpx;
-    &-head {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: space-between;
-      .left {
-        font-size: 50rpx;
-        line-height: normal;
-        color: #ffffff;
-      }
-      .right {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 20rpx;
-        .row {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: flex-end;
-          gap: 20rpx;
-          color: white;
-          .title {
-            font-size: 24rpx;
-            color: #ffffff;
-          }
-          .time {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 10rpx;
-            .timeItem {
-              position: relative;
-              width: 50rpx;
-              height: 54rpx;
-              &-img {
-                width: 100%;
-                height: 100%;
-              }
-              &-day {
-                position: absolute;
-                left: 0;
-                top: 6rpx;
-                width: 100%;
-                text-align: center;
-                font-size: 20rpx;
-                color: #000000;
-              }
-              &-unit {
-                position: absolute;
-                left: 0;
-                bottom: 0rpx;
-                width: 100%;
-                text-align: center;
-                font-size: 18rpx;
-                color: white;
-              }
-            }
-          }
-        }
-      }
-    }
-    &-progress {
-      position: relative;
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      height: 14rpx;
-      background: #000000;
-      border-radius: 6rpx;
-      overflow: hidden;
-      &-value {
-        height: 100%;
-        background: #ffffff;
-      }
-    }
-    &-row1 {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      &-title {
-        font-weight: normal;
-        font-size: 20rpx;
-        color: #ffffff;
-      }
-      &-price {
-        font-weight: normal;
-        font-size: 20rpx;
-        color: #ffffff;
-      }
-      &-subTitle {
-        font-weight: normal;
-        font-size: 20rpx;
-        color: #ffffff;
-      }
-    }
-    &-row2 {
-      position: relative;
-      white-space: nowrap;
-
-      &-price {
-        width: 202rpx;
-        height: 41rpx;
-        line-height: 41rpx;
-        display: inline-block;
-        margin-right: 12rpx;
-        font-weight: normal;
-        font-size: 20rpx;
-        color: #794627;
-        text-align: center;
-        background-image: url("/static/kahe-202510/groupBuy/discount-item.png");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        border-radius: 4rpx;
-      }
-    }
-    &-title {
-      font-size: 42rpx;
-      color: #fcd09d;
-      width: 100%;
-      text-align: left;
-    }
-  }
-}
 </style>
