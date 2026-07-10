@@ -1,27 +1,31 @@
 <template>
-  <view class="address">
-    <scroll-view class="address-content" :scroll-y="true">
+  <view class="address w-full h-screen bg-main-bg">
+    <scroll-view class="address-content absolute left-0 top-0 p-32 box-border w-full flex flex-col"
+      :scroll-y="true"
+      :style="{ height: 'calc(100vh - env(safe-area-inset-bottom) - 100rpx)' }"
+    >
       <view
-        class="address-content-item"
+        class="address-content-item relative bg-[rgba(20,20,20,0)] rounded-4 h-122 mb-32 border-2 border-[#000000]"
         v-for="(item, index) in addressList"
         :key="index"
         @tap.stop="selectItem(item)"
       >
-        <view class="address-content-item-content">
-          <view class="address-content-item-content-side">
-            <text class="address-content-item-content-side-title">{{
+        <view class="address-content-item-content absolute left-0 top-0 px-50 w-full h-full flex flex-row items-center justify-between"
+        >
+          <view class="address-content-item-content-side flex flex-col">
+            <text class="address-content-item-content-side-title text-28 font-normal text-black">{{
               item.detail
             }}</text>
-            <text class="address-content-item-content-side-subTitle"
+            <text class="address-content-item-content-side-subTitle mt-24 text-24 font-normal text-[#515151]"
               >{{ item.realName }} {{ handleMobile(item.phone) }}</text
             >
           </view>
           <view
-            class="address-content-item-content-right"
+            class="address-content-item-content-right flex flex-row items-center"
             @tap.stop="handleEdit(item)"
             v-if="!needSelect"
           >
-            <view class="address-content-item-content-right-border" />
+            <view class="address-content-item-content-right-border mr-40 w-1 h-87 bg-[#000000]" />
             <image
               style="width: 17px; height: 24px"
               src="/static/kahe/mine/address-edit.png"
@@ -87,72 +91,4 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.address {
-  width: 100%;
-  height: 100vh;
-  background-color: $main-bg;
-  &-bg {
-    width: 100%;
-    height: 100%;
-  }
-  &-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    box-sizing: border-box;
-    padding: 32rpx;
-    width: 100%;
-    height: calc(100vh - env(safe-area-inset-bottom) - 100rpx);
-    display: flex;
-    flex-direction: column;
-
-    &-item {
-      position: relative;
-
-      background: rgba(20, 20, 20, 0);
-      border: 2rpx solid #000000;
-      border-radius: 4rpx;
-      height: 122rpx;
-      margin-bottom: 32rpx;
-      &-content {
-        position: absolute;
-        left: 0;
-        top: 0;
-        padding: 0 50rpx;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        &-right {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          &-border {
-            margin-right: 40rpx;
-            width: 1rpx;
-            height: 87rpx;
-            background: #000000;
-          }
-        }
-        &-side {
-          display: flex;
-          flex-direction: column;
-          &-title {
-            font-size: 28rpx;
-            font-weight: 400;
-            color: #000000;
-          }
-          &-subTitle {
-            margin-top: 24rpx;
-            font-size: 24rpx;
-            font-weight: 400;
-            color: #515151;
-          }
-        }
-      }
-    }
-  }
-}
 </style>

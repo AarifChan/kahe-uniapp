@@ -1,6 +1,9 @@
 <template>
-  <view class="address">
-    <view class="address-form">
+  <view class="address w-full box-border h-screen bg-main-bg p-32">
+    <view class="address-form w-full px-32 box-border rounded-30 border-2 border-white"
+      style="height: 60%"
+      :style="{ background: 'rgba(255, 255, 255, 0.41)', boxShadow: '0 0 11rpx 3rpx #ffffff' }"
+    >
       <TnForm>
         <item
           title="收件人"
@@ -19,13 +22,13 @@
           :value="areaAddress"
         >
           <template #default>
-            <view class="address-selected" @tap.stop="openRegionPicker = true">
+            <view class="address-selected" style="margin-left: 9px" @tap.stop="openRegionPicker = true">
               <view
-                class="address-selected-active text-flow-ellipsis-single"
+                class="address-selected-active text-ellipsis text-black"
                 v-if="areaAddress"
                 >{{ areaAddress }}</view
               >
-              <view class="address-selected-normal" v-else>点击选择地址</view>
+              <view class="address-selected-normal text-[#888888]" v-else>点击选择地址</view>
             </view>
           </template>
         </item>
@@ -41,10 +44,13 @@
           v-model:value="address.isDefault"
         />
         // #ifdef MP-WEIXIN
-        <view class="address-addressInput" @tap.stop="handleWxAddress">
-          <view class="address-addressInput-wechat">
+        <view class="address-addressInput relative w-full h-92 bg-white rounded-4 mb-18"
+          :style="{ boxShadow: '0rpx 0rpx 6rpx 0rpx #d4dee9' }"
+          @tap.stop="handleWxAddress"
+        >
+          <view class="address-addressInput-wechat absolute left-0 top-0 w-full h-full flex flex-row items-center justify-center">
             <image
-              class="address-addressInput-wechat-img"
+              class="address-addressInput-wechat-img w-50 h-50"
               src="/static/kahe-202510/images/weixin.png"
             />
             <text
@@ -166,55 +172,4 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.address {
-  width: 100%;
-  box-sizing: border-box;
-  height: 100vh;
-  background-color: $main-bg;
-  padding: 32rpx;
-  &-form {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.41);
-    box-shadow: 0 0 11rpx 3rpx #ffffff;
-    border: 2rpx solid white;
-    border-radius: 30rpx;
-    height: 60%;
-    padding: 0 32rpx;
-    box-sizing: border-box;
-  }
-  &-selected {
-    margin-left: 9px;
-    &-active {
-      color: #000000;
-    }
-    &-normal {
-      color: #888888;
-    }
-  }
-
-  &-addressInput {
-    position: relative;
-    width: 100%;
-    height: 92rpx;
-    background: #ffffff;
-    box-shadow: 0rpx 0rpx 6rpx 0rpx #d4dee9;
-    border-radius: 4rpx;
-    margin-bottom: 18rpx;
-    &-wechat {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      &-img {
-        width: 50rpx;
-        height: 50rpx;
-      }
-    }
-  }
-}
 </style>

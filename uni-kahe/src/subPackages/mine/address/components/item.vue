@@ -1,22 +1,22 @@
 <template>
   <TnFormItem
-    class="addressInput"
+    class="addressInput relative w-full py-12 px-24 rounded-4 mb-18"
     label-position="left"
     label-width="140"
     :label="title"
     :value="value"
-    placeholder-style="placeholderStyle"
+    :placeholder-style="placeholderStyle"
     :placeholder="placeholder"
     :border="false"
   >
-    <view class="addressInput-item">
+    <view class="addressInput-item relative w-full h-70 flex flex-row items-center">
       <TnInput
         v-if="type === 'input'"
         v-model="inputValue"
         :placeholder="placeholder"
         :border="false"
       />
-      <view v-else-if="type === 'switch'" class="addressInput-item-switch">
+      <view v-else-if="type === 'switch'" class="addressInput-item-switch w-full flex flex-row items-center justify-end">
         <TnSwitch
           active-color="#95C3F7"
           inactive-color="#C0C0C0"
@@ -58,6 +58,8 @@ const inputValue = ref(props.value);
 
 const emits = defineEmits(["update:value", "didClickSelect", "fetchWxAddress"]);
 
+const placeholderStyle = "font-weight:400;font-size:30rpx;color:#888888;";
+
 watch(
   () => inputValue.value,
   (value) => {
@@ -78,33 +80,4 @@ const onChange = (e: { detail: boolean | string }) => {
 </script>
 
 <style lang="scss" scoped>
-.addressInput {
-  position: relative;
-  width: 100%;
-  padding: 12rpx 24rpx;
-  border-radius: 4rpx;
-  margin-bottom: 18rpx;
-
-  &-item {
-    position: relative;
-    width: 100%;
-    height: 70rpx;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    &-switch {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-end;
-    }
-  }
-}
-.placeholderStyle {
-  font-weight: 400;
-  font-size: 30rpx;
-  color: #888888;
-}
 </style>

@@ -1,5 +1,7 @@
 <template>
-  <view class="favorite">
+  <view class="favorite relative w-full h-screen"
+    :style="{ background: 'linear-gradient(180deg, #f7daa1, #fff3dc)' }"
+  >
     <tab
       v-model:current="current"
       :list="tabList"
@@ -8,31 +10,34 @@
     />
 
     <scroll-view
-      class="favorite-content"
+      class="favorite-content relative w-full px-32 box-border"
       :scroll-y="true"
       @scrolltolower="handleScrollToLower"
+      :style="{ height: 'calc(100vh - 100rpx)' }"
     >
-      <view class="favorite-content-list">
+      <view class="favorite-content-list relative w-full flex flex-col gap-32">
         <view
-          class="favorite-content-list-item"
+          class="favorite-content-list-item relative p-32 box-border rounded-20 flex flex-row items-center"
+          :style="{ background: '#fffbef', boxShadow: '0rpx 3rpx 7rpx 0rpx rgba(217, 190, 134, 0.5)' }"
           v-for="(item, index) in dataList"
           :key="'index' + index"
           @tap.stop="handleClickItem(item)"
         >
-          <image class="favorite-content-list-item-logo" :src="item.logo" />
-          <view class="favorite-content-list-item-info">
-            <view class="favorite-content-list-item-info-title theme-font">{{
+          <image class="favorite-content-list-item-logo w-190 h-190 rounded-14" :src="item.logo" />
+          <view class="favorite-content-list-item-info ml-19 flex flex-col">
+            <view class="favorite-content-list-item-info-title theme-font font-400 text-40 text-black">{{
               item.title
             }}</view>
-            <view class="favorite-content-list-item-info-subTitle theme-font"
+            <view class="favorite-content-list-item-info-subTitle theme-font font-400 text-30 text-black"
               >编号{{ item.boxSeqNo }}</view
             >
-            <view class="favorite-content-list-item-info-price price-font">{{
+            <view class="favorite-content-list-item-info-price price-font font-400 text-50 text-black leading-26">{{
               item.price
             }}</view>
           </view>
           <view
-            class="favorite-content-list-item-btn theme-font"
+            class="favorite-content-list-item-btn theme-font absolute right-32 bottom-32 w-146 h-56 rounded-8 text-center leading-56 font-400 text-30"
+            :style="{ background: '#53d6ac', boxShadow: '0rpx 4rpx 0rpx 0rpx #43a17f', color: 'whitesmoke' }"
             @tap.stop="handleRemove(item.productId)"
             >移出收藏</view
           >
@@ -73,78 +78,4 @@ const handleClick = () => {
 </script>
 
 <style lang="scss" scoped>
-.favorite {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background: linear-gradient(180deg, #f7daa1, #fff3dc);
-  &-content {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 100rpx);
-    padding: 0 32rpx;
-    box-sizing: border-box;
-    &-list {
-      position: relative;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 32rpx;
-      &-item {
-        position: relative;
-        padding: 32rpx;
-        box-sizing: border-box;
-        background: #fffbef;
-        box-shadow: 0rpx 3rpx 7rpx 0rpx rgba(217, 190, 134, 0.5);
-        border-radius: 20rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        &-logo {
-          width: 190rpx;
-          height: 190rpx;
-          border-radius: 14rpx;
-        }
-        &-info {
-          margin-left: 19rpx;
-          display: flex;
-          flex-direction: column;
-          &-title {
-            font-weight: 400;
-            font-size: 40rpx;
-            color: #000000;
-          }
-          &-subTitle {
-            margin-top: 20rpx;
-            font-weight: 400;
-            font-size: 30rpx;
-            color: #000000;
-          }
-          &-price {
-            margin-top: 42rpx;
-            font-weight: 400;
-            font-size: 50rpx;
-            color: #000000;
-            line-height: 26rpx;
-          }
-        }
-        &-btn {
-          position: absolute;
-          right: 32rpx;
-          bottom: 32rpx;
-          width: 146rpx;
-          height: 56rpx;
-          background: #53d6ac;
-          box-shadow: 0rpx 4rpx 0rpx 0rpx #43a17f;
-          border-radius: 8rpx;
-          text-align: center;
-          line-height: 56rpx;
-          color: whitesmoke;
-          font-weight: 400;
-          font-size: 30rpx;
-        }
-      }
-    }
-  }
-}
 </style>

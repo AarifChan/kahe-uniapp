@@ -1,13 +1,13 @@
 <template>
-    <view class="pager">
-        <image class="pager-side" src="/static/kahe-202510/invite/invite-page-left.png" />
-        <view class="pager-list">
-            <view class="pager-list-item">
-                <image class="pager-list-item-bg" src="/static/kahe-202510/invite/invite-page-current.png" />
-                <view class="pager-list-item-text">1</view>
+    <view class="pager relative w-full flex flex-row items-center justify-center h-60">
+        <image class="pager-side w-46 h-46" src="/static/kahe-202510/invite/invite-page-left.png" />
+        <view class="pager-list flex flex-row px-16">
+            <view class="pager-list-item relative w-46 h-46 mr-16">
+                <image class="pager-list-item-bg w-full h-full" src="/static/kahe-202510/invite/invite-page-current.png" />
+                <view class="pager-list-item-text absolute left-0 top-0 w-full leading-46 font-normal text-34 text-center text-white">1</view>
             </view>
         </view>
-        <image class="pager-side" src="/static/kahe-202510/invite/invite-page-right.png" />
+        <image class="pager-side w-46 h-46" src="/static/kahe-202510/invite/invite-page-right.png" />
     </view>
 </template>
 
@@ -17,47 +17,4 @@
 
 <style lang="scss" scoped>
 
-.pager{
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 60rpx;
-    &-side{
-        width: 46rpx;
-        height: 46rpx;
-    }
-
-    &-list{
-        display: flex;
-        flex-direction: row;
-        padding: 0 16rpx;
-        &-item{
-            position: relative;
-            width: 46rpx;
-            height: 46rpx;
-            margin-right: 16rpx;
-            &-bg{
-                width: 100%;
-                height: 100%;
-            }
-            &-text{
-                position: absolute;
-                left: 0;
-                top:0;
-                width: 100%;
-                line-height: 46rpx;
-                font-weight: normal;
-                font-size: 34rpx;
-                text-align: center;
-                color: #FFFFFF;
-            }
-        }
-        &-item:last-child{
-            margin-right: 0;
-        }
-    }
-}
 </style>

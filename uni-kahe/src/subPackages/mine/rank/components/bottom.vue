@@ -1,15 +1,17 @@
 <template>
-    <view class="bottom">
-        <view class="bottom-left">
-            <view class="bottom-left-title theme-font"
+    <view class="bottom fixed left-0 flex flex-row items-center justify-between w-full h-104 bg-black opacity-70 px-24 box-border"
+        :style="{ bottom: 'env(safe-area-inset-bottom)' }"
+    >
+        <view class="bottom-left flex flex-col">
+            <view class="bottom-left-title theme-font text-32 font-400 text-white"
                 >我的排名：{{ mineRanks.rank }}</view
             >
-            <view class="bottom-left-value theme-font"
+            <view class="bottom-left-value theme-font text-32 font-400 text-white"
                 >我的成绩: {{ mineRanks.score }}</view
             >
         </view>
         <image
-            class="bottom-btn"
+            class="bottom-btn w-200 h-68"
             src="/static/kahe-202510/images/rewardbtn.png"
             @tap.stop="emits('didClickReward')"
         />
@@ -28,34 +30,4 @@ defineProps({
 const emits = defineEmits(['didClickReward'])
 </script>
 <style lang="scss" scoped>
-.bottom {
-    position: fixed;
-    left: 0;
-    bottom: env(safe-area-inset-bottom);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 104rpx;
-    background-color: #000;
-    opacity: 0.7;
-    padding: 0 24rpx;
-    box-sizing: border-box;
-    &-left {
-        display: flex;
-        flex-direction: column;
-        &-title,
-        &-value {
-            font-size: 32rpx;
-            font-weight: 400;
-            color: #ffffff;
-        }
-    }
-
-    &-btn {
-        width: 200rpx;
-        height: 68rpx;
-    }
-}
 </style>

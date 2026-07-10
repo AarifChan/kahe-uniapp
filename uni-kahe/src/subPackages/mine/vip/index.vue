@@ -1,92 +1,111 @@
 <template>
-    <view class="vip">
-        <!-- <image src="/static/kahe-202510/images/mine-bg.png" style="width: 100%;height: 100%;position: absolute;left: 0;top: 0;" /> -->
-        <view class="vip-top">
-            <view class="vip-top-content">
-                <image src="/static/kahe-202510/ka-he/mine/svip-bg.png" class="vip-top-bg" />
-                <view class="vip-top-content-avatar">
+    <view class="vip relative flex flex-col h-screen"
+        :style="{ background: 'linear-gradient(to bottom, #fee8cb 100%, #fffaf2 100%)' }"
+    >
+        <view class="vip-top p-24 box-border">
+            <view class="vip-top-content relative w-full flex">
+                <image src="/static/kahe-202510/ka-he/mine/svip-bg.png" class="vip-top-bg w-full h-253" />
+                <view class="vip-top-content-avatar absolute -left-10 -top-10">
                     <decorate-avatar :avatar="userInfo.avatar" :level="userInfo.vip" />
                 </view>
-                <view class="vip-top-content-title">
-                    <!-- <image class="vip-top-content-title-img" src="/static/kahe-202510/images/mine-nickname.png" /> -->
-                    <view class="vip-top-content-title-text">{{
+                <view class="vip-top-content-title absolute left-165 top-25 flex flex-row items-center">
+                    <view class="vip-top-content-title-text relative text-30 text-black ml-20">{{
                         userInfo.nickname ?? "用户昵称"
                         }}</view>
                 </view>
-                <view class="vip-top-content-rightTitle" @tap.stop="handleShowRule">
-                    <!-- <image class="vip-top-content-rightTitle-img" src="/static/kahe-202510/images/vip-right-bg.png"
-                        style="width: 109rpx;height: 42rpx;position: absolute;left: 0;top: 0;" /> -->
-                    <text class="vip-top-content-rightTitle-title" style="font-size: 16rpx;
-                    color: #000000; position: relative;">规则说明</text>
+                <view class="vip-top-content-rightTitle absolute right-26 top-25 text-center leading-25 w-98 h-34 rounded-17 flex justify-center items-center box-border pl-5 border-2px border-[#CDA374]"
+                    :style="{ background: 'linear-gradient(0deg, #FFEEC5)', boxShadow: '0rpx 2rpx 0rpx 0rpx #774718' }"
+                    @tap.stop="handleShowRule"
+                >
+                    <text class="vip-top-content-rightTitle-title relative text-16 text-black">规则说明</text>
                 </view>
-                <view class="vip-top-content-info">
-                    <view class="vip-top-content-info-level">
-                        <text class="vip-top-content-info-level-before theme-font">VIP{{ userInfo.vip }}</text>
-                        <view class="vip-top-content-info-level-progress">
-                            <view class="vip-top-content-info-level-progress-value" :style="progressStyle"></view>
-                            <text class="vip-top-content-info-level-progress-title  text-flow-ellipsis-single">今日成长值{{
+                <view class="vip-top-content-info pointer-events-none absolute left-0 top-0 w-full h-full flex flex-col items-center justify-center">
+                    <view class="vip-top-content-info-level mt-40 relative flex flex-row items-center justify-start">
+                        <text class="vip-top-content-info-level-before theme-font text-36 font-400 text-[#BF5133]">VIP{{ userInfo.vip }}</text>
+                        <view class="vip-top-content-info-level-progress relative w-338 h-21 bg-[#B9C4C7] rounded-10 mx-10">
+                            <view class="vip-top-content-info-level-progress-value absolute left-0 top-0 h-full bg-[#FF673E] rounded-10" :style="progressStyle"></view>
+                            <text class="vip-top-content-info-level-progress-title absolute -top-30 left-1/2 -translate-x-1/2 leading-28 font-normal text-20 text-black text-ellipsis">今日成长值{{
                                 userInfo.expDay ?? 0 }}点</text>
                         </view>
-                        <text class="vip-top-content-info-level-before theme-font">VIP{{ userInfo.vip + 1 }}</text>
+                        <text class="vip-top-content-info-level-before theme-font text-36 font-400 text-[#BF5133]">VIP{{ userInfo.vip + 1 }}</text>
                     </view>
-                    <view class="vip-top-content-info-current">
-                        <view style="margin-right: 50rpx; display: flex;">
-                            <view class="vip-top-content-info-current-title">当前</view>
-                            <view class="vip-top-content-info-current-value">{{ userInfo.exp ?? 0 }}</view>
-                            <view class="vip-top-content-info-current-title">点，需要{{ currentLevelExp }}点升级</view>
+                    <view class="vip-top-content-info-current flex flex-row items-baseline justify-center w-full">
+                        <view class="mr-50 flex">
+                            <view class="vip-top-content-info-current-title font-normal text-20 text-black"
+                                :style="{ fontFamily: 'Adobe Heiti Std' }">当前</view>
+                            <view class="vip-top-content-info-current-value text-20 text-black">{{ userInfo.exp ?? 0 }}</view>
+                            <view class="vip-top-content-info-current-title font-normal text-20 text-black"
+                                :style="{ fontFamily: 'Adobe Heiti Std' }">点，需要{{ currentLevelExp }}点升级</view>
                         </view>
                     </view>
                 </view>
             </view>
         </view>
-        <view class="vip-table">
-            <view class="vip-table-head">
-                <image class="vip-table-head-bg" src="/static/kahe-202510/ka-he/mine/top1.png" />
-                <view class="vip-table-head-title theme-font" style="color: #fff;">等级</view>
-                <view class="vip-table-head-title theme-font">升级奖励</view>
-                <view class="vip-table-head-title theme-font">每日奖励</view>
+        <view class="vip-table w-full p-8 px-20 box-border overflow-auto flex-1">
+            <view class="vip-table-head relative h-60 rounded-4 flex">
+                <image class="vip-table-head-bg w-full h-full absolute left-0 top-0" src="/static/kahe-202510/ka-he/mine/top1.png" />
+                <view class="vip-table-head-title theme-font relative text-26 font-400 text-center leading-60 w-1/4 text-white"
+                    :style="{ marginLeft: '-20rpx' }"
+                >等级</view>
+                <view class="vip-table-head-title theme-font relative text-26 font-400 text-center leading-60 w-1/4 text-black"
+                    :style="{ marginLeft: '20rpx' }"
+                >升级奖励</view>
+                <view class="vip-table-head-title theme-font relative text-26 font-400 text-center leading-60 w-1/4 text-black"
+                    :style="{ marginLeft: '125rpx' }"
+                >每日奖励</view>
             </view>
             <scroll-view class="vip-table-content" :enable-flex="true" :scroll-y="true" scroll-with-animation>
                 <view v-for="(item, index) in vipModels" :id="'vip-table:id' + index" :key="'vip-table:key' + index"
-                    class="vip-table-content-row">
-                    <image class="vip-table-content-row-bg"
+                    class="vip-table-content-row relative flex h-135 items-center justify-evenly mb-10"
+                >
+                    <image class="vip-table-content-row-bg w-full h-full absolute left-0 top-0"
                         :src="item.id === userInfo.vip ? '/static/kahe-202510/ka-he/mine/top2.png' : '/static/kahe-202510/ka-he/mine/top3.png'" />
-                    <view class="vip-table-content-row-item">
-                        <text class="vip-table-content-row-item-title theme-font">{{ item.id }}</text>
+                    <view class="vip-table-content-row-item relative flex flex-row justify-center items-baseline"
+                        :style="{ width: '30%' }"
+                    >
+                        <text class="vip-table-content-row-item-title theme-font text-50 text-white -ml-94">{{ item.id }}</text>
                     </view>
-                    <view class="vip-table-content-row-item vip-table-content-row-column">
+                    <view class="vip-table-content-row-item vip-table-content-row-column relative flex flex-col"
+                        :style="{ width: '30%' }"
+                    >
                         <view v-for="(v, vIndex) in item.rewards" :id="index + 'reward:id' + vIndex"
-                            :key="index + 'reward:key' + vIndex" class="vip-table-content-row-item-c">
+                            :key="index + 'reward:key' + vIndex" class="vip-table-content-row-item-c flex items-center -ml-55"
+                        >
                             <image src="/static/kahe-202510/images/vip-icon1.png" style="height: 27rpx;" mode="heightFix"
                                 v-if="v.name === '点券'" />
                             <image :src="v.logo" style="height: 27rpx;" mode="heightFix" v-if="v.logo" />
-                            <text class="vip-table-content-row-item-c-title">{{ v.name }} x{{ v.num }}</text>
+                            <text class="vip-table-content-row-item-c-title relative text-24 text-black">{{ v.name }} x{{ v.num }}</text>
                         </view>
                     </view>
-                    <view class="vip-table-content-row-item vip-table-content-row-column">
+                    <view class="vip-table-content-row-item vip-table-content-row-column relative flex flex-col"
+                        :style="{ width: '30%' }"
+                    >
                         <view v-for="(v, vIndex) in item.rewardsDay" :id="index + 'rewardsDay:id' + vIndex"
-                            :key="index + 'rewardsDay:key' + vIndex" class="vip-table-content-row-item-d">
+                            :key="index + 'rewardsDay:key' + vIndex" class="vip-table-content-row-item-d flex items-center ml-60"
+                        >
                             <image src="/static/kahe-202510/images/vip-icon1.png" style="height: 27rpx;" mode="heightFix"
                                 v-if="v.name === '点券'" />
-                            <text class="vip-table-content-row-item-d-title"> {{ v.num ? v.num + v.name : v.name
+                            <text class="vip-table-content-row-item-d-title text-24 text-black"> {{ v.num ? v.num + v.name : v.name
                                 }}</text>
                         </view>
 
                     </view>
                 </view>
-                <view class="empty"></view>
+                <view class="empty h-60 w-full"></view>
                 <empty :show="vipModels.length === 0" />
             </scroll-view>
         </view>
-        <!-- <bottom-bar /> -->
-        <view class="page-control">
-            <image class="page-control-arrow" src="/static/kahe/vip/left.png" mode="aspectFit"
+        <view class="page-control w-full flex flex-row justify-center items-center bg-[#FDFDF1]"
+            :style="{ height: 'calc(env(safe-area-inset-bottom) + 103rpx)', boxShadow: '0rpx 2rpx 0rpx 0rpx rgba(243, 182, 113, 0.58)', paddingBottom: 'env(safe-area-inset-bottom)' }"
+        >
+            <image class="page-control-arrow w-48 h-48 mx-12" src="/static/kahe/vip/left.png" mode="aspectFit"
                 @tap.stop="changePage(false)" />
             <view v-for="(item, index) in pageItem" :id="'vip-pageControl:id' + index" :key="'vip-pageControl:' + index"
-                class="page-control-item" :class="item === pageParams.page ? 'active' : ''"
+                class="page-control-item w-42 h-42 rounded-2 border-2 text-34 leading-42 text-center mx-12"
+                :class="item === pageParams.page ? 'text-black border-[#000000]' : 'text-[#4D4D4D] border-[#4D4D4D]'"
                 @tap.stop="changeCurrentPage(item)">{{ item }}
             </view>
-            <image class="page-control-arrow" src="/static/kahe/vip/right.png" mode="aspectFit"
+            <image class="page-control-arrow w-48 h-48 mx-12" src="/static/kahe/vip/right.png" mode="aspectFit"
                 @tap.stop="changePage(true)" />
         </view>
         <common-model v-model:show="modelShow" :title="title" :content="content" />
@@ -212,351 +231,4 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.vip {
-    position: relative;
-    height: calc(100vh);
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(to bottom, #fee8cb 100%, #fffaf2 100%);
-
-    &-top {
-        padding: 24rpx;
-        box-sizing: border-box;
-
-        &-bg {
-            width: 100%;
-            height: 253rpx;
-        }
-
-        &-content {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-
-            &-avatar {
-                position: absolute;
-                left: -10rpx;
-                top: -10rpx;
-            }
-
-            &-rightTitle {
-                padding-left: 5rpx;
-                position: absolute;
-                right: 26rpx;
-                top: 25rpx;
-                text-align: center;
-                line-height: 25rpx;
-                width: 98rpx;
-                height: 34rpx;
-                background: linear-gradient(0deg, #FFEEC5);
-                box-shadow: 0rpx 2rpx 0rpx 0rpx #774718;
-                border-radius: 17rpx;
-                border: 2px solid #CDA374;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            &-title {
-                position: absolute;
-                left: 165rpx;
-                top: 25rpx;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-
-                // &-img {
-                //     width: 100%;
-                //     height: 100%;
-                //     position: absolute;
-                //     left: 0;
-                //     top: 0;
-                // }
-
-                &-text {
-                    position: relative;
-                    color: #000000;
-                    font-size: 30rpx;
-                    margin-left: 20rpx;
-                }
-            }
-
-            &-info {
-                pointer-events: none;
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-
-                &-title {
-                    margin-top: 8rpx;
-                    margin-left: 14rpx;
-                    font-size: 30rpx;
-                    font-weight: 400;
-                    color: #FFFFFF;
-                }
-
-                &-level {
-                    margin-top: 40rpx;
-                    position: relative;
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: flex-start;
-
-                    &-before {
-                        font-size: 36rpx;
-                        font-weight: 400;
-                        color: #BF5133;
-                    }
-
-                    &-progress {
-                        position: relative;
-                        width: 338rpx;
-                        height: 21rpx;
-                        background-color: #B9C4C7;
-                        border-radius: 10rpx;
-                        margin: 0 10rpx;
-
-                        &-value {
-                            position: absolute;
-                            left: 0;
-                            top: 0;
-                            width: 100%;
-                            height: 100%;
-                            background-color: #FF673E;
-                            border-radius: 10rpx;
-                        }
-
-                        &-title {
-                            position: absolute;
-                            top: -30rpx;
-                            left: 50%;
-                            transform: translateX(-50%);
-                            line-height: 28rpx;
-                            font-family: Adobe Heiti Std;
-                            font-weight: normal;
-                            font-size: 20rpx;
-                            color: #000000;
-                        }
-                    }
-                }
-
-                &-current {
-                    // position: absolute;
-                    // bottom: 100rpx;
-                    // left: 50%;
-                    // transform: translateX(-50%);
-                    display: flex;
-                    flex-direction: row;
-                    align-items: baseline;
-                    justify-content: center;
-                    width: 100%;
-
-                    &-title {
-                        font-family: Adobe Heiti Std;
-                        font-weight: normal;
-                        font-size: 20rpx;
-                        color: #000000;
-                    }
-
-                    &-value {
-                        font-size: 20rpx;
-                        color: #000000;
-                    }
-                }
-            }
-
-            &-decorate {
-                position: absolute;
-                right: 0;
-                top: 0;
-                width: 256rpx;
-                height: 256rpx;
-            }
-        }
-    }
-
-    &-table {
-        width: 100%;
-        padding: 8rpx 20rpx 8rpx 20rpx;
-        box-sizing: border-box;
-        overflow: auto;
-        flex: 1;
-
-        &-head {
-            position: relative;
-            // width: 707rpx;
-            height: 60rpx;
-            border-radius: 4rpx;
-            display: flex;
-
-            &-bg {
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                left: 0;
-                top: 0;
-            }
-
-            &-title {
-                position: relative;
-                font-size: 26rpx;
-                font-weight: 400;
-                text-align: center;
-                line-height: 60rpx;
-                width: 25%;
-                color: #000000;
-            }
-
-            &-title:nth-of-type(1) {
-                margin-left: -20rpx;
-            }
-
-            &-title:nth-of-type(2) {
-                margin-left: 20rpx;
-            }
-
-            &-title:nth-of-type(3) {
-                margin-left: 125rpx;
-            }
-
-        }
-
-        &-content {
-            &-row {
-                position: relative;
-                display: flex;
-                height: 135rpx;
-                align-items: center;
-                justify-content: space-evenly;
-                margin-bottom: 10rpx;
-
-                &-bg {
-                    width: 100%;
-                    height: 100%;
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                }
-
-                &-item {
-                    position: relative;
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: center;
-                    align-items: baseline;
-                    width: 30%;
-
-                    &-title {
-                        font-size: 50rpx;
-                        color: #FFFFFF;
-                        margin-left: -94rpx;
-                    }
-
-                    &-c {
-                        display: flex;
-                        align-items: center;
-                        margin-left: -55rpx;
-
-                        &-title {
-                            position: relative;
-                            font-size: 24rpx;
-                            color: #000;
-                        }
-                    }
-
-                    &-d {
-                        display: flex;
-                        margin-left: 60rpx;
-                        align-items: center;
-
-                        &-title {
-                            font-size: 24rpx;
-                            color: #000;
-
-                        }
-                    }
-                }
-
-                &-column {
-                    display: flex;
-                    flex-direction: column;
-                }
-            }
-
-            &-empty {
-                height: 60rpx;
-                width: 100%;
-            }
-        }
-    }
-
-    &-question {
-        position: fixed;
-        right: 60rpx;
-        bottom: 220rpx;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        &-content {
-            position: relative;
-
-            &-icon {
-                position: absolute;
-                left: calc((100% - 30rpx) / 2);
-                top: 40rpx;
-                width: 30rpx;
-                height: 46rpx;
-            }
-        }
-    }
-}
-
-.page-control {
-    // position: fixed;
-    // bottom: calc(env(safe-area-inset-bottom) + 26rpx);
-    // left: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    height: calc(env(safe-area-inset-bottom) + 103rpx);
-    background: #FDFDF1;
-    box-shadow: 0rpx 2rpx 0rpx 0rpx rgba(243, 182, 113, 0.58);
-    padding-bottom: env(safe-area-inset-bottom);
-
-    &-arrow {
-        width: 48rpx;
-        height: 48rpx;
-        margin: 0 12rpx;
-    }
-
-    &-item {
-
-        width: 42rpx;
-        height: 42rpx;
-        border-radius: 2rpx;
-        border: 2rpx solid #4D4D4D;
-        font-size: 34rpx;
-        line-height: 42rpx;
-        text-align: center;
-        color: #4D4D4D;
-        margin: 0 12rpx;
-
-        &.active {
-            color: #000000;
-            border: 2rpx solid #000000;
-        }
-    }
-}
 </style>

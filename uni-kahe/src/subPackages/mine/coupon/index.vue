@@ -1,34 +1,36 @@
 <template>
-  <view class="coupon">
-    <image class="coupon-bg" src="/static/kahe-202510/common/common-bg.png" /> <!-- 缺失图片: common-bg.png -->
-    <view class="coupon-content">
-      <view class="coupon-content-tab">
+  <view class="coupon relative w-full h-screen bg-main-bg">
+    <image class="coupon-bg w-full h-full" src="/static/kahe-202510/common/common-bg.png" /> <!-- 缺失图片: common-bg.png -->
+    <view class="coupon-content absolute left-0 top-0 w-full h-full flex flex-col">
+      <view class="coupon-content-tab relative px-32 py-16 box-border flex flex-row items-center justify-between w-full">
         <view
           v-for="(item, index) in tabList"
           :key="index"
-          class="coupon-content-tab-item"
+          class="coupon-content-tab-item relative w-182 h-70"
+          :style="{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }"
           @tap.stop="tabDidChange(index)"
         >
           <image
             v-if="current === index"
-            class="coupon-content-tab-item-bg"
+            class="coupon-content-tab-item-bg w-full h-full"
             src="/static/kahe-202510/coupon/tab1.png"
           />
           <view
-            class="coupon-content-tab-item-title theme-font"
+            class="coupon-content-tab-item-title absolute left-0 top-0 w-full leading-70 text-36 text-[#c4aa73] font-400 text-center theme-font"
             :style="{ color: current === index ? '#fff' : '#c4aa73' }"
             >{{ item }}</view
           >
         </view>
       </view>
       <scroll-view
-        class="coupon-content-content"
+        class="coupon-content-content relative w-full"
         :enable-flex="true"
         :scroll-y="true"
         scroll-with-animation
         @scrolltolower="scrollToLower"
+        :style="{ height: 'calc(100vh - 60px - env(safe-area-inset-bottom))' }"
       >
-        <view class="coupon-content-content-list">
+        <view class="coupon-content-content-list w-full box-border" style="padding: 0 15px">
           <item
             v-for="(item, index) in dataList"
             :id="'coupon-content-list-box:id' + index"
@@ -110,68 +112,5 @@
   }
 </script>
 
-<style lang="scss">
-  .coupon {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background-color: $main-bg;
-    &-bg {
-      width: 100%;
-      height: 100%;
-    }
-    &-content {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-
-      flex-direction: column;
-      &-tab {
-        position: relative;
-        padding: 16rpx 32rpx;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        &-item {
-          position: relative;
-          width: 182rpx;
-          height: 70rpx;
-          background-color: rgba($color: #ffffff, $alpha: 0.6);
-          &-bg {
-            width: 100%;
-            height: 100%;
-          }
-
-          &-title {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            line-height: 70rpx;
-            font-size: 36rpx;
-            color: #c4aa73;
-            font-weight: 400;
-            text-align: center;
-          }
-        }
-      }
-      &-content {
-        position: relative;
-        width: 100%;
-        height: calc(100vh - 60px - env(safe-area-inset-bottom));
-
-        &-list {
-          padding: 0 15px;
-          width: 100%;
-          box-sizing: border-box;
-        }
-      }
-    }
-  }
+<style lang="scss" scoped>
 </style>

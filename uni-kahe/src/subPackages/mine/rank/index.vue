@@ -1,46 +1,53 @@
 <template>
-    <view class="activity">
-        <image class="activity-bg" src="/static/kahe-202510/images/rank-bg.png" />
-        <view class="activity-content">
+    <view class="activity w-full h-screen">
+        <image class="activity-bg absolute left-0 top-0 w-full h-full" src="/static/kahe-202510/images/rank-bg.png" />
+        <view class="activity-content relative w-full h-full flex flex-col">
             <image
-                class="activity-content-rankbtn"
+                class="activity-content-rankbtn w-259 h-87 mt-10 mx-auto mb-0"
                 src="/static/kahe-202510/images/rankbtn.png"
             />
-            <view class="activity-content-time">活动结束时间{{ endTime }}</view>
-            <view class="activity-content-rank">
-                <view class="activity-content-rank-list">
+            <view class="activity-content-time mx-auto text-20 text-[#595959]">活动结束时间{{ endTime }}</view>
+            <view class="activity-content-rank relative w-full">
+                <view class="activity-content-rank-list relative left-0 top-28 w-full flex flex-row items-center justify-evenly">
                     <avatar-info
                         v-for="(item, index) in rankList"
                         :key="'index' + index"
                         class="activity-content-rank-list-item"
+                        :class="{ 'mb-60': index === 1 }"
                         :info="item"
                         @tap.stop="didClickFilterMonth(index)"
                     ></avatar-info>
                 </view>
             </view>
-            <view class="activity-content-leader">
+            <view class="activity-content-leader relative w-636 h-102 mt-10 mx-auto">
                 <image
-                    class="activity-content-leader-bg"
+                    class="activity-content-leader-bg absolute w-full h-full top-0 left-0 object-cover"
                     src="/static/kahe-202510/images/leader.png"
                 />
-                <view class="activity-content-leader-num theme-font">{{
+                <view class="activity-content-leader-num theme-font absolute text-60 text-[#79451b] z-1"
+                    :style="{ left: '68rpx', top: '29rpx' }"
+                >{{
                     rankList[2].rank
                 }}</view>
-                <view class="activity-content-leader-num theme-font">{{
+                <view class="activity-content-leader-num theme-font absolute text-60 text-[#79451b] z-1"
+                    :style="{ left: '516rpx', top: '35rpx' }"
+                >{{
                     rankList[1].rank
                 }}</view>
-                <view class="activity-content-leader-num theme-font">{{
+                <view class="activity-content-leader-num theme-font absolute text-60 text-[#79451b] z-1"
+                    :style="{ left: '304rpx', top: '15rpx' }"
+                >{{
                     rankList[0].rank
                 }}</view>
             </view>
-            <view class="activity-content-center">
+            <view class="activity-content-center mx-auto relative w-694 h-860 flex flex-col items-center bg-white rounded-t-20 opacity-60">
                 <scroll-view
-                    class="activity-content-center-list"
+                    class="activity-content-center-list absolute left-0 top-0 w-full h-full"
                     :scroll-y="true"
                     :scroll-x="false"
                     scroll-with-animation
                 >
-                    <view class="activity-content-center-list-content">
+                    <view class="activity-content-center-list-content box-border w-full h-full p-30">
                         <rank-item
                             v-for="(item, index) in otherRankList"
                             :key="index"
@@ -200,190 +207,4 @@ getIndexData()
 </script>
 
 <style lang="scss" scoped>
-.activity {
-    width: 100%;
-    height: 100vh;
-    &-bg {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-    }
-    &-content {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        &-rankbtn {
-            width: 259rpx;
-            height: 87rpx;
-            margin: 10rpx auto 0;
-        }
-        &-time {
-            margin: 0 auto;
-            font-size: 20rpx;
-            color: #595959;
-        }
-        &-leader {
-            position: relative;
-            width: 636rpx;
-            height: 102rpx;
-            margin: 10rpx auto 0;
-            &-bg {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                top: 0;
-                left: 0;
-                object-fit: cover;
-            }
-            &-num {
-                position: absolute;
-                left: 68rpx;
-                top: 29rpx;
-                font-size: 60rpx;
-                color: #79451b;
-                z-index: 1;
-            }
-            &-num:nth-child(2) {
-                left: 516rpx;
-                top: 35rpx;
-            }
-            &-num:nth-child(3) {
-                left: 304rpx;
-                top: 15rpx;
-            }
-        }
-        &-top {
-            position: relative;
-            padding: 0 32rpx;
-            width: calc(100% - 64rpx);
-            height: 50rpx;
-            background: rgba(63, 62, 53, 0.4);
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-
-            &-left {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                &-title {
-                    font-size: 32rpx;
-                    font-weight: 400;
-                    color: #000000;
-                }
-                &-time {
-                    position: relative;
-                    margin-left: 56rpx;
-                    &-show {
-                        display: flex;
-                        flex-direction: row;
-                        align-items: center;
-
-                        &-title {
-                            font-size: 32rpx;
-                            font-weight: 400;
-                            color: #000000;
-                        }
-                    }
-
-                    &-list {
-                        position: absolute;
-                        left: -20rpx;
-                        top: 40rpx;
-                        width: 100%;
-                        display: flex;
-                        flex-direction: column;
-                        background: #2d3e7c;
-                        border: 2rpx solid #6564cb;
-                        border-radius: 4rpx;
-
-                        &-item {
-                            padding: 8rpx 16rpx;
-                            border-bottom: 1rpx solid #6564cb;
-                            display: inline-block;
-                            font-size: 24rpx;
-                            text-align: center;
-                            font-weight: 400;
-                            color: #dbdbff;
-                        }
-                        &-item:last-child {
-                            border-bottom: none;
-                        }
-                    }
-                }
-            }
-            &-right {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                &-img {
-                    width: 24rpx;
-                    height: 24rpx;
-                    margin-right: 6rpx;
-                }
-                &-title {
-                    font-size: 24rpx;
-                    font-weight: 400;
-                    color: #383737;
-                }
-            }
-        }
-
-        &-rank {
-            position: relative;
-            width: 100%;
-            &-list {
-                position: relative;
-                left: 0;
-                top: 28rpx;
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-evenly;
-
-                &-item:nth-child(2) {
-                    margin-bottom: 60rpx;
-                }
-            }
-        }
-
-        &-center {
-            margin: 0 auto;
-            position: relative;
-            width: 694rpx;
-            height: 860rpx;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: #ffffff;
-            border-radius: 20rpx 20rpx 0rpx 0rpx;
-            opacity: 0.6;
-            &-bg {
-                position: relative;
-                width: calc(100% - 24rpx);
-                padding: 0 12rpx;
-                width: 100%;
-                height: 100%;
-            }
-            &-list {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: calc(100%);
-                &-content {
-                    padding: 30rpx;
-                    width: calc(100% - 60rpx);
-                    height: calc(100% - 60rpx);
-                }
-            }
-        }
-    }
-}
 </style>
