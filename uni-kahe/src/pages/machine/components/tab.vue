@@ -8,7 +8,7 @@
         @tap.stop="clickItem(index)"
       >
         <image class="w-93 h-93" :src="item.icon" />
-        <view class="w-93 text-center mt-12 text-20 text-[#763a1c] text-flow-ellipsis-single">{{
+        <view class="w-93 text-center mt-12 text-20 text-[#763a1c] text-ellipsis">{{
           item.title
         }}</view>
       </view>

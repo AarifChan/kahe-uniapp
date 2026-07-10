@@ -78,7 +78,7 @@
               src="/static/kahe-202510/collect/label1.png"
             />
             <image
-              class="collectDetail-content-bottom-top-info-avatar w-44 h-44 rounded-22 mr-8 text-flow-ellipsis-single"
+              class="collectDetail-content-bottom-top-info-avatar w-44 h-44 rounded-22 mr-8 text-ellipsis"
               :src="collectDetail?.user.avatar"
             />
             <view

@@ -55,7 +55,7 @@
           <view class="flex flex-col">
             <text class="text-26 font-normal text-black">赏品退货声明</text>
             <text
-              class="text-18 font-normal w-360 text-black text-flow-ellipsis-multiple"
+              class="text-18 font-normal w-360 text-black text-ellipsis-2"
               >注：退货不可逆转。</text
             >
             <text class="text-22 font-normal text-[#ba0000]"

@@ -20,7 +20,7 @@
       class="collect-goods-bottom absolute bottom-24 left-16 w-[calc(100%-32rpx)] flex flex-col z-3"
     >
       <view
-        class="collect-goods-bottom-title font-normal text-20 text-white leading-20 h-40 text-flow-ellipsis-multiple text-shadow-[-1px_-1px_0_#1aa1ff,1px_-1px_0_#1aa1ff,-1px_1px_0_#1aa1ff,1px_1px_0_#1aa1ff]"
+        class="collect-goods-bottom-title font-normal text-20 text-white leading-20 h-40 text-ellipsis-2 text-shadow-[-1px_-1px_0_#1aa1ff,1px_-1px_0_#1aa1ff,-1px_1px_0_#1aa1ff,1px_1px_0_#1aa1ff]"
         >{{ item.goods.name }}</view
       >
       <view

@@ -16,10 +16,10 @@
         >
             <view class="flex items-center w-full h-full">
                 <img class="w-50 h-50 object-cover rounded-full box-border ml-5" :src="item.avatar" alt="" />
-                <view class="ml-10 w-60 text-24 text-black text-flow-ellipsis-single">{{
+                <view class="ml-10 w-60 text-24 text-black text-ellipsis">{{
                     item.userName
                 }}</view>
-                <view class="flex-1 px-0 py-0 text-flow-ellipsis-multiple text-12 text-black leading-13 break-words">{{ item.content }}</view>
+                <view class="flex-1 px-0 py-0 text-ellipsis-2 text-12 text-black leading-13 break-words">{{ item.content }}</view>
             </view>
         </view>
     </view>

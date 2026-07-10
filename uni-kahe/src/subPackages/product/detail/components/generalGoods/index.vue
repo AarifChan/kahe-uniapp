@@ -51,7 +51,7 @@
     </view>
     <view class="goodsBox-info mt-8 flex flex-col">
       <view
-        class="goodsBox-info-title w-200 text-black text-flow-ellipsis-single"
+        class="goodsBox-info-title w-200 text-black text-ellipsis"
         :style="{ color: showPrice ? '#000000' : '#ffffff', fontSize: '10px' }"
         >{{ item.title }}</view
       >

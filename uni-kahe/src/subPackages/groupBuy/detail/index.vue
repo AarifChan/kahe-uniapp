@@ -113,7 +113,7 @@
       <!--            @tap.stop="showModal"-->
       <!--          >-->
       <!--            <view-->
-      <!--              class="groupBuyDetail-content-group-card1-bottom-left text-flow-ellipsis-single"-->
+      <!--              class="groupBuyDetail-content-group-card1-bottom-left text-ellipsis"-->
       <!--              >{{ stripHTMLTags(groupBuyDetail.remark) }}</view-->
       <!--            >-->
       <!--            <image-->
@@ -159,7 +159,7 @@
                 class="groupBuyDetail-content-group-card2-content-item-left-info ml-20 flex flex-col"
               >
                 <view
-                  class="groupBuyDetail-content-group-card2-content-item-left-info-nickName text-flow-ellipsis-single w-100 font-normal text-24 text-[#ffffff] leading-30"
+                  class="groupBuyDetail-content-group-card2-content-item-left-info-nickName text-ellipsis w-100 font-normal text-24 text-[#ffffff] leading-30"
                   >{{ item.user.nickname }}</view
                 >
                 <view

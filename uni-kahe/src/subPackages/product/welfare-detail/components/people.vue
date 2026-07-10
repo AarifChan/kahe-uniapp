@@ -15,7 +15,7 @@
                     style="line-height: 28rpx;"
                 >{{item.num}}</view>
                 <view
-                    class="people-user-item-title text-flow-ellipsis-single w-93 text-center text-18 font-normal text-black"
+                    class="people-user-item-title text-ellipsis w-93 text-center text-18 font-normal text-black"
                 >{{ item.user.nickname }}</view>
             </view>
         </scroll-view>

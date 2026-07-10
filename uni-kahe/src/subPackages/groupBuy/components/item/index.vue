@@ -59,7 +59,7 @@
         </view>
       </view>
       <view
-        class="groupBuyItem-info-title text-flow-ellipsis-single font-normal text-24 text-[#000000] leading-[36rpx]"
+        class="groupBuyItem-info-title text-ellipsis font-normal text-24 text-[#000000] leading-[36rpx]"
         >{{ item.title }}</view
       >
 
@@ -93,7 +93,7 @@
             :src="item.merchant?.icon"
           />
           <view
-            class="groupBuyItem-info-row-merchant-name text-flow-ellipsis-single max-w-[120rpx] ml-[5rpx] font-normal text-18 text-[#504F4F]"
+            class="groupBuyItem-info-row-merchant-name text-ellipsis max-w-[120rpx] ml-[5rpx] font-normal text-18 text-[#504F4F]"
             >{{ item.merchant?.name ?? "" }}</view
           >
         </view>

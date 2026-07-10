@@ -13,7 +13,7 @@
         <view class="goodsInfo-info">
             <view class="goodsInfo-info-content relative w-full h-full">
                 <view class="goodsInfo-info-content-bottom px-12 w-full box-border">
-                    <view class="goodsInfo-info-content-bottom-title mt-10 ml-10 font-normal text-24 text-black leading-30 h-60 text-flow-ellipsis-multiple">{{ item.name }}</view>
+                    <view class="goodsInfo-info-content-bottom-title mt-10 ml-10 font-normal text-24 text-black leading-30 h-60 text-ellipsis-2">{{ item.name }}</view>
                     <view class="goodsInfo-info-content-bottom-row1 px-10 box-border flex flex-row items-center justify-between" style="transform: translateY(-16rpx)">
                         <text class="goodsInfo-info-content-bottom-row1-title price-font text-black text-40">{{ isFromMall ? '' : '' }}{{ item.price }}/{{
                                 isFromMall ? '点券' : '抽'

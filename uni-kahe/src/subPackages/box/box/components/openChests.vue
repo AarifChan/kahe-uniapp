@@ -22,7 +22,7 @@
           <view class="goodsContent-list-goods-info-content w-[calc(100%-16rpx)] relative left-9 bottom-0 flex flex-col"
           >
             <text
-              class="goodsContent-list-goods-info-content-title mt-8 relative w-160 text-20 font-normal text-[#2356a9] leading-32 text-flow-ellipsis-single"
+              class="goodsContent-list-goods-info-content-title mt-8 relative w-160 text-20 font-normal text-[#2356a9] leading-32 text-ellipsis"
             >
               {{ item.title }}
             </text>

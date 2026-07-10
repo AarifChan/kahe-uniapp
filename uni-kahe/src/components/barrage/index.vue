@@ -10,10 +10,10 @@
         <img class="w-38 h-38 object-cover rounded-full box-border ml-5" :src="item.avatar" alt="" />
         <view
           v-if="item.userName.length > 0"
-          class="ml-10 w-60 text-18 text-[#87b66e] text-flow-ellipsis-single"
+          class="ml-10 w-60 text-18 text-[#87b66e] text-ellipsis"
           >{{ item.userName }}</view
         >
-        <view class="flex-1 text-18 text-[#87b66e] text-flow-ellipsis-single">{{ item.content }}</view>
+        <view class="flex-1 text-18 text-[#87b66e] text-ellipsis">{{ item.content }}</view>
       </view>
     </view>
   </view>

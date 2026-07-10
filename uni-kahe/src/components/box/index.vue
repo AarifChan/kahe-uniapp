@@ -52,7 +52,7 @@
             </view>
         </view>
         <view class="mt-8 flex flex-col" v-if="info">
-            <view class="w-full text-26 text-[#c3dbff] text-flow-ellipsis-single">{{
+            <view class="w-full text-26 text-[#c3dbff] text-ellipsis">{{
                 item.title
             }}</view>
             <view class="text-26 text-[#c3dbff]"
@@ -60,7 +60,7 @@
             >
         </view>
         <view class="mt-8 flex flex-col" v-else>
-            <view class="w-full text-26 text-[#c3dbff] text-flow-ellipsis-single">{{
+            <view class="w-full text-26 text-[#c3dbff] text-ellipsis">{{
                 item.title
             }}</view>
         </view>

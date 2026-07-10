@@ -24,7 +24,7 @@
       </view>
       <view v-if="isOpen" class="absolute left-58 top-292 w-168 flex flex-col">
         <text
-          class="mt-8 text-20 font-normal text-black leading-20 w-full h-40 text-center theme-font text-flow-ellipsis-multiple"
+          class="mt-8 text-20 font-normal text-black leading-20 w-full h-40 text-center theme-font text-ellipsis-2"
           >{{ item.title }}</text
         >
       </view>

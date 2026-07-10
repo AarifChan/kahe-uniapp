@@ -9,7 +9,7 @@
       />
       <view class="merchant-info relative ml-28 flex flex-col">
         <view
-          class="merchant-info-title theme-font text-flow-ellipsis-single text-36 font-normal text-black"
+          class="merchant-info-title theme-font text-ellipsis text-36 font-normal text-black"
           >{{ merchant?.name }}</view
         >
         <view

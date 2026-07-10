@@ -102,7 +102,7 @@
                   mode="heightFix"
                 />
                 <view
-                  class="collectRecord-content-list-item-content-bottom-left-title ml-16 font-normal text-24 text-[#000000] w-200 text-flow-ellipsis-single"
+                  class="collectRecord-content-list-item-content-bottom-left-title ml-16 font-normal text-24 text-[#000000] w-200 text-ellipsis"
                   >{{ item.name }}</view
                 >
               </view>

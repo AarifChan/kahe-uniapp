@@ -38,7 +38,7 @@
             </view>
 
             <text
-              class="box-record-content-list-item-content-title py-8 w-152 text-20 text-center font-normal text-black text-flow-ellipsis-single"
+              class="box-record-content-list-item-content-title py-8 w-152 text-20 text-center font-normal text-black text-ellipsis"
               >{{ gItem.name }}</text>
           </view>
         </view>

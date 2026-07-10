@@ -15,7 +15,7 @@
       <!--            </view>-->
     </view>
     <view class="boxItem-info mt-24 ml-24 flex flex-col">
-      <text class="boxItem-info-title text-16 font-normal text-black text-flow-ellipsis-single">{{ item?.goods?.name }}</text>
+      <text class="boxItem-info-title text-16 font-normal text-black text-ellipsis">{{ item?.goods?.name }}</text>
       <view class="boxItem-info-ticket flex flex-row items-center">
         <!--                <image class="boxItem-info-ticket-img w-27 h-28" src="/static/kahe/mine/icon2.png" />-->
         <text class="boxItem-info-ticket-title text-32 font-normal text-black price-font"

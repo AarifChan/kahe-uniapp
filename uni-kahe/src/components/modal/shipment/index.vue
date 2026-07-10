@@ -30,7 +30,7 @@
                                     </view>
                                     <text class="absolute right-15 bottom-5 z-2 text-24 font-normal text-black">x{{ item.num }}</text>
                                 </view>
-                                <text class="relative w-80 h-21 text-left text-20 font-normal text-[#1a385b] text-flow-ellipsis-single">{{ item.name??'' }}</text>
+                                <text class="relative w-80 h-21 text-left text-20 font-normal text-[#1a385b] text-ellipsis">{{ item.name??'' }}</text>
                             </view>
                         </view>
 

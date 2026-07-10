@@ -51,7 +51,7 @@
               :src="item.merchant?.icon"
             />
             <view
-              class="groupBuy-content-info-row-merchant-name max-w-120 ml-5 font-normal text-18 text-black text-flow-ellipsis-single"
+              class="groupBuy-content-info-row-merchant-name max-w-120 ml-5 font-normal text-18 text-black text-ellipsis"
               >{{ item.merchant?.name ?? "" }}</view
             >
           </view>

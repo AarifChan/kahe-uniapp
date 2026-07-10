@@ -27,7 +27,7 @@
           class="collect-item-content-info relative w-[calc(100%-196rpx)] ml-18 flex flex-col justify-center"
         >
           <view
-            class="collect-item-content-info-title font-normal text-26 text-[#000000] leading-30 text-flow-ellipsis-multiple"
+            class="collect-item-content-info-title font-normal text-26 text-[#000000] leading-30 text-ellipsis-2"
             >{{ item.name }}</view
           >
           <view

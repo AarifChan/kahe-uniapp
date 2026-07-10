@@ -67,7 +67,7 @@
         </view>
       </view>
       <view
-        class="topInfo-content-title theme-font text-flow-ellipsis-single text-42 text-[#fcd09d] w-full text-left"
+        class="topInfo-content-title theme-font text-ellipsis text-42 text-[#fcd09d] w-full text-left"
         >{{ detail.title }}</view
       >
       <scroll-view class="topInfo-content-row2 relative whitespace-nowrap" scroll-x>

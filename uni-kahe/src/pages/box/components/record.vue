@@ -41,7 +41,7 @@
             </view>
 
             <text
-              class="py-8 px-0 w-152 text-20 text-center font-normal text-black text-flow-ellipsis-single"
+              class="py-8 px-0 w-152 text-20 text-center font-normal text-black text-ellipsis"
               >{{ gItem.name }}</text
             >
           </view>

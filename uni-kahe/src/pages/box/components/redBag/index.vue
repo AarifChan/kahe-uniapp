@@ -3,7 +3,7 @@
         <view class="relative ml-36 h-full flex flex-row items-center">
             <image class="w-178 h-165 rounded-8" :src="item?.goodsDto?.image" mode="widthFix" />
             <view class="ml-48 mt-16 relative flex h-full flex-col justify-center">
-                <text class="font-normal text-black w-full text-38 text-flow-ellipsis-multiple theme-font">{{item.goodsDto.name}}</text>
+                <text class="font-normal text-black w-full text-38 text-ellipsis-2 theme-font">{{item.goodsDto.name}}</text>
                 <view class="mt-36 flex flex-col">
                     <text class="text-24 font-normal text-[#727272]">指导价:{{item.goodsDto.price}}</text>
                 </view>

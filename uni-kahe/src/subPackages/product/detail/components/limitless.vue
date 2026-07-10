@@ -13,7 +13,7 @@
                     />
                     <view class="limitless-top-content-info-text ml-26 flex flex-col">
                         <text
-                            class="limitless-top-content-info-text-title text-flow-ellipsis-multiple theme-font py-4 text-30 font-normal text-[#649bff]"
+                            class="limitless-top-content-info-text-title text-ellipsis-2 theme-font py-4 text-30 font-normal text-[#649bff]"
                             :style="{ width: '300rpx' }"
                         >领主
                             {{

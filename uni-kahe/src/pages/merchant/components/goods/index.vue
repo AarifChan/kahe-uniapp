@@ -14,7 +14,7 @@
         <view class="absolute bottom-0 left-0 w-full">
             <view class="relative w-full">
                 <view class="relative px-12 pb-12 w-full box-border flex flex-col">
-                    <view class="font-normal text-16 text-black w-full leading-18 mb-4 text-flow-ellipsis-single">{{ item.title }}</view>
+                    <view class="font-normal text-16 text-black w-full leading-18 mb-4 text-ellipsis">{{ item.title }}</view>
                     <view class="relative" style="width: calc(97rpx * 0.6); height: calc(46rpx * 0.6);">
                         <image class="w-full h-full"
                             src="/static/kahe-202510/ka-he/home/price-bg.png" />

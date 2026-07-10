@@ -43,21 +43,21 @@
               class="groupBuyList-content-main-table-content-row"
             >
               <view
-                class="groupBuyList-content-main-table-content-row-item text-flow-ellipsis-single inline-block py-36 w-[calc(100%/3)] font-normal text-20 text-[#000000] leading-36 text-center border-r-2 border-r-[#e2c07e] border-b-2 border-b-[#e2c07e] first:w-120 last:border-r-0"
+                class="groupBuyList-content-main-table-content-row-item text-ellipsis inline-block py-36 w-[calc(100%/3)] font-normal text-20 text-[#000000] leading-36 text-center border-r-2 border-r-[#e2c07e] border-b-2 border-b-[#e2c07e] first:w-120 last:border-r-0"
                 >{{ item.id }}</view
               >
               <view
-                class="groupBuyList-content-main-table-content-row-item text-flow-ellipsis-single inline-block py-36 w-[calc(100%/3)] font-normal text-20 text-[#000000] leading-36 text-center border-r-2 border-r-[#e2c07e] border-b-2 border-b-[#e2c07e] first:w-120 last:border-r-0"
+                class="groupBuyList-content-main-table-content-row-item text-ellipsis inline-block py-36 w-[calc(100%/3)] font-normal text-20 text-[#000000] leading-36 text-center border-r-2 border-r-[#e2c07e] border-b-2 border-b-[#e2c07e] first:w-120 last:border-r-0"
                 >{{ item.name }}</view
               >
               <!--                            <view class="groupBuyList-content-main-table-content-row-item">{{ getNormalLevelNameByLevel(item.level) }}</view>-->
               <view
-                class="groupBuyList-content-main-table-content-row-item text-flow-ellipsis-single inline-block py-36 w-[calc(100%/3)] font-normal text-20 text-[#000000] leading-36 text-center border-r-2 border-r-[#e2c07e] border-b-2 border-b-[#e2c07e] first:w-120 last:border-r-0"
+                class="groupBuyList-content-main-table-content-row-item text-ellipsis inline-block py-36 w-[calc(100%/3)] font-normal text-20 text-[#000000] leading-36 text-center border-r-2 border-r-[#e2c07e] border-b-2 border-b-[#e2c07e] first:w-120 last:border-r-0"
                 >#{{ item.number }}</view
               >
               <!--                            <view class="groupBuyList-content-main-table-content-row-item">{{item.sid}}</view>-->
               <view
-                class="groupBuyList-content-main-table-content-row-item text-flow-ellipsis-single inline-block py-36 w-[calc(100%/3)] font-normal text-20 text-[#000000] leading-36 text-center border-r-2 border-r-[#e2c07e] border-b-2 border-b-[#e2c07e] first:w-120 last:border-r-0"
+                class="groupBuyList-content-main-table-content-row-item text-ellipsis inline-block py-36 w-[calc(100%/3)] font-normal text-20 text-[#000000] leading-36 text-center border-r-2 border-r-[#e2c07e] border-b-2 border-b-[#e2c07e] first:w-120 last:border-r-0"
                 >{{ item.sname }}</view
               >
             </view>

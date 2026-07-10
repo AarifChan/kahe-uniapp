@@ -16,7 +16,7 @@
         <image class="w-178 h-178" :src="goods.image" />
         <view class="ml-28 flex flex-col justify-center">
           <text
-            class="text-40 font-normal text-black w-400 theme-font text-flow-ellipsis-multiple"
+            class="text-40 font-normal text-black w-400 theme-font text-ellipsis-2"
             >{{ goods.title }}</text
           >
           <view class="mt-36 flex flex-row items-center">
@@ -39,7 +39,7 @@
         <view class="flex flex-col">
           <text class="text-26 font-normal text-black">商品兑换声明</text>
           <text
-            class="text-18 font-normal w-360 text-black text-flow-ellipsis-multiple"
+            class="text-18 font-normal w-360 text-black text-ellipsis-2"
             >注：商品兑换，需消耗相应{{
               isTicket ? "无门槛抵扣券" : "点券"
             }}，一经兑换无法撤回</text

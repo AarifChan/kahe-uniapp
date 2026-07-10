@@ -20,7 +20,7 @@
           </view>
           <view class="relative flex flex-col" style="width: calc(100% - 16rpx); left: 9rpx;">
             <text
-              class="mt-8 relative w-160 text-20 font-normal text-[#2356a9] leading-32 text-flow-ellipsis-single"
+              class="mt-8 relative w-160 text-20 font-normal text-[#2356a9] leading-32 text-ellipsis"
             >
               {{ item.title }}
             </text>

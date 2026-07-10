@@ -11,7 +11,7 @@
         <image class="avatar-img w-full h-full rounded-full" :src="merchant?.icon" />
       </view>
       <view class="info relative ml-24 flex flex-col" :style="{ width: 'calc(100% - 160rpx)' }">
-        <view class="info-name text-flow-ellipsis-single font-normal text-30 text-white">{{
+        <view class="info-name text-ellipsis font-normal text-30 text-white">{{
           merchant?.name
         }}</view>
         <view

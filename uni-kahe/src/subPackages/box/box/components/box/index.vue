@@ -3,7 +3,7 @@
     <view class="box-item-left relative ml-36 flex flex-row items-start">
       <image class="box-item-left-img w-178 h-165 rounded-8" :src="item.logo" mode="widthFix" />
       <view class="box-item-left-info relative ml-48 mt-16 h-full flex flex-col justify-start">
-        <text class="box-item-left-info-title font-normal text-38 text-black w-280 text-flow-ellipsis-multiple theme-font">{{ item.title }}</text>
+        <text class="box-item-left-info-title font-normal text-38 text-black w-280 text-ellipsis-2 theme-font">{{ item.title }}</text>
         <view class="box-item-left-info-other flex flex-col">
           <text class="box-item-left-info-other-title text-24 font-normal text-[#727272]">当前有{{ item.num }}件商品待处理</text>
         </view>

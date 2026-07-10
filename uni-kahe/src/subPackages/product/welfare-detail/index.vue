@@ -16,7 +16,7 @@
         </view>
       </view>
       <view class="detail-center mt-24 w-688 h-119 bg-white rounded-20 opacity-97">
-        <view class="detail-center-title theme-font text-flow-ellipsis-single ml-34 pt-18 text-34 text-[#00008b]">
+        <view class="detail-center-title theme-font text-ellipsis ml-34 pt-18 text-34 text-[#00008b]">
           {{ welfareDetails.title }}
         </view>
         <view class="detail-center-price ml-34 text-28 text-[#ff2a2a]"> ￥0 </view>

@@ -38,7 +38,7 @@
     <view class="homeGoods-info mt-8 relative w-full flex flex-col justify-between">
       <view class="homeGoods-info-content relative w-full h-full">
         <view class="homeGoods-info-bottom px-12 box-border w-full">
-          <view class="homeGoods-info-bottom-title font-normal text-24 text-black leading-30 text-flow-ellipsis-single">{{
+          <view class="homeGoods-info-bottom-title font-normal text-24 text-black leading-30 text-ellipsis">{{
             item.name
           }}</view>
           <view class="homeGoods-info-bottom-row1 box-border flex flex-row items-center justify-between">
@@ -54,7 +54,7 @@
                 :src="item.merchant?.icon"
               />
               <view
-                class="homeGoods-info-merchant-name max-w-120 ml-5 font-normal text-18 text-black text-flow-ellipsis-single"
+                class="homeGoods-info-merchant-name max-w-120 ml-5 font-normal text-18 text-black text-ellipsis"
                 >{{ item.merchant?.name }}</view
               >
             </view>

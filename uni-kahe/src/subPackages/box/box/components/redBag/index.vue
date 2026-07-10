@@ -3,7 +3,7 @@
         <view class="redBag-left relative ml-36 h-full flex flex-row items-center">
             <image class="redBag-left-img w-178 h-165 rounded-8" :src="item?.goodsDto?.image" mode="widthFix" />
             <view class="redBag-left-info relative ml-48 mt-16 h-full flex flex-col justify-center">
-                <text class="redBag-left-info-title font-normal text-38 text-black w-full text-flow-ellipsis-multiple theme-font">{{item.goodsDto.name}}</text>
+                <text class="redBag-left-info-title font-normal text-38 text-black w-full text-ellipsis-2 theme-font">{{item.goodsDto.name}}</text>
                 <view class="redBag-left-info-other mt-36 flex flex-col">
                     <text class="redBag-left-info-other-title text-24 font-normal text-[#727272]">指导价:{{item.goodsDto.price}}</text>
                 </view>

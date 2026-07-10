@@ -3,7 +3,7 @@
         <view class="relative ml-36 flex flex-row items-start">
             <image class="w-178 h-165 rounded-8" :src="item.logo" mode="widthFix" />
             <view class="ml-48 mt-16 relative flex h-full flex-col justify-start">
-                <text class="font-normal text-black w-280 text-38 text-flow-ellipsis-multiple theme-font">{{ item.title }}</text>
+                <text class="font-normal text-black w-280 text-38 text-ellipsis-2 theme-font">{{ item.title }}</text>
                 <view class="flex flex-col">
                     <text class="text-24 font-normal text-[#727272]">当前有{{ item.num }}件商品待处理</text>
                 </view>

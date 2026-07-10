@@ -41,13 +41,13 @@
                     </view>
 
                     <view class="redEnvelope-content-card-item-bottom w-[calc(100%-24rpx)] h-123 p-12 bg-black flex flex-col">
-                        <text class="redEnvelope-content-card-item-bottom-title font-normal text-18 text-white text-flow-ellipsis-single"
+                        <text class="redEnvelope-content-card-item-bottom-title font-normal text-18 text-white text-ellipsis"
                             >{{ detail?.goodsDto.name }}
                         </text>
-                        <text class="redEnvelope-content-card-item-bottom-subTitle font-normal text-18 text-[#929292] text-flow-ellipsis-single"
+                        <text class="redEnvelope-content-card-item-bottom-subTitle font-normal text-18 text-[#929292] text-ellipsis"
                             >获得日期:{{ parseTime(detail?.redbag?.createTime, '{y}-{m}-{d}') }}
                         </text>
-                        <text class="redEnvelope-content-card-item-bottom-subTitle font-normal text-18 text-[#929292] text-flow-ellipsis-single"
+                        <text class="redEnvelope-content-card-item-bottom-subTitle font-normal text-18 text-[#929292] text-ellipsis"
                             >指导价:{{ detail?.goodsDto.price }}
                         </text>
                     </view>

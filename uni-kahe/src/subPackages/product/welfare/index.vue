@@ -36,7 +36,7 @@
                         >{{
                             item.title
                         }}</view>
-                        <view class="welfare-header-item-goods-content-time text-flow-ellipsis-single absolute bottom-4 w-180 text-center text-18 text-[#8d8d8d]"
+                        <view class="welfare-header-item-goods-content-time text-ellipsis absolute bottom-4 w-180 text-center text-18 text-[#8d8d8d]"
                             style="left: 50%; transform: translateX(-50%);"
                         >
                             <Countdown :end-time="item.endTime" />
@@ -68,7 +68,7 @@
                         mode="widthFix"
                         style="height: calc(177rpx / 320 * 400);"
                     />
-                    <view class="welfare-center-item-list-text theme-font text-flow-ellipsis-single absolute left-12 bottom-5 text-20 text-black z-1">{{
+                    <view class="welfare-center-item-list-text theme-font text-ellipsis absolute left-12 bottom-5 text-20 text-black z-1">{{
                         item.title
                     }}</view>
                 </view>
