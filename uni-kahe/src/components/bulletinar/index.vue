@@ -1,13 +1,12 @@
 <template>
-  <view class="home-bulletin relative flex items-center w-709 h-60 mx-auto bg-white"
-  >
+  <view class="relative flex items-center w-709 h-60 mx-auto mt-12">
     <image
       src="/static/kaju/common/notice-bg.png"
       class="img w-709 h-60"
       mode="aspectFit"
     />
     <view
-      class="bulletin-content absolute left-120 top-0 bottom-0 z-1 flex items-center w-[calc(100%-200rpx)] overflow-hidden"
+      class="absolute left-120 top-0 bottom-0 z-1 flex items-center w-[calc(100%-100rpx)] overflow-hidden"
     >
       <TnNoticeBar
         :data="noticeData"

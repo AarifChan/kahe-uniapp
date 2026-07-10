@@ -9,7 +9,10 @@
       backgroundColor: `rgba(255, 248, 233, ${opacity})`,
     }"
   >
-    <view class="customNav-bar relative w-full flex flex-row items-center justify-start" :style="{ lineHeight: `${navBarHeight}PX` }">
+    <view
+      class="relative w-full flex flex-row items-center justify-start"
+      :style="{ lineHeight: `${navBarHeight}PX` }"
+    >
     </view>
   </view>
   <view

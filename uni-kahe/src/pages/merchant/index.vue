@@ -39,7 +39,8 @@
 import Search from "@/components/search/index.vue";
 import Tab from "./components/tab/index.vue";
 import Card from "./components/card/index.vue";
-import NavBar from "./components/navBar/index.vue";
+import NavBar from "@/components/navBar/index.vue";
+
 import { useMerchant } from "@/pages/merchant/index";
 import { useGoods } from "@/composables/goods";
 import { onMounted, computed, ref } from "vue";

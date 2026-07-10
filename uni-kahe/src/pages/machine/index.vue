@@ -1,31 +1,30 @@
 <template>
-  <scroll-view
-    class="relative w-full flex flex-col bg-main-bg"
-    style="height: calc(100vh - env(safe-area-inset-bottom) - 132rpx);"
-    :scroll-y="true"
-    @scrolltolower="machineScroll"
-  >
+  <view class="relative w-screen h-screen flex flex-col">
     <image
-      class="w-full aspect-ratio-[721/362]"
-      src="/static/kahe-202510/ka-he/merchant/bg-top.png"
+      class="fixed left-0 top-0 w-full h-full"
+      src="/static/kaju/machine/machine-bg.png"
     />
-    <view class="absolute left-0 top-0 w-full">
-      <image
-        class="ml-32"
-        style="width: calc(149rpx * 1.3); height: calc(53rpx * 1.3);"
-        src="/static/kahe-202510/jikaquan/jikaquan-logo.png"
-      />
-      <Top :types="false" :goods="barrageList" />
-      <tab
-        v-model:current="current"
-        :list="machineTabList"
-        :search="true"
-        @did-click="didClickMachineTab"
-      />
-      <goods @tapCardListItem="tapCardListItem" :list="machineList" />
-      <empty :show="machineList.length === 0" />
-    </view>
-  </scroll-view>
+    <NavBar :opacity="0" position="sticky" @search="handleSearch" />
+    <image class="w-750 h-374" src="/static/kaju/machine/machine-banner.png" />
+
+    <scroll-view
+      class="relative w-full flex flex-col overflow-hidden items-center"
+      :scroll-y="true"
+      @scrolltolower="machineScroll"
+    >
+      <view class="w-full flex flex-col">
+        <tab
+          v-model:current="current"
+          :list="machineTabList"
+          :search="true"
+          @did-click="didClickMachineTab"
+        />
+        <goods @tapCardListItem="tapCardListItem" :list="machineList" />
+        <empty :show="machineList.length === 0" />
+      </view>
+    </scroll-view>
+  </view>
+
   <!--  <TabBar />-->
 </template>
 <script setup lang="ts">
@@ -55,6 +54,7 @@ onMounted(() => {
   getBarrageList();
   getMachineList();
 });
+const handleSearch = (value: string) => {};
 onShareAppMessage(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,

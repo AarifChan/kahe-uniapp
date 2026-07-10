@@ -1,9 +1,9 @@
 <template>
   <!-- :opacity="navOpacity" -->
-  <NavBar title="首页" :opacity="1" position="sticky" @search="handleSearch" />
+  <NavBar :opacity="1" position="sticky" @search="handleSearch" />
   <scroll-view
     class="relative w-full flex flex-col overflow-hidden bg-main-bg"
-    style="height: calc(100vh - (env(safe-area-inset-bottom) + 100rpx));"
+    style="height: calc(100vh - (env(safe-area-inset-bottom) + 100rpx))"
     :scroll-y="true"
     :scroll-with-animation="true"
     :scroll-into-view="currentVew"
@@ -31,7 +31,16 @@
           :search="true"
           @did-click="handleHomeTab"
         />
-        <view class="box-border w-full px-30" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(calc((100% - 10px) / 2), 1fr)); grid-gap: 10px;"
+        <view
+          class="box-border w-full px-30"
+          style="
+            display: grid;
+            grid-template-columns: repeat(
+              auto-fill,
+              minmax(calc((100% - 10px) / 2), 1fr)
+            );
+            grid-gap: 10px;
+          "
         >
           <view
             v-for="(item, index) in goodsList"
@@ -64,7 +73,8 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import Banner from "./components/banner/index.vue";
 import Recommend from "@/pages/home/components/recommend/index.vue";
 import Empty from "@/components/empty/index.vue";
-import NavBar from "./components/navBar/index.vue";
+import NavBar from "@/components/navBar/index.vue";
+
 import { useMerchant } from "@/pages/merchant/index";
 import { AppModule } from "@/store/modules/app";
 import { useLogin } from "@/composables/login";
