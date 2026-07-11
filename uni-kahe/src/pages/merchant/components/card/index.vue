@@ -59,7 +59,7 @@
         :enable-flex="true"
       >
         <view
-          class="w-153 h-203 inline-block relative ml-8 mr-16 overflow-hidden"
+          class="inline-block relative ml-8 mr-16 overflow-hidden"
           v-for="(box, index) in item.box"
           :key="'goods' + box.id"
           :id="'box:' + box.id"

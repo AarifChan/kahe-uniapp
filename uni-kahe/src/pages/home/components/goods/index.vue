@@ -1,27 +1,21 @@
 <template>
   <view class="w-full relative overflow-hidden mb-20 flex flex-col">
     <view
-      class="relative w-full aspect-ratio-[1/1] overflow-hidden flex flex-row items-center justify-center"
+      class="relative w-full aspect-ratio-[1/1] overflow-hidden flex flex-row items-center justify-center sticker-border"
     >
-      <image
-        class="w-full h-full aspect-ratio-[1/1]"
-        src="/static/kaju/common/good-bg.png"
-      />
       <view
-        class="absolute left-4 top-4 flex flex-row items-center justify-center"
-        style="width: calc(100% - 8rpx); height: calc(100% - 8rpx)"
+        class="absolute left-4 top-10 flex flex-row items-center justify-center"
+        style="width: calc(100% - 8rpx); height: calc(100% - 20rpx)"
       >
         <image class="h-full" :src="item.image" mode="heightFix" />
       </view>
 
-      <view
-        class="homeGoods-cover-pattern absolute right-8 top-8 z-2 flex flex-row items-center"
-      >
+      <view class="absolute right-8 top-8 z-2 flex flex-row items-center">
         <image
           v-for="(label, index) in item.labels"
           :key="'labels:' + index"
           :src="formatLabelImage(label)"
-          class="homeGoods-cover-pattern-img mr-8 w-65 h-34 rounded-4"
+          class="mr-8 w-65 h-34 rounded-4"
         />
       </view>
     </view>
@@ -53,13 +47,17 @@
         </view>
       </view>
     </view>
-    <view v-if="showTag" />
+    <view
+      class="absolute left-24 w-84 h-30 text-center top-3 theme-font bg-[#8BB7FF] text-white rounded-b-8 text-22 text-stroke-2-[#3B44B9]"
+      >{{ getMainTagName(Number(item.mainTag)) }}</view
+    >
   </view>
 </template>
 
 <script lang="ts" setup>
 import type { PropType } from "vue";
 import type { UIMallListItemModel, UIProductModel } from "@/model";
+import { getMainTagName } from "@/utils/tools/image";
 defineProps({
   item: {
     default: {} as UIProductModel,

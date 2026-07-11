@@ -252,7 +252,7 @@ export function useGoods() {
     if (params.cid === 999) {
       params = Object.assign(params, {
         cid: null,
-        mid: 1,
+        mid: 2,
       });
     }
 
@@ -264,6 +264,7 @@ export function useGoods() {
         goods.push({
           name: item.title,
           image: item.logo,
+          mainTag: item.mainTag,
           mainTagImage: getMainTagImagePath(item.mainTag),
           subTagImage: getSubTagImagePath(item.subTag),
           price: formatPrice(item.price),

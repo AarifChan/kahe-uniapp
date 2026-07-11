@@ -33,6 +33,7 @@ export interface UIProductModel {
   subTagImage: string;
   price: string;
   id: number;
+  mainTag: number;
   cateId: number;
   productNum?: number;
   isSellout: boolean;

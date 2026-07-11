@@ -427,7 +427,8 @@ export default defineConfig({
   ],
 
   // 快捷方式 - 组合常用类名
-  shortcuts: {
+  shortcuts: [
+    {
     // 布局
     "flex-center": "flex items-center justify-center",
     "flex-col-center": "flex flex-col items-center justify-center",
@@ -437,6 +438,10 @@ export default defineConfig({
     // 常用组件样式
     "btn-primary": "flex-center h-88 rounded-44 bg-primary text-white",
     card: "p-24 rounded-16 bg-white",
+
+    // 卡片描边：四边不等宽 + 圆角（上4 右7 下8 左5）
+    "sticker-border":
+      "border-t-4 border-r-7 border-b-8 border-l-5 border-[#151714] rounded-24",
 
     // 文字省略
     "text-ellipsis": "overflow-hidden text-ellipsis whitespace-nowrap",
@@ -458,7 +463,16 @@ export default defineConfig({
     "game-text": "text-white text-outline-2 text-outline-red font-bold",
     "game-text-sm": "text-white text-outline-1 text-outline-red font-bold",
     "game-text-lg": "text-white text-outline-3 text-outline-red font-bold",
-  },
+    },
+
+    // 动态卡片描边：sticker-<上>-<右>-<下>-<左>-<圆角>（单位均为 rpx，描边色固定 #151714）
+    // 示例：sticker-4-7-8-5-24 → 上4 右7 下8 左5，圆角24rpx
+    [
+      /^sticker-(\d+)-(\d+)-(\d+)-(\d+)-(\d+)$/,
+      ([, t, r, b, l, rd]) =>
+        `border-t-${t} border-r-${r} border-b-${b} border-l-${l} border-[#151714] rounded-${rd}`,
+    ],
+  ],
 
   // 主题配置 - 与项目设计系统对齐
   theme: {
