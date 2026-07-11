@@ -11,23 +11,23 @@
       class="general-top-btn absolute right-16 top-28 flex flex-row items-center gap-16"
     >
       <view
-        class="style1 text-28 text-center py-4 px-6 rounded-10 mr-16 text-[#237927] theme-font"
+        class="text-28 text-center py-4 px-6 rounded-4 mr-16 text-[#237927] theme-font bg-[#7fff85] border-2 border-[#29984b]"
         @tap.stop="tapShowModel(0)"
         >发货须知</view
       >
       <view
-        class="style2 text-28 text-center py-4 px-6 rounded-10 mr-16 text-[#85733a] theme-font"
+        class="text-28 text-center py-4 px-6 rounded-4 mr-16 text-[#85733a] theme-font bg-[#fffa70] border-2 border-[#785e30]"
         @tap.stop="tapShowModel(1)"
         >购买说明</view
       >
       <view
-        class="general-top-btn-item style3 text-28 text-center py-4 px-6 rounded-10 mr-16 text-[#237927] theme-font"
+        class="text-28 text-center py-4 px-6 rounded-4 mr-16 text-[#237927] theme-font bg-[#7cd2f0] border-2 border-[#785e30]"
         @tap.stop="tapShowModel(2)"
         >品相定义</view
       >
     </view>
     <view
-      class="general-top-content absolute top-104 left-32 flex flex-row items-center h-175"
+      class="absolute top-104 left-32 flex flex-row items-center h-175"
       :style="{ width: 'calc(100% - 64rpx)' }"
     >
       <image
