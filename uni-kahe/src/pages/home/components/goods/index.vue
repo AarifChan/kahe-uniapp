@@ -1,32 +1,22 @@
 <template>
-  <view class="homeGoods w-full relative overflow-hidden mb-20 flex flex-col">
-    <!--    <image-->
-    <!--      class="homeGoods-bg"-->
-    <!--      mode="widthFix"-->
-    <!--      src="/static/kaju/common/good-bg.png"-->
-    <!--    />-->
-    <!--        <view class="homeGoods-empty" v-if="item.isSellout">-->
-    <!--            <image-->
-    <!--                style="width:137rpx;height: 63rpx"-->
-    <!--                src="/static/jos/1214/sell-out.png"-->
-    <!--            />-->
-    <!--        </view>-->
-
-    <view class="homeGoods-cover relative w-full aspect-ratio-[1/1] overflow-hidden flex flex-row items-center justify-center">
+  <view class="w-full relative overflow-hidden mb-20 flex flex-col">
+    <view
+      class="relative w-full aspect-ratio-[1/1] overflow-hidden flex flex-row items-center justify-center"
+    >
       <image
-        class="homeGoods-cover-bg w-full h-full aspect-ratio-[1/1]"
-        mode="widthFix"
+        class="w-full h-full aspect-ratio-[1/1]"
         src="/static/kaju/common/good-bg.png"
       />
-      <view class="homeGoods-cover-top absolute left-4 top-4 flex flex-row items-center justify-center" style="width: calc(100% - 8rpx); height: calc(100% - 8rpx)">
-        <image
-          class="homeGoods-cover-top-img h-full"
-          :src="item.image"
-          mode="heightFix"
-        />
+      <view
+        class="absolute left-4 top-4 flex flex-row items-center justify-center"
+        style="width: calc(100% - 8rpx); height: calc(100% - 8rpx)"
+      >
+        <image class="h-full" :src="item.image" mode="heightFix" />
       </view>
 
-      <view class="homeGoods-cover-pattern absolute right-8 top-8 z-2 flex flex-row items-center">
+      <view
+        class="homeGoods-cover-pattern absolute right-8 top-8 z-2 flex flex-row items-center"
+      >
         <image
           v-for="(label, index) in item.labels"
           :key="'labels:' + index"
@@ -35,26 +25,27 @@
         />
       </view>
     </view>
-    <view class="homeGoods-info mt-8 relative w-full flex flex-col justify-between">
-      <view class="homeGoods-info-content relative w-full h-full">
-        <view class="homeGoods-info-bottom px-12 box-border w-full">
-          <view class="homeGoods-info-bottom-title font-normal text-24 text-black leading-30 text-ellipsis">{{
-            item.name
-          }}</view>
-          <view class="homeGoods-info-bottom-row1 box-border flex flex-row items-center justify-between">
-            <view class="homeGoods-info-bottom-row1-price relative">
-              <text class="homeGoods-info-bottom-row1-price-title price-font text-[#fe452c] text-24 leading-42"
+    <view class="mt-8 relative w-full flex flex-col justify-between">
+      <view class="relative w-full h-full">
+        <view class="px-12 box-border w-full">
+          <view
+            class="font-normal text-24 text-black leading-30 text-ellipsis"
+            >{{ item.name }}</view
+          >
+          <view class="box-border flex flex-row items-center justify-between">
+            <view class="relative">
+              <text class="price-font text-[#fe452c] text-24 leading-42"
                 >{{ isFromMall ? "" : "" }}{{ item.price
                 }}{{ isFromMall ? "/点券" : "" }}</text
               >
             </view>
-            <view class="homeGoods-info-merchant flex flex-row items-center" v-if="!hideMerchant">
+            <view class="flex flex-row items-center" v-if="!hideMerchant">
               <image
-                class="homeGoods-info-merchant-logo w-36 h-36 rounded-full"
+                class="w-36 h-36 rounded-full"
                 :src="item.merchant?.icon"
               />
               <view
-                class="homeGoods-info-merchant-name max-w-120 ml-5 font-normal text-18 text-black text-ellipsis"
+                class="max-w-120 ml-5 font-normal text-18 text-black text-ellipsis"
                 >{{ item.merchant?.name }}</view
               >
             </view>
@@ -62,7 +53,7 @@
         </view>
       </view>
     </view>
-    <view class="homeGoods-tags" v-if="showTag" />
+    <view v-if="showTag" />
   </view>
 </template>
 

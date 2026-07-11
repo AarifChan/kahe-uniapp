@@ -1,5 +1,7 @@
 <template>
-  <view class="recommend flex flex-row items-center justify-center box-border w-full h-280 py-16 px-16 pt-16 pb-0 gap-12">
+  <view
+    class="recommend flex flex-row items-center justify-center box-border w-full h-280 py-16 px-16 pt-16 pb-0 gap-12"
+  >
     <view class="recommend-left relative w-300 h-280">
       <image
         class="recommend-left-top absolute left-0 top-0 w-158 h-280"
@@ -21,15 +23,15 @@
         mode="aspectFit"
         @tap.stop="handleGroupBuyPage"
       />
-      <view class="recommend-right-list absolute top-52 left-12 right-12 bottom-12 flex flex-col gap-8 overflow-hidden">
-        <view
+      <view
+        class="absolute top-68 left-16 right-16 bottom-12 flex flex-col gap-8 overflow-hidden"
+      >
+        <item
           v-for="(item, index) in displayList"
           :key="index"
-          class="recommend-right-item flex-1 min-h-0 box-border"
+          :item="item"
           @tap.stop="handleClickItem(item)"
-        >
-          <item :item="item" />
-        </view>
+        />
       </view>
     </view>
   </view>

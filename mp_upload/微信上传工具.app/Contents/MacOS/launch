@@ -1,0 +1,60 @@
+#!/bin/zsh
+# 微信上传工具 启动器（.app）—— Finder / Dock 双击启动，不打开终端窗口。
+
+# 加载用户环境（让 nvm/node 等对编译子进程可用）
+[ -r "$HOME/.zprofile" ] && source "$HOME/.zprofile" 2>/dev/null
+[ -r "$HOME/.zshrc" ] && source "$HOME/.zshrc" 2>/dev/null
+
+LOG="$HOME/Library/Logs/wx-uploader-launch.log"
+: > "$LOG"   # 每次启动清空旧日志
+
+# 解析项目目录：相对 .app 自身；若被复制到桌面/应用程序，回退到绝对路径
+SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
+APP_DIR="$(cd "$SELF_DIR/../../.." && pwd)"
+if [ ! -f "$APP_DIR/wx_uploader_gui.py" ]; then
+  APP_DIR="/Users/fuqiang/Project/aarif/jmcw/kahe-uniapp/mp_upload"
+fi
+if ! cd "$APP_DIR" 2>>"$LOG"; then
+  /usr/bin/osascript -e "display alert \"无法进入项目目录\" message \"$APP_DIR\"" 2>/dev/null
+  exit 1
+fi
+
+# 选一个【带 tkinter】的 python3：按优先级逐个探测。
+# 关键：不能直接信任 `command -v python3`——PATH 里若 Homebrew python 排在 conda 前，
+# 会命中没有 tkinter 的 Homebrew python，导致 `import tkinter` 崩溃（这就是双击无反应的根因）。
+find_python() {
+  local candidates=(
+    /opt/homebrew/Caskroom/miniforge/base/bin/python3
+    "$HOME/miniforge3/bin/python3" "$HOME/miniforge3/bin/python"
+    "$HOME/miniconda3/bin/python3" "$HOME/miniconda3/bin/python"
+    "$(command -v python3 2>/dev/null)"
+    /opt/homebrew/bin/python3
+    /usr/local/bin/python3
+    /usr/bin/python3
+  )
+  local p
+  for p in "${candidates[@]}"; do
+    [ -z "$p" ] && continue
+    [ -x "$p" ] || continue
+    if "$p" -c "import tkinter" 2>/dev/null; then
+      echo "$p"
+      return 0
+    fi
+  done
+  return 1
+}
+
+PY="$(find_python)"
+if [ -z "$PY" ]; then
+  /usr/bin/osascript -e 'display alert "无法启动微信上传工具" message "未找到支持 tkinter 的 Python 3。可在终端运行：python3 -c \"import tkinter\" 自检。"' 2>/dev/null
+  exit 1
+fi
+
+echo "[launch] $(date) python=$PY app=$APP_DIR" >> "$LOG"
+# 作为子进程运行（不用 exec），以便捕获退出码并在失败时给出可见提示
+"$PY" "$APP_DIR/wx_uploader_gui.py" >> "$LOG" 2>&1
+rc=$?
+if [ $rc -ne 0 ]; then
+  /usr/bin/osascript -e "display alert \"启动失败 (exit $rc)\" message \"详见日志：\n$LOG\"" 2>/dev/null
+fi
+exit $rc

@@ -1,6 +1,9 @@
 <template>
-  <view class="item flex flex-row items-center box-border w-full h-full py-8 px-12 gap-12" :style="itemBgStyle">
-    <view class="item-pic relative flex-shrink-0 w-88 h-88">
+  <view
+    class="flex flex-row items-center box-border w-full py-8 px-12 gap-12 rounded-16 bg-[#FFF8F1]"
+    :style="itemBgStyle"
+  >
+    <view class="relative flex-shrink-0 w-88 h-88">
       <image
         class="item-pic-tag absolute -top-4 -left-4 w-50 h-28 z-10"
         src="/static/kahe-202510/challenge/pingtuan-tag.png"
@@ -14,20 +17,41 @@
     </view>
 
     <view class="item-info flex-1 flex flex-col justify-between min-w-0 h-88">
-      <view class="item-row flex flex-row items-center justify-between w-full min-w-0">
-        <view class="item-title flex-1 font-bold text-22 text-[#333] leading-30 overflow-hidden text-ellipsis whitespace-nowrap mr-8">{{ item.title }}</view>
-        <view class="item-price flex-shrink-0 font-bold text-26 text-[#ff4d4f] leading-30">¥{{ item.price }}</view>
+      <view
+        class="item-row flex flex-row items-center justify-between w-full min-w-0"
+      >
+        <view
+          class="item-title flex-1 font-bold text-22 text-[#333] leading-30 overflow-hidden text-ellipsis whitespace-nowrap mr-8"
+          >{{ item.title }}</view
+        >
+        <view
+          class="item-price flex-shrink-0 font-bold text-26 text-[#ff4d4f] leading-30"
+          >¥{{ item.price }}</view
+        >
       </view>
 
       <view class="item-countdown flex items-center">
-        <text class="item-countdown-text text-20 text-[#666] leading-28 font-mono">{{ isOver ? "已结束" : remainingTime }}</text>
+        <text
+          class="item-countdown-text text-20 text-[#666] leading-28 font-mono"
+          >{{ isOver ? "已结束" : remainingTime }}</text
+        >
       </view>
 
-      <view class="item-row flex flex-row items-center justify-between w-full min-w-0">
-        <view class="item-progress flex-1 h-8 bg-[#e5e5e5] rounded-4 overflow-hidden mr-8">
-          <view v-if="item.total > 0" class="item-progress-value h-full bg-[#ffac5b] rounded-4" :style="progressStyles"></view>
+      <view
+        class="item-row flex flex-row items-center justify-between w-full min-w-0"
+      >
+        <view
+          class="item-progress flex-1 h-8 bg-[#e5e5e5] rounded-4 overflow-hidden mr-8"
+        >
+          <view
+            v-if="item.total > 0"
+            class="item-progress-value h-full bg-[#ffac5b] rounded-4"
+            :style="progressStyles"
+          ></view>
         </view>
-        <text class="item-remain flex-shrink-0 text-18 text-[#999] leading-24">余{{ item.num }}/共{{ item.total }}</text>
+        <text class="item-remain flex-shrink-0 text-18 text-[#999] leading-24"
+          >余{{ item.num }}/共{{ item.total }}</text
+        >
       </view>
     </view>
   </view>
@@ -45,7 +69,7 @@ const { startTimeRemain, remainingTime, isTimeout } = useTimeCount();
 const props = defineProps({
   item: {
     type: Object as PropType<GroupBuyItem>,
-    default: () => ({} as GroupBuyItem),
+    default: () => ({}) as GroupBuyItem,
   },
 });
 

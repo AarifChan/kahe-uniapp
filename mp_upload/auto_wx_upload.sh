@@ -8,8 +8,8 @@
 # 2. 自动解析 appid（从文件名中提取 wx******）
 # 3. 在本地生成对应的 upload_wx******.js
 # 4. 将 js + key 打包为 tar.gz
-# 5. 通过 scp 上传到远程指定目录
-# 6. 在远程解压，并用 node 执行 upload_wx******.js 完成上传
+# 5. 通过 scp 上传到远程指定目录的 ${APPID} 子目录
+# 6. 在远程解压（不执行 node，执行由调用方负责）
 #
 # 使用示例（第二个参数指定环境：2 / 3 / 默认）：
 #   chmod +x ./auto_wx_upload.sh
@@ -173,8 +173,13 @@ fi
 
 echo "远程目录：${REMOTE_DIR}"
 
+# 对远程路径中的特殊字符进行转义，防止单引号等破坏 SSH 命令
+Q_REMOTE_DIR=$(printf '%q' "$REMOTE_DIR")
+Q_APPID=$(printf '%q' "$APPID")
+Q_TARBALL_NAME=$(printf '%q' "$TARBALL_NAME")
+
 echo "确保远程目录存在（服务器迁移后可能不存在）..."
-ssh "$REMOTE_HOST" "mkdir -p '${REMOTE_DIR}'"
+ssh "$REMOTE_HOST" "mkdir -p ${Q_REMOTE_DIR}"
 
 echo "通过 scp 上传压缩包到远程..."
 scp "$TARBALL_PATH" "${REMOTE_HOST}:${REMOTE_DIR}/"
@@ -182,12 +187,18 @@ scp "$TARBALL_PATH" "${REMOTE_HOST}:${REMOTE_DIR}/"
 echo "在远程解压到 ${APPID} 子目录，并删除压缩包 ..."
 ssh "$REMOTE_HOST" "
   set -euo pipefail;
-  cd '${REMOTE_DIR}' && \
-  mkdir -p '${APPID}' && \
-  tar --warning=no-unknown-keyword -xzf '${TARBALL_NAME}' -C '${APPID}' && \
-  rm -f '${TARBALL_NAME}'
+  cd ${Q_REMOTE_DIR} && \
+  mkdir -p ${Q_APPID} && \
+  tar --warning=no-unknown-keyword -xzf ${Q_TARBALL_NAME} -C ${Q_APPID} && \
+  rm -f ${Q_TARBALL_NAME}
 "
 # 如需在远程执行上传脚本，可取消下面这一行的注释：
-# ssh "$REMOTE_HOST" \"cd '${REMOTE_DIR}/${APPID}' && node '${UPLOAD_JS_NAME}'\"
+# ssh "$REMOTE_HOST" "
+#   set -euo pipefail;
+#   export NVM_DIR=\"\$HOME/.nvm\";
+#   [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\";
+#   nvm use 18;
+#   cd '${REMOTE_DIR}/${APPID}' && node '${UPLOAD_JS_NAME}'
+# "
 echo "全部流程完成。"
 

@@ -55,8 +55,6 @@ class QiniuClient {
     this.cdnManager = new qiniu.cdn.CdnManager(this.mac);
     this.bucketManager = new qiniu.rs.BucketManager(this.mac, config);
 
-    this.uploadToken = new qiniu.rs.PutPolicy({ scope: bucket }).uploadToken(this.mac);
-
     // 内存缓存已上传文件的 ETag，减少 API 调用
     this.etagCache = new Map();
   }
@@ -146,12 +144,16 @@ class QiniuClient {
    */
   async uploadFile(localFile, key) {
     let lastError;
+    // 使用 key 级 scope 生成上传凭证，允许覆盖已存在的同名文件
+    const uploadToken = new qiniu.rs.PutPolicy({
+      scope: `${this.bucket}:${key}`,
+    }).uploadToken(this.mac);
 
     for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
       try {
         const result = await new Promise((resolve, reject) => {
           this.formUploader.putFile(
-            this.uploadToken,
+            uploadToken,
             key,
             localFile,
             this.putExtra,

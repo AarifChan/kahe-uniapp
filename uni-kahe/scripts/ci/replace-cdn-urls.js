@@ -25,7 +25,7 @@ const {
 
 const MANIFEST_PATH = path.join(PROJECT_ROOT, "dist", "asset-manifest.json");
 const SUPPORTED_EXTS = new Set([
-  ".js", ".css", ".wxml", ".wxss", ".json", ".html", ".vue",
+  ".js", ".css", ".wxml", ".wxss", ".html", ".vue",
   ".scss", ".less", ".ts", ".jsx", ".tsx",
 ]);
 
