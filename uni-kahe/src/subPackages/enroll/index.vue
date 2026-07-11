@@ -51,15 +51,18 @@ const materials = ref([
 const handleEnroll = () => {
   showInGroupImage();
 };
+
+/** 用对象样式避免内联 url(&quot;...) 编译到 WXML 时引号/斜杠被误解析（miniprogram-ci 报 unexpected `/`） */
+const pageBgStyle = {
+  backgroundImage: "url(/static/kahe-202510/jikaquan/invite-bg.png)",
+  backgroundSize: "100% auto",
+};
 </script>
 
 <template>
   <view
     class="h-screen w-screen relative bg-no-repeat"
-    style="
-      background-image: url(&quot;/static/kahe-202510/jikaquan/invite-bg.png&quot;);
-      background-size: 100% auto;
-    "
+    :style="pageBgStyle"
   >
     <view class="w-full relative">
       <view class="absolute left-40 top-40">

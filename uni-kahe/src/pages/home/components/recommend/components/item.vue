@@ -1,7 +1,6 @@
 <template>
   <view
     class="flex flex-row items-center box-border w-full py-8 px-12 gap-12 rounded-16 bg-[#FFF8F1]"
-    :style="itemBgStyle"
   >
     <view class="relative flex-shrink-0 w-88 h-88">
       <image
@@ -75,7 +74,7 @@ const props = defineProps({
 
 /** 用对象样式避免内联 url(&quot;...) 编译到 WXML 时引号/斜杠被误解析（miniprogram-ci 报 unexpected `/`） */
 const itemBgStyle = {
-  backgroundImage: "url(/static/kaju/home/good-bg.png)",
+  // backgroundImage: "url(/static/kaju/home/good-bg.png)",
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
