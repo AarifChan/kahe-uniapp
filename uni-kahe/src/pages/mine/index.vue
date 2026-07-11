@@ -48,9 +48,7 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, ref, nextTick } from "vue";
-import Item from "./components/item.vue";
 import Coin from "./components/coin.vue";
-import TabBar from "@/components/tabBar/index.vue";
 import NavBar from "./components/navBar/index.vue";
 import Info from "./components/info.vue";
 import { UserModule } from "@/store/modules/user";

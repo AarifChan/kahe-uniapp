@@ -1,12 +1,19 @@
 <template>
-  <view class="boxDetail relative w-full h-screen overflow-hidden bg-gradient-[linear-gradient(180deg,#f7daa1,#fff3dc)]">
-    <view class="absolute left-15 right-15 top-0 flex flex-row justify-between items-center z-10"
+  <view
+    class="boxDetail relative w-full h-screen overflow-hidden bg-gradient-[linear-gradient(180deg,#f7daa1,#fff3dc)]"
+  >
+    <view
+      class="absolute left-15 right-15 top-0 flex flex-row justify-between items-center z-10"
     >
       <view>
-        <view class="boxDetail-top-title theme-font text-40 font-normal text-white text-stroke-3 text-stroke-[#775435]">{{ title }}</view>
-        <view class="boxDetail-top-subTitle theme-font text-40 font-normal text-black">{{
-          selectNum ? `已选${selectNum}个` : `共${total}个`
-        }}</view>
+        <view
+          class="theme-font text-40 font-normal text-white text-stroke-3 text-stroke-[#775435]"
+          >{{ title }}</view
+        >
+        <view
+          class="boxDetail-top-subTitle theme-font text-40 font-normal text-black"
+          >{{ selectNum ? `已选${selectNum}个` : `共${total}个` }}</view
+        >
       </view>
       <view class="boxDetail-top-btn flex flex-row items-center gap-8">
         <view
@@ -32,7 +39,15 @@
       :enable-flex="true"
       @scrolltolower="handleScrollToLower"
     >
-      <view class="w-full box-border grid gap-15" style="grid-template-columns: repeat(auto-fill, minmax(calc((100% - 30px) / 3), 1fr))">
+      <view
+        class="w-full box-border grid gap-15"
+        style="
+          grid-template-columns: repeat(
+            auto-fill,
+            minmax(calc((100% - 30px) / 3), 1fr)
+          );
+        "
+      >
         <view
           class="inline-block"
           v-for="(item, index) in goodsList"
@@ -118,12 +133,12 @@ const total = computed(() => {
 
 const btnStyle = (type: number) => {
   if (type === 0) {
-    return 'bg-[#7fff85] border-2 border-[#29984b] text-[#237927]';
+    return "bg-[#7fff85] border-2 border-[#29984b] text-[#237927]";
   }
   if (type === 2) {
-    return 'bg-[#7cd2f0] border-2 border-[#785e30] text-[#237927]';
+    return "bg-[#7cd2f0] border-2 border-[#785e30] text-[#237927]";
   }
-  return '';
+  return "";
 };
 
 onMounted(() => {

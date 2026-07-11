@@ -68,7 +68,7 @@ const handleGroupBuyPage = () => {
 
 const handleChallengePage = () => {
   if (currentEnv() === "mp-weixin") {
-    ShowToast("请下载卡牌核心app体验新功能");
+    ShowToast("敬请期待");
     return;
   }
   uni.navigateTo({
