@@ -1,5 +1,8 @@
 <template>
-  <view class="actions fixed right-8 flex flex-col items-center z-99" :style="{ bottom: 'calc(200rpx + env(safe-area-inset-bottom))' }">
+  <view
+    class="actions fixed right-8 flex flex-col items-center z-99"
+    :style="{ bottom: 'calc(200rpx + env(safe-area-inset-bottom))' }"
+  >
     <template v-for="(item, index) in actionList" :key="index + 'itemId'">
       <!-- #ifdef MP-WEIXIN -->
       <button
@@ -14,8 +17,18 @@
           class="actions-item-bg w-full h-full"
           src="/static/kahe-202510/ka-he/product/item-bg.png"
         />
-        <image class="actions-item-icon absolute left-8 top-8 w-50 h-50" :src="item.icon" />
-        <text class="actions-item-title theme-font absolute left-0 w-full text-center -bottom-14 text-20 text-white" :style="{ textShadow: '-1px -1px 0 #703b16, 1px -1px 0 #703b16, -1px 1px 0 #703b16, 1px 1px 0 #703b16' }">{{ item.title }}</text>
+        <image
+          class="actions-item-icon absolute left-8 top-8 w-50 h-50"
+          :src="item.icon"
+        />
+        <text
+          class="actions-item-title theme-font absolute left-0 w-full text-center -bottom-14 text-20 text-white"
+          :style="{
+            textShadow:
+              '-1px -1px 0 #703b16, 1px -1px 0 #703b16, -1px 1px 0 #703b16, 1px 1px 0 #703b16',
+          }"
+          >{{ item.title }}</text
+        >
       </button>
       <!-- #endif -->
 
@@ -29,12 +42,17 @@
           class="actions-item-bg w-full h-full"
           src="/static/kahe-202510/ka-he/product/item-bg.png"
         />
-        <image class="actions-item-icon absolute left-8 top-8 w-50 h-50" :src="item.icon" />
-        <text class="actions-item-title theme-font absolute left-0 w-full text-center -bottom-14 text-20 text-white" :style="{ textShadow: '-1px -1px 0 #703b16, 1px -1px 0 #703b16, -1px 1px 0 #703b16, 1px 1px 0 #703b16' }">{{ item.title }}</text>
-        <view
-          v-if="item.action === 4 && unReadCount > 0"
-          class="actions-item-num absolute -right-4 -top-4 w-32 h-32 text-center leading-32 text-20 bg-red text-white rounded-16"
-          >{{ unReadCount }}</view
+        <image
+          class="actions-item-icon absolute left-8 top-8 w-50 h-50"
+          :src="item.icon"
+        />
+        <text
+          class="actions-item-title theme-font absolute left-0 w-full text-center -bottom-14 text-20 text-white"
+          :style="{
+            textShadow:
+              '-1px -1px 0 #703b16, 1px -1px 0 #703b16, -1px 1px 0 #703b16, 1px 1px 0 #703b16',
+          }"
+          >{{ item.title }}</text
         >
       </view>
 
@@ -49,8 +67,18 @@
           class="actions-item-bg w-full h-full"
           src="/static/kahe-202510/ka-he/product/item-bg.png"
         />
-        <image class="actions-item-icon absolute left-8 top-8 w-50 h-50" :src="item.icon" />
-        <text class="actions-item-title theme-font absolute left-0 w-full text-center -bottom-14 text-20 text-white" :style="{ textShadow: '-1px -1px 0 #703b16, 1px -1px 0 #703b16, -1px 1px 0 #703b16, 1px 1px 0 #703b16' }">{{ item.title }}</text>
+        <image
+          class="actions-item-icon absolute left-8 top-8 w-50 h-50"
+          :src="item.icon"
+        />
+        <text
+          class="actions-item-title theme-font absolute left-0 w-full text-center -bottom-14 text-20 text-white"
+          :style="{
+            textShadow:
+              '-1px -1px 0 #703b16, 1px -1px 0 #703b16, -1px 1px 0 #703b16, 1px 1px 0 #703b16',
+          }"
+          >{{ item.title }}</text
+        >
       </view>
       <!-- #endif -->
     </template>
@@ -157,8 +185,7 @@ const handleShare = () => {
   shareWeixinMiniProgramCard({
     title: `【${props.product?.title}】这个箱子快出货了，速来！`,
     imageUrl:
-      props.product?.image ||
-      "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
+      props.product?.image || "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
     path: sharePath,
   });
 };
@@ -175,5 +202,7 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-button::after { border: none; }
+button::after {
+  border: none;
+}
 </style>

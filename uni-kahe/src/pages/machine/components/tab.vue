@@ -1,20 +1,18 @@
 <template>
-  <view class="relative mx-32">
-    <view class="relative flex flex-row items-center justify-between">
-      <view
-        class="relative flex flex-col items-center justify-center"
-        v-for="(item, index) in list"
-        :key="index"
-        @tap.stop="clickItem(index)"
-      >
-        <image class="w-93 h-93" :src="item.icon" />
-        <view
-          class="w-140 text-center mt-12 text-24 text-white font-bold leading-38 alibaba-font text-ellipsis text-stroke-2-[#151714]"
-          >{{ item.title }}</view
-        >
-      </view>
-    </view>
-  </view>
+  <scroll-view
+    class="relative w-full whitespace-nowrap mx-16"
+    :enable-flex="true"
+    :scroll-x="true"
+    scroll-with-animation
+  >
+    <image
+      v-for="(item, index) in list"
+      :key="index"
+      @tap.stop="clickItem(index)"
+      class="w-183 h-72 mr-8"
+      :src="index === current ? item.selectIcon : item.icon"
+    />
+  </scroll-view>
 </template>
 
 <script lang="ts" setup>
@@ -24,6 +22,7 @@ interface ItemType {
   title: string;
   value: number;
   icon: string;
+  selectIcon: string;
 }
 
 defineProps({

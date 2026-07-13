@@ -1,44 +1,30 @@
 <template>
-  <view
-    class="relative w-710 h-258 my-30 mx-30 flex items-center box-border"
-    v-for="(item, index) in list"
-    :key="index"
-    @tap.stop="emits('tapCardListItem', item)"
-  >
-    <image class="w-full h-full absolute left-0 top-0 z-0" src="/static/kahe-202510/ka-he/machine/item-bg.png" />
-    <view class="relative w-92 ml-50">
-      <image class="w-full h-full" :src="item.logo" mode="widthFix" />
-    </view>
-    <view class="relative w-518 ml-28"
+  <view class="grid grid-cols-3 gap-y-20 justify-items-center m-32">
+    <view
+      v-for="(item, index) in list"
+      :key="index + 'goods-row'"
+      @tap.stop="emits('tapCardListItem', item)"
     >
-      <view class="relative text-30 text-black theme-font">{{ item.title }}</view>
-      <view class="flex items-center"
-      >
-        <view class="relative mr-20 text-28 text-black price-font">￥{{ item.price }}</view>
-        <view class="text-center w-143 leading-30 h-30 bg-[#f1855f] rounded-6 text-16 text-white"
-          >含<text>{{ item.goods?.length ?? 0 }}</text>种卡牌</view
-        >
+      <view class="relative w-233 h-318">
+        <image class="w-full h-full" :src="item.logo" />
+        <image
+          class="absolute left-0 top-0 w-full h-full"
+          src="/static/kaju/common/goods-item-bg.png"
+        />
       </view>
-      <view class="flex"
+      <view
+        class="text-center w-full leading-38 h-40 bg-[#000000] rounded-20 text-24 text-white"
+        >含<text>{{ item.goods?.length ?? 0 }}</text
+        >种卡牌</view
       >
-        <scroll-view
-          :scroll-x="true"
-          :enable-flex="true"
-          scroll-with-animation
-          class="whitespace-nowrap w-full mt-10"
-        >
-          <view
-            class="inline-block relative w-60 mr-12"
-            style="height: calc(60rpx / 300 * 420);"
-            v-for="(goods, index) in item.goods"
-            :key="index"
-          >
-            <image
-              class="w-full h-full"
-              :src="goods.image"
-            />
-          </view>
-        </scroll-view>
+      <view class="flex flex-row justify-between mt-8">
+        <view class="text-24 text-black alibaba-font">{{ item.title }}</view>
+        <view class="flex flex-row mt-16">
+          <view class="text-18 text-[#FE452C] alibaba-font">￥</view>
+          <view class="text-24 text-[#FE452C] alibaba-font">{{
+            item.price
+          }}</view>
+        </view>
       </view>
     </view>
   </view>

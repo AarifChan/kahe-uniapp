@@ -54,11 +54,7 @@
       @tap-show-model="tapShowModel"
       @did-click-remark="handleClickRemark"
     />
-    <Handles
-      @did-tap-reload="reloadCurrentPage"
-      :product="productDetail"
-      :un-read-count="unreadNum"
-    />
+    <Handles @did-tap-reload="reloadCurrentPage" :product="productDetail" />
     <detail-modal v-model:show="detailShow" :item="currentBox" />
     <!--    <login v-model:show="loginShow" @did-tap-login="handleLogin" />-->
     <pay
@@ -149,17 +145,7 @@ const tapShowModel = (value: number) => {
     });
   }
 };
-const unreadNum = ref(0);
-onShow(() => {
-  getUnReadCount();
-});
-const getUnReadCount = async () => {
-  const res = await getUnreadNum();
-  console.log("res:", res);
-  if (res.code === 200) {
-    unreadNum.value = res.data.data ?? 0;
-  }
-};
+
 const {
   openShow,
   skipLottery,
@@ -265,5 +251,4 @@ onShareTimeline(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

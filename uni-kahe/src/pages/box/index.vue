@@ -1,7 +1,12 @@
 <template>
   <view class="relative w-screen h-screen bg-[#FFF8E9] flex flex-col">
     <!-- logo -->
-    <NavBar :opacity="0" position="sticky" @search="handleSearch" />
+    <NavBar
+      :opacity="0"
+      position="sticky"
+      :search="false"
+      @search="handleSearch"
+    />
     <view class="relative w-full overflow-hidden flex flex-col">
       <!-- 公告 -->
       <view class="mt-16">

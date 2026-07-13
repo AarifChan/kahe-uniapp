@@ -58,27 +58,32 @@ const limitTabList = [
   {
     title: "宝可梦",
     value: 6,
-    icon: "/static/kahe-202510/ka-he/machine/cat1.png",
+    icon: "/static/kaju/machine/tab-6.png",
+    selectIcon: "/static/kaju/machine/tab-1.png",
   },
   {
     title: "航海王",
     value: 7,
-    icon: "/static/kahe-202510/ka-he/machine/cat2.png",
+    icon: "/static/kaju/machine/tab-7.png",
+    selectIcon: "/static/kaju/machine/tab-2.png",
   },
   {
     title: "洛卡纳",
     value: 8,
-    icon: "/static/kahe-202510/ka-he/machine/cat3.png",
+    icon: "/static/kaju/machine/tab-8.png",
+    selectIcon: "/static/kaju/machine/tab-3.png",
   },
   {
     title: "WS黑白双翼",
     value: 9,
-    icon: "/static/kahe-202510/ka-he/machine/cat4.png",
+    icon: "/static/kaju/machine/tab-9.png",
+    selectIcon: "/static/kaju/machine/tab-4.png",
   },
   {
     title: "UA",
     value: 10,
-    icon: "/static/kahe-202510/ka-he/machine/cat5.png",
+    icon: "/static/kaju/machine/tab-10.png",
+    selectIcon: "/static/kaju/machine/tab-5.png",
   },
 ];
 

@@ -1,7 +1,7 @@
 {
     "remote_host": "jermy",
     "compress_png_strict": true,
-    "use_qiniu": false,
+    "use_qiniu": true,
     "plats": [
         {
             "name": "wx_ma",

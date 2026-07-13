@@ -12,7 +12,10 @@
     <!--            />联系商家</view-->
     <!--        >-->
     <!-- #ifdef MP-WEIXIN -->
-    <button class="merchantInfo-share merchantInfo-share-btn absolute right-0 top-156 flex flex-row items-center px-8 py-2 rounded-l-22 bg-[rgba(0,0,0,0.5)] text-white text-24 leading-40 border-0" open-type="share">
+    <button
+      class="merchantInfo-share merchantInfo-share-btn absolute right-0 top-156 flex flex-row items-center px-8 py-2 rounded-l-22 bg-[rgba(0,0,0,0.5)] text-white text-24 leading-40 border-0"
+      open-type="share"
+    >
       <image
         class="merchantInfo-contact-img w-24 h-24"
         src="/static/share.png"
@@ -20,29 +23,45 @@
     </button>
     <!-- #endif -->
     <!-- #ifndef MP-WEIXIN -->
-    <view class="merchantInfo-share absolute right-0 top-156 flex flex-row items-center px-8 py-2 rounded-l-22 bg-[rgba(0,0,0,0.5)] text-white text-24 leading-40 border-2 border-white" @tap.stop="handleClickShare">
+    <view
+      class="merchantInfo-share absolute right-0 top-156 flex flex-row items-center px-8 py-2 rounded-l-22 bg-[rgba(0,0,0,0.5)] text-white text-24 leading-40 border-2 border-white"
+      @tap.stop="handleClickShare"
+    >
       <image
         class="merchantInfo-contact-img w-24 h-24"
         src="/static/share.png"
       />分享商家
     </view>
     <!-- #endif -->
-    <view class="merchantInfo-complain absolute right-0 top-218 flex flex-row items-center px-8 py-2 rounded-l-22 bg-[rgba(0,0,0,0.5)] text-white text-24 leading-40 border-2 border-white" @tap.stop="handleClickComplain">
+    <view
+      class="merchantInfo-complain absolute right-0 top-218 flex flex-row items-center px-8 py-2 rounded-l-22 bg-[rgba(0,0,0,0.5)] text-white text-24 leading-40 border-2 border-white"
+      @tap.stop="handleClickComplain"
+    >
       <image
         class="merchantInfo-contact-img w-24 h-24"
         src="/static/kahe-202510/merchant/complaint.png"
       />投诉商家
     </view>
-    <view class="merchantInfo-content absolute top-314 left-0 w-750" style="height: calc(100vh - 314rpx)">
+    <view
+      class="merchantInfo-content absolute top-314 left-0 w-750"
+      style="height: calc(100vh - 314rpx)"
+    >
       <view class="welfare relative w-full">
         <img
           src="/static/kahe-202510/ka-he/merchant/card-bg.png"
           alt=""
           class="welfare-bg absolute w-full h-full inset-0"
         />
-        <view class="merchantInfo-content-top relative px-34 pt-32 box-border flex flex-row">
-          <image class="merchantInfo-content-top-avatar relative w-140 h-140 bg-white shadow-[0rpx_2rpx_0rpx_0rpx_rgba(0,0,0,0.71)] rounded-full" :src="detail.icon" />
-          <view class="merchantInfo-content-top-info relative ml-68 flex flex-col">
+        <view
+          class="merchantInfo-content-top relative px-34 pt-32 box-border flex flex-row"
+        >
+          <image
+            class="merchantInfo-content-top-avatar relative w-140 h-140 bg-white shadow-[0rpx_2rpx_0rpx_0rpx_rgba(0,0,0,0.71)] rounded-full"
+            :src="detail.icon"
+          />
+          <view
+            class="merchantInfo-content-top-info relative ml-68 flex flex-col"
+          >
             <view class="flex flex-row">
               <view
                 class="merchantInfo-content-top-info-title theme-font text-ellipsis font-normal text-36 text-[#621b08] leading-36"
@@ -59,9 +78,10 @@
                 class="merchantInfo-content-top-info-bar-tag absolute -left-22 top-1/2 -translate-y-1/2 w-44 h-35"
                 :src="getTagIcon(detail.tag)"
               />
-              <text class="merchantInfo-content-top-info-bar-title absolute left-26 top-0 font-normal text-20 text-white leading-27">{{
-                getLevelName(detail.tag)
-              }}</text>
+              <text
+                class="merchantInfo-content-top-info-bar-title absolute left-26 top-0 font-normal text-20 text-white leading-27"
+                >{{ getLevelName(detail.tag) }}</text
+              >
             </view>
             <view
               class="merchantInfo-content-top-info-desc w-460 font-normal text-24 text-[#ff730d] leading-36 text-ellipsis-2"
@@ -76,7 +96,10 @@
               src="/static/kahe-202510/ka-he/merchant/btn.png"
               class="imgBg relative w-193 h-73"
             />
-            <text class="absolute left-1/2 top-[30%] -translate-x-1/2 -translate-y-[40%] font-normal text-24 text-[#582610] leading-28 other-font">进群豪礼</text>
+            <text
+              class="absolute left-1/2 top-[30%] -translate-x-1/2 -translate-y-[40%] font-normal text-24 text-[#582610] leading-28 other-font"
+              >进群豪礼</text
+            >
           </view>
         </view>
         <cards @did-click-item="handleClickItem" />
@@ -95,7 +118,15 @@
           :search="true"
           @did-click="didClickTab(merchantTabList[current].value)"
         />
-        <view class="merchantInfo-content-padding box-border py-8 px-30 grid gap-10" style="grid-template-columns: repeat(auto-fill, minmax(calc((100% - 10px) / 2), 1fr))">
+        <view
+          class="merchantInfo-content-padding box-border py-8 px-30 grid gap-10"
+          style="
+            grid-template-columns: repeat(
+              auto-fill,
+              minmax(calc((100% - 10px) / 2), 1fr)
+            );
+          "
+        >
           <view
             v-for="(item, index) in goodsList"
             :key="index"
@@ -195,7 +226,7 @@ const handleClickShare = () => {
     imageUrl:
       detail.value.icon ||
       detail.value.logo ||
-      "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
+      "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
     path: `/subPackages/merchant/index?merchantId=${id}`,
   });
 };

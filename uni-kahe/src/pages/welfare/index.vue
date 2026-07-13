@@ -7,7 +7,16 @@
     />
     <view class="absolute top-0 left-0 w-full flex flex-col">
       <view class="w-full h-463" />
-      <view class="box-border w-full px-30" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(calc((100% - 32rpx) / 2), 1fr)); grid-gap: 32rpx;"
+      <view
+        class="box-border w-full px-30"
+        style="
+          display: grid;
+          grid-template-columns: repeat(
+            auto-fill,
+            minmax(calc((100% - 32rpx) / 2), 1fr)
+          );
+          grid-gap: 32rpx;
+        "
       >
         <view
           class="relative w-full aspect-ratio-[339/116]"
@@ -19,11 +28,16 @@
             class="w-full h-full"
             src="/static/kahe-202510/ka-he/welfare/card-bg.png"
           />
-          <view class="absolute left-0 top-0 w-full h-full"
-          >
+          <view class="absolute left-0 top-0 w-full h-full">
             <view
               class="absolute top-24 left-50 font-normal text-39 text-[#a26e4e] mb-8 other-font"
-              style="text-shadow: 0 0 2rpx #ffffff, 0 0 2rpx #ffffff, 0 0 2rpx #ffffff, 0 0 2rpx #ffffff;"
+              style="
+                text-shadow:
+                  0 0 2rpx #ffffff,
+                  0 0 2rpx #ffffff,
+                  0 0 2rpx #ffffff,
+                  0 0 2rpx #ffffff;
+              "
               >{{ item.title }}</view
             >
             <image
@@ -170,14 +184,14 @@ const itemList = ref([
 onShareAppMessage(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
+    imageUrl: "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
     path: "/pages/welcome/index",
   };
 });
 onShareTimeline(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
+    imageUrl: "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
     path: "/pages/welcome/index",
   };
 });

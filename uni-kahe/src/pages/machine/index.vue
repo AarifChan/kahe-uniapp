@@ -45,6 +45,7 @@ const {
   tapCardListItem,
   getMachineList,
   machineList,
+  goodsParams,
   current,
   machineTabList,
   didClickMachineTab,
@@ -54,18 +55,22 @@ onMounted(() => {
   getBarrageList();
   getMachineList();
 });
-const handleSearch = (value: string) => {};
+const handleSearch = (value: string) => {
+  goodsParams.value.key = value;
+  goodsParams.value.page = 1;
+  getMachineList();
+};
 onShareAppMessage(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
+    imageUrl: "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
     path: "/pages/welcome/index",
   };
 });
 onShareTimeline(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
+    imageUrl: "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
     path: "/pages/welcome/index",
   };
 });

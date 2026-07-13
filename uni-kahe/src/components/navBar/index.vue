@@ -14,6 +14,7 @@
     >
       <image class="ml-59 w-115 h-63" src="/static/kaju/common/logo.png" />
       <view
+        v-if="search"
         class="flex flex-row items-center w-345 h-58 bg-white rounded-29 border-2px border-[#ffe4d0] ml-28 pl-20 box-border"
       >
         <image
@@ -48,8 +49,8 @@ defineProps({
     default: "",
     type: String,
   },
-  custom: {
-    default: false,
+  search: {
+    default: true,
     type: Boolean,
   },
   opacity: {

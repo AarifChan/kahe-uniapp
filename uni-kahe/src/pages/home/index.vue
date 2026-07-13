@@ -184,14 +184,14 @@ const handleLogoLongPress = async () => {
 onShareAppMessage(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
+    imageUrl: "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
     path: "/pages/welcome/index",
   };
 });
 onShareTimeline(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "/static/kahe-202510/jikaquan/jikaquan-share.jpg",
+    imageUrl: "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
     path: "/pages/welcome/index",
   };
 });
