@@ -46,6 +46,38 @@ onHide(() => {
 <style>
 @import "@tuniao/tn-style/dist/uniapp/index.css";
 
+/* UnoCSS preset 的 transform 类（translate/rotate/scale/skew）依赖 --un-* 变量，
+   项目关闭了 preflight，需手动提供默认值（CSS 变量可继承，定义在 page/:root 即可全局生效） */
+page {
+  --un-rotate: 0;
+  --un-rotate-x: 0;
+  --un-rotate-y: 0;
+  --un-rotate-z: 0;
+  --un-scale-x: 1;
+  --un-scale-y: 1;
+  --un-scale-z: 1;
+  --un-skew-x: 0;
+  --un-skew-y: 0;
+  --un-translate-x: 0;
+  --un-translate-y: 0;
+  --un-translate-z: 0;
+}
+
+:root {
+  --un-rotate: 0;
+  --un-rotate-x: 0;
+  --un-rotate-y: 0;
+  --un-rotate-z: 0;
+  --un-scale-x: 1;
+  --un-scale-y: 1;
+  --un-scale-z: 1;
+  --un-skew-x: 0;
+  --un-skew-y: 0;
+  --un-translate-x: 0;
+  --un-translate-y: 0;
+  --un-translate-z: 0;
+}
+
 /* #ifdef APP-PLUS */
 /* APP平台禁止H5页面滚动，只允许scroll-view内部滚动 */
 page {

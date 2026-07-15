@@ -28,7 +28,7 @@ const emits = defineEmits(["scrolltolower"]);
           mode="scaleToFill"
           class="icon relative w-full h-full"
         />
-        <text class="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 theme-font text-36 text-black leading-22" :style="{ top: '55%' }">{{ "往期欧皇" }}</text>
+        <text class="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 theme-font font-normal text-36 text-black leading-22" :style="{ top: '55%' }">{{ "往期欧皇" }}</text>
       </view>
       <image
         src="/static/kahe-202510/shine/pop-bg.png"

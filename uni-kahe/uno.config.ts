@@ -410,11 +410,7 @@ export default defineConfig({
     ["bottom-1/2", { bottom: "50%" }],
     ["left-1/2", { left: "50%" }],
 
-    // translate
-    ["-translate-x-1/2", { "--un-translate-x": "-50%", transform: "translateX(-50%)" }],
-    ["-translate-y-1/2", { "--un-translate-y": "-50%", transform: "translateY(-50%)" }],
-    ["translate-x-1/2", { "--un-translate-x": "50%", transform: "translateX(50%)" }],
-    ["translate-y-1/2", { "--un-translate-y": "50%", transform: "translateY(50%)" }],
+    // translate 由 preset-weapp 内置规则生成（依赖 --un-* 变量，默认值见 App.vue 全局样式）
 
     // text-shadow 任意值
     [/^text-shadow-\[(.+)\]$/, ([_, value]) => ({ "text-shadow": value.replace(/_/g, " ") })],

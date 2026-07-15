@@ -86,7 +86,7 @@ const formData = reactive({
             src="/static/kahe-202510/shine/top-icon.png"
             class="icon_bg relative w-full h-full"
           />
-          <text class="icon_title theme-font absolute left-1/2 -translate-x-1/2 -translate-y-1/2 text-45 text-white font-normal" :style="{ top: '35%', textShadow: '-3rpx -3rpx 0 #ff3333, 3rpx -3rpx 0 #ff3333, -3rpx 3rpx 0 #ff3333, 3rpx 3rpx 0 #ff3333' }">恭喜获得</text>
+          <text class="icon_title absolute left-1/2 -translate-x-1/2 -translate-y-1/2 text-45 text-white font-normal" :style="{ top: '35%', textShadow: '-3rpx -3rpx 0 #ff3333, 3rpx -3rpx 0 #ff3333, -3rpx 3rpx 0 #ff3333, 3rpx 3rpx 0 #ff3333' }">恭喜获得</text>
         </view>
         <image
           src="/static/kahe-202510/shine/pop-bg.png"
@@ -118,7 +118,7 @@ const formData = reactive({
               <TnInput v-model="selectAddress.address" textarea />
             </TnFormItem>
           </TnForm>
-          <view class="card text-center font-normal text-26 text-black leading-72" :style="{ fontFamily: 'Adobe Heiti Std' }">参与码为实体卡片，需填写收货信息。</view>
+          <view class="card-tip text-center font-normal text-26 text-black leading-72" :style="{ fontFamily: 'Adobe Heiti Std' }">参与码为实体卡片，需填写收货信息。</view>
         </view>
         <view class="pop-button mt-35 mx-auto" @click="handleRecieve">
           <view class="btn flex items-center justify-center w-187 h-63 bg-[url(/static/kahe-202510/shine/yellow.png)] bg-[length:100%_100%] bg-no-repeat"> 确定领取 </view>

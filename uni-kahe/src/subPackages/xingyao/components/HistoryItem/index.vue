@@ -4,10 +4,10 @@
     <view class="item w-full flex items-center relative box-border">
       <view class="user-info flex items-center flex-1 min-w-0">
         <image class="avatar w-60 h-60 rounded-full mr-20 flex-shrink-0" :src="user?.avatar" mode="aspectFill" />
-        <text class="username text-28 text-black truncate">{{ user?.nickname }}</text>
+        <text class="username text-28 text-black text-ellipsis">{{ user?.nickname }}</text>
       </view>
       <view class="user-time flex-1 text-center text-26 text-[#666666]">
-        <view class="date SimHei-font text-24 font-normal text-black">第{{ aId }}期</view>
+        <view class="date text-24 font-normal text-black">第{{ aId }}期</view>
         <text>{{
           item.createTime ? dayjs(item.createTime).format("MM-DD HH:mm:ss") : ""
         }}</text>
@@ -42,4 +42,14 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
+// SimHei 字体无法用原子类表达（uno.config.ts 未定义 SimHei-font 规则），补回 SCSS
+.user-card {
+  .num {
+    font-family: SimHei;
+  }
+
+  .item .user-time .date {
+    font-family: SimHei;
+  }
+}
 </style>

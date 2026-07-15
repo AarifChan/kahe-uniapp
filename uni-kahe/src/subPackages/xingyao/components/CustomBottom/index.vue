@@ -9,7 +9,7 @@
       <view class="btn_icon w-242 h-85 bg-[url(/static/kahe-202510/shine/blue.png)] bg-[length:100%_100%] bg-no-repeat flex justify-center items-center">
         <text class="theme-font text-36 font-normal text-black leading-48">{{ item === "award" ? "领取奖券" : "本期记录" }}</text>
       </view>
-      <view class="day SimHei-font text-26 font-normal text-black" :style="{ textShadow: '-2rpx -2rpx 0 #ffffff, 2rpx -2rpx 0 #ffffff, -2rpx 2rpx 0 #ffffff, 2rpx 2rpx 0 #ffffff' }">
+      <view class="day text-26 font-normal text-black" :style="{ textShadow: '-2rpx -2rpx 0 #ffffff, 2rpx -2rpx 0 #ffffff, -2rpx 2rpx 0 #ffffff, 2rpx 2rpx 0 #ffffff' }">
         {{
           item === "award"
             ? `今日全服剩${(info?.dailyLimit ?? 0) - (info?.todayReceived ?? 0)}张待领取`
@@ -43,4 +43,7 @@ const tapAward = (item: string) => {
 </script>
 
 <style lang="scss" scoped>
+.day {
+  font-family: SimHei;
+}
 </style>

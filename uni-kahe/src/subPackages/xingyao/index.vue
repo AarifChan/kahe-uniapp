@@ -5,10 +5,11 @@
       mode="scaleToFill"
       class="w-full h-full"
     />
-    <view class="absolute left-0 top-0 w-full h-full flex flex-col justify-between pb-130">
+    <view
+      class="absolute left-0 top-0 w-full h-full flex flex-1 flex-col justify-between pb-130"
+    >
       <image
         src="/static/kahe-202510/shine/title.png"
-        mode="scaleToFill"
         class="relative w-465 h-264 mx-auto"
       />
       <CustomNav @tap-nav="tapNav" :info="pageInfo" />
