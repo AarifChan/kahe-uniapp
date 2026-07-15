@@ -31,7 +31,7 @@
       <view class="pb-32">
         <options
           @did-tap-action="showModalType"
-          @did-tap-contact="showInGroupImage"
+          @did-tap-contact="showComplaintChannelImage"
         />
       </view>
     </scroll-view>
@@ -62,7 +62,7 @@ import Options from "./components/options.vue";
 import { eventBus } from "@/utils/event";
 import { getRechargePlanRequest, getUnreadNum } from "@/api";
 import type { RechargeModel } from "@/model";
-import { showInGroupImage } from "@/utils/tools";
+import { showInGroupImage, showComplaintChannelImage } from "@/utils/tools";
 import { useModal } from "@/composables/modal";
 const { modalShow, modalTitle, modalContent, showModalType } = useModal();
 import InfoModal from "@/components/modal/info/index.vue";

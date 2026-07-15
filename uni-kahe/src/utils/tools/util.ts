@@ -1,4 +1,5 @@
 import * as CryptoJS from "crypto-js";
+import { AppModule } from "@/store/modules/app";
 
 const toString = Object.prototype.toString;
 
@@ -8,11 +9,28 @@ export function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export const showInGroupImage = () => {
+const DEFAULT_IN_GROUP_IMAGE =
+  "/static/kahe-202510/jikaquan/jikaquan-contact.png";
+
+const previewSingleImage = (url: string) => {
   uni.previewImage({
-    current: "/static/kahe-202510/jikaquan/jikaquan-contact.png",
-    urls: ["/static/kahe-202510/jikaquan/jikaquan-contact.png"],
+    current: url,
+    urls: [url],
   });
+};
+
+/* 卡友福利群图片（优先使用后台配置） */
+export const showInGroupImage = () => {
+  previewSingleImage(
+    AppModule.appConfig.cardBenefitsGroupImg || DEFAULT_IN_GROUP_IMAGE
+  );
+};
+
+/* 投诉渠道图片（优先使用后台配置） */
+export const showComplaintChannelImage = () => {
+  previewSingleImage(
+    AppModule.appConfig.complaintChannelImg || DEFAULT_IN_GROUP_IMAGE
+  );
 };
 
 export function calculateMD5(inputNumber: number, length: number): string {

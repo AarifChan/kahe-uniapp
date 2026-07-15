@@ -9,6 +9,7 @@ onLaunch(() => {
   console.log("App Show");
   UserModule.preLogin();
   AppModule.getSystemInfo();
+  AppModule.getAppConfig();
   UserModule.getUserInfo();
 });
 onShow(() => {

@@ -9,6 +9,9 @@ import {
 import store from "@/store";
 
 import { GetStorageSync, SetStorageSync } from "@/utils/storage";
+import { getAppConfigRequest } from "@/api/app";
+import { RequestConfig } from "@/config";
+import type { AppConfigModel } from "@/model";
 export interface SystemInfoModel {
   statusBarHeight: number;
   topSafeAreaInsets: number;
@@ -47,6 +50,33 @@ class App extends VuexModule {
    */
   featureSmashRefundEnabled: boolean =
     GetStorageSync("featureSmashRefundEnabled") ?? false;
+
+  /** 应用配置（/app/config） */
+  appConfig: AppConfigModel = {
+    cardBenefitsGroupImg: "",
+    clientAuditVersion: "",
+    complaintChannelImg: "",
+    merchantComplaintImg: "",
+  };
+
+  /**
+   * 当前客户端是否处于审核版本
+   * - 审核期间可用此标志隐藏支付等敏感功能
+   */
+  get isAuditVersion(): boolean {
+    return (
+      !!this.appConfig.clientAuditVersion &&
+      this.appConfig.clientAuditVersion === RequestConfig.version
+    );
+  }
+
+  @Action
+  async getAppConfig() {
+    const res = await getAppConfigRequest();
+    if (res.code === 200 && res.data) {
+      this.context.commit("UPDATE_APP_CONFIG", res.data);
+    }
+  }
 
   @Action
   getSystemInfo() {
@@ -163,6 +193,11 @@ class App extends VuexModule {
   UPDATE_FEATURE_SMASH_REFUND_ENABLED(enabled: boolean) {
     this.featureSmashRefundEnabled = enabled;
     SetStorageSync("featureSmashRefundEnabled", enabled);
+  }
+
+  @Mutation
+  UPDATE_APP_CONFIG(config: AppConfigModel) {
+    this.appConfig = { ...this.appConfig, ...config };
   }
 }
 

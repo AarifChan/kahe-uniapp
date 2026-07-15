@@ -208,7 +208,9 @@ const handleClickQrCode = () => {
 };
 
 const handleClickComplain = () => {
-  const image = "/static/kahe-202510/ka-he/common/qrcode.png";
+  const image =
+    AppModule.appConfig.merchantComplaintImg ||
+    "/static/kahe-202510/ka-he/common/qrcode.png";
   uni.previewImage({
     current: image,
     urls: [image],
