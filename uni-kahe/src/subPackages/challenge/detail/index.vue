@@ -310,7 +310,7 @@ onShareAppMessage(() => {
   const id = detailId.value;
   const boxName = detail.value?.box?.name || "闯关挑战";
   const logo =
-    detail.value?.box?.logo || "https://cdn.richcw.cn/tycw-mp/kaju/share.png";
+    detail.value?.box?.logo || "https://cdn.kjkapai.com/tycw-mp/kaju/share.png";
   return {
     title: `【${boxName}】这个箱子快出货了，速来！`,
     path: `/subPackages/challenge/detail/index?id=${id}`,
@@ -322,7 +322,7 @@ onShareTimeline(() => {
   const id = detailId.value;
   const boxName = detail.value?.box?.name || "闯关挑战";
   const logo =
-    detail.value?.box?.logo || "https://cdn.richcw.cn/tycw-mp/kaju/share.png";
+    detail.value?.box?.logo || "https://cdn.kjkapai.com/tycw-mp/kaju/share.png";
   return {
     title: `【${boxName}】这个箱子快出货了，速来！`,
     path: `/subPackages/challenge/detail/index?id=${id}`,

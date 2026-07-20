@@ -381,7 +381,7 @@ const handleClickShare = () => {
     title: `${UserModule.userInfo.nickname}邀请您来助力免费得奖品！`,
     imageUrl:
       welfareDetails.value.logo ||
-      "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
+      "https://cdn.kjkapai.com/tycw-mp/kaju/share.png",
     path: `/subPackages/product/welfare-detail/index?aid=${aid.value}&obj=${UserModule.userInfo.uid}`,
   });
 };

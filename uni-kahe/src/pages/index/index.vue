@@ -43,14 +43,14 @@ const userInfo = computed(() => {
 onShareAppMessage(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
+    imageUrl: "https://cdn.kjkapai.com/tycw-mp/kaju/share.png",
     path: "/pages/welcome/index",
   };
 });
 onShareTimeline(() => {
   return {
     title: `${UserModule.userInfo?.nickname ?? ""}邀请你来抽取各种稀有卡牌！`,
-    imageUrl: "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
+    imageUrl: "https://cdn.kjkapai.com/tycw-mp/kaju/share.png",
     path: "/pages/welcome/index",
   };
 });

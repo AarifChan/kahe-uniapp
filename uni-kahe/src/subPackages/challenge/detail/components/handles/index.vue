@@ -195,7 +195,7 @@ const handleShare = () => {
     title: `【${props.product?.box.name}】这个箱子快出货了，速来！`,
     imageUrl:
       props.product?.box?.logo ||
-      "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
+      "https://cdn.kjkapai.com/tycw-mp/kaju/share.png",
     path: sharePath,
   });
 };

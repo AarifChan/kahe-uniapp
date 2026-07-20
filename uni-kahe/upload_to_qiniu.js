@@ -6,7 +6,7 @@ const qiniu = require("qiniu");
 const accessKey = "X9wmuIdDWvpQU6bpJMxNyRywn8ZGaJ-klfQF-85F";
 const secretKey = "nvrdxTMtSAFdD4nhaeDPYzxjFs5DOtolGhAwkQQJ";
 const bucket = "kahe-blindbox";
-const cdnDomain = "https://cdn.richcw.cn";
+const cdnDomain = "https://cdn.kjkapai.com";
 
 const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 const config = new qiniu.conf.Config();

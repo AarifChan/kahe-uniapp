@@ -185,7 +185,7 @@ const handleShare = () => {
   shareWeixinMiniProgramCard({
     title: `【${props.product?.title}】这个箱子快出货了，速来！`,
     imageUrl:
-      props.product?.image || "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
+      props.product?.image || "https://cdn.kjkapai.com/tycw-mp/kaju/share.png",
     path: sharePath,
   });
 };

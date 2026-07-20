@@ -147,12 +147,22 @@
       </view>
       <view class="flex flex-row items-center w-full justify-center">
         <view class="p-16" @tap.stop="checked = !checked">
-          <view class="relative m-0 mx-12 p-2 border border-[#999999] flex flex-row items-center justify-center rounded-full"
+          <view
+            class="mx-12 flex flex-row items-center justify-center"
+            :style="{
+              width: '32rpx',
+              height: '32rpx',
+              boxSizing: 'border-box',
+              borderRadius: '50%',
+              border: checked ? 'none' : '2rpx solid #999999',
+              background: checked ? '#4a8edb' : 'transparent',
+            }"
           >
-            <view
-              class="w-26 h-26 rounded-26"
-              :style="{ background: checked ? '#4a8edb' : 'transparent' }"
-            />
+            <text
+              v-if="checked"
+              style="color: #ffffff; font-size: 22rpx; line-height: 32rpx"
+              >✓</text
+            >
           </view>
         </view>
         <view class="text-24 text-black leading-58"

@@ -50,22 +50,23 @@ const ENV_FILE_MAP = {
   prod: ".env.production",
 };
 const ENV_SELECTOR = process.env.ENVIRONMENT || "dev";
-loadEnvFile(path.join(PROJECT_ROOT, ENV_FILE_MAP[ENV_SELECTOR] || ".env.development"));
-
-
+loadEnvFile(
+  path.join(PROJECT_ROOT, ENV_FILE_MAP[ENV_SELECTOR] || ".env.development")
+);
 
 // 环境配置
 const ENV_CONFIGS = {
   dev: {
     name: "development",
-    apiBaseUrl: process.env.DEV_API_BASEURL || "https://kahe-tapi.85gui7.com/api",
+    apiBaseUrl:
+      process.env.DEV_API_BASEURL || "https://kahe-tapi.85gui7.com/api",
     // 微信小程序测试号 appid（需替换为实际值）
     mpWeixinAppid: process.env.DEV_MP_WEIXIN_APPID || "wxa59d33960bdab663",
     // 支付宝小程序测试号 appid
     mpAlipayAppid: process.env.DEV_MP_ALIPAY_APPID || "",
     qiniu: {
       bucket: process.env.QINIU_BUCKET || "kahe-blindbox",
-      cdnDomain: process.env.QINIU_CDN_DOMAIN || "https://cdn.richcw.cn",
+      cdnDomain: process.env.QINIU_CDN_DOMAIN || "https://cdn.kjkapai.com",
       folder: "tycw-mp",
     },
     upload: {
@@ -84,12 +85,13 @@ const ENV_CONFIGS = {
   },
   test: {
     name: "test",
-    apiBaseUrl: process.env.TEST_API_BASEURL || "https://kahe-tapi.85gui7.com/api",
+    apiBaseUrl:
+      process.env.TEST_API_BASEURL || "https://kahe-tapi.85gui7.com/api",
     mpWeixinAppid: process.env.TEST_MP_WEIXIN_APPID || "wxa59d33960bdab663",
     mpAlipayAppid: process.env.TEST_MP_ALIPAY_APPID || "",
     qiniu: {
       bucket: process.env.QINIU_BUCKET || "kahe-blindbox",
-      cdnDomain: process.env.QINIU_CDN_DOMAIN || "https://cdn.richcw.cn",
+      cdnDomain: process.env.QINIU_CDN_DOMAIN || "https://cdn.kjkapai.com",
       folder: "tycw-mp",
     },
     upload: {
@@ -107,12 +109,13 @@ const ENV_CONFIGS = {
   },
   prod: {
     name: "production",
-    apiBaseUrl: process.env.PROD_API_BASEURL || "https://kahe-api.85gui7.com/api",
+    apiBaseUrl:
+      process.env.PROD_API_BASEURL || "https://kahe-api.85gui7.com/api",
     mpWeixinAppid: process.env.PROD_MP_WEIXIN_APPID || "wxa59d33960bdab663",
     mpAlipayAppid: process.env.PROD_MP_ALIPAY_APPID || "",
     qiniu: {
       bucket: process.env.QINIU_BUCKET || "kahe-blindbox",
-      cdnDomain: process.env.QINIU_CDN_DOMAIN || "https://cdn.richcw.cn",
+      cdnDomain: process.env.QINIU_CDN_DOMAIN || "https://cdn.kjkapai.com",
       folder: "tycw-mp",
     },
     upload: {
@@ -163,7 +166,9 @@ function getConfig(env) {
 function getPlatformConfig(platform) {
   const config = PLATFORM_CONFIGS[platform];
   if (!config) {
-    throw new Error(`Unknown platform: ${platform}. Expected: mp-weixin, mp-alipay`);
+    throw new Error(
+      `Unknown platform: ${platform}. Expected: mp-weixin, mp-alipay`
+    );
   }
   return config;
 }

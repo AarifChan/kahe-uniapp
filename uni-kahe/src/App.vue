@@ -94,7 +94,7 @@ scroll-view {
 
 @font-face {
   font-family: "YouSheBiaoTiHei";
-  src: url("https://cdn.richcw.cn/sources/YouSheBiaoTiHei.ttf");
+  src: url("https://cdn.kjkapai.com/sources/YouSheBiaoTiHei.ttf");
 }
 
 @font-face {
@@ -118,7 +118,7 @@ scroll-view {
 
 @font-face {
   font-family: "AlibabaPuHuiTi";
-  src: url("https://cdn.richcw.cn/sources/AlibabaPuHuiTi3.0-105-Heavy.ttf");
+  src: url("https://cdn.kjkapai.com/sources/AlibabaPuHuiTi3.0-105-Heavy.ttf");
 }
 
 /* 全局动画定义 - 挑战游戏摇晃动画 */

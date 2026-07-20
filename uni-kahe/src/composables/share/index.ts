@@ -10,7 +10,7 @@ export interface WeixinMiniProgramShareOptions {
 const DEFAULT_MINI_PROGRAM_ID = "gh_4a7522ad6b7a";
 const DEFAULT_WEB_URL = "https://app.91tcg.com";
 // Use a tiny fixed image as emergency thumbnail fallback for WeChat.
-const DEFAULT_FALLBACK_IMAGE = "https://cdn.richcw.cn/tycw-mp/kaju/share.png";
+const DEFAULT_FALLBACK_IMAGE = "https://cdn.kjkapai.com/tycw-mp/kaju/share.png";
 const DEFAULT_SCENE: "WXSceneSession" | "WXSceneTimeline" = "WXSceneSession";
 const DEFAULT_MINI_PROGRAM_TYPE: 0 | 1 | 2 = 0;
 

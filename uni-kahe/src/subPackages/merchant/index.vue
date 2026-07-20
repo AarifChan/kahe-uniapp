@@ -228,7 +228,7 @@ const handleClickShare = () => {
     imageUrl:
       detail.value.icon ||
       detail.value.logo ||
-      "https://cdn.richcw.cn/tycw-mp/kaju/share.png",
+      "https://cdn.kjkapai.com/tycw-mp/kaju/share.png",
     path: `/subPackages/merchant/index?merchantId=${id}`,
   });
 };
