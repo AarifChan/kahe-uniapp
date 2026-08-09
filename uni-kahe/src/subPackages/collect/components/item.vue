@@ -54,6 +54,20 @@
           </view>
           <view
             v-if="!isTimeout"
+            class="collect-item-content-info-btn absolute bottom-48 right-0 w-111 h-41"
+            @tap.stop="emits('didExchangeItem', item)"
+          >
+            <image
+              class="collect-item-content-info-btn-bg w-full h-full"
+              src="/static/kahe-202510/collect/btn1.png"
+            />
+            <view
+              class="collect-item-content-info-btn-title absolute left-0 top-0 w-full leading-41 text-center font-normal text-22 text-white text-shadow-[-1px_-1px_0_#b94905,1px_-1px_0_#b94905,-1px_1px_0_#b94905,1px_1px_0_#b94905] theme-font"
+              >去兑换</view
+            >
+          </view>
+          <view
+            v-if="!isTimeout"
             class="collect-item-content-info-btn absolute -bottom-8 right-0 w-111 h-41"
             @tap.stop="emits('didClickItem', item)"
           >
