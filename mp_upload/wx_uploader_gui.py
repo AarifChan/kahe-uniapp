@@ -329,14 +329,17 @@ def read_env_file(mode: str) -> dict:
     return env_vars
 
 
-def build_mp_weixin(mode: str = "production") -> bool:
+def build_mp_weixin(mode: str = "production", audit: bool = False) -> bool:
     """
     编译微信小程序
     mode: "production" 或 "development"
+    audit: True 表示审核版本（VITE_APP_AUDIT=true，隐藏部分功能、tabBar 仅保留 首页/盒柜/我的）
     返回: True 表示成功，False 表示失败
     """
     env_file = ".env.production" if mode == "production" else ".env.development"
     mode_text = "生产环境" if mode == "production" else "测试环境"
+    if audit:
+        mode_text += "·审核版"
 
     # 读取环境配置
     env_vars = read_env_file(mode)
@@ -352,14 +355,18 @@ def build_mp_weixin(mode: str = "production") -> bool:
     print(f"VITE_APP_ENV:        {app_env}")
     print(f"VITE_APP_BASEURL:    {base_url}")
     print(f"VITE_APP_CDN_FOLDER: {cdn_folder}")
+    print(f"VITE_APP_AUDIT:      {'true' if audit else 'false'}")
     print("=" * 60)
     print("正在切换到 Node 18...")
 
     try:
+        # 环境变量前缀会传递给 yarn 的 pre 钩子（apply-audit-tabbar.js），
+        # 由钩子按 VITE_APP_AUDIT 自动切换 pages.json 的 tabBar
+        audit_prefix = "VITE_APP_AUDIT=true " if audit else ""
         if mode == "development":
-            build_cmd = "yarn build:mp-weixin-test"
+            build_cmd = f"{audit_prefix}yarn build:mp-weixin-test"
         else:
-            build_cmd = "yarn build:mp-weixin"
+            build_cmd = f"{audit_prefix}yarn build:mp-weixin"
 
         # 使用 bash 加载 nvm 并切换到 node 18，然后执行 yarn 编译命令
         # nvm 是 shell 函数，需要先 source nvm.sh
@@ -1013,6 +1020,7 @@ class WxUploaderGUI:
         self.key_path_var = tk.StringVar()
         self.plat_var = tk.StringVar()
         self.build_mode_var = tk.StringVar(value="production")
+        self.audit_var = tk.BooleanVar(value=False)
         self.use_env_plat_var = tk.BooleanVar(value=True)
         self.compress_png_strict_var = tk.BooleanVar(
             value=self.config.get("compress_png_strict", True)
@@ -1101,6 +1109,19 @@ class WxUploaderGUI:
         ttk.Radiobutton(
             opt_row1, text="测试环境", value="development", variable=self.build_mode_var
         ).pack(side="left", padx=4)
+        self.audit_check = ttk.Checkbutton(
+            opt_row1,
+            text="审核版本",
+            variable=self.audit_var,
+        )
+        self.audit_check.pack(side="left", padx=(12, 0))
+        tk.Label(
+            opt_row1,
+            text="隐藏部分功能/精简tabBar",
+            bg=COLORS["card"],
+            fg=COLORS["muted"],
+            font=(FONTS["base"][0], FONT_SMALL),
+        ).pack(side="left", padx=(4, 0))
         self.qiniu_check = ttk.Checkbutton(
             opt_row1,
             text="上传 CDN",
@@ -1543,7 +1564,10 @@ class WxUploaderGUI:
             return
 
         build_mode = self.build_mode_var.get()
+        audit = bool(self.audit_var.get())
         mode_text = "生产环境" if build_mode == "production" else "测试环境"
+        if audit:
+            mode_text += "·审核版"
         remote_path = self.get_remote_dir(actual_plat_name)
         remote_host = self.config.get("remote_host", "jermy")
 
@@ -1582,6 +1606,7 @@ class WxUploaderGUI:
             "actual_plat_name": actual_plat_name,
             "appid": appid,
             "build_mode": build_mode,
+            "audit": audit,
             "mode_text": mode_text,
             "remote_path": remote_path,
             "remote_host": remote_host,
@@ -1594,7 +1619,7 @@ class WxUploaderGUI:
 
     def _publish_work(self, ctx):
         self._set_status("正在编译…")
-        if not build_mp_weixin(ctx["build_mode"]):
+        if not build_mp_weixin(ctx["build_mode"], audit=ctx["audit"]):
             raise RuntimeError("编译失败，请检查上方日志")
 
         self._set_status("正在处理 CDN…")
@@ -1644,7 +1669,10 @@ class WxUploaderGUI:
         if self._running:
             return
         build_mode = self.build_mode_var.get()
+        audit = bool(self.audit_var.get())
         mode_text = "生产环境" if build_mode == "production" else "测试环境"
+        if audit:
+            mode_text += "·审核版"
         env_vars = read_env_file(build_mode)
         base_url = env_vars.get("VITE_APP_BASEURL", "未配置")
         platform_env = env_vars.get("VITE_APP_PLATFORM", "未配置")
@@ -1665,6 +1693,7 @@ class WxUploaderGUI:
 
         ctx = {
             "build_mode": build_mode,
+            "audit": audit,
             "mode_text": mode_text,
             "base_url": base_url,
             "platform_env": platform_env,
@@ -1675,7 +1704,7 @@ class WxUploaderGUI:
 
     def _local_work(self, ctx):
         self._set_status("正在编译…")
-        if not build_mp_weixin(ctx["build_mode"]):
+        if not build_mp_weixin(ctx["build_mode"], audit=ctx["audit"]):
             raise RuntimeError("编译失败，请检查上方日志")
 
         self._set_status("正在处理 CDN…")

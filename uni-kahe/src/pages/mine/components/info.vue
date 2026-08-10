@@ -30,7 +30,7 @@
             <image class="w-23 h-23 ml-12" src="/static/kaju/mine/copy.png" />
           </view>
 
-          <view class="flex flex-row items-center mt-12">
+          <view v-if="!isAuditVersion" class="flex flex-row items-center mt-12">
             <image
               v-if="userInfo.uid"
               class="w-50 h-50"
@@ -62,6 +62,7 @@
           <view class="text-20 text-[#000000]">联系客服</view>
         </view>
         <view
+          v-if="!isAuditVersion"
           class="relative w-162 h-70 flex-center mt-20"
           @tap.stop="emits('didClickVip')"
         >
@@ -85,6 +86,7 @@ import DecorateAvatar from "@/components/custom/DecorateAvatar/index.vue";
 import type { PropType } from "vue";
 import { ref, computed } from "vue";
 import { UserModule } from "@/store/modules/user";
+import { isAuditVersion } from "@/config";
 
 interface UserInfo {
   avatar: string;

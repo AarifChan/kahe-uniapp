@@ -22,8 +22,8 @@
     <bulletinar />
     <view class="relative w-full -mt-80">
       <view class="absolute w-full top-100 left-0 flex flex-col">
-        <items />
-        <recommend :group-list="groupBuyList" />
+        <items v-if="!isAuditVersion" />
+        <recommend v-if="!isAuditVersion" :group-list="groupBuyList" />
         <tab
           id="currentTab"
           v-model:current="current"
@@ -74,6 +74,7 @@ import Banner from "./components/banner/index.vue";
 import Recommend from "@/pages/home/components/recommend/index.vue";
 import Empty from "@/components/empty/index.vue";
 import NavBar from "@/components/navBar/index.vue";
+import { isAuditVersion } from "@/config";
 
 import { useMerchant } from "@/pages/merchant/index";
 import { AppModule } from "@/store/modules/app";
@@ -127,7 +128,9 @@ onMounted(async () => {
   logger.info("首页加载开始");
   const startTime = Date.now();
 
-  current.value = AppModule.productTabIndex;
+  current.value = isAuditVersion
+    ? Math.min(AppModule.productTabIndex, goodsTabList.value.length - 1)
+    : AppModule.productTabIndex;
   getGroupBuyListByHot();
   await getGoodsList(goodsTabList.value[current.value].value);
   await getHomeList();

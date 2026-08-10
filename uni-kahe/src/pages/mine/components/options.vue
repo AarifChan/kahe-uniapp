@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { showInGroupImage } from "@/utils/tools";
 import { AppModule } from "@/store/modules/app";
+import { isAuditVersion } from "@/config";
 
 const emits = defineEmits(["didTapAction", "didTapContact"]);
 enum ItemType {
@@ -27,7 +28,7 @@ interface ItemModel {
   title: string;
   type: ItemType;
 }
-const itemList = ref([
+const fullItemList: ItemModel[] = [
   {
     icon: "/static/kaju/mine/option1.png",
     title: "用户协议",
@@ -72,7 +73,20 @@ const itemList = ref([
     title: "入驻了解",
     type: ItemType.rollIn,
   },
-]);
+];
+
+// 审核版本隐藏的服务项：特惠礼包、排行奖励、宝箱、入驻了解
+const auditHiddenTypes = [
+  ItemType.giftPack,
+  ItemType.rank,
+  ItemType.chest,
+  ItemType.rollIn,
+];
+const itemList = ref(
+  isAuditVersion
+    ? fullItemList.filter((item) => !auditHiddenTypes.includes(item.type))
+    : fullItemList
+);
 
 const handleClick = (item: ItemModel) => {
   console.log("handleClick:", item);

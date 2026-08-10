@@ -41,7 +41,7 @@
       :content="modalContent"
     />
 
-    <recharge v-model:show="rechargeShow" :list="rechargeList" />
+    <recharge v-if="!isAuditVersion" v-model:show="rechargeShow" :list="rechargeList" />
     <InfoModal v-model:show="infoShow" />
   </view>
 </template>
@@ -66,6 +66,7 @@ import { showInGroupImage, showComplaintChannelImage } from "@/utils/tools";
 import { useModal } from "@/composables/modal";
 const { modalShow, modalTitle, modalContent, showModalType } = useModal();
 import InfoModal from "@/components/modal/info/index.vue";
+import { isAuditVersion } from "@/config";
 import { onShow } from "@dcloudio/uni-app";
 import { ShowToast } from "@/utils";
 
@@ -172,6 +173,9 @@ const handleClickOther = async (sType: string) => {
   }
   switch (sType) {
     case "money": {
+      if (isAuditVersion) {
+        break;
+      }
       const resp = await getRechargePlanRequest();
       if (resp.code === 200 && resp.data.length > 0) {
         rechargeList.value = resp.data;

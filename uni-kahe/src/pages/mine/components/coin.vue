@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { isAuditVersion } from "@/config";
+
 defineProps({
   momey: {
     default: 0,
@@ -32,6 +34,7 @@ const emits = defineEmits(["didClickItem"]);
         <view class="text-22 text-[#3b1900]">无门槛抵扣券</view>
       </view>
       <view
+        v-if="!isAuditVersion"
         class="flex flex-col items-center"
         @tap.stop="emits('didClickItem', 'integral')"
       >

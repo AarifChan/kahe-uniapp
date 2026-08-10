@@ -19,6 +19,7 @@ import {
 } from "@/utils/tools/image";
 import { formatPrice, isValidURL } from "@/utils/tools";
 import { AppModule } from "@/store/modules/app";
+import { isAuditVersion } from "@/config";
 import item from "@/subPackages/product/welfare-detail/components/item.vue";
 
 const homeTabList = [
@@ -174,7 +175,12 @@ export function useGoods() {
 
   const machineTabList = ref(limitTabList);
 
-  const goodsTabList = ref(homeTabList);
+  // 审核版本仅保留 一番赏/无限赏 两个 tab
+  const goodsTabList = ref(
+    isAuditVersion
+      ? homeTabList.filter((item) => [1, 3].includes(item.value))
+      : homeTabList
+  );
 
   /* 获取盲盒参数 */
   const goodsParams = ref({
