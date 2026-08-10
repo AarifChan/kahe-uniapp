@@ -30,12 +30,21 @@
             class="collect-item-content-info-title font-normal text-26 text-[#000000] leading-30 text-ellipsis-2"
             >{{ item.name }}</view
           >
-          <view
-            class="collect-item-content-info-subTitle bg-[rgba(255,255,255,0.48)] rounded-4 py-2 px-8 font-normal text-20 text-[#000000] flex flex-row"
-            style="width: max-content"
-          >
-            <view style="color: #000000">余</view>
-            <view style="color: #0070bf">{{ item.total - item.sales }}</view>
+          <view class="collect-item-content-info-subTitle flex flex-row">
+            <view
+              class="bg-[rgba(255,255,255,0.48)] rounded-4 py-2 px-8 font-normal text-20 text-[#000000] flex flex-row"
+              style="width: max-content"
+            >
+              <view style="color: #000000">余</view>
+              <view style="color: #0070bf">{{ item.total - item.sales }}</view>
+            </view>
+            <view
+              class="bg-[rgba(255,255,255,0.48)] rounded-4 py-2 px-8 ml-8 font-normal text-20 text-[#000000] flex flex-row"
+              style="width: max-content"
+            >
+              <view style="color: #0070bf">{{ item.price }}</view>
+              <view style="color: #000000">点券</view>
+            </view>
           </view>
           <view class="collect-item-content-info-progress mt-4 flex flex-row items-center"
           >

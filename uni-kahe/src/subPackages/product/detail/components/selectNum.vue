@@ -2,7 +2,10 @@
   <view class="box-container relative w-full h-screen">
     <scroll-view
       class="selectNum w-full flex flex-col box-border"
-      :style="{ padding: '16px 0', height: 'calc(100vh - env(safe-area-inset-bottom) - 100rpx)' }"
+      :style="{
+        padding: '16px 0',
+        height: 'calc(100vh - env(safe-area-inset-bottom) - 100rpx)',
+      }"
       :scroll-y="true"
       @scrolltolower="emits('scrollToLower')"
     >
@@ -16,7 +19,14 @@
       />
       <merchant :product="product" />
       <InGroup @tap.stop="emits('didClickRemark')" :content="product.remark" />
-      <view class="selectNum-content-goods box-border relative grid gap-30 mx-20 my-16 p-32 bg-[#fffbef] overflow-hidden shadow-[0rpx_3rpx_7rpx_0rpx_#d9be86] rounded-10" :style="{ width: 'calc(100% - 40rpx)', gridTemplateColumns: 'repeat(auto-fill, minmax(calc((100% - 60rpx) / 3), 1fr))' }">
+      <view
+        class="selectNum-content-goods box-border relative grid gap-30 mx-20 my-16 p-32 bg-[#fffbef] overflow-hidden shadow-[0rpx_3rpx_7rpx_0rpx_#d9be86] rounded-10"
+        :style="{
+          width: 'calc(100% - 40rpx)',
+          gridTemplateColumns:
+            'repeat(auto-fill, minmax(calc((100% - 60rpx) / 3), 1fr))',
+        }"
+      >
         <goods-item
           class="selectNum-content-goods-item inline-block w-full"
           :is-select="true"
@@ -28,8 +38,13 @@
         />
       </view>
 
-      <view class="selectNum-tab w-full box-border flex flex-row items-center justify-evenly gap-40 py-8 px-20">
-        <view class="selectNum-tab-item relative w-309 aspect-ratio-[309/106]" @tap.stop="didClickTabItem(0)">
+      <view
+        class="selectNum-tab w-full box-border flex flex-row items-center justify-evenly gap-40 py-8 px-20"
+      >
+        <view
+          class="selectNum-tab-item relative w-309 aspect-ratio-[309/106]"
+          @tap.stop="didClickTabItem(0)"
+        >
           <image
             class="selectNum-tab-item-bg relative w-full h-full"
             :src="
@@ -38,10 +53,16 @@
                 : '/static/kahe-202510/ka-he/product/tab-disable.png'
             "
           />
-          <view class="selectNum-tab-item-content absolute left-0 top-0 w-full h-full flex flex-row items-center justify-center">
+          <view
+            class="selectNum-tab-item-content absolute left-0 top-0 w-full h-full flex flex-row items-center justify-center"
+          >
             <text
               class="theme-font selectNum-tab-item-title text-40 font-normal"
-              :style="{ color: currentTab === 0 ? '#fb7f3c' : '#969696', textShadow: '-3rpx -3rpx 0 #ffffff, 3rpx -3rpx 0 #ffffff, -3rpx 3rpx 0 #ffffff, 3rpx 3rpx 0 #ffffff' }"
+              :style="{
+                color: currentTab === 0 ? '#fb7f3c' : '#969696',
+                textShadow:
+                  '-3rpx -3rpx 0 #ffffff, 3rpx -3rpx 0 #ffffff, -3rpx 3rpx 0 #ffffff, 3rpx 3rpx 0 #ffffff',
+              }"
               >{{ product.type === 4 ? "赏品" : "赏品一览" }}</text
             >
           </view>
@@ -58,7 +79,9 @@
                 : '/static/kahe-202510/ka-he/product/tab-disable.png'
             "
           />
-          <view class="selectNum-tab-item-content absolute left-0 top-0 w-full h-full flex flex-row items-center justify-center">
+          <view
+            class="selectNum-tab-item-content absolute left-0 top-0 w-full h-full flex flex-row items-center justify-center"
+          >
             <text
               class="theme-font selectNum-tab-item-title text-40 font-normal"
               :style="{
@@ -66,7 +89,8 @@
                   currentTab === (product.type === 4 ? 2 : 1)
                     ? '#fb7f3c'
                     : '#969696',
-                textShadow: '-3rpx -3rpx 0 #ffffff, 3rpx -3rpx 0 #ffffff, -3rpx 3rpx 0 #ffffff, 3rpx 3rpx 0 #ffffff',
+                textShadow:
+                  '-3rpx -3rpx 0 #ffffff, 3rpx -3rpx 0 #ffffff, -3rpx 3rpx 0 #ffffff, 3rpx 3rpx 0 #ffffff',
               }"
               >{{ product.type === 4 ? "购买记录" : "抽赏记录" }}</text
             >
@@ -85,41 +109,71 @@
                 : '/static/kahe-202510/ka-he/product/tab-disable.png'
             "
           />
-          <view class="selectNum-tab-item-content absolute left-0 top-0 w-full h-full flex flex-row items-center justify-center">
+          <view
+            class="selectNum-tab-item-content absolute left-0 top-0 w-full h-full flex flex-row items-center justify-center"
+          >
             <text
               class="theme-font selectNum-tab-item-title text-40 font-normal"
-              :style="{ color: currentTab === 1 ? '#fb7f3c' : '#969696', textShadow: '-3rpx -3rpx 0 #ffffff, 3rpx -3rpx 0 #ffffff, -3rpx 3rpx 0 #ffffff, 3rpx 3rpx 0 #ffffff' }"
+              :style="{
+                color: currentTab === 1 ? '#fb7f3c' : '#969696',
+                textShadow:
+                  '-3rpx -3rpx 0 #ffffff, 3rpx -3rpx 0 #ffffff, -3rpx 3rpx 0 #ffffff, 3rpx 3rpx 0 #ffffff',
+              }"
               >结果</text
             >
           </view>
         </view>
       </view>
-      <view class="selectNum-content box-border mx-20 my-8 p-21 bg-[#fffbef] overflow-hidden shadow-[0rpx_3rpx_7rpx_0rpx_#d9be86] rounded-10" :style="{ width: 'calc(100% - 40rpx)' }" v-if="currentTab === 0">
+      <view
+        class="selectNum-content box-border mx-20 my-8 p-21 bg-[#fffbef] overflow-hidden shadow-[0rpx_3rpx_7rpx_0rpx_#d9be86] rounded-10"
+        :style="{ width: 'calc(100% - 40rpx)' }"
+        v-if="currentTab === 0"
+      >
         <view class="selectNum-content-top relative w-full">
-          <view class="selectNum-content-top-info w-full flex flex-row justify-between items-center">
-            <view class="selectNum-content-top-info-left flex flex-row items-center">
-              <text class="selectNum-content-top-info-left-title theme-font mx-20 text-24 font-normal text-black"
+          <view
+            class="selectNum-content-top-info w-full flex flex-row justify-between items-center"
+          >
+            <view
+              class="selectNum-content-top-info-left flex flex-row items-center"
+            >
+              <text
+                class="selectNum-content-top-info-left-title theme-font mx-20 text-24 font-normal text-black"
                 >指定福袋</text
               >
               <image
                 class="selectNum-content-top-info-left-box w-36 h-36"
-                src="/static/kahe-202510/jikaquan/box-normal.png"
+                src="/static/kahe-202510/jikaquan/normal-box.png"
               />
-              <text class="selectNum-content-top-info-left-tips ml-5 mr-28 text-16 text-black">可选</text>
+              <text
+                class="selectNum-content-top-info-left-tips ml-5 mr-28 text-16 text-black"
+                >可选</text
+              >
               <image
                 class="selectNum-content-top-info-left-box w-36 h-36"
                 src="/static/kahe-202510/ka-he/product/box-sell.png"
               />
-              <text class="selectNum-content-top-info-left-tips ml-5 mr-28 text-16 text-black">已售</text>
+              <text
+                class="selectNum-content-top-info-left-tips ml-5 mr-28 text-16 text-black"
+                >已售</text
+              >
               <image
                 class="selectNum-content-top-info-left-box w-36 h-36"
                 src="/static/kahe-202510/ka-he/product/box-lock.png"
               />
-              <text class="selectNum-content-top-info-left-tips ml-5 mr-28 text-16 text-black">上锁</text>
+              <text
+                class="selectNum-content-top-info-left-tips ml-5 mr-28 text-16 text-black"
+                >上锁</text
+              >
             </view>
           </view>
         </view>
-        <view class="selectNum-content-box box-border w-full grid gap-20 mt-21" :style="{ gridTemplateColumns: 'repeat(auto-fill, minmax(calc((100% - 7 * 20rpx) / 8), 1fr))' }">
+        <view
+          class="selectNum-content-box box-border w-full grid gap-20 mt-21"
+          :style="{
+            gridTemplateColumns:
+              'repeat(auto-fill, minmax(calc((100% - 7 * 20rpx) / 8), 1fr))',
+          }"
+        >
           <view
             class="selectNum-content-box-item relative aspect-ratio-[1/1] text-white"
             v-for="(item, index) in boxList"
@@ -128,15 +182,21 @@
           >
             <image
               class="selectNum-content-box-item-img w-full h-full"
-              :src="`/static/kahe-202510/ka-he/product/box-${item.state === 1 ? 'normal' : item.state === 0 ? 'sell' : 'lock'}.png`"
+              :src="`/static/kahe-202510/ka-he/product/box-${item.state === 1 ? 'kaju' : item.state === 0 ? 'sell' : 'lock'}.png`"
             />
-            <view class="selectNum-content-box-item-title absolute left-10 top-5 font-normal text-24 text-white">
+            <view
+              class="selectNum-content-box-item-title absolute left-10 top-5 font-normal text-24 text-white"
+            >
               {{ item.title }}</view
             >
           </view>
         </view>
       </view>
-      <view class="selectNum-content box-border mx-20 my-8 p-21 bg-[#fffbef] overflow-hidden shadow-[0rpx_3rpx_7rpx_0rpx_#d9be86] rounded-10" :style="{ width: 'calc(100% - 40rpx)' }" v-if="currentTab === 1">
+      <view
+        class="selectNum-content box-border mx-20 my-8 p-21 bg-[#fffbef] overflow-hidden shadow-[0rpx_3rpx_7rpx_0rpx_#d9be86] rounded-10"
+        :style="{ width: 'calc(100% - 40rpx)' }"
+        v-if="currentTab === 1"
+      >
         <view class="selectNum-content-records box-border w-full">
           <record
             :record-list="recordList"
@@ -147,7 +207,11 @@
           />
         </view>
       </view>
-      <view class="selectNum-content box-border mx-20 my-8 p-21 bg-[#fffbef] overflow-hidden shadow-[0rpx_3rpx_7rpx_0rpx_#d9be86] rounded-10" :style="{ width: 'calc(100% - 40rpx)' }" v-if="currentTab === 2">
+      <view
+        class="selectNum-content box-border mx-20 my-8 p-21 bg-[#fffbef] overflow-hidden shadow-[0rpx_3rpx_7rpx_0rpx_#d9be86] rounded-10"
+        :style="{ width: 'calc(100% - 40rpx)' }"
+        v-if="currentTab === 2"
+      >
         <view class="selectNum-content-records box-border w-full">
           <record
             :record-list="orderList"
@@ -160,13 +224,20 @@
         </view>
       </view>
     </scroll-view>
-    <view class="box-container-bottom fixed bottom-0 left-0 w-750 flex flex-col">
+    <view
+      class="box-container-bottom fixed bottom-0 left-0 w-750 flex flex-col"
+    >
       <image
         class="box-container-bottom-bg w-750 h-164"
         src="/static/kahe-202510/ka-he/welfare/bottom-bg.png"
       />
-      <view class="box-container-bottom-content absolute left-0 bottom-32 w-full px-32 box-border flex flex-row items-center justify-between" :style="{ padding: '0 32rpx' }">
-        <view class="box-container-bottom-left flex flex-row items-center justify-start font-normal text-28 text-black">
+      <view
+        class="box-container-bottom-content absolute left-0 bottom-32 w-full px-32 box-border flex flex-row items-center justify-between"
+        :style="{ padding: '0 32rpx' }"
+      >
+        <view
+          class="box-container-bottom-left flex flex-row items-center justify-start font-normal text-28 text-black"
+        >
           已选<text style="color: red">{{ boxSelect.length }}</text
           >个 共<text style="color: red">{{
             (boxSelect.length * product.price).toFixed(1)
@@ -184,7 +255,10 @@
             />
             <text
               class="box-container-bottom-right-item-text theme-font absolute left-0 top-16 w-full text-center text-40 font-normal text-white leading-36"
-              :style="{ textShadow: '-1px -1px 0 #0F2268, 1px -1px 0 #0F2268, -1px 1px 0 #0F2268, 1px 1px 0 #0F2268' }"
+              :style="{
+                textShadow:
+                  '-1px -1px 0 #0F2268, 1px -1px 0 #0F2268, -1px 1px 0 #0F2268, 1px 1px 0 #0F2268',
+              }"
               >换 箱</text
             >
           </view>
@@ -198,7 +272,10 @@
             />
             <text
               class="box-container-bottom-right-item-text theme-font absolute left-0 top-16 w-full text-center text-40 font-normal text-white leading-36"
-              :style="{ textShadow: '-1px -1px 0 #0F2268, 1px -1px 0 #0F2268, -1px 1px 0 #0F2268, 1px 1px 0 #0F2268' }"
+              :style="{
+                textShadow:
+                  '-1px -1px 0 #0F2268, 1px -1px 0 #0F2268, -1px 1px 0 #0F2268, 1px 1px 0 #0F2268',
+              }"
               >购 买</text
             >
 
@@ -210,7 +287,9 @@
                 class="box-container-bottom-right-item-queue-bg w-full h-full"
                 src="/static/kahe-202510/product/lock-queue.png"
               />
-              <text class="box-container-bottom-right-item-queue-title absolute top-8 left-16 text-20 font-normal text-black" :style="{ width: 'calc(100% - 10rpx)' }"
+              <text
+                class="box-container-bottom-right-item-queue-title absolute top-8 left-16 text-20 font-normal text-black"
+                :style="{ width: 'calc(100% - 10rpx)' }"
                 >每发锁{{ product.queueLockTime }}秒</text
               >
             </view>
@@ -354,5 +433,4 @@ const didClickTabItem = (index: number) => {
   emits("tabDidChange", index);
 };
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
