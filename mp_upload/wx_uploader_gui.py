@@ -329,11 +329,15 @@ def read_env_file(mode: str) -> dict:
     return env_vars
 
 
-def build_mp_weixin(mode: str = "production", audit: bool = False) -> bool:
+def build_mp_weixin(
+    mode: str = "production", audit: bool = False, platform: str = ""
+) -> bool:
     """
     编译微信小程序
     mode: "production" 或 "development"
     audit: True 表示审核版本（VITE_APP_AUDIT=true，隐藏部分功能、tabBar 仅保留 首页/盒柜/我的）
+    platform: 上传目标选择的平台标识；非空时以 VITE_APP_PLATFORM 注入编译命令，
+              覆盖 .env 文件中的同名变量（进程环境变量优先于 .env 文件）
     返回: True 表示成功，False 表示失败
     """
     env_file = ".env.production" if mode == "production" else ".env.development"
@@ -346,6 +350,9 @@ def build_mp_weixin(mode: str = "production", audit: bool = False) -> bool:
     base_url = env_vars.get("VITE_APP_BASEURL", "未配置")
     app_env = env_vars.get("VITE_APP_ENV", "未配置")
     cdn_folder = env_vars.get("VITE_APP_CDN_FOLDER", "未配置")
+    # 以上传目标选择为准；未指定时回退到 env 文件中的值
+    effective_platform = platform or env_vars.get("VITE_APP_PLATFORM", "未配置")
+    platform_source = "上传目标选择" if platform else "env 文件"
 
     print("=" * 60)
     print("开始编译微信小程序")
@@ -355,6 +362,7 @@ def build_mp_weixin(mode: str = "production", audit: bool = False) -> bool:
     print(f"VITE_APP_ENV:        {app_env}")
     print(f"VITE_APP_BASEURL:    {base_url}")
     print(f"VITE_APP_CDN_FOLDER: {cdn_folder}")
+    print(f"VITE_APP_PLATFORM:   {effective_platform}（{platform_source}）")
     print(f"VITE_APP_AUDIT:      {'true' if audit else 'false'}")
     print("=" * 60)
     print("正在切换到 Node 18...")
@@ -363,10 +371,14 @@ def build_mp_weixin(mode: str = "production", audit: bool = False) -> bool:
         # 环境变量前缀会传递给 yarn 的 pre 钩子（apply-audit-tabbar.js），
         # 由钩子按 VITE_APP_AUDIT 自动切换 pages.json 的 tabBar
         audit_prefix = "VITE_APP_AUDIT=true " if audit else ""
+        # 上传目标选择的平台优先于 env 文件：显式注入 VITE_APP_PLATFORM
+        platform_prefix = (
+            f"VITE_APP_PLATFORM={shlex.quote(platform)} " if platform else ""
+        )
         if mode == "development":
-            build_cmd = f"{audit_prefix}yarn build:mp-weixin-test"
+            build_cmd = f"{platform_prefix}{audit_prefix}yarn build:mp-weixin-test"
         else:
-            build_cmd = f"{audit_prefix}yarn build:mp-weixin"
+            build_cmd = f"{platform_prefix}{audit_prefix}yarn build:mp-weixin"
 
         # 使用 bash 加载 nvm 并切换到 node 18，然后执行 yarn 编译命令
         # nvm 是 shell 函数，需要先 source nvm.sh
@@ -1493,6 +1505,17 @@ class WxUploaderGUI:
 
         return None
 
+    def _resolve_build_platform(self, build_mode: str) -> str:
+        """
+        返回本次编译应使用的 VITE_APP_PLATFORM：
+        始终以上传目标选择为准；选择「环境变量」时取 env 文件中的值。
+        """
+        plat_name = self.plat_var.get()
+        if plat_name and plat_name != "__env__":
+            return plat_name
+        env_vars = read_env_file(build_mode)
+        return env_vars.get("VITE_APP_PLATFORM", "").strip()
+
     def ensure_key_and_plat(self):
         key_path = self.key_path_var.get().strip()
         if not key_path:
@@ -1573,9 +1596,11 @@ class WxUploaderGUI:
 
         env_vars = read_env_file(build_mode)
         base_url = env_vars.get("VITE_APP_BASEURL", "未配置")
-        platform_env = env_vars.get("VITE_APP_PLATFORM", "未配置")
+        # 编译平台始终以上传目标选择为准（actual_plat_name 已按 __env__ 解析），
+        # 编译时会显式注入 VITE_APP_PLATFORM 覆盖 env 文件中的值
+        platform_env = actual_plat_name
         plat_info = (
-            f"使用环境变量: VITE_APP_PLATFORM={platform_env}"
+            f"按环境变量解析: VITE_APP_PLATFORM={actual_plat_name}"
             if plat_selection == "__env__"
             else f"手动选择: {actual_plat_name}"
         )
@@ -1587,7 +1612,7 @@ class WxUploaderGUI:
             "即将执行以下操作：\n\n"
             f"1. 编译微信小程序（{mode_text}）\n"
             f"   API地址: {base_url}\n"
-            f"   平台标识: {platform_env}\n\n"
+            f"   平台标识: {actual_plat_name}（按上传目标选择编译）\n\n"
             f"{self._static_step_text(use_qiniu, png_strict)}"
             "3. 上传代码到服务器并远程解压\n"
             f"   主机: {remote_host}\n"
@@ -1619,7 +1644,9 @@ class WxUploaderGUI:
 
     def _publish_work(self, ctx):
         self._set_status("正在编译…")
-        if not build_mp_weixin(ctx["build_mode"], audit=ctx["audit"]):
+        if not build_mp_weixin(
+            ctx["build_mode"], audit=ctx["audit"], platform=ctx["actual_plat_name"]
+        ):
             raise RuntimeError("编译失败，请检查上方日志")
 
         self._set_status("正在处理 CDN…")
@@ -1675,7 +1702,9 @@ class WxUploaderGUI:
             mode_text += "·审核版"
         env_vars = read_env_file(build_mode)
         base_url = env_vars.get("VITE_APP_BASEURL", "未配置")
-        platform_env = env_vars.get("VITE_APP_PLATFORM", "未配置")
+        # 编译平台始终以上传目标选择为准
+        build_platform = self._resolve_build_platform(build_mode)
+        platform_env = build_platform or "未配置"
         use_qiniu = bool(self.use_qiniu_var.get())
         png_strict = bool(self.compress_png_strict_var.get()) if use_qiniu else False
 
@@ -1684,7 +1713,7 @@ class WxUploaderGUI:
             "即将【只打本地包】（不上传服务器、不发布微信）：\n\n"
             f"1. 编译微信小程序（{mode_text}）\n"
             f"   API地址: {base_url}\n"
-            f"   平台标识: {platform_env}\n\n"
+            f"   平台标识: {platform_env}（按上传目标选择编译）\n\n"
             f"{self._static_step_text(use_qiniu, png_strict)}"
             f"产物目录: {MP_WEIXIN_DIST}\n\n"
             "是否继续？",
@@ -1697,6 +1726,7 @@ class WxUploaderGUI:
             "mode_text": mode_text,
             "base_url": base_url,
             "platform_env": platform_env,
+            "build_platform": build_platform,
             "use_qiniu": use_qiniu,
             "png_strict": png_strict,
         }
@@ -1704,7 +1734,9 @@ class WxUploaderGUI:
 
     def _local_work(self, ctx):
         self._set_status("正在编译…")
-        if not build_mp_weixin(ctx["build_mode"], audit=ctx["audit"]):
+        if not build_mp_weixin(
+            ctx["build_mode"], audit=ctx["audit"], platform=ctx["build_platform"]
+        ):
             raise RuntimeError("编译失败，请检查上方日志")
 
         self._set_status("正在处理 CDN…")
