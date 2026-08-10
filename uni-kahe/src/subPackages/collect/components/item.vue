@@ -9,7 +9,8 @@
     >
       <view class="collect-item-top relative flex flex-row items-center">
         <view class="collect-item-top-line w-2 h-19 bg-[#0070bf]" />
-        <view class="collect-item-top-label ml-2 font-normal text-20 text-[#0070bf] leading-30"
+        <view
+          class="collect-item-top-label ml-2 font-normal text-20 text-[#0070bf] leading-30"
           >{{ isTimeout ? "已结束" : "进行中" }}</view
         >
         <view
@@ -18,7 +19,9 @@
           >结束时间：{{ item.expireTime }}</view
         >
       </view>
-      <view class="collect-item-content relative w-full flex flex-row items-center">
+      <view
+        class="collect-item-content relative w-full flex flex-row items-center"
+      >
         <image
           class="collect-item-content-logo w-164 h-164 bg-[rgba(210,220,245,0.8)] rounded-10 border-3 border-[#8bb8ea]"
           :src="item.logo"
@@ -43,10 +46,11 @@
               style="width: max-content"
             >
               <view style="color: #0070bf">{{ item.price }}</view>
-              <view style="color: #000000">点券</view>
+              <!--              <view style="color: #000000">点券</view>-->
             </view>
           </view>
-          <view class="collect-item-content-info-progress mt-4 flex flex-row items-center"
+          <view
+            class="collect-item-content-info-progress mt-4 flex flex-row items-center"
           >
             <view
               class="collect-item-content-info-progress-title font-normal text-20 text-[#0070bf] leading-30"
@@ -135,5 +139,4 @@ const progressStyle = computed(() => {
 const emits = defineEmits(["didClickItem", "didExchangeItem"]);
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
