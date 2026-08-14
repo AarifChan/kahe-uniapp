@@ -55,7 +55,11 @@
       @did-click-remark="handleClickRemark"
     />
     <Handles @did-tap-reload="reloadCurrentPage" :product="productDetail" />
-    <detail-modal v-model:show="detailShow" :item="currentBox" />
+    <detail-modal
+      v-model:show="detailShow"
+      :item="currentBox"
+      :join-price="productDetail.payType === 8 ? currentBox.price : productDetail.price"
+    />
     <!--    <login v-model:show="loginShow" @did-tap-login="handleLogin" />-->
     <pay
       v-model:show="payShow"

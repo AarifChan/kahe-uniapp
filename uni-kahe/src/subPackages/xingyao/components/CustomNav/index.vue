@@ -90,6 +90,9 @@
 import { ShingingInfo } from "../../api/index";
 import { PropType } from "vue";
 
+const emit = defineEmits<{
+  (e: "tapNav", item: any): void;
+}>();
 const props = defineProps({
   info: {
     default: {},
@@ -114,6 +117,10 @@ const itemList = ref([
   { icon: "/static/kahe-202510/shine/icon1.png", text: "规则", key: 1 },
   { icon: "/static/kahe-202510/shine/icon2.png", text: "往期", key: 2 },
 ]);
+
+const tapNav = (item: any) => {
+  emit("tapNav", item);
+};
 
 onMounted(() => {});
 </script>

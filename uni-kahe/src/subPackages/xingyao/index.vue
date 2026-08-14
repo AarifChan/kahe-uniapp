@@ -74,6 +74,7 @@ const {
   logType,
   handleScrollToLower,
   logList,
+  resetPage,
 } = useShinging();
 
 onMounted(() => {
@@ -88,6 +89,7 @@ const tapAward = (item: string) => {
   } else {
     awardType.value = "record";
     logType.value = 2;
+    resetPage();
     queryLogList();
     showWinningPop.value = true;
   }
@@ -126,6 +128,7 @@ const tapNav = (value: any) => {
   }
   if (value.key === 2) {
     logType.value = 3;
+    resetPage();
     queryHistory();
     showHistoryPop.value = true;
   }

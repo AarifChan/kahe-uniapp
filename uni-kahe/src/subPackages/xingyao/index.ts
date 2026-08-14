@@ -60,7 +60,8 @@ export function useShinging() {
     getLog({
       aid: currentId.value,
       limit: params.value.limit,
-      status: logType.value,
+      // 后端 status 为记录状态：3=已参与（带用户信息），不能直接用 UI 类型 logType
+      status: 3,
       page: params.value.page,
     })
       .then((res) => {
@@ -94,6 +95,10 @@ export function useShinging() {
     });
   };
 
+  const resetPage = () => {
+    params.value.page = 1;
+  };
+
   const handleScrollToLower = async () => {
     console.log(
       "scrollToLower:",
@@ -122,5 +127,6 @@ export function useShinging() {
     handleReceive,
     queryLogList,
     handleScrollToLower,
+    resetPage,
   };
 }

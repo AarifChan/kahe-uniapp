@@ -56,8 +56,11 @@
         >{{ item.title }}</view
       >
       <view v-if="showPrice">
+        <view class="goodsBox-info-priceTip w-200" :style="{ color: '#909090', fontSize: '9px' }" v-if="!item.isHide"
+          >套系参与价为本次抽取支付金额，非单卡售价</view
+        >
         <view class="goodsBox-info-subTitle" :style="{ color: '#909090', fontSize: '9px' }" v-if="!item.isHide"
-          >参考价: {{ goodsPrice }}</view
+          >套系参与价：{{ goodsPrice }}</view
         >
         <view class="goodsBox-info-prob" :style="{ color: '#55d8b0', fontSize: '9px' }" v-if="item.isSky"
           >{{ item.prob }}~{{ item.weight }}抽完赠送</view
