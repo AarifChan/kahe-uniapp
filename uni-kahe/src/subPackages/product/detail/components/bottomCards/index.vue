@@ -14,8 +14,8 @@
                 </view>
                 <image src="/static/kahe-202510/ka-he/common/common-btn-bg.png"
                     class="cards-list-item-img absolute left-0 top-0 w-full h-full" />
-                <text class="cards-list-item-text relative w-full text-center font-400 leading-78 text-34 text-white theme-font"
-                    :style="{ textShadow: '-1px -1px 0 #936120, 1px -1px 0 #936120, -1px 1px 0 #936120, 1px 1px 0 #936120' }">冲{{ item.num }}发</text>
+                <text class="cards-list-item-text relative w-full text-center font-400 leading-78 text-34 text-white theme-font whitespace-nowrap"
+                    :style="{ textShadow: '-1px -1px 0 #936120, 1px -1px 0 #936120, -1px 1px 0 #936120, 1px 1px 0 #936120', fontSize: cardFontSize(item.num) }">冲{{ item.num }}发</text>
             </view>
         </view>
         <!--    <view class="cards-bottom" v-if="!isInfinite">-->
@@ -56,6 +56,14 @@ const props = defineProps({
 const allShow = computed(() => {
     return props.cardsArray.filter((n) => n.num === -1).length > 0;
 });
+
+// 按钮宽度有限，按字数缩小字号保证“冲X发”显示完整
+const cardFontSize = (num: number) => {
+    const len = `冲${num}发`.length;
+    if (len <= 3) return "34rpx";
+    if (len === 4) return "30rpx";
+    return "26rpx";
+};
 
 const emits = defineEmits(["didTapChoose", "didTapChangeBox"]);
 </script>

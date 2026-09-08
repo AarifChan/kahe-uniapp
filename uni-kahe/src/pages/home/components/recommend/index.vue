@@ -2,20 +2,7 @@
   <view
     class="recommend flex flex-row items-center justify-center box-border w-full h-280 py-16 px-16 pt-16 pb-0 gap-12"
   >
-    <view class="recommend-left relative w-300 h-280">
-      <image
-        class="recommend-left-top absolute left-0 top-0 w-158 h-280"
-        src="/static/kaju/home/left.png"
-        mode="aspectFit"
-        @tap.stop="handleChallengePage"
-      />
-      <image
-        class="recommend-left-bottom absolute left-128 top-0 w-158 h-280"
-        src="/static/kaju/home/right.png"
-        mode="aspectFit"
-        @tap.stop="handleMatchPage"
-      />
-    </view>
+
     <view class="recommend-right relative h-280 w-400" :style="rightBgStyle">
       <image
         class="recommend-right-more absolute -top-8 right-0 w-110 h-50 z-10"
@@ -33,6 +20,20 @@
           @tap.stop="handleClickItem(item)"
         />
       </view>
+    </view>
+       <view class="recommend-left relative w-300 h-280">
+      <!-- <image
+        class="recommend-left-top absolute left-0 top-0 w-158 h-280"
+        src="/static/kaju/home/left.png"
+        mode="aspectFit"
+        @tap.stop="handleChallengePage"
+      />
+      <image
+        class="recommend-left-bottom absolute left-128 top-0 w-158 h-280"
+        src="/static/kaju/home/right.png"
+        mode="aspectFit"
+        @tap.stop="handleMatchPage"
+      /> -->
     </view>
   </view>
 </template>

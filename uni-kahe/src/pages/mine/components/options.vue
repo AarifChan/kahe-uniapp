@@ -75,17 +75,14 @@ const fullItemList: ItemModel[] = [
   },
 ];
 
-// 审核版本隐藏的服务项：特惠礼包、排行奖励、宝箱、入驻了解
-const auditHiddenTypes = [
-  ItemType.giftPack,
-  ItemType.rank,
-  ItemType.chest,
-  ItemType.rollIn,
-];
+// 入驻了解全版本隐藏；审核版本额外隐藏：特惠礼包、排行奖励、宝箱
+const alwaysHiddenTypes = [ItemType.rollIn];
+const auditHiddenTypes = [ItemType.giftPack, ItemType.rank, ItemType.chest];
+const hiddenTypes = isAuditVersion
+  ? [...alwaysHiddenTypes, ...auditHiddenTypes]
+  : alwaysHiddenTypes;
 const itemList = ref(
-  isAuditVersion
-    ? fullItemList.filter((item) => !auditHiddenTypes.includes(item.type))
-    : fullItemList
+  fullItemList.filter((item) => !hiddenTypes.includes(item.type))
 );
 
 const handleClick = (item: ItemModel) => {
