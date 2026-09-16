@@ -105,6 +105,13 @@ echo "已复制 key 到：$LOCAL_KEY_PATH"
 #####################################
 
 cat > "$UPLOAD_JS_PATH" <<EOF
+// 让 miniprogram-ci 的 summer 编译器在主进程内运行：
+// 服务器负载较高时 fork 编译子进程会超过其硬编码的 20s ready 超时（fork process timeout），
+// 通过 localStorage 开关 compilerInMainProcess 绕过 fork，编译逻辑完全一致。
+global.localStorage = {
+    getItem: (k) => (k === 'compilerInMainProcess' ? true : undefined),
+    getItemAsync: async (k) => (k === 'compilerInMainProcess' ? true : undefined)
+};
 const ci = require('miniprogram-ci');
 (async () => {
     const project = new ci.Project({
