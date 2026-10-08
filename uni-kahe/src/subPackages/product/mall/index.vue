@@ -72,7 +72,7 @@ const scrollToLower = () => {
 onMounted(() => {
     const op = getPageOptions()
     if (op.model) {
-        model.value = JSON.parse(op.model)
+        model.value = JSON.parse(decodeURIComponent(op.model))
         listParams.value.cid = model.value.id
         uni.setNavigationBarTitle({
             title: model.value.name

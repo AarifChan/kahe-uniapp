@@ -679,7 +679,7 @@ export function useBox() {
   const selectItem = (item: UIMineChestModel) => {
     chestsModel.value = item;
     uni.navigateTo({
-      url: `/subPackages/box/chest/index?&item=${JSON.stringify(item)}`,
+      url: `/subPackages/box/chest/index?item=${encodeURIComponent(JSON.stringify(item))}`,
     });
   };
   const openChestAction = (item: UIMineChestModel) => {

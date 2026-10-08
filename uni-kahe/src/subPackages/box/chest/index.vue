@@ -154,7 +154,7 @@ const chestlist = ref({
 } as UIMineChestModel)
 onMounted(() => {
     const op = getPageOptions()
-    const chestsParams = JSON.parse(op.item)
+    const chestsParams = JSON.parse(decodeURIComponent(op.item))
     chestlist.value = chestsParams
 })
 </script>

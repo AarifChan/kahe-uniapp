@@ -48,7 +48,7 @@ export function useMall() {
     }
   };
   const handleClickCategory = (item: UIMallCategoryModel) => {
-    const json = JSON.stringify(item);
+    const json = encodeURIComponent(JSON.stringify(item));
     uni.navigateTo({
       url: `/subPackages/product/mall/index?model=${json}`,
     });
