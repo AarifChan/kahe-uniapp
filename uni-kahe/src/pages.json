@@ -1,0 +1,606 @@
+{
+  "easycom": {
+    "custom": {
+      "^z-(.*)": "@zebra-ui/swiper/components/z-$1/z-$1.vue",
+      "^tn-(.*)-(item|group)$": "@tuniao/tnui-vue3-uniapp/components/$1/src/$1-$2.vue",
+      "^tn-(.*)": "@tuniao/tnui-vue3-uniapp/components/$1/src/$1.vue"
+    }
+  },
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+
+    // #ifdef MP-WEIXIN
+    {
+      "path": "pages/welcome/index",
+      "style": {
+        "navigationStyle": "custom",
+        "disableScroll": true
+      }
+    },
+    // #endif
+    {
+      "path": "pages/index/index",
+      "style": {
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/home/index",
+      "style": {
+        "navigationStyle": "custom",
+        "disableScroll": true,
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "pages/machine/index",
+      "style": {
+        "navigationStyle": "custom",
+        "disableScroll": true,
+        "navigationBarTitleText": "抽卡机"
+      }
+    },
+    {
+      "path": "pages/box/index",
+      "style": {
+        "navigationStyle": "custom",
+        "disableScroll": true,
+        "navigationBarTitleText": "寄存柜"
+      }
+    },
+    {
+      "path": "pages/merchant/index",
+      "style": {
+        //
+        "navigationStyle": "custom",
+        "disableScroll": true,
+        "navigationBarTitleText": "商家"
+      }
+    },
+    {
+      "path": "pages/mine/index",
+      "style": {
+        "navigationStyle": "custom",
+        "disableScroll": true,
+        "navigationBarTitleText": "我的"
+      }
+    },
+
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "登录",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/test-log/index",
+      "style": {
+        "navigationBarTitleText": "日志测试",
+        "disableScroll": true
+      }
+    }
+  ],
+  "tabBar": {
+    "color": "#333333",
+    "selectedColor": "#000000",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+     {
+       "pagePath": "pages/home/index",
+       "text": "首页",
+       "iconPath": "/static/kaju/tabbar/icon1-normal.png",
+       "selectedIconPath": "/static/kaju/tabbar/icon1-active.png"
+     },
+     {
+       "pagePath": "pages/merchant/index",
+       "text": "商家",
+       "iconPath": "/static/kaju/tabbar/icon2-normal.png",
+       "selectedIconPath": "/static/kaju/tabbar/icon2-active.png"
+     },
+     {
+       "pagePath": "pages/machine/index",
+       "text": "抽卡机",
+       "iconPath": "/static/kaju/tabbar/icon3-normal.png",
+       "selectedIconPath": "/static/kaju/tabbar/icon3-active.png"
+     },
+     {
+       "pagePath": "pages/box/index",
+       "text": "盒柜",
+       "iconPath": "/static/kaju/tabbar/icon4-normal.png",
+       "selectedIconPath": "/static/kaju/tabbar/icon4-active.png"
+     },
+     {
+       "pagePath": "pages/mine/index",
+       "text": "我的",
+       "iconPath": "/static/kaju/tabbar/icon5-normal.png",
+       "selectedIconPath": "/static/kaju/tabbar/icon5-active.png"
+     }
+   ]
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#FDEFCC",
+    "backgroundColor": "#FDEFCC"
+  },
+  "subPackages": [
+    {
+      "root": "subPackages/webview",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "网页",
+            "enablePullDownRefresh": false,
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/challenge",
+      "pages": [
+        {
+          "path": "list/index",
+          "style": {
+            "navigationBarTitleText": "闯关夺宝",
+            "enablePullDownRefresh": false,
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "detail/index",
+          "style": {
+            "navigationBarTitleText": "闯关夺宝",
+            "enablePullDownRefresh": false,
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/xingyao",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "星耀欧皇",
+            "enablePullDownRefresh": false,
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/gift",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "优惠礼包",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/order",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "订单列表",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "detail",
+          "style": {
+            "navigationBarTitleText": "订单详情",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/collect",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "换卡集市",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "detail/index",
+          "style": {
+            "navigationBarTitleText": "集赏详情",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "record/index",
+          "style": {
+            "navigationBarTitleText": "集赏记录",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/groupBuy",
+      "pages": [
+        {
+          "path": "index/index",
+          "style": {
+            "navigationBarTitleText": "拼团",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "detail/index",
+          "style": {
+            "navigationBarTitleText": "拼团详情",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "list/index",
+          "style": {
+            "navigationBarTitleText": "卡密列表",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "mine/index",
+          "style": {
+            "navigationBarTitleText": "我的卡密",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "submit/index",
+          "style": {
+            "navigationBarTitleText": "确认订单",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "result/index",
+          "style": {
+            "navigationBarTitleText": "拼团结果",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/mine",
+      "pages": [
+        {
+          "path": "favorite/index",
+          "style": {
+            "navigationBarTitleText": "我的收藏",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "address/index",
+          "style": {
+            "navigationBarTitleText": "地址管理",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "address/detail",
+          "style": {
+            "navigationBarTitleText": "地址编辑",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "realName/index",
+          "style": {
+            "navigationBarTitleText": "实名认证",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "vip/index",
+          "style": {
+            "navigationBarTitleText": "VIP会员",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "coupon/index",
+          "style": {
+            "navigationBarTitleText": "我的优惠券",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "rank/index",
+          "style": {
+            "navigationBarTitleText": "排行榜",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "invite/index",
+          "style": {
+            "navigationBarTitleText": "邀请有奖",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/mall",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "卡牌商城",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/enroll",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "入驻指南",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/infinite",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "积分福利",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/welfare",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "福利大厅",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/merchant",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "商户信息",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/discount",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "优惠礼包",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/pet",
+      "pages": [
+        {
+          "path": "introduce/index",
+          "style": {
+            "navigationBarTitleText": "宠物图鉴",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "eggs/index",
+          "style": {
+            "navigationBarTitleText": "宠物孵化",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "exploration/index",
+          "style": {
+            "navigationBarTitleText": "探险",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "merge/index",
+          "style": {
+            "navigationBarTitleText": "融合",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/product",
+      "pages": [
+        {
+          "path": "state/index",
+          "style": {
+            "navigationBarTitleText": "品相定义",
+            "backgroundColor": "#232635",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "detail/index",
+          "style": {
+            "navigationBarTitleText": "",
+            "backgroundColor": "#232635",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "mall/index",
+          "style": {
+            "navigationBarTitleText": "兑换商城",
+            "backgroundColor": "#232635",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "card/index",
+          "style": {
+            "navigationBarTitleText": "",
+            "backgroundColor": "#232635",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "welfare/index",
+          "style": {
+            "navigationBarTitleText": "福利活动",
+            "backgroundColor": "#232635",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "welfare-detail/index",
+          "style": {
+            "navigationBarTitleText": "抽奖活动详情",
+            "backgroundColor": "#232635",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "reward-code/index",
+          "style": {
+            "navigationBarTitleText": "我的抽奖码",
+            "backgroundColor": "#f3f6fe",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/setting",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "设置",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "password/index",
+          "style": {
+            "navigationBarTitleText": "设置",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "bindPhone/index",
+          "style": {
+            "navigationBarTitleText": "绑定手机号",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/dailyWelfare",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "每日领券",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/activity",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "福利活动",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/box",
+      "pages": [
+        {
+          "path": "box/index",
+          "style": {
+            "navigationBarTitleText": "寄存柜",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "",
+            "backgroundColor": "#232635",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "chest/index",
+          "style": {
+            "navigationBarTitleText": "我的宝箱",
+            "backgroundColor": "#232635",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "redBag/index",
+          "style": {
+            "navigationBarTitleText": "分享红包",
+            "backgroundColor": "#232635",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/agreement",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "用户协议",
+            "disableScroll": true
+          }
+        }
+      ]
+    }
+  ]
+}
