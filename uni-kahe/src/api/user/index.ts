@@ -5,6 +5,7 @@ import {
   type LoginRequestParams,
   type LoginResponse,
   type RechargeModel,
+  type RealNameAuthParams,
   type User,
   type UserInfo,
   type VipIndexModel,
@@ -89,6 +90,11 @@ export const userInfoRequest = async () => {
 /* 更新用户信息 */
 export const updateUserInfoRequest = async (data: any) => {
   return await post("user/edit", data);
+};
+
+/* 实名认证 */
+export const realNameAuthRequest = async (params: RealNameAuthParams) => {
+  return await post("user/realNameAuth", params);
 };
 
 /** 用户简介 */

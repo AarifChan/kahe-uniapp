@@ -35,6 +35,7 @@ export interface User {
 export interface UserInfo {
   account: string;
   addIp: string;
+  authStatus: number; // 实名认证状态(0: 未认证 1: 已认证)
   avatar: string;
   birthday: number;
   coin: number;
@@ -126,6 +127,11 @@ export interface RechargeModel {
   price: number;
   sort: number;
   status: number;
+}
+
+export interface RealNameAuthParams {
+  idCard: string; // 身份证号
+  realName: string; // 真实姓名
 }
 
 export interface WithdrawParams {

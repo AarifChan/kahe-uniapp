@@ -445,174 +445,217 @@ class User extends VuexModule {
   async handleWxPay(orderId: string, pid = 0) {
     // eslint-disable-next-line no-async-promise-executor,promise/param-names
     return new Promise(async (resolve, _) => {
-      let payType = "";
-      // #ifdef MP-WEIXIN
-      payType = import.meta.env.VITE_APP_PLATFORM || "wx_ma_3";
-      // #endif
-
-      // #ifdef H5
-      payType = AppModule.payType === 1 ? "wx_h5" : "ali_h5";
-
-      if (currentEnv() === "h5-weixin" || currentEnv() === "mp-weixin") {
-        resolve("请在别的浏览器尝试");
-        return;
-      }
-
-      // #endif
-
-      // #ifdef APP
-      console.log(
-        "[APP Pay] handleWxPay start, orderId:",
-        orderId,
-        "pid:",
-        pid
-      );
-      console.log("[APP Pay] payType:", payType);
-      payType = AppModule.payType === 1 ? "wx_app" : "ali_app";
-
-      // #endif
-
-      const params = {
-        from: "routine",
-        orderId: orderId,
-        payType: payType,
-      } as OrderSubmitParams;
-      if (payType === "ali_h5") {
-        let aliReturnUrl = window.location.href;
-        if (pid) {
-          aliReturnUrl += "&pid=" + pid;
+      try {
+        // 支付前实名认证校验：缓存已认证直接放行；缓存未认证时刷新一次再判断，避免误拦
+        if (this.userInfo?.authStatus !== 1) {
+          try {
+            const infoResp = await userInfoRequest();
+            if (infoResp?.code === 200) {
+              this.context.commit("UPDATE_USERINFO", infoResp.data);
+            }
+          } catch (e) {
+            console.log("handleWxPay refresh userInfo err:", e);
+          }
         }
-        params.aliReturnUrl = aliReturnUrl + `&orderId=${orderId}`;
-      }
+        if (this.userInfo?.authStatus !== 1) {
+          uni.showModal({
+            title: "提示",
+            content: "支付前请先完成实名认证",
+            confirmText: "去认证",
+            cancelText: "取消",
+            success: (res) => {
+              if (res.confirm) {
+                uni.navigateTo({
+                  url: "/subPackages/mine/realName/index",
+                });
+              }
+            },
+          });
+          resolve("未完成实名认证");
+          return;
+        }
 
-      // #ifdef APP
-      console.log("[APP Pay] orderSubmit params:", JSON.stringify(params));
-      // #endif
+        let payType = "";
+        // #ifdef MP-WEIXIN
+        payType = import.meta.env.VITE_APP_PLATFORM || "wx_ma_3";
+        // #endif
 
-      const orderResp = await orderSubmitRequest(params);
+        // #ifdef H5
+        payType = AppModule.payType === 1 ? "wx_h5" : "ali_h5";
 
-      // #ifdef APP
-      console.log("[APP Pay] orderSubmit response:", JSON.stringify(orderResp));
-      // #endif
+        if (currentEnv() === "h5-weixin" || currentEnv() === "mp-weixin") {
+          resolve("请在别的浏览器尝试");
+          return;
+        }
 
-      if (orderResp.code !== 200) {
-        await orderCancelRequest(orderId);
+        // #endif
+
+        // #ifdef APP
         console.log(
-          "[APP Pay] alipay orderCancelRequest orderString:",
-          orderResp.msg
+          "[APP Pay] handleWxPay start, orderId:",
+          orderId,
+          "pid:",
+          pid
         );
-        resolve(orderResp.msg + "error~");
-        ShowToast(orderResp.msg);
-        return;
-      }
-      if (payType === "ali_app") {
-        const orderString = orderResp.data.jsConfig?.orderString ?? "";
+        console.log("[APP Pay] payType:", payType);
+        payType = AppModule.payType === 1 ? "wx_app" : "ali_app";
 
-        // #ifdef APP
-        console.log(`[APP Pay] alipay orderString:${orderString}`);
         // #endif
 
-        console.log("String Length:", orderString.length);
-        uni.requestPayment({
-          provider: "alipay",
-          orderInfo: orderString,
-          success: async (result) => {
-            console.log("[APP Pay] alipay success:", JSON.stringify(result));
-            ShowToast("支付成功");
-
-            resolve(null);
-          },
-          fail: async (err: any) => {
-            console.log("[APP Pay] alipay fail:", JSON.stringify(err));
-            await orderCancelRequest(orderId);
-            resolve("取消支付" + JSON.stringify(err));
-          },
-        });
-      } else if (payType === "ali_h5") {
-        const url = orderResp.data.jsConfig.url;
-        if (url) {
-          window.location.href = url;
-        } else {
-          resolve("支付出错，请联系客服");
+        const params = {
+          from: "routine",
+          orderId: orderId,
+          payType: payType,
+        } as OrderSubmitParams;
+        if (payType === "ali_h5") {
+          let aliReturnUrl = window.location.href;
+          if (pid) {
+            aliReturnUrl += "&pid=" + pid;
+          }
+          params.aliReturnUrl = aliReturnUrl + `&orderId=${orderId}`;
         }
-      } else {
-        const payParams = orderResp.data.jsConfig as OrderWechatPayParams;
 
         // #ifdef APP
-        console.log("[APP Pay] wx payParams:", JSON.stringify(payParams));
+        console.log("[APP Pay] orderSubmit params:", JSON.stringify(params));
         // #endif
 
-        let orderInfo = {};
-        if (payType === "wx_app") {
-          orderInfo = {
-            appid: payParams.appid, // 应用ID（AppID）
-            partnerid: payParams.partnerid, // 商户号（PartnerID）
-            prepayid: payParams.prepayid, // 预支付交易会话ID
-            package: payParams.package, // 固定值
-            noncestr: payParams.noncestr, // 随机字符串
-            timestamp: payParams.timestamp, // 时间戳（单位：秒）
-            sign: payParams.sign, // 签名，这里用的 MD5 签名
-          };
+        const orderResp = await orderSubmitRequest(params);
+
+        // #ifdef APP
+        console.log(
+          "[APP Pay] orderSubmit response:",
+          JSON.stringify(orderResp)
+        );
+        // #endif
+
+        if (orderResp.code !== 200) {
+          await orderCancelRequest(orderId);
+          console.log(
+            "[APP Pay] alipay orderCancelRequest orderString:",
+            orderResp.msg
+          );
+          resolve(orderResp.msg + "error~");
+          ShowToast(orderResp.msg);
+          return;
+        }
+        if (payType === "ali_app") {
+          const orderString = orderResp.data.jsConfig?.orderString ?? "";
 
           // #ifdef APP
-          console.log("[APP Pay] wx_app orderInfo:", JSON.stringify(orderInfo));
+          console.log(`[APP Pay] alipay orderString:${orderString}`);
           // #endif
 
+          console.log("String Length:", orderString.length);
           uni.requestPayment({
-            provider: "wxpay",
-            orderInfo: JSON.stringify(orderInfo),
+            provider: "alipay",
+            orderInfo: orderString,
             success: async (result) => {
-              console.log("[APP Pay] wxpay success:", JSON.stringify(result));
+              console.log("[APP Pay] alipay success:", JSON.stringify(result));
               ShowToast("支付成功");
-              pollPaymentStatus(orderId, 5000, 10)
-                .then((res) => {
-                  resolve(res === "success" ? null : "订单查询失败");
-                })
-                .catch((err) => {
-                  resolve("订单查询失败");
-                });
+
+              resolve(null);
             },
             fail: async (err: any) => {
-              console.log("[APP Pay] wxpay fail:", JSON.stringify(err));
+              console.log("[APP Pay] alipay fail:", JSON.stringify(err));
               await orderCancelRequest(orderId);
-              resolve("取消支付");
+              resolve("取消支付" + JSON.stringify(err));
             },
           });
+        } else if (payType === "ali_h5") {
+          const url = orderResp.data.jsConfig.url;
+          if (url) {
+            window.location.href = url;
+          } else {
+            resolve("支付出错，请联系客服");
+          }
         } else {
-          const payParams = orderResp.data.jsConfig as OrderWechatMpPayParams;
+          const payParams = orderResp.data.jsConfig as OrderWechatPayParams;
 
           // #ifdef APP
-          console.log("[APP Pay] wx_mp payParams:", JSON.stringify(payParams));
+          console.log("[APP Pay] wx payParams:", JSON.stringify(payParams));
           // #endif
 
-          uni.requestPayment({
-            provider: "wxpay",
-            nonceStr: payParams.nonceStr,
-            package: payParams.package,
-            paySign: payParams.paySign,
-            signType: payParams.signType,
-            timeStamp: payParams.timeStamp,
-            orderInfo: orderId,
-            success: async (result) => {
-              console.log(
-                "[APP Pay] wxpay mp success:",
-                JSON.stringify(result)
-              );
-              pollPaymentStatus(orderId, 5000, 10)
-                .then((res) => {
-                  resolve(res === "success" ? null : "订单查询失败");
-                })
-                .catch((err) => {
-                  resolve("订单查询失败");
-                });
-            },
-            fail: async (_) => {
-              console.log("[APP Pay] wxpay mp fail");
-              await orderCancelRequest(orderId);
-              resolve("取消支付");
-            },
-          });
+          let orderInfo = {};
+          if (payType === "wx_app") {
+            orderInfo = {
+              appid: payParams.appid, // 应用ID（AppID）
+              partnerid: payParams.partnerid, // 商户号（PartnerID）
+              prepayid: payParams.prepayid, // 预支付交易会话ID
+              package: payParams.package, // 固定值
+              noncestr: payParams.noncestr, // 随机字符串
+              timestamp: payParams.timestamp, // 时间戳（单位：秒）
+              sign: payParams.sign, // 签名，这里用的 MD5 签名
+            };
+
+            // #ifdef APP
+            console.log(
+              "[APP Pay] wx_app orderInfo:",
+              JSON.stringify(orderInfo)
+            );
+            // #endif
+
+            uni.requestPayment({
+              provider: "wxpay",
+              orderInfo: JSON.stringify(orderInfo),
+              success: async (result) => {
+                console.log("[APP Pay] wxpay success:", JSON.stringify(result));
+                ShowToast("支付成功");
+                pollPaymentStatus(orderId, 5000, 10)
+                  .then((res) => {
+                    resolve(res === "success" ? null : "订单查询失败");
+                  })
+                  .catch((err) => {
+                    resolve("订单查询失败");
+                  });
+              },
+              fail: async (err: any) => {
+                console.log("[APP Pay] wxpay fail:", JSON.stringify(err));
+                await orderCancelRequest(orderId);
+                resolve("取消支付");
+              },
+            });
+          } else {
+            const payParams = orderResp.data.jsConfig as OrderWechatMpPayParams;
+
+            // #ifdef APP
+            console.log(
+              "[APP Pay] wx_mp payParams:",
+              JSON.stringify(payParams)
+            );
+            // #endif
+
+            uni.requestPayment({
+              provider: "wxpay",
+              nonceStr: payParams.nonceStr,
+              package: payParams.package,
+              paySign: payParams.paySign,
+              signType: payParams.signType,
+              timeStamp: payParams.timeStamp,
+              orderInfo: orderId,
+              success: async (result) => {
+                console.log(
+                  "[APP Pay] wxpay mp success:",
+                  JSON.stringify(result)
+                );
+                pollPaymentStatus(orderId, 5000, 10)
+                  .then((res) => {
+                    resolve(res === "success" ? null : "订单查询失败");
+                  })
+                  .catch((err) => {
+                    resolve("订单查询失败");
+                  });
+              },
+              fail: async (_) => {
+                console.log("[APP Pay] wxpay mp fail");
+                await orderCancelRequest(orderId);
+                resolve("取消支付");
+              },
+            });
+          }
         }
+      } catch (e) {
+        console.log("handleWxPay err:", e);
+        resolve("支付异常，请稍后重试");
       }
     });
   }
