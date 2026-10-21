@@ -112,6 +112,20 @@ global.localStorage = {
     getItem: (k) => (k === 'compilerInMainProcess' ? true : undefined),
     getItemAsync: async (k) => (k === 'compilerInMainProcess' ? true : undefined)
 };
+// 主进程模式下 SubProcessProxy 的 ready 任务由 SingletonTask 包装，默认 60s 超时，
+// 服务器较慢时序列化+预编译会超时，报 reason "timeout"。把默认超时放宽到 10 分钟。
+// miniprogram-ci 内部按属性动态引用该模块的 SingletonTask，替换导出即可全局生效。
+try {
+    const st = require('miniprogram-ci/dist/utils/singletontask');
+    const OriginalSingletonTask = st.SingletonTask;
+    st.SingletonTask = class extends OriginalSingletonTask {
+        constructor(executor, key, timeout) {
+            super(executor, key, timeout || 600000);
+        }
+    };
+} catch (e) {
+    console.warn('SingletonTask 超时补丁未生效（miniprogram-ci 结构可能已变更）:', e.message);
+}
 const ci = require('miniprogram-ci');
 (async () => {
     const project = new ci.Project({

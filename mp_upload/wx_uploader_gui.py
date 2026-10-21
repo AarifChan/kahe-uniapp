@@ -386,6 +386,9 @@ def build_mp_weixin(
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
             nvm use 18
+            # XDG_CACHE_HOME 可能指向未挂载的卷（如 whisper 模型缓存），
+            # corepack 会用它做缓存目录导致 EACCES，这里清掉让其回落到 ~/.cache
+            unset XDG_CACHE_HOME
             {build_cmd}
         """
 
@@ -656,11 +659,13 @@ def upload_key_and_publish(key_path: str, remote_host: str, remote_path: str) ->
         # 执行 node upload_appid.js 上传到微信
         # Node.js 已安装到 /usr/local/bin/node（全局可用，无需 nvm）
         # 设置 NODE_PATH 使其能找到全局安装的 miniprogram-ci
+        # nice/ionice 把编译进程调度优先级降到最低：服务器同时跑着 MySQL/Java 生产服务，
+        # 编译宁可慢一点也不能抢占生产的 CPU/IO
         print(f"正在执行 node {upload_js_name}...")
         ssh_cmd = [
             "ssh",
             remote_host,
-            "cd {} && NODE_PATH=/usr/local/lib/nodejs/node-v16.20.2-linux-x64/lib/node_modules node {}".format(
+            "cd {} && NODE_PATH=/usr/local/lib/nodejs/node-v16.20.2-linux-x64/lib/node_modules nice -n 19 ionice -c2 -n7 node {}".format(
                 quoted_remote_app_dir,
                 shlex.quote(upload_js_name),
             ),
